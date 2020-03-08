@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="YT7QzoP0CGYZziDQuLr2aOTGGmpgioKi3izg5T1vBPs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,Performance Testing,自动化测试," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YONGFEIUALL" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="在性能测试的过程中，要监控的地方应该就是以下部分：
+
+操作系统
+中间件
+Code
+DB
+网络
+
+这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。
+CPUCPU监控的关键指标做一个大概的说明：
+运行队列正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux操作系统监控">
+<meta property="og:url" content="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/index.html">
+<meta property="og:site_name" content="YONGFEIUALL">
+<meta property="og:description" content="在性能测试的过程中，要监控的地方应该就是以下部分：
+
+操作系统
+中间件
+Code
+DB
+网络
+
+这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。
+CPUCPU监控的关键指标做一个大概的说明：
+运行队列正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。Notes">
+<meta property="og:image" content="http://izheyi.com/images/linux/memory_process.jpg">
+<meta property="og:image" content="http://izheyi.com/images/linux/spotlight.jpg">
+<meta property="og:updated_time" content="2015-12-10T05:30:27.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux操作系统监控">
+<meta name="twitter:description" content="在性能测试的过程中，要监控的地方应该就是以下部分：
+
+操作系统
+中间件
+Code
+DB
+网络
+
+这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。
+CPUCPU监控的关键指标做一个大概的说明：
+运行队列正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。Notes">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/"/>
+
+
+
+
+
+  <title>Linux操作系统监控 | YONGFEIUALL</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?964433a58390bc50ac82f1418eb8dc8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YONGFEIUALL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">izheyi.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'fZPEsEHs3tafejXBDpZs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux操作系统监控</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-09T08:37:33+08:00">
+                2015-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/09/Performance-Testing-操作系统监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/09/Performance-Testing-操作系统监控/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在性能测试的过程中，要监控的地方应该就是以下部分：</p>
+<ul>
+<li>操作系统</li>
+<li>中间件</li>
+<li>Code</li>
+<li>DB</li>
+<li>网络</li>
+</ul>
+<p>这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。</p>
+<h1 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h1><p>CPU监控的关键指标做一个大概的说明：</p>
+<h2 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h2><p>正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。<br><strong>Notes：运行队列长度最大不要超过当前内核数的3倍。</strong><br>Another common system statistic is that of load average. The load on a system is the total amount of running and runnable process. For example, if two processes were running and three were available to run, the system’s load would be five. The load average is the amount of load over a given amount of time. Typically, the load average is taken over <strong>1 minute, 5 minutes, and 15 minutes</strong>. This enables you to see how the load changes over time.</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>To create the illusion that a given single processor runs multiple tasks simultaneously, the Linux kernel constantly switches between different processes. The switch between different processes is called a context switch, because when it happens, the CPU saves all the context information from the old process and retrieves all the context information for the new process.<br>是CPU在不同进程间按时间片轮换，交互性强的需要高优先级，交互性弱的需要低优先级。在linux系统中，有两种优先级：普通优先级和实时优先级。上下文切换不可避免，如果可能最好减少上下文切换。</p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>一般来自于外部硬件中断，中断也是不可避免的。中断就会有上下文切换，但是上正文切换并不都是中断造成的。<br><em>性能测试不需要特别关心内核的问题（中断、上下文切换），而是关注有时因程序写的不好造成的频繁切换（不正常切换）。</em></p>
+<h2 id="资源利用率"><a href="#资源利用率" class="headerlink" title="资源利用率"></a>资源利用率</h2><p>CPU utilization is a straightforward concept. At any given time, the CPU can be doing one of seven things.<br>First, it can be idle, which means that the processor is not actually doing any work and is waiting for something to do. This is “<strong>idle</strong>“ time.<br>Second, the CPU can be running user code, which is specified as “<strong>user</strong>“ time.<br>Third, the CPU can be executing code in the Linux kernel on behalf of the application code. This is “<strong>system</strong>“ time.<br>Fourth, the CPU can be executing user code that has been “nice”ed or set to run at a lower priority than normal processes. （切换线程优先级时消耗的时间)<br>Fifth, the CPU can be in iowait, which mean the system is spending its time waiting for I/O (such as disk or network) to complete.<br>Sixth, the CPU can be in irq state, which means it is in high-priority kernel code handling a hardware interrupt.<br>Finally, the CPU can be in softirq mode, which means it is executing kernel code that was also triggered by an interrupt, but it is running at a lower priority (the bottom-half code). This can happen when a device interrupt occurs, but the kernel needs to do some work with it before it is ready to hand it over to user space (for example, with a network packet).<br>通常我们只关注：idle, user, system, (+wa)。<br><strong>在正常情况下，用户态和系统态的CUP消耗比率是7：3.</strong></p>
+<a id="more"></a>
+<h1 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h1><h2 id="Swap"><a href="#Swap" class="headerlink" title="Swap"></a>Swap</h2><p>All systems have a fixed amount of physical memory in the form of RAM chips. The Linux kernel allows applications to run even if they require more memory than available with the physical memory. The Linux kernel uses the hard drive as a temporary memory. This hard drive space is called <strong>swap space</strong>.<br><strong>交换空间大小一般是实际物理内存大小的2倍。</strong><br>Although swap is an excellent way to allow processes to run, it is terribly slow. It can be up to 1,000 times slower for an application to use swap rather than physical memory.</p>
+<h2 id="Cache-amp-Buffer"><a href="#Cache-amp-Buffer" class="headerlink" title="Cache &amp; Buffer"></a>Cache &amp; Buffer</h2><p><strong>Cache(读缓存)</strong>： If your system has much more physical memory than required by your applications, Linux will cache recently used files in physical memory so that subsequent accesses to that file do not require an access to the hard drive.<br><strong>Buffer(写缓存)</strong>: To further optimize applications, Linux sets aside memory to use for data that needs to be written to disk. These set-asides are called buffers. If an application has to write something to the disk, which would usually take a long time, Linux lets the application continue immediately but saves the file data into a memory buffer. At some point in the future, the buffer is flushed to disk, but the application can continue immediately. </p>
+<h2 id="程序内存申请整个流程"><a href="#程序内存申请整个流程" class="headerlink" title="程序内存申请整个流程"></a>程序内存申请整个流程</h2><p>程序申请操作的不是直接要物理内存地址，而是一个虚拟的地址表，跟实际内存映射。<br>例子：</p>
+<ul>
+<li>实际物理内存2G, 已经占用1.5G，剩余0.5G</li>
+<li>程序申请1G<br><img src="/images/linux/memory_process.jpg" alt=""></li>
+</ul>
+<p><em>请与文章末尾的Spotlight可视化界面进行参照学习，更容易理解。</em></p>
+<h1 id="Disk-I-O"><a href="#Disk-I-O" class="headerlink" title="Disk I/O"></a>Disk I/O</h1><p>这块的内容在内存的流程中已经提及，Disk的主要工作就是读和写，提高性能的主要手段也就是减少磁盘的访问次数。<br>iostat 命令用来监视系统输入/输出设备负载，如果没有安装需要自己安装。<br>安装时可以执行如下命令<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> sysstat</span><br></pre></td></tr></table></figure></p>
+<p>命令使用<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># iostat</span></span><br><span class="line">Linux <span class="number">2.6</span><span class="number">.32</span>-<span class="number">573.</span>el6.x86_64 (Automation)        <span class="number">2015</span>年<span class="number">12</span>月<span class="number">10</span>日  _x86_64_        (<span class="number">2</span> CPU)</span><br><span class="line"></span><br><span class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</span><br><span class="line">           <span class="number">0.02</span>    <span class="number">0.02</span>    <span class="number">0.08</span>    <span class="number">0.03</span>    <span class="number">0.00</span>   <span class="number">99.85</span></span><br><span class="line"></span><br><span class="line">Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn</span><br><span class="line">sda               <span class="number">0.63</span>        <span class="number">15.39</span>        <span class="number">14.25</span>    <span class="number">2560734</span>    <span class="number">2370826</span></span><br><span class="line">scd0              <span class="number">0.00</span>         <span class="number">0.00</span>         <span class="number">0.00</span>        <span class="number">360</span>          <span class="number">0</span></span><br><span class="line">dm-<span class="number">0</span>              <span class="number">2.05</span>        <span class="number">15.33</span>        <span class="number">14.25</span>    <span class="number">2551410</span>    <span class="number">2370808</span></span><br><span class="line">dm-<span class="number">1</span>              <span class="number">0.00</span>         <span class="number">0.02</span>         <span class="number">0.00</span>       <span class="number">2600</span>          <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><p>考虑的是带宽。主要工具：iptraf，如果没安装需要自己安装。<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> -y iptraf</span><br></pre></td></tr></table></figure></p>
+<p>还有netstat, ifconfig====</p>
+<h1 id="监控工具"><a href="#监控工具" class="headerlink" title="监控工具"></a>监控工具</h1><p>这里主要介绍两个Linux自带的工具：</p>
+<h2 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># vmstat <span class="number">2</span></span></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu------</span><br><span class="line"> r  b   swpd   <span class="built_in">free</span>   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> <span class="number">0</span>      <span class="number">0</span> <span class="number">3029876</span> <span class="number">199616</span> <span class="number">690980</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">2</span>    <span class="number">3</span>    <span class="number">2</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>      <span class="number">0</span> <span class="number">3029752</span> <span class="number">199616</span> <span class="number">690980</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>    <span class="number">41</span> <span class="number">1009</span>   <span class="number">39</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>      <span class="number">0</span> <span class="number">3029752</span> <span class="number">199616</span> <span class="number">690980</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">3</span> <span class="number">1004</span>   <span class="number">36</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>      <span class="number">0</span> <span class="number">3029752</span> <span class="number">199616</span> <span class="number">690980</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span> <span class="number">1004</span>   <span class="number">36</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>      <span class="number">0</span> <span class="number">3029752</span> <span class="number">199616</span> <span class="number">690980</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">6</span> <span class="number">1003</span>   <span class="number">33</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p><strong>Notes：</strong><br>r 表示运行队列(就是说多少个进程真的分配到CPU)，我测试的服务器目前CPU比较空闲，没什么程序在跑，当这个值超过了CPU数目，就会出现CPU瓶颈了。这个也和top的负载有关系，一般负载超过了3就比较高，超过了5就高，超过了10就不正常了，服务器的状态很危险。top的负载类似每秒的运行队列。如果运行队列过大，表示你的CPU很繁忙，一般会造成CPU使用率很高。</p>
+<p>b 表示阻塞的进程,这个不多说，进程阻塞，大家懂的。</p>
+<p>swpd 虚拟内存已使用的大小，如果大于0，表示你的机器物理内存不足了，如果不是程序内存泄露的原因，那么你该升级内存了或者把耗内存的任务迁移到其他机器。</p>
+<p>free   空闲的物理内存的大小，我的机器内存总共8G，剩余3415M。</p>
+<p>buff   Linux/Unix系统是用来存储，目录里面有什么内容，权限等的缓存，我本机大概占用300多M</p>
+<p>cache  cache直接用来记忆我们打开的文件,给文件做缓冲，(这里是Linux/Unix的聪明之处，把空闲的物理内存的一部分拿来做文件和目录的缓存，是为了提高程序执行的性能，当程序使用内存时，buffer/cached会很快地被使用。)</p>
+<p>si  每秒从磁盘读入虚拟内存的大小，如果这个值大于0，表示物理内存不够用或者内存泄露了，要查找耗内存进程解决掉。我的机器内存充裕，一切正常。</p>
+<p>so  每秒虚拟内存写入磁盘的大小，如果这个值大于0，同上。</p>
+<p>bi  块设备每秒接收的块数量，这里的块设备是指系统上所有的磁盘和其他块设备，默认块大小是1024byte，我本机上没什么IO操作，所以一直是0。</p>
+<p>bo 块设备每秒发送的块数量，例如我们读取文件，bo就要大于0。bi和bo一般都要接近0，不然就是IO过于频繁，需要调整。</p>
+<p>in 每秒CPU的中断次数，包括时间中断</p>
+<p>cs 每秒上下文切换次数，例如我们调用系统函数，就要进行上下文切换，线程的切换，也要进程上下文切换，这个值要越小越好，太大了，要考虑调低线程或者进程的数目,例如在apache和nginx这种web服务器中，我们一般做性能测试时会进行几千并发甚至几万并发的测试，选择web服务器的进程可以由进程或者线程的峰值一直下调，压测，直到cs到一个比较小的值，这个进程和线程数就是比较合适的值了。系统调用也是，每次调用系统函数，我们的代码就会进入内核空间，导致上下文切换，这个是很耗资源，也要尽量避免频繁调用系统函数。上下文切换次数过多表示你的CPU大部分浪费在上下文切换，导致CPU干正经事的时间少了，CPU没有充分利用，是不可取的。</p>
+<p>us 用户CPU时间。</p>
+<p>sy 系统CPU时间，如果太高，表示系统调用时间长，例如是IO操作频繁。</p>
+<p>id  空闲 CPU时间，一般来说，id + us + sy = 100,一般我认为id是空闲CPU使用率，us是用户CPU使用率，sy是系统CPU使用率。</p>
+<p>wa 等待IO CPU时间。</p>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>top很消耗资源，相当于任务管理器，不建议使用。<br>在top信息里，也可以看到运行队列长度的信息，只不过top里显示的是一段时间内的平均值：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# top</span><br><span class="line">top - 09:39:58 up 21:13,  1 user,  <span class="operator"><span class="keyword">load</span> average: <span class="number">0.00</span>, <span class="number">0.00</span>, <span class="number">0.00</span></span><br><span class="line">Tasks: <span class="number">147</span> total,   <span class="number">1</span> running, <span class="number">146</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">Cpu(s):  <span class="number">0.0</span>%us,  <span class="number">0.0</span>%sy,  <span class="number">0.0</span>%ni,<span class="number">100.0</span>%<span class="keyword">id</span>,  <span class="number">0.0</span>%wa,  <span class="number">0.0</span>%hi,  <span class="number">0.0</span>%si,  <span class="number">0.0</span>%st</span><br><span class="line">Mem:   <span class="number">3389988</span><span class="keyword">k</span> total,  <span class="number">1705472</span><span class="keyword">k</span> used,  <span class="number">1684516</span><span class="keyword">k</span> free,   <span class="number">124564</span><span class="keyword">k</span> buffers</span><br><span class="line">Swap:  <span class="number">3522556</span><span class="keyword">k</span> total,        <span class="number">0</span><span class="keyword">k</span> used,  <span class="number">3522556</span><span class="keyword">k</span> free,   <span class="number">992336</span><span class="keyword">k</span> cached</span><br><span class="line"></span><br><span class="line">  PID <span class="keyword">USER</span>      PR  NI  VIRT  RES  SHR S %CPU %MEM    <span class="keyword">TIME</span>+  COMMAND</span><br><span class="line"> <span class="number">2649</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">2286</span><span class="keyword">m</span> <span class="number">295</span><span class="keyword">m</span>  <span class="number">12</span><span class="keyword">m</span> S  <span class="number">0.3</span>  <span class="number">8.9</span>   <span class="number">2</span>:<span class="number">55.70</span> <span class="keyword">java</span></span><br><span class="line"><span class="number">18382</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">15032</span> <span class="number">1228</span>  <span class="number">916</span> R  <span class="number">0.3</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.01</span> top</span><br><span class="line">    <span class="number">1</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">19356</span> <span class="number">1528</span> <span class="number">1220</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">01.73</span> init</span><br><span class="line">    <span class="number">2</span> root      <span class="number">20</span>   <span class="number">0</span>     <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kthreadd</span></span><br></pre></td></tr></table></figure></p>
+<p><em>Notes: 还有其他的Linux性能监控工具，比如Spotlight，商业工具，可视化的界面，显示信息包括：操作系统、网络、CPU、内存、磁盘。</em><br><img src="/images/linux/spotlight.jpg" alt="Spotlight"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin.jpg" alt="唐胡璐 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>分享创造价值，您的支持将鼓励我继续前行！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.jpg" alt="唐胡璐 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay.jpg" alt="唐胡璐 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    唐胡璐
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/" title="Linux操作系统监控">http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Performance-Testing/" rel="tag"># Performance Testing</a>
+          
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/08/Centos下Nginx-php-fpm安装配置/" rel="next" title="Centos下Nginx + php-fpm安装配置">
+                <i class="fa fa-chevron-left"></i> Centos下Nginx + php-fpm安装配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/10/TestNG-命令行运行/" rel="prev" title="TestNG 命令行运行">
+                TestNG 命令行运行 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="唐胡璐" />
+            
+              <p class="site-author-name" itemprop="name">唐胡璐</p>
+              <p class="site-description motion-element" itemprop="description">i just wanna live while i am alive</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yongfeiuall" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/yongfeiuall" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yongfeiuall" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yongfeiuall@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU"><span class="nav-number">1.</span> <span class="nav-text">CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运行队列"><span class="nav-number">1.1.</span> <span class="nav-text">运行队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">1.2.</span> <span class="nav-text">上下文切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">1.3.</span> <span class="nav-text">中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源利用率"><span class="nav-number">1.4.</span> <span class="nav-text">资源利用率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory"><span class="nav-number">2.</span> <span class="nav-text">Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swap"><span class="nav-number">2.1.</span> <span class="nav-text">Swap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-amp-Buffer"><span class="nav-number">2.2.</span> <span class="nav-text">Cache & Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序内存申请整个流程"><span class="nav-number">2.3.</span> <span class="nav-text">程序内存申请整个流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Disk-I-O"><span class="nav-number">3.</span> <span class="nav-text">Disk I/O</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Network"><span class="nav-number">4.</span> <span class="nav-text">Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监控工具"><span class="nav-number">5.</span> <span class="nav-text">监控工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vmstat"><span class="nav-number">5.1.</span> <span class="nav-text">vmstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top"><span class="nav-number">5.2.</span> <span class="nav-text">top</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">唐胡璐</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 101212, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 101212, xid: "2015/12/09/Performance-Testing-操作系统监控/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/101212/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Wechat,Linkedin,Weibo,Mailto,Douban,QQZone,Twitter,Reddit,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="YT7QzoP0CGYZziDQuLr2aOTGGmpgioKi3izg5T1vBPs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SaltStack," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YONGFEIUALL" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="States是SaltStack中的配置语言，在日常进行配置管理时需要编写大量的States文件。如安装软件啊，更改配置啊等，就需要编写states sls文件（描述状态配置的文件）去描述和实现这些功能。编写states sls文件一般是是YAML语法格式，也支持使用Python语言来编写。定义例子：1234567apache: #state名称：apache  pkg: #管理对象类型：pkg，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Salt - State">
+<meta property="og:url" content="http://izheyi.com/2018/03/11/Salt-State/index.html">
+<meta property="og:site_name" content="YONGFEIUALL">
+<meta property="og:description" content="States是SaltStack中的配置语言，在日常进行配置管理时需要编写大量的States文件。如安装软件啊，更改配置啊等，就需要编写states sls文件（描述状态配置的文件）去描述和实现这些功能。编写states sls文件一般是是YAML语法格式，也支持使用Python语言来编写。定义例子：1234567apache: #state名称：apache  pkg: #管理对象类型：pkg，">
+<meta property="og:image" content="http://izheyi.com/images/salt/order.jpg">
+<meta property="og:image" content="http://izheyi.com/images/salt/requisites.jpg">
+<meta property="og:updated_time" content="2018-03-12T01:15:40.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Salt - State">
+<meta name="twitter:description" content="States是SaltStack中的配置语言，在日常进行配置管理时需要编写大量的States文件。如安装软件啊，更改配置啊等，就需要编写states sls文件（描述状态配置的文件）去描述和实现这些功能。编写states sls文件一般是是YAML语法格式，也支持使用Python语言来编写。定义例子：1234567apache: #state名称：apache  pkg: #管理对象类型：pkg，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://izheyi.com/2018/03/11/Salt-State/"/>
+
+
+
+
+
+  <title>Salt - State | YONGFEIUALL</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?964433a58390bc50ac82f1418eb8dc8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YONGFEIUALL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">izheyi.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'fZPEsEHs3tafejXBDpZs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/11/Salt-State/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Salt - State</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T15:17:10+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/11/Salt-State/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/11/Salt-State/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>States是SaltStack中的配置语言，在日常进行配置管理时需要编写大量的States文件。如安装软件啊，更改配置啊等，就需要编写states sls文件（描述状态配置的文件）去描述和实现这些功能。编写states sls文件一般是是YAML语法格式，也支持使用Python语言来编写。<br>定义例子：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apache: #state名称：apache</span><br><span class="line">  pkg: #管理对象类型：pkg，进行软件安装（yum、apt）</span><br><span class="line">    -<span class="ruby"> installed <span class="comment">#pkg要执行的方法：install，如未安装就进行安装</span></span><br><span class="line"></span>  service: #管理对象类型：service，管理系统守护进程</span><br><span class="line">    -<span class="ruby"> running <span class="comment">#service要执行的方法：running，如未运行就进行启动</span></span><br><span class="line"></span>    -<span class="ruby"> <span class="symbol">require:</span> <span class="comment">#关键字require，确保apache服务只有在成功安装软件包后才会启动</span></span><br><span class="line"></span>      -<span class="ruby"> <span class="symbol">pkg:</span> apache</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="State-Tree"><a href="#State-Tree" class="headerlink" title="State Tree"></a>State Tree</h1><p>Top file:配置管理入口文件，和pillar类似，指定minions需要完成那些配置管理，默认为top.sls<br><em>注：在定义top.sls时,会先找apache/init.sls,如果没有的话，会找<br>apache.sls</em><br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="keyword">base</span>:</span><br><span class="line">　　　　<span class="string">'*'</span>:</span><br><span class="line">　　　　  - apache</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>跟系统文件树一样，salt state文件也有自己的树系统，这通过配置文件中的file_roots配置<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#在/etc/salt/master 中配置下面选项，指定salt state的根目录在/srv/salt</span></span><br><span class="line"><span class="label">file_roots:</span></span><br><span class="line">  base:</span><br><span class="line">    - /srv/salt</span><br></pre></td></tr></table></figure></p>
+<p>修改master配置文件后需要重启。</p>
+<h2 id="创建Top文件"><a href="#创建Top文件" class="headerlink" title="创建Top文件"></a>创建Top文件</h2><p>在/srv/salt目录下创建一个top.sls文件，这个文件提供了其它文件的映射。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">vi</span> <span class="tag">top</span><span class="class">.sls</span></span><br><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">cat</span> <span class="tag">top</span><span class="class">.sls</span> </span><br><span class="line"><span class="rule"><span class="attribute">base</span>:<span class="value"></span><br><span class="line">  <span class="string">'*'</span>:</span><br><span class="line">    - webserver</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="创建State文件"><a href="#创建State文件" class="headerlink" title="创建State文件"></a>创建State文件</h2><p>在top.sls相同的目录下，创建一个名为webserver.sls的空文件，也可以在同目录下创建一个文件夹webserver，在里边创建init.sls。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">vi</span> <span class="tag">webserver</span><span class="class">.sls</span></span><br><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">cat</span> <span class="tag">webserver</span><span class="class">.sls</span> </span><br><span class="line"><span class="rule"><span class="attribute">httpd</span>:<span class="value">                  </span><br><span class="line">  pkg:                  </span><br><span class="line">    - installed</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="执行Salt-State"><a href="#执行Salt-State" class="headerlink" title="执行Salt State"></a>执行Salt State</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]# salt <span class="emphasis">'*'</span> state.highstate</span><br><span class="line"><span class="header">192.168.244.130:</span><br><span class="line">----------</span></span><br><span class="line"><span class="code">          ID: httpd</span></span><br><span class="line"><span class="code">    Function: pkg.installed</span></span><br><span class="line"><span class="code">      Result: True</span></span><br><span class="line"><span class="code">     Comment: Package httpd is already installed.</span></span><br><span class="line"><span class="code">     Started: 20:54:04.497245</span></span><br><span class="line"><span class="code">    Duration: 2334.569 ms</span></span><br><span class="line"><span class="code">     Changes:   </span></span><br><span class="line"></span><br><span class="line"><span class="header">Summary</span><br><span class="line">------------</span></span><br><span class="line">Succeeded: 1</span><br><span class="line"><span class="header">Failed:    0</span><br><span class="line">------------</span></span><br><span class="line">Total states run:     1</span><br></pre></td></tr></table></figure>
+<p>master将会指导所有的目标minions运行state.highstate。<br>当minion执行highstate，它将会下载top文件中匹配的内容，minion将表达式中匹配的内容下载、编译、执行。一旦完成，minion将返回所有的动作执行结果和所有更改。</p>
+<a id="more"></a>
+<h1 id="状态间关系"><a href="#状态间关系" class="headerlink" title="状态间关系"></a>状态间关系</h1><ul>
+<li>Ordering<br><img src="/images/salt/order.jpg" alt=""></li>
+<li>require<br><img src="/images/salt/requisites.jpg" alt=""></li>
+<li><p>include<br>包含某个文件 比如新建一个test.sls文件内，就可以继承nginx和php相关模块配置，而不必重新编写</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">cat</span> <span class="tag">test</span><span class="class">.sls</span> </span><br><span class="line"><span class="rule"><span class="attribute">include</span>:<span class="value"></span><br><span class="line">  - nginx</span><br><span class="line">  - php</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>watch<br>监测依赖的state的状态，如果状态发生变化，做出反应（例如监控文件变化，发生变化后立即重启服务）</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ntpd</span>:  </span><br><span class="line">  service.<span class="attribute">running</span>:  </span><br><span class="line">    - <span class="attribute">watch</span>:  #这里它是监听ID为<span class="attribute">file</span>: /etc/ntp.conf，如果下方的状态没有发生改变，那么我这个重启规则就不会执行，那么就不会执行服务重启操作。</span><br><span class="line">      - <span class="attribute">file</span>: /etc/ntp.conf  #也就相当于如果minion端的ntp.conf或者master端的<span class="attribute">salt</span>:<span class="comment">//files/ntp.conf的文件没有发生改变，也就不会发生文件下发操作，也就可以理解为如果没有发生文件更改。</span></span><br><span class="line"></span><br><span class="line">/etc/ntp.<span class="attribute">conf</span>:</span><br><span class="line">  file.<span class="attribute">managed</span>:</span><br><span class="line">    - <span class="attribute">source</span>: <span class="attribute">salt</span>:<span class="comment">//files/ntp.conf</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h1><ul>
+<li><p>软件包状态管理模块 - pkg</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pkg.installed  <span class="comment"># 安装</span></span><br><span class="line">pkg.latest  <span class="comment"># 确保最新版本</span></span><br><span class="line">pkg.<span class="keyword">remove</span>  <span class="comment"># 卸载</span></span><br><span class="line">pkg.purge  <span class="comment"># 卸载并删除配置文件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件状态管理模块 - file</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">file</span>.managed：   　　<span class="comment">#保证文件存在并且为对应的状态</span></span><br><span class="line"><span class="type">file</span>.recurse:   　　 <span class="comment">#保证目录存在并且为对应的状态</span></span><br><span class="line"><span class="type">file</span>.absent:   　　  <span class="comment">#确保文件不存在，如果存在则进行删除操作</span></span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]# vi file.sls</span><br><span class="line">[root@Automation salt]# cat file.sls </span><br><span class="line"><span class="operator"><span class="keyword">create</span> test_create_directory:</span><br><span class="line"> <span class="keyword">file</span>.<span class="keyword">directory</span>:</span><br><span class="line">   - <span class="keyword">name</span>: /opt/my_new_directory</span><br><span class="line">   - <span class="keyword">user</span>: root</span><br><span class="line">   - <span class="keyword">group</span>: root</span><br><span class="line">   - <span class="keyword">mode</span>: <span class="number">755</span></span><br><span class="line">[root@Automation <span class="keyword">salt</span>]# <span class="keyword">salt</span> <span class="string">'*'</span> state.<span class="keyword">apply</span> <span class="keyword">file</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    <span class="comment">----------</span></span><br><span class="line">    file_|-<span class="keyword">create</span> test_create_directory_|-/opt/my_new_directory_|-<span class="keyword">directory</span>:</span><br><span class="line">        <span class="comment">----------</span></span><br><span class="line">        __run_num__:</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        changes:</span><br><span class="line">            <span class="comment">----------</span></span><br><span class="line">            /opt/my_new_directory:</span><br><span class="line">                <span class="keyword">New</span> Dir</span><br><span class="line">        <span class="keyword">comment</span>:</span><br><span class="line">            <span class="keyword">Directory</span> /opt/my_new_directory <span class="keyword">updated</span></span><br><span class="line">        <span class="keyword">duration</span>:</span><br><span class="line">            <span class="number">52.238</span></span><br><span class="line">        <span class="keyword">name</span>:</span><br><span class="line">            /opt/my_new_directory</span><br><span class="line">        <span class="keyword">result</span>:</span><br><span class="line">            <span class="literal">True</span></span><br><span class="line">        start_time:</span><br><span class="line">            <span class="number">21</span>:<span class="number">07</span>:<span class="number">18.721680</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务状态管理模块 - service</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">service<span class="class">.running</span>        #确保服务处于运行状态</span><br><span class="line">service<span class="class">.enabled</span>        #确保服务会开机自动启动</span><br><span class="line">service<span class="class">.disabled</span>    #确保服务不会开机自启动</span><br><span class="line">service<span class="class">.dead</span>        #确保服务当前没有运行</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<ol>
+<li>on minion，<code>service mysqld stop</code></li>
+<li><p>execute state</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="type">Automation</span> salt]<span class="comment"># cat mysql.sls </span></span><br><span class="line">mysql running:</span><br><span class="line">  service.running:</span><br><span class="line">    - name: mysqld</span><br><span class="line">[root@<span class="type">Automation</span> salt]<span class="comment"># salt '*' state.apply mysql</span></span><br><span class="line"><span class="number">192</span>.<span class="number">168</span>.<span class="number">244</span>.<span class="number">130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    service_|-mysql running_|-mysqld_|-running:</span><br><span class="line">        ----------</span><br><span class="line">        __run_num__:</span><br><span class="line">            <span class="number">0</span></span><br><span class="line">        changes:</span><br><span class="line">            ----------</span><br><span class="line">            mysqld:</span><br><span class="line">                <span class="type">True</span></span><br><span class="line">        comment:</span><br><span class="line">            <span class="type">Started</span> <span class="type">Service</span> mysqld</span><br><span class="line">        duration:</span><br><span class="line">            <span class="number">1189</span>.<span class="number">538</span></span><br><span class="line">        name:</span><br><span class="line">            mysqld</span><br><span class="line">        <span class="literal">result</span>:</span><br><span class="line">            <span class="type">True</span></span><br><span class="line">        start_time:</span><br><span class="line">            <span class="number">21</span>:<span class="number">20</span>:<span class="number">29</span>.<span class="number">182736</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mysql start</p>
+</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin.jpg" alt="唐胡璐 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>分享创造价值，您的支持将鼓励我继续前行！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.jpg" alt="唐胡璐 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay.jpg" alt="唐胡璐 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    唐胡璐
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://izheyi.com/2018/03/11/Salt-State/" title="Salt - State">http://izheyi.com/2018/03/11/Salt-State/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SaltStack/" rel="tag"># SaltStack</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/Salt-Grains和Pillar/" rel="next" title="Salt - Grains和Pillar">
+                <i class="fa fa-chevron-left"></i> Salt - Grains和Pillar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/18/丁丁画画（一）/" rel="prev" title="丁丁画画（一年级上学期）">
+                丁丁画画（一年级上学期） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="唐胡璐" />
+            
+              <p class="site-author-name" itemprop="name">唐胡璐</p>
+              <p class="site-description motion-element" itemprop="description">i just wanna live while i am alive</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yongfeiuall" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/yongfeiuall" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yongfeiuall" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yongfeiuall@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#State-Tree"><span class="nav-number">1.</span> <span class="nav-text">State Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Top文件"><span class="nav-number">1.2.</span> <span class="nav-text">创建Top文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建State文件"><span class="nav-number">1.3.</span> <span class="nav-text">创建State文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行Salt-State"><span class="nav-number">1.4.</span> <span class="nav-text">执行Salt State</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态间关系"><span class="nav-number">2.</span> <span class="nav-text">状态间关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主要模块"><span class="nav-number">3.</span> <span class="nav-text">主要模块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">唐胡璐</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 101212, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 101212, xid: "2018/03/11/Salt-State/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/101212/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Wechat,Linkedin,Weibo,Mailto,Douban,QQZone,Twitter,Reddit,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

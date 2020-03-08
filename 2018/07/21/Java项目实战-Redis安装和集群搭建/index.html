@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="YT7QzoP0CGYZziDQuLr2aOTGGmpgioKi3izg5T1vBPs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Java项目实战,Redis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YONGFEIUALL" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="RedisRedis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
+
+字符串类型
+散列类型
+列表类型
+集合类型
+有序集合类型
+
+详细内容，参考：Redis
+安装安装还是很简单的，如下：1234$ wget http://download.redis.io/releases/redi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java项目实战 - Redis安装和集群搭建">
+<meta property="og:url" content="http://izheyi.com/2018/07/21/Java项目实战-Redis安装和集群搭建/index.html">
+<meta property="og:site_name" content="YONGFEIUALL">
+<meta property="og:description" content="RedisRedis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
+
+字符串类型
+散列类型
+列表类型
+集合类型
+有序集合类型
+
+详细内容，参考：Redis
+安装安装还是很简单的，如下：1234$ wget http://download.redis.io/releases/redi">
+<meta property="og:updated_time" content="2018-07-28T06:12:27.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java项目实战 - Redis安装和集群搭建">
+<meta name="twitter:description" content="RedisRedis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
+
+字符串类型
+散列类型
+列表类型
+集合类型
+有序集合类型
+
+详细内容，参考：Redis
+安装安装还是很简单的，如下：1234$ wget http://download.redis.io/releases/redi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://izheyi.com/2018/07/21/Java项目实战-Redis安装和集群搭建/"/>
+
+
+
+
+
+  <title>Java项目实战 - Redis安装和集群搭建 | YONGFEIUALL</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?964433a58390bc50ac82f1418eb8dc8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YONGFEIUALL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">izheyi.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'fZPEsEHs3tafejXBDpZs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/21/Java项目实战-Redis安装和集群搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java项目实战 - Redis安装和集群搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-21T15:04:08+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/21/Java项目实战-Redis安装和集群搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/21/Java项目实战-Redis安装和集群搭建/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：</p>
+<ul>
+<li>字符串类型</li>
+<li>散列类型</li>
+<li>列表类型</li>
+<li>集合类型</li>
+<li>有序集合类型</li>
+</ul>
+<p>详细内容，参考：<a href="https://redis.io/" target="_blank" rel="external">Redis</a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>安装还是很简单的，如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//download.redis.io/releases/redis-4.0.10.tar.gz</span></span><br><span class="line">$ tar xzf redis-<span class="number">4.0</span><span class="number">.10</span>.tar.gz</span><br><span class="line">$ cd redis-<span class="number">4.0</span><span class="number">.10</span></span><br><span class="line">$ make</span><br></pre></td></tr></table></figure></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><ol>
+<li><p>直接启动</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-4.0.10]# src/redis-server </span><br><span class="line">9833:C 13 Jun 23:58:18.056 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">9833:C 13 Jun 23:58:18.056 # Redis version=4.0.10, bits=64, <span class="operator"><span class="keyword">commit</span>=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">9833</span>, just started</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">C</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.056</span> # <span class="keyword">Warning</span>: <span class="keyword">no</span> config <span class="keyword">file</span> specified, <span class="keyword">using</span> the <span class="keyword">default</span> config. <span class="keyword">In</span> <span class="keyword">order</span> <span class="keyword">to</span> specify a config <span class="keyword">file</span> <span class="keyword">use</span> src/redis-<span class="keyword">server</span> /<span class="keyword">path</span>/<span class="keyword">to</span>/redis.conf</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">M</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.058</span> * Increased maximum <span class="built_in">number</span> <span class="keyword">of</span> <span class="keyword">open</span> files <span class="keyword">to</span> <span class="number">10032</span> (it was originally <span class="keyword">set</span> <span class="keyword">to</span> <span class="number">1024</span>).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-<span class="string">``</span>__ <span class="string">''</span>-._                                             </span><br><span class="line">      _.-<span class="string">``</span>    <span class="string">`.  `</span>_.  <span class="string">''</span>-._           Redis <span class="number">4.0</span><span class="number">.10</span> (<span class="number">00000000</span>/<span class="number">0</span>) <span class="number">64</span> <span class="built_in">bit</span></span><br><span class="line">  .-<span class="string">``</span> .-<span class="string">``</span><span class="string">`.  `</span><span class="string">``</span>\/    _.,_ <span class="string">''</span>-._                                   </span><br><span class="line"> (    <span class="string">'      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|'</span><span class="string">` _.-'|     Port: 6379</span><br><span class="line"> |    `</span>-._   <span class="string">`._    /     _.-'    |     PID: 9833</span><br><span class="line">  `</span>-._    <span class="string">`-._  `</span>-./  _.-<span class="string">'    _.-'</span>                                   </span><br><span class="line"> |<span class="string">`-._`</span>-._    <span class="string">`-.__.-'    _.-'_.-'|                                  </span><br><span class="line"> |    `</span>-._<span class="string">`-._        _.-'_.-'    |           http://redis.io        </span><br><span class="line">  `</span>-._    <span class="string">`-._`</span>-.__.-<span class="string">'_.-'</span>    _.-<span class="string">'                                   </span><br><span class="line"> |`-._`-._    `-.__.-'</span>    _.-<span class="string">'_.-'</span>|                                  </span><br><span class="line"> |    <span class="string">`-._`</span>-._        _.-<span class="string">'_.-'</span>    |                                  </span><br><span class="line">  <span class="string">`-._    `</span>-._<span class="string">`-.__.-'_.-'    _.-'                                   </span><br><span class="line">      `</span>-._    <span class="string">`-.__.-'    _.-'                                       </span><br><span class="line">          `</span>-._        _.-<span class="string">'                                           </span><br><span class="line">              `-.__.-'</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定配置文件启动<br>把redis的解压缩目录的redis.conf文件复制一份到/usr/local/redis/bin目录下</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-<span class="number">4.0</span><span class="number">.10</span>]<span class="preprocessor"># src/redis-server redis.conf </span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.382</span> <span class="preprocessor"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Redis version=<span class="number">4.0</span><span class="number">.10</span>, bits=<span class="number">64</span>, commit=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">12033</span>, just started</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Configuration loaded</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-<span class="number">4.0</span><span class="number">.10</span>]<span class="preprocessor"># src/redis-cli </span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; <span class="built_in">set</span> a <span class="number">10</span></span><br><span class="line">OK</span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; get a</span><br><span class="line"><span class="string">"10"</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-<span class="number">4.0</span><span class="number">.10</span>]<span class="preprocessor"># src/redis-cli shutdown</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h1><h2 id="需要安装以下环境"><a href="#需要安装以下环境" class="headerlink" title="需要安装以下环境"></a>需要安装以下环境</h2><ul>
+<li>ruby的环境：yum install ruby</li>
+<li>rubygems组件：yum install rubygems</li>
+<li>redis和ruby的接口：gem install redis</li>
+</ul>
+<h2 id="在同一台机器上搭建环境"><a href="#在同一台机器上搭建环境" class="headerlink" title="在同一台机器上搭建环境"></a>在同一台机器上搭建环境</h2><ol>
+<li>在<code>/usr/local/</code>下创建文件夹redis-cluster</li>
+<li><p>为每个实例创建一个文件夹，共6个</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-cluster]<span class="preprocessor"># ls</span></span><br><span class="line"><span class="number">7001</span>  <span class="number">7002</span>  <span class="number">7003</span>  <span class="number">7004</span>  <span class="number">7005</span>  <span class="number">7006</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把redis安装目录bin Copy到6个文件夹</p>
+</li>
+<li>修改每个实例<ol>
+<li>Port 7001 - 7006</li>
+<li>屏蔽限制本地访问,在bind 127.0.0.1之前加#</li>
+<li>protected-mode后的yes改为no</li>
+<li>daemonize后的no改为yes</li>
+<li>去掉cluster-enabled前面的#</li>
+<li>去掉cluster-node-timeout前面的#</li>
+</ol>
+</li>
+<li>启动6个实例 - 可以建个脚本一并启动</li>
+<li>验证启动 <figure class="highlight"><figcaption><span>redis-cluster]# ps -ef | grep redis</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root     24891     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7001 [cluster]&#10;root     24896     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7002 [cluster]&#10;root     24901     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7003 [cluster]&#10;root     24906     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7004 [cluster]&#10;root     24911     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7005 [cluster]&#10;root     24913     1  0 00:05 ?        00:00:00 ./redis-server 127.0.0.1:7006 [cluster]&#10;root     24921 23221  0 00:05 pts/2    00:00:00 grep redis</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h2><ol>
+<li><p>创建<br>把这个脚本（redis-trib.rb）从解压目录下复制到/usr/local/redis-cluster。</p>
+ <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-cluster]# ./redis-trib.rb create --replicas <span class="number">1 10.24.33</span>.<span class="number">147:7001 10</span>.<span class="number">24.33.147:70</span><span class="number">02 10.24.33</span>.<span class="number">147:7003 10</span>.<span class="number">24.33.147:70</span><span class="number">04 10.24.33</span>.<span class="number">147:7005</span>  <span class="number">10.24.33.147</span>:7006</span><br><span class="line">&gt;&gt;&gt; Creating cluster</span><br><span class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</span><br><span class="line">Using 3 masters:</span><br><span class="line"><span class="number">10.24.33.147</span>:7001</span><br><span class="line"><span class="number">10.24.33.147</span>:7002</span><br><span class="line"><span class="number">10.24.33.147</span>:7003</span><br><span class="line">Adding replica <span class="number">10.24.33.147</span>:7005 to <span class="number">10.24.33.147</span>:7001</span><br><span class="line">Adding replica <span class="number">10.24.33.147</span>:7006 to <span class="number">10.24.33.147</span>:7002</span><br><span class="line">Adding replica <span class="number">10.24.33.147</span>:7004 to <span class="number">10.24.33.147</span>:7003</span><br><span class="line">&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity</span><br><span class="line">[WARNING] Some slaves are in the same host as their master</span><br><span class="line">M: 6d9cab<span class="number">72763d1a1</span>fe85be<span class="number">04b6448998</span>b88ea<span class="number">18a2 10.24</span>.<span class="number">33.147:7001</span></span><br><span class="line">   slots:0-5460 (5461 slots) master</span><br><span class="line">M: c<span class="number">7693a9c9</span>e<span class="number">1189196481f65</span>153ed41ca9a6fe<span class="number">449 10.24</span>.<span class="number">33.147:7002</span></span><br><span class="line">   slots:<span class="number">5461-10922</span> (5462 slots) master</span><br><span class="line">M: e<span class="number">3c3977d52</span>165dcb<span class="number">589f59d16</span>a713888abdc<span class="number">0c56 10.24</span>.<span class="number">33.147:7003</span></span><br><span class="line">   slots:<span class="number">10923-16383</span> (5461 slots) master</span><br><span class="line">S: 089b61bc<span class="number">451920a7</span>a0cba<span class="number">996a4a43</span><span class="number">0b8a8805</span>c<span class="number">03 10.24.33</span>.<span class="number">147:7004</span></span><br><span class="line">   replicates e<span class="number">3c3977d52</span>165dcb<span class="number">589f59d16</span>a713888abdc0c56</span><br><span class="line">S: f<span class="number">3e9541424</span>af4fcad<span class="number">212456d2f5</span>ae<span class="number">5b6a35635</span><span class="number">25 10.24.33</span>.<span class="number">147:7005</span></span><br><span class="line">   replicates 6d9cab<span class="number">72763d1a1</span>fe85be<span class="number">04b6448998</span>b88ea18a2</span><br><span class="line">S: 0c16f9babaa8def8b721bcd<span class="number">82e43d9258</span>f<span class="number">3f68d9 10</span>.<span class="number">24.33.147:70</span>06</span><br><span class="line">   replicates c<span class="number">7693a9c9</span>e<span class="number">1189196481f65</span>153ed41ca9a6fe449</span><br><span class="line">Can I set the above configuration? (type 'yes' to accept): yes</span><br><span class="line">&gt;&gt;&gt; Nodes configuration updated</span><br><span class="line">&gt;&gt;&gt; Assign a different config epoch to each node</span><br><span class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</span><br><span class="line">Waiting for the cluster to join.....</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node <span class="number">10.24.33.147</span>:7001)</span><br><span class="line">M: 6d9cab<span class="number">72763d1a1</span>fe85be<span class="number">04b6448998</span>b88ea<span class="number">18a2 10.24</span>.<span class="number">33.147:7001</span></span><br><span class="line">   slots:0-5460 (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: f<span class="number">3e9541424</span>af4fcad<span class="number">212456d2f5</span>ae<span class="number">5b6a35635</span><span class="number">25 10.24.33</span>.<span class="number">147:7005</span></span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 6d9cab<span class="number">72763d1a1</span>fe85be<span class="number">04b6448998</span>b88ea18a2</span><br><span class="line">M: e<span class="number">3c3977d52</span>165dcb<span class="number">589f59d16</span>a713888abdc<span class="number">0c56 10.24</span>.<span class="number">33.147:7003</span></span><br><span class="line">   slots:<span class="number">10923-16383</span> (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 0c16f9babaa8def8b721bcd<span class="number">82e43d9258</span>f<span class="number">3f68d9 10</span>.<span class="number">24.33.147:70</span>06</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates c<span class="number">7693a9c9</span>e<span class="number">1189196481f65</span>153ed41ca9a6fe449</span><br><span class="line">S: 089b61bc<span class="number">451920a7</span>a0cba<span class="number">996a4a43</span><span class="number">0b8a8805</span>c<span class="number">03 10.24.33</span>.<span class="number">147:7004</span></span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates e<span class="number">3c3977d52</span>165dcb<span class="number">589f59d16</span>a713888abdc0c56</span><br><span class="line">M: c<span class="number">7693a9c9</span>e<span class="number">1189196481f65</span>153ed41ca9a6fe<span class="number">449 10.24</span>.<span class="number">33.147:7002</span></span><br><span class="line">   slots:<span class="number">5461-10922</span> (5462 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check for open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All 16384 slots covered.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation <span class="number">7001</span>]<span class="preprocessor"># redis-cli -h <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span> -p <span class="number">7001</span> -c</span></span><br><span class="line"><span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7001</span>&gt; CLUSTER NODES</span><br><span class="line">f3e9541424af4fcad212456d2f5ae5b6a3563525 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7005</span>@<span class="number">17005</span> slave <span class="number">6</span>d9cab72763d1a1fe85be04b6448998b88ea18a2 <span class="number">0</span> <span class="number">1528994341234</span> <span class="number">5</span> connected</span><br><span class="line">e3c3977d52165dcb589f59d16a713888abdc0c56 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7003</span>@<span class="number">17003</span> master - <span class="number">0</span> <span class="number">1528994340000</span> <span class="number">3</span> connected <span class="number">10923</span>-<span class="number">16383</span></span><br><span class="line"><span class="number">0</span>c16f9babaa8def8b721bcd82e43d9258f3f68d9 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7006</span>@<span class="number">17006</span> slave c7693a9c9e1189196481f65153ed41ca9a6fe449 <span class="number">0</span> <span class="number">1528994339000</span> <span class="number">6</span> connected</span><br><span class="line"><span class="number">6</span>d9cab72763d1a1fe85be04b6448998b88ea18a2 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7001</span>@<span class="number">17001</span> myself,master - <span class="number">0</span> <span class="number">1528994338000</span> <span class="number">1</span> connected <span class="number">0</span>-<span class="number">5460</span></span><br><span class="line"><span class="number">089</span>b61bc451920a7a0cba996a4a430b8a8805c03 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7004</span>@<span class="number">17004</span> slave e3c3977d52165dcb589f59d16a713888abdc0c56 <span class="number">0</span> <span class="number">1528994339221</span> <span class="number">4</span> connected</span><br><span class="line">c7693a9c9e1189196481f65153ed41ca9a6fe449 <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7002</span>@<span class="number">17002</span> master - <span class="number">0</span> <span class="number">1528994340228</span> <span class="number">2</span> connected <span class="number">5461</span>-<span class="number">10922</span></span><br><span class="line"><span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7001</span>&gt; <span class="built_in">set</span> a <span class="number">100</span></span><br><span class="line">-&gt; Redirected to slot [<span class="number">15495</span>] located at <span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7003</span></span><br><span class="line">OK</span><br><span class="line"><span class="number">10.24</span><span class="number">.33</span><span class="number">.147</span>:<span class="number">7003</span>&gt; get a</span><br><span class="line"><span class="string">"100"</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin.jpg" alt="唐胡璐 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>分享创造价值，您的支持将鼓励我继续前行！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.jpg" alt="唐胡璐 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay.jpg" alt="唐胡璐 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    唐胡璐
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://izheyi.com/2018/07/21/Java项目实战-Redis安装和集群搭建/" title="Java项目实战 - Redis安装和集群搭建">http://izheyi.com/2018/07/21/Java项目实战-Redis安装和集群搭建/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Java项目实战/" rel="tag"># Java项目实战</a>
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/20/Java项目实战-通过httpclient实现前后端调用/" rel="next" title="Java项目实战 - 通过httpclient实现前后端调用">
+                <i class="fa fa-chevron-left"></i> Java项目实战 - 通过httpclient实现前后端调用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/21/Java项目实战-Redis集成Spring/" rel="prev" title="Java项目实战 - Redis集成Spring">
+                Java项目实战 - Redis集成Spring <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="唐胡璐" />
+            
+              <p class="site-author-name" itemprop="name">唐胡璐</p>
+              <p class="site-description motion-element" itemprop="description">i just wanna live while i am alive</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yongfeiuall" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/yongfeiuall" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yongfeiuall" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yongfeiuall@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行"><span class="nav-number">3.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群搭建"><span class="nav-number">4.</span> <span class="nav-text">集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需要安装以下环境"><span class="nav-number">4.1.</span> <span class="nav-text">需要安装以下环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在同一台机器上搭建环境"><span class="nav-number">4.2.</span> <span class="nav-text">在同一台机器上搭建环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建集群"><span class="nav-number">4.3.</span> <span class="nav-text">创建集群</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">唐胡璐</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 101212, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 101212, xid: "2018/07/21/Java项目实战-Redis安装和集群搭建/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/101212/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Wechat,Linkedin,Weibo,Mailto,Douban,QQZone,Twitter,Reddit,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
