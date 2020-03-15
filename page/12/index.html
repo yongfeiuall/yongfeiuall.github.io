@@ -305,6 +305,353 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/27/Salt-简单Demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/27/Salt-简单Demo/" itemprop="url">Salt - 安装SaltStack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T13:43:57+08:00">
+                2018-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/27/Salt-简单Demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/27/Salt-简单Demo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="官方Demo环境安装"><a href="#官方Demo环境安装" class="headerlink" title="官方Demo环境安装"></a>官方Demo环境安装</h1><p>A Salt Demo using Vagrant，(Git, VirtualBox and Vagrant must already be installed.)请参考：<a href="https://github.com/UtahDave/salt-vagrant-demo" target="_blank" rel="external">Salt Vagrant Demo</a></p>
+<p>过程中遇到的问题，搞了好久，Windows系统就是麻烦：<a href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/">Vagrant Up起不来</a></p>
+<p>I HATE WINDOWS！！！ 到处是坑，I GIVE UP，还是自己搭建环境吧，不用官方教程了。 以下自己捣鼓：</p>
+<h1 id="Salt安装"><a href="#Salt安装" class="headerlink" title="Salt安装"></a>Salt安装</h1><p>在SaltMaster主机上安装salt-master：<code>yum -y install salt-master</code><br>在Minion主机上安装salt-minion：<code>yum -y install salt-minion</code></p>
+<h1 id="Salt配置"><a href="#Salt配置" class="headerlink" title="Salt配置"></a>Salt配置</h1><ul>
+<li><p>配置salt-master : /etc/salt/master</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># salt运行的用户，影响到salt的执行权限</span></span><br><span class="line">user: root</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">#s alt的运行线程，开的线程越多一般处理的速度越快，但一般不要超过CPU的个数</span></span><br><span class="line">worker_threads: <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master的管理端口</span></span><br><span class="line">publish_port : <span class="number">4505</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master跟minion的通讯端口，用于文件服务，认证，接受返回结果等</span></span><br><span class="line">ret_port : <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 如果这个master运行的salt-syndic连接到了一个更高层级的master,那么这个参数需要配置成连接到的这个高层级master的监听端口</span></span><br><span class="line">syndic_master_port : <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 指定pid文件位置</span></span><br><span class="line">pidfile: /<span class="keyword">var</span>/run/salt-master.pid</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># saltstack 可以控制的文件系统的开始位置</span></span><br><span class="line">root_dir: /</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 日志文件地址</span></span><br><span class="line">log_file: /<span class="keyword">var</span>/log/salt_master.log</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 分组设置</span></span><br><span class="line">nodegroups:</span><br><span class="line">  group_all: <span class="string">'*'</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># salt state执行时候的根目录</span></span><br><span class="line">file_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/file</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 设置pillar 的根目录</span></span><br><span class="line">pillar_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/pillar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置salt-minion : /etc/salt/minion</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># minion的识别ID，可以是IP，域名，或是可以通过DNS解析的字符串</span></span><br><span class="line">id: <span class="number">192.168</span><span class="number">.0</span><span class="number">.100</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># salt运行的用户权限</span></span><br><span class="line">user: root</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master的识别ID，可以是IP，域名，或是可以通过DNS解析的字符串</span></span><br><span class="line">master : <span class="number">192.168</span><span class="number">.0</span><span class="number">.100</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master通讯端口</span></span><br><span class="line">master_port: <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 备份模式，minion是本地备份，当进行文件管理时的文件备份模式</span></span><br><span class="line">backup_mode: minion</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 执行salt-call时候的输出方式</span></span><br><span class="line">output: nested</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># minion等待master接受认证的时间</span></span><br><span class="line">acceptance_wait_time: <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 失败重连次数，0表示无限次，非零会不断尝试到设置值后停止尝试</span></span><br><span class="line">acceptance_wait_time_max: <span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 重新认证延迟时间，可以避免因为master的key改变导致minion需要重新认证的syn风暴</span></span><br><span class="line">random_reauth_delay: <span class="number">60</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 日志文件位置</span></span><br><span class="line">log_file: /<span class="keyword">var</span>/logs/salt_minion.log</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 文件路径基本位置</span></span><br><span class="line">file_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/minion/file</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># pillar基本位置</span></span><br><span class="line">pillar_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /data/salt/minion/pillar</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Salt启动"><a href="#Salt启动" class="headerlink" title="Salt启动"></a>Salt启动</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># master</span></span><br><span class="line">service salt-master restart</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># minion</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
+<h1 id="ACCEPT-CONNECTIONS"><a href="#ACCEPT-CONNECTIONS" class="headerlink" title="ACCEPT CONNECTIONS"></a>ACCEPT CONNECTIONS</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key</span></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Rejected Keys:</span><br><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key -y -a <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span></span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Key <span class="keyword">for</span> minion <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span> accepted.</span><br><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key --list-all</span></span><br><span class="line">Accepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+<h1 id="验证安装成功"><a href="#验证安装成功" class="headerlink" title="验证安装成功"></a>验证安装成功</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> test.ping</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    True</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/19/跟任何人都聊的来/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/19/跟任何人都聊的来/" itemprop="url">跟任何人都聊的来</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-19T08:53:27+08:00">
+                2018-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
+                    <span itemprop="name">胡璐读书</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/19/跟任何人都聊的来/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/19/跟任何人都聊的来/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>所有交谈技巧都离不开交谈之道：真正在意对方，把对方放在心上。</p>
+<h1 id="坚持自己的个性"><a href="#坚持自己的个性" class="headerlink" title="坚持自己的个性"></a>坚持自己的个性</h1><p>不管我们是偏向于安静还是表达，都不是错误。我们越是煞费苦心地改变自己，就越会感觉沮丧。</p>
+<p>每个人都是独一无二的。沟通的技能不要模仿他人，而且自我学习和成长。</p>
+<h2 id="内向-VS-外向"><a href="#内向-VS-外向" class="headerlink" title="内向 VS 外向"></a>内向 VS 外向</h2><ul>
+<li>内向型是指通过独处就可以获得能量的人。</li>
+<li>外向型是指通过群体交流获得获得能量的人。</li>
+<li>内向让交谈更有深度，外向让交谈更具行动力。</li>
+</ul>
+<p>要想人际沟通有成效，就要具备两个基本的事实：</p>
+<ol>
+<li>了解并接受自己</li>
+<li>了解并接受对方</li>
+</ol>
+<p>交谈的目的不是向对方炫耀你有多么聪明，而是在两之间建立联系。</p>
+<h1 id="准备越充分，越自信"><a href="#准备越充分，越自信" class="headerlink" title="准备越充分，越自信"></a>准备越充分，越自信</h1><p>一定要自信，至少看上去如此。除了心态，充分的准备，也能让我们自信。<br>不管你处在什么水平，都有进步的空间。坚持下去，时间长了，你就会养成事前思考和准备的习惯。</p>
+<h1 id="保持一颗好奇心，让自己变得有趣"><a href="#保持一颗好奇心，让自己变得有趣" class="headerlink" title="保持一颗好奇心，让自己变得有趣"></a>保持一颗好奇心，让自己变得有趣</h1><p>大家同属人类，这就说明彼此之间会有一些类似的经历或者感受，这些相似点就可以拉进彼此之间的距离。</p>
+<p>我们没有必要成为各个领域的专家，但每个领域略知一二，就可以成为一个有趣的人。</p>
+<p>简单来说，好奇心就是从不同的角度观察常见事物。</p>
+<h1 id="学会从他人思维角度出发，把对方放在心上"><a href="#学会从他人思维角度出发，把对方放在心上" class="headerlink" title="学会从他人思维角度出发，把对方放在心上"></a>学会从他人思维角度出发，把对方放在心上</h1><p>重点在于我们自身的责任，而不是他人的行为。我们无法控制他人，最多就是给他人带来影响。</p>
+<h2 id="学会倾听，别人才能聊的开"><a href="#学会倾听，别人才能聊的开" class="headerlink" title="学会倾听，别人才能聊的开"></a>学会倾听，别人才能聊的开</h2><p>拉里金说：“每天早晨我都会想到，今天我所说的任何内容都不会让我增长知识，因此，要想吸取很多知识，就要去倾听。”</p>
+<h2 id="学会提问，别人才能聊的透"><a href="#学会提问，别人才能聊的透" class="headerlink" title="学会提问，别人才能聊的透"></a>学会提问，别人才能聊的透</h2><p>有效的提问需要注意以下几点：</p>
+<ul>
+<li>提一个封闭式问题</li>
+<li>然后选择开放式问题。5W1H</li>
+<li>仔细倾听对方的回答</li>
+<li>重复</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/12/过年-还有没有年味/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1634,338 +1981,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/26/Consul-Key-Value和Web-UI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/26/Consul-Key-Value和Web-UI/" itemprop="url">Consul - Key/Value和Web UI</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-26T10:28:03+08:00">
-                2017-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consul/" itemprop="url" rel="index">
-                    <span itemprop="name">Consul</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/26/Consul-Key-Value和Web-UI/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/26/Consul-Key-Value和Web-UI/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Key-Value"><a href="#Key-Value" class="headerlink" title="Key/Value"></a>Key/Value</h1><p>为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# <span class="keyword">mkdir</span> <span class="keyword">test</span></span><br><span class="line">[root@Automation ~]# consul kv get <span class="keyword">test</span>/</span><br><span class="line"><span class="keyword">Error</span>! <span class="keyword">No</span> key exists at: <span class="keyword">test</span>/</span><br></pre></td></tr></table></figure></p>
-<p>consul支持http api和consul client进行K/V操作<br>1.添加: consul kv put [-flags=xx] key value<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv 1</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv1 11</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv1</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put -flags=21 test/kv2 admin</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv2</span><br></pre></td></tr></table></figure></p>
-<p>consul支持64位整数的flags表示kv的metadata<br>2.查询: consul kv get [-deatiled] key<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get test/kv</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get -detailed test/kv</span></span><br><span class="line">CreateIndex      <span class="number">215</span></span><br><span class="line">Flags            <span class="number">0</span></span><br><span class="line">Key              test/kv</span><br><span class="line">LockIndex        <span class="number">0</span></span><br><span class="line">ModifyIndex      <span class="number">695</span></span><br><span class="line">Session          -</span><br><span class="line">Value            <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
-<p>3.查询所有的key: consul kv get -recurse<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># consul kv get -recurse</span></span><br><span class="line"><span class="built_in">test</span>:<span class="number">15</span></span><br><span class="line"><span class="built_in">test</span>/kv:<span class="number">1</span></span><br><span class="line"><span class="built_in">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="built_in">test</span>/kv2:admin</span><br></pre></td></tr></table></figure></p>
-<p>4.删除key: consul kv delete key<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# consul kv <span class="operator"><span class="keyword">delete</span> <span class="keyword">test</span>/kv</span><br><span class="line"><span class="keyword">Success</span>! Deleted <span class="keyword">key</span>: <span class="keyword">test</span>/kv</span><br><span class="line">[root@Automation ~]# consul kv <span class="keyword">get</span> -recurse</span><br><span class="line"><span class="keyword">test</span>:<span class="number">15</span></span><br><span class="line"><span class="keyword">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="keyword">test</span>/kv2:<span class="keyword">admin</span></span></span><br></pre></td></tr></table></figure></p>
-<p>5.前缀匹配删除: consul kv delete -recurse key-prefix<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv delete -recurse test</span></span><br><span class="line">Success! Deleted keys <span class="keyword">with</span> prefix: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get -recurse</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure></p>
-<p>6.修改kv<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test new</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">new</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test update</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">update</span><br></pre></td></tr></table></figure></p>
-<h1 id="Web-UI"><a href="#Web-UI" class="headerlink" title="Web UI"></a>Web UI</h1><p>启动Consul代理并设置 -ui 参数来启动自有主机的界面：<br><code>[root@Automation ~]# consul agent -dev -enable-script-checks -ui -config-dir /etc/consul.d</code><br><img src="/images/consul/ui.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/25/Consul-服务注册和健康检查/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/25/Consul-服务注册和健康检查/" itemprop="url">Consul - 服务注册和健康检查</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T15:52:40+08:00">
-                2017-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consul/" itemprop="url" rel="index">
-                    <span itemprop="name">Consul</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/25/Consul-服务注册和健康检查/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/25/Consul-服务注册和健康检查/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h1><h2 id="定义一个服务"><a href="#定义一个服务" class="headerlink" title="定义一个服务"></a>定义一个服务</h2><ol>
-<li>为Consul配置创建一个目录/etc/consul.d。Consul装载配置目录中所有的配置文件。<code>[root@Automation bin]# sudo mkdir /etc/consul.d</code></li>
-<li>我们将创建一个服务定义配置文件。<code>echo &#39;{&quot;service&quot;: {&quot;name&quot;: &quot;web&quot;, &quot;tags&quot;: [&quot;rails&quot;], &quot;port&quot;: 80}}&#39;&gt;/etc/consul.d/web.json</code></li>
-<li>用配置目录对数重启代理：<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">[<span class="keyword">root@Automation</span> bin]# curl http://10.24.33.75:8500/v1/catalog/service/web</span><br><span class="line">curl: <span class="list">(<span class="keyword">7</span>)</span> couldn<span class="variable">'t</span> connect to host</span><br><span class="line"><span class="list">[<span class="keyword">root@Automation</span> bin]# consul agent -dev -config-dir /etc/consul.d</span><br><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">==&gt; Consul agent running!</span><br><span class="line">           Version: <span class="variable">'v1.0.2</span>'</span><br><span class="line">           Node ID: <span class="variable">'8f55dc0e-5765-5941-e566-5a4f1166645f</span>'</span><br><span class="line">         Node name: <span class="variable">'Automation</span>'</span><br><span class="line">        Datacenter: <span class="variable">'dc1</span>' <span class="list">(<span class="keyword">Segment:</span> <span class="variable">'&lt;all&gt;</span>')</span></span><br><span class="line">            Server: true <span class="list">(<span class="keyword">Bootstrap:</span> false)</span></span><br><span class="line">       Client Addr: <span class="list">[<span class="keyword">127.0.0.1</span>] <span class="list">(<span class="keyword">HTTP:</span> <span class="number">8500</span>, HTTPS: <span class="number">-1</span>, DNS: <span class="number">8600</span>)</span></span><br><span class="line">      Cluster Addr: <span class="number">127.0</span>.0.1 <span class="list">(<span class="keyword">LAN:</span> <span class="number">8301</span>, WAN: <span class="number">8302</span>)</span></span><br><span class="line">           Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false</span><br><span class="line"></span><br><span class="line">==&gt; Log data will now stream in as it occurs:</span><br><span class="line"></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] Using random ID <span class="string">"8f55dc0e-5765-5941-e566-5a4f1166645f"</span> as node ID</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Initial configuration <span class="list">(<span class="keyword">index=1</span>)</span>: <span class="list">[&#123;Suffrage:Voter ID:8f55dc0e-5765-5941-e566-5a4f1166645f Address:127.0.0.1:8300&#125;]</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Follower</span>] entering Follower state <span class="list">(<span class="keyword">Leader:</span> <span class="string">""</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] serf: EventMemberJoin: Automation.dc1 <span class="number">127.0</span>.0.1</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] serf: EventMemberJoin: Automation <span class="number">127.0</span>.0.1</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: Adding LAN server Automation <span class="list">(<span class="keyword">Addr:</span> tcp/127.0.0.1:8300)</span> <span class="list">(<span class="keyword">DC:</span> dc1)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started DNS server <span class="number">127.0</span>.0.1:8600 <span class="list">(<span class="keyword">tcp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: Handled member-join event for server <span class="string">"Automation.dc1"</span> in area <span class="string">"wan"</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started DNS server <span class="number">127.0</span>.0.1:8600 <span class="list">(<span class="keyword">udp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started HTTP server on <span class="number">127.0</span>.0.1:8500 <span class="list">(<span class="keyword">tcp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: started state syncer</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">WARN</span>] raft: Heartbeat timeout from <span class="string">""</span> reached, starting election</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Candidate</span>] entering Candidate state in term <span class="number">2</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] raft: Votes needed: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] raft: Vote granted from <span class="number">8</span>f55dc0e-5765-5941-e566-5a4f1166645f in term <span class="number">2</span>. Tally: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Election won. Tally: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Leader</span>] entering Leader state</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: cluster leadership acquired</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] consul: Skipping self join check for <span class="string">"Automation"</span> since the cluster is too small</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: member <span class="variable">'Automation</span>' joined, marking health alive</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: New leader elected: Automation</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] Skipping remote check <span class="string">"serfHealth"</span> since it is managed automatically</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Synced service <span class="string">"web"</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>你会注意到在输出中”synced service ‘web’”。这意味着代理已经从配置文件中装载了该服务定义，并且已经成功注册该服务到服务目录中。</p>
-<p>如果你想注册多个服务，你可以在Consul配置目录中创建多个服务定义文件。</p>
-<h2 id="查询服务"><a href="#查询服务" class="headerlink" title="查询服务"></a>查询服务</h2><p>这里只试了HTTP API：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># curl http:<span class="comment">//localhost:8500/v1/catalog/service/web</span></span></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"ID"</span>: <span class="string">"8f55dc0e-5765-5941-e566-5a4f1166645f"</span>,</span><br><span class="line">        <span class="string">"Node"</span>: <span class="string">"Automation"</span>,</span><br><span class="line">        <span class="string">"Address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="string">"Datacenter"</span>: <span class="string">"dc1"</span>,</span><br><span class="line">        <span class="string">"TaggedAddresses"</span>: &#123;</span><br><span class="line">            <span class="string">"lan"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">            <span class="string">"wan"</span>: <span class="string">"127.0.0.1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"NodeMeta"</span>: &#123;</span><br><span class="line">            <span class="string">"consul-network-segment"</span>: <span class="string">""</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"ServiceID"</span>: <span class="string">"web"</span>,</span><br><span class="line">        <span class="string">"ServiceName"</span>: <span class="string">"web"</span>,</span><br><span class="line">        <span class="string">"ServiceTags"</span>: [</span><br><span class="line">            <span class="string">"rails"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"ServiceAddress"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="string">"ServicePort"</span>: <span class="number">80</span>,</span><br><span class="line">        <span class="string">"ServiceEnableTagOverride"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">"CreateIndex"</span>: <span class="number">6</span>,</span><br><span class="line">        <span class="string">"ModifyIndex"</span>: <span class="number">6</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/25/Consul-服务注册和健康检查/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2015,7 +2035,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-count">331</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2026,7 +2046,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2037,7 +2057,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,6 +305,330 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/" itemprop="url">CI/CD - 环境搭建(4) - 自动更新Next Release Version</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-13T12:22:02+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面已经实现最基本的当有Code Commit，会自动运行Jenkins Job，并把Artifact Upload到Artifactory上去。这中间的Version是手动来更改的，最好也跟着一并做成全自动化的。</p>
+<h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>Build成功后，自动更新Verion Number在Pom文件，并上传至Github。</p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><ol>
+<li><p>通过Shell Script对Pipeline做了一些修改，增加获得Version，更改Version，上传Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">   def mvnHome</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Checkout and Preparation'</span>) &#123; // <span class="keyword">for</span> display purposes</span><br><span class="line">      // Get some code from a GitHub repository</span><br><span class="line">      git credentialsId: <span class="string">'ee7a726b-e672-424d-9b78-e8015668d55a'</span>, url: <span class="string">'git@github.com:yongfeiuall/artifactory-maven-example.git'</span></span><br><span class="line">      // Get the Maven tool.</span><br><span class="line">      // ** NOTE: This <span class="string">'M3'</span> Maven tool must be configured</span><br><span class="line">      // **       <span class="keyword">in</span> the global configuration.           </span><br><span class="line">      mvnHome = tool <span class="string">'M3'</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Get current version'</span>) &#123;</span><br><span class="line">        sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' help:evaluate -Dexpression=project.version | grep -e '^[^\\[]' &gt; version.out"</span></span><br><span class="line">        version = <span class="built_in">read</span>File(<span class="string">"version.out"</span>).trim()</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Version is <span class="variable">$&#123;version&#125;</span>"</span></span><br><span class="line">		sh <span class="string">'cat version.out |awk -F "-" \'</span>&#123;<span class="built_in">print</span> <span class="variable">$1</span>&#125;\<span class="string">' &gt; release.out'</span></span><br><span class="line">        release = <span class="built_in">read</span>File(<span class="string">"release.out"</span>).trim()</span><br><span class="line">		<span class="built_in">echo</span> <span class="string">"Release version is <span class="variable">$&#123;release&#125;</span>"</span></span><br><span class="line">        </span><br><span class="line">        sh <span class="string">'cat release.out|awk \'</span>&#123;n=split(<span class="variable">$1</span>,A,<span class="string">"."</span>);i=<span class="number">2</span>;major=A[<span class="number">1</span>];<span class="keyword">while</span>(i&lt;n) major = major <span class="string">"."</span> A[i++];<span class="built_in">print</span> major&#125;\<span class="string">' &gt; major.out'</span></span><br><span class="line">        sh <span class="string">'cat release.out|awk \'</span>&#123;n=split(<span class="variable">$1</span>,A,<span class="string">"."</span>);<span class="built_in">print</span> A[n]&#125;\<span class="string">' &gt; minor.out'</span></span><br><span class="line">        major = <span class="built_in">read</span>File(<span class="string">"major.out"</span>).trim()</span><br><span class="line">        minor = <span class="built_in">read</span>File(<span class="string">"minor.out"</span>).trim() as Integer</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">   stage(<span class="string">'Build'</span>) &#123;</span><br><span class="line">      // Run the maven build</span><br><span class="line">      sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' clean install -DskipTests"</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Results'</span>) &#123;</span><br><span class="line">      archive <span class="string">'target/*.jar'</span></span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'Update pom with next development version'</span>) &#123;</span><br><span class="line">        sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' versions:set -DnewVersion=<span class="variable">$&#123;major&#125;</span>.<span class="variable">$&#123;minor+1&#125;</span>-SNAPSHOT -DoldVersion=* -DgroupId=* -DartifactId=* -DgenerateBackupPoms=false"</span></span><br><span class="line">        sh script:<span class="string">'git status'</span></span><br><span class="line">        modifiedFiles = sh(<span class="built_in">return</span>Stdout: <span class="literal">true</span>, script: <span class="string">"git ls-files -m"</span>).trim()</span><br><span class="line">        <span class="built_in">echo</span> modifiedFiles</span><br><span class="line">        <span class="keyword">if</span>(modifiedFiles) &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit required"</span></span><br><span class="line">            fileAdded = sh(<span class="built_in">return</span>Stdout: <span class="literal">true</span>, script: <span class="string">"git add ."</span>)</span><br><span class="line">            sh(script: <span class="string">"git commit -m 'RELEASE_BUILD: changing to next development'"</span>)</span><br><span class="line">            sh(script: <span class="string">"git push --set-upstream origin master"</span>)</span><br><span class="line">          </span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit completed"</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit not required"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行Jenkins Job<br><img src="/images/CI/jenkins_next_version_maven.jpg" alt=""></p>
+</li>
+<li>Github验证<br><img src="/images/CI/jenkins_next_version_github.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/" itemprop="url">CI/CD - 环境搭建(3) - 集成Artifactory</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-12T12:42:55+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/12/CI-CD-环境搭建-3-集成Artifactory/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>When Github have commit，will trigger Jenkins job to upload artifact to artifactory.</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><p>Artifactory installation and running，please refer: <a href="/2018/05/05/CI-CD-artifacroty/">Artifactory</a></p>
+<h1 id="Config-Artifactory-with-Jenkins"><a href="#Config-Artifactory-with-Jenkins" class="headerlink" title="Config Artifactory with Jenkins"></a>Config Artifactory with Jenkins</h1><p>Jenkins &gt; Manage Jenkins &gt; Configure System<br><img src="/images/CI/jenkins_artifactory.jpg" alt=""></p>
+<h1 id="Update-Pipeline-Script"><a href="#Update-Pipeline-Script" class="headerlink" title="Update Pipeline Script"></a>Update Pipeline Script</h1><p>Add script for uploading Artifact<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">mvnHome</span></span><br><span class="line"></span>   <span class="function"><span class="keyword">def</span> <span class="title">baseArtifactoryUrl</span> =</span> <span class="symbol">'com</span>/izheyi/yongfeiuall'</span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">artifactoryServer</span> =</span> <span class="type">Artifactory</span>.server <span class="symbol">'artifact</span>-jenkins'</span><br><span class="line">   </span><br><span class="line">   stage(<span class="symbol">'Preparatio</span>n') &#123; <span class="comment">// for display purposes</span></span><br><span class="line">      <span class="comment">// Get some code from a GitHub repository</span></span><br><span class="line">      git credentialsId: <span class="symbol">'ee7a726b</span>-e672-<span class="number">424</span>d-<span class="number">9</span>b78-e8015668d55a', url: <span class="symbol">'https</span>:<span class="comment">//github.com/yongfeiuall/artifactory-maven-example.git'</span></span><br><span class="line">      <span class="comment">// Get the Maven tool.</span></span><br><span class="line">      <span class="comment">// ** <span class="doctag">NOTE:</span> This 'M3' Maven tool must be configured</span></span><br><span class="line">      <span class="comment">// **       in the global configuration.           </span></span><br><span class="line">      mvnHome = tool <span class="symbol">'M</span>3'</span><br><span class="line">   &#125;</span><br><span class="line">   stage(<span class="symbol">'Buil</span>d') &#123;</span><br><span class="line">      <span class="comment">// Run the maven build</span></span><br><span class="line">      <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">         sh <span class="string">"'$&#123;mvnHome&#125;/bin/mvn' -Dmaven.test.failure.ignore clean package"</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         bat(/<span class="string">"$&#123;mvnHome&#125;\bin\mvn"</span> -<span class="type">Dmaven</span>.test.failure.ignore clean <span class="keyword">package</span>/)</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    stage(<span class="symbol">'publish</span> release build to artifactory') &#123;</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">uploadSpec</span> =</span> <span class="string">"""</span><br><span class="line">            &#123;</span><br><span class="line">                "files": [&#123;</span><br><span class="line">                    "pattern": "target/*.jar",</span><br><span class="line">                    "target": "libs-release-local/$&#123;baseArtifactoryUrl&#125;/test/"</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">buildInfo</span> =</span> artifactoryServer.upload(uploadSpec)</span><br><span class="line">        artifactoryServer.publishBuildInfo buildInfo</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Verify-Uploadiing"><a href="#Verify-Uploadiing" class="headerlink" title="Verify Uploadiing"></a>Verify Uploadiing</h1><ol>
+<li>Run jenkins job<br><img src="/images/CI/jenkins_artifactory_run.jpg" alt=""></li>
+<li>Check on Artifactory<br><img src="/images/CI/jenkins_artifactory_verify.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1685,386 +2009,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/24/Terraform-Deploy-Server-Multiple-Servers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/24/Terraform-Deploy-Server-Multiple-Servers/" itemprop="url">Terraform - Deploy Server - Multiple Servers</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-24T13:02:33+08:00">
-                2018-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/24/Terraform-Deploy-Server-Multiple-Servers/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/24/Terraform-Deploy-Server-Multiple-Servers/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>现实中不可能只有单一的Server，会弹性运行多个Server来保证有足够的Server可用。</p>
-<h1 id="Auto-Scaling-Group"><a href="#Auto-Scaling-Group" class="headerlink" title="Auto Scaling Group"></a>Auto Scaling Group</h1><p>可以利用ASG来实现多个Web Servers。</p>
-<ol>
-<li>创建Config文件<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"server_port"</span> &#123;</span><br><span class="line">	<span class="title">description</span> = <span class="string">"The port the server will use for HTTP requests"</span></span><br><span class="line">	default = <span class="number">80</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data <span class="string">"aws_availability_zones"</span> <span class="string">"all"</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_autoscaling_group"</span> <span class="string">"yonfeiuall_scaling_group"</span> &#123;</span><br><span class="line">	<span class="title">launch_configuration</span> = <span class="string">"<span class="variable">$&#123;aws_launch_configuration.yongfeiuall_launch_config.id&#125;</span>"</span></span><br><span class="line">	availability_zones = [<span class="string">"<span class="variable">$&#123;data.aws_availability_zones.all.names&#125;</span>"</span>]</span><br><span class="line">	min_size = <span class="number">2</span></span><br><span class="line">	max_size = <span class="number">10</span></span><br><span class="line">	tag &#123;</span><br><span class="line">		<span class="title">key</span> = <span class="string">"Name"</span></span><br><span class="line">		value = <span class="string">"yongfeiuall-asg"</span></span><br><span class="line">		propagate_at_launch = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_launch_configuration"</span> <span class="string">"yongfeiuall_launch_config"</span> &#123;</span><br><span class="line">	<span class="title">image_id</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; configurable web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">				</span><br><span class="line">	lifecycle &#123;</span><br><span class="line">		<span class="title">create_before_destroy</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">	security_groups = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	lifecycle &#123;</span><br><span class="line">		<span class="title">create_before_destroy</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li>lifecycle block to any resource to configure how that resource should be created, updated, or destroyed.</li>
-<li>A data source represents a piece of read-only information that is fetched from the provider every time you run Terraform. To use the data source, you reference it using the following syntax: <code>&quot;${data.TYPE.NAME.ATTRIBUTE}&quot;</code>.</li>
-</ul>
-<ol>
-<li>执行命令<code>terraform plan</code>，<code>terraform apply</code></li>
-<li>验证成功<br><img src="/images/terraform/asgserver.jpg" alt=""></li>
-</ol>
-<h1 id="Elastic-Load-Balancer"><a href="#Elastic-Load-Balancer" class="headerlink" title="Elastic Load Balancer"></a>Elastic Load Balancer</h1><p>ASG能实现多个Servers，但是有多个IP啊，可能通过ELB来实现对外只有一个DNS。</p>
-<ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"server_port"</span> &#123;</span><br><span class="line">	<span class="title">description</span> = <span class="string">"The port the server will use for HTTP requests"</span></span><br><span class="line">	default = <span class="number">80</span></span><br><span class="line">&#125;</span><br><span class="line">output <span class="string">"elb_dns_name"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_elb.yongfeiuall_elb.dns_name&#125;</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data <span class="string">"aws_availability_zones"</span> <span class="string">"all"</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># elb</span></span><br><span class="line">resource <span class="string">"aws_elb"</span> <span class="string">"yongfeiuall_elb"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yongfeiuall-asg-elb"</span></span><br><span class="line">	availability_zones = [<span class="string">"<span class="variable">$&#123;data.aws_availability_zones.all.names&#125;</span>"</span>]</span><br><span class="line">	security_groups = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">	</span><br><span class="line">	listener &#123;</span><br><span class="line">		<span class="title">lb_port</span> = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		lb_protocol = <span class="string">"http"</span></span><br><span class="line">		instance_port = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		instance_protocol = <span class="string">"http"</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	health_check &#123;</span><br><span class="line">		<span class="title">healthy_threshold</span> = <span class="number">2</span></span><br><span class="line">		unhealthy_threshold = <span class="number">2</span></span><br><span class="line">		timeout = <span class="number">3</span></span><br><span class="line">		interval = <span class="number">30</span></span><br><span class="line">		target = <span class="string">"HTTP:<span class="variable">$&#123;var.server_port&#125;</span>/"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># asg</span></span><br><span class="line">resource <span class="string">"aws_autoscaling_group"</span> <span class="string">"yonfeiuall_scaling_group"</span> &#123;</span><br><span class="line">	<span class="title">launch_configuration</span> = <span class="string">"<span class="variable">$&#123;aws_launch_configuration.yongfeiuall_launch_config.id&#125;</span>"</span></span><br><span class="line">	availability_zones = [<span class="string">"<span class="variable">$&#123;data.aws_availability_zones.all.names&#125;</span>"</span>]</span><br><span class="line">	load_balancers = [<span class="string">"<span class="variable">$&#123;aws_elb.yongfeiuall_elb.name&#125;</span>"</span>]</span><br><span class="line">	</span><br><span class="line">	min_size = <span class="number">2</span></span><br><span class="line">	max_size = <span class="number">10</span></span><br><span class="line">	tag &#123;</span><br><span class="line">		<span class="title">key</span> = <span class="string">"Name"</span></span><br><span class="line">		value = <span class="string">"yongfeiuall-asg"</span></span><br><span class="line">		propagate_at_launch = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># launch configuration</span></span><br><span class="line">resource <span class="string">"aws_launch_configuration"</span> <span class="string">"yongfeiuall_launch_config"</span> &#123;</span><br><span class="line">	<span class="title">image_id</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; configurable web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">				</span><br><span class="line">	lifecycle &#123;</span><br><span class="line">		<span class="title">create_before_destroy</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">	security_groups = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># security group</span></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	lifecycle &#123;</span><br><span class="line">		<span class="title">create_before_destroy</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/elbserver.jpg" alt=""></li>
-</ol>
-<h1 id="Clean-Up"><a href="#Clean-Up" class="headerlink" title="Clean Up"></a>Clean Up</h1><p>这个非常简单：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">D:\terraform\Example&gt;terraform destroy</span><br><span class="line">aws_security_group.http: Refreshing <span class="keyword">state</span>... (ID: sg-<span class="number">3</span>a619542)</span><br><span class="line">data.aws_availability_zones.<span class="literal">all</span>: Refreshing <span class="keyword">state</span>...</span><br><span class="line">aws_elb.yongfeiuall_elb: Refreshing <span class="keyword">state</span>... (ID: yongfeiuall-asg-elb)</span><br><span class="line">aws_launch_configuration.yongfeiuall_launch_config: Refreshing <span class="keyword">state</span>... (ID: terraform-<span class="number">201804240854003</span></span><br><span class="line"><span class="number">23000000001</span>)</span><br><span class="line">aws_autoscaling_group.yonfeiuall_scaling_group: Refreshing <span class="keyword">state</span>... (ID: tf-asg-<span class="number">2018042408541147700000</span></span><br><span class="line"><span class="number">0002</span>)</span><br><span class="line"></span><br><span class="line">An execution plan has been generated and is shown below.</span><br><span class="line">Resource actions are indicated with the following symbols:</span><br><span class="line">  - destroy</span><br><span class="line"></span><br><span class="line">Terraform will perform the following actions:</span><br><span class="line"></span><br><span class="line">  - aws_autoscaling_group.yonfeiuall_scaling_group</span><br><span class="line"></span><br><span class="line">  - aws_elb.yongfeiuall_elb</span><br><span class="line"></span><br><span class="line">  - aws_launch_configuration.yongfeiuall_launch_config</span><br><span class="line"></span><br><span class="line">  - aws_security_group.http</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Plan: <span class="number">0</span> <span class="keyword">to</span> add, <span class="number">0</span> <span class="keyword">to</span> change, <span class="number">4</span> <span class="keyword">to</span> destroy.</span><br><span class="line"></span><br><span class="line">Do you really want <span class="keyword">to</span> destroy?</span><br><span class="line">  Terraform will destroy <span class="literal">all</span> your managed infrastructure, as shown above.</span><br><span class="line">  There is no undo. Only 'yes' will be accepted <span class="keyword">to</span> confirm.</span><br><span class="line"></span><br><span class="line">  Enter a value:</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-Deploy-Servers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/Terraform-Deploy-Servers/" itemprop="url">Terraform - Deploy Server - Single Server</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:57:02+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/Terraform-Deploy-Servers/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-Deploy-Servers/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>做一些简单的联系，Deploy一些不同的Server。</p>
-<h1 id="Pre-condition"><a href="#Pre-condition" class="headerlink" title="Pre-condition"></a>Pre-condition</h1><p>为了让Terraform和AWS工作，必须把AWS User的AWS_ACCESS_KEY_ID和AWS_SECRET_ACCESS_KEY加到环境变量。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">set</span> AWS_ACCESS_KEY_ID=(your <span class="keyword">access</span> <span class="keyword">key</span> <span class="keyword">id</span>)</span><br><span class="line"><span class="keyword">set</span> AWS_SECRET_ACCESS_KEY=(your secret <span class="keyword">access</span> <span class="keyword">key</span>)</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Single-Server"><a href="#Single-Server" class="headerlink" title="Single Server"></a>Single Server</h1><ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple single server"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/singleserver.jpg" alt=""></li>
-</ol>
-<h1 id="Single-Web-Server"><a href="#Single-Web-Server" class="headerlink" title="Single Web Server"></a>Single Web Server</h1><ol>
-<li>创建Config文件<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; single web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">80</span></span><br><span class="line">		to_port     = <span class="number">80</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>说明：</p>
-<ul>
-<li>AWS默认不允许任何Incoming和Outcoming，我们要建一个Security Group（要同时有Inbound和Outbound）</li>
-<li>把SG要添加到EC2上，用到SG的ID,Terraform里，用<code>&quot;${TYPE.NAME.ATTRIBUTE}&quot;</code>语法来引用其他Resources的Attribute</li>
-<li>The &lt;&lt;-EOF and EOF are allows you to create multiline strings without having to insert newline characters all over the place.</li>
-</ul>
-<ol>
-<li>执行命令<code>terraform plan</code>，<code>terraform apply</code></li>
-<li>验证成功<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yongfeiuall<span class="comment">@automation:~$ curl http://13.113.195.209</span></span><br><span class="line"><span class="variable">&lt;html&gt;</span><span class="variable">&lt;h1&gt;</span> single web server from terraform <span class="variable">&lt;/h1&gt;</span><span class="variable">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>用Browser打开，可以看到。</p>
-<h1 id="Configurable-Web-Server"><a href="#Configurable-Web-Server" class="headerlink" title="Configurable Web Server"></a>Configurable Web Server</h1><p>为了更好的管理，Terraform允许定义Input变量：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">variable</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="preprocessor">[</span>CONFIG <span class="attribute">...</span><span class="preprocessor">]</span><span class="markup"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>The body of the variable declaration can contain three parameters, all of them<br>optional:</p>
-<ul>
-<li><strong>description</strong><br>Use this parameter to document how a variable is used. </li>
-<li><strong>default</strong><br>There are a number of ways to provide a value for the variable.</li>
-<li><strong>type</strong><br>Must be one of “string”, “list”, or “map”.<br>E.g.,<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">variable <span class="string">"list_example"</span> &#123;</span><br><span class="line">description = <span class="string">"An example of a list in Terraform"</span></span><br><span class="line">type = <span class="string">"list"</span></span><br><span class="line"><span class="keyword">default</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>用下面的方式来读取变量<code>&quot;${var.VARIABLE_NAME}&quot;</code>。</p>
-<p>同时，Terraform还允许定义Output变量：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="title">value</span> = VALUE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以返回创建Instance后你想获得的一些属性，例如：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.example.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"server_port"</span> &#123;</span><br><span class="line">	<span class="title">description</span> = <span class="string">"The port the server will use for HTTP requests"</span></span><br><span class="line">	default = <span class="number">80</span></span><br><span class="line">&#125;</span><br><span class="line">output <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.yongfeiuall.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">provider <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"configurable web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; configurable web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/configwebserver.jpg" alt=""></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2114,7 +2063,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-count">331</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2125,7 +2074,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2136,7 +2085,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

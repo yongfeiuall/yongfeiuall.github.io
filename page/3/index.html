@@ -305,6 +305,338 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/09/30/Centos下配置-Sonarqube-MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/30/Centos下配置-Sonarqube-MySQL/" itemprop="url">Centos下配置 Sonarqube+MySQL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-30T16:51:18+08:00">
+                2018-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SonarQube/" itemprop="url" rel="index">
+                    <span itemprop="name">SonarQube</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/30/Centos下配置-Sonarqube-MySQL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/09/30/Centos下配置-Sonarqube-MySQL/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="SonarQube"><a href="#SonarQube" class="headerlink" title="SonarQube"></a>SonarQube</h1><p>Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了接口支持，可以很方便地在持续集成中使用 Sonar。<br>此外，Sonar 的插件还可以对 Java 以外的其他编程语言（支持的语言包括：Java、PHP、C#、C、Cobol、PL/SQL、Flex等）提供支持，对国际化以及报告文档化也有良好的支持。可以说Sonar是目前最强大的代码质量管理工具之一。</p>
+<h1 id="环境前提"><a href="#环境前提" class="headerlink" title="环境前提"></a>环境前提</h1><ul>
+<li>Centos 6.7</li>
+<li>JDK 1.8</li>
+<li>Mysql 5.6</li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li><p>创建数据库及授权</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> sonar <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span> </span><br><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'sonar'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'sonar'</span>;</span></span><br><span class="line"><span class="operator"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> sonar.* <span class="keyword">TO</span> <span class="string">'sonar'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'sonar'</span>;</span></span><br><span class="line"><span class="operator"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> sonar.* <span class="keyword">TO</span> <span class="string">'sonar'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'sonar'</span>;</span></span><br><span class="line"><span class="operator"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载安装SonarQube<br>从官方下载<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">Downloads</a>，下载后放到/opt，解压ZIP文件。</p>
+</li>
+<li><p>配置sonar.properties</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># User credentials.</span><br><span class="line"># Permissions to <span class="operator"><span class="keyword">create</span> <span class="keyword">tables</span>, <span class="keyword">indices</span> <span class="keyword">and</span> <span class="keyword">triggers</span> must be granted <span class="keyword">to</span> JDBC <span class="keyword">user</span>.</span><br><span class="line"># The <span class="keyword">schema</span> must be created <span class="keyword">first</span>.</span><br><span class="line">sonar.jdbc.username=sonar</span><br><span class="line">sonar.jdbc.<span class="keyword">password</span>=sonar</span><br><span class="line"></span><br><span class="line">#<span class="comment">----- Embedded Database (default)</span></span><br><span class="line"># H2 embedded <span class="keyword">database</span> <span class="keyword">server</span> listening port, <span class="keyword">defaults</span> <span class="keyword">to</span> <span class="number">9092</span></span><br><span class="line">#sonar.embeddedDatabase.port=<span class="number">9092</span></span><br><span class="line"></span><br><span class="line">#<span class="comment">----- MySQL 5.6 or greater</span></span><br><span class="line"># <span class="keyword">Only</span> <span class="keyword">InnoDB</span> <span class="keyword">storage</span> <span class="keyword">engine</span> <span class="keyword">is</span> supported (<span class="keyword">not</span> myISAM).</span><br><span class="line"># <span class="keyword">Only</span> the bundled driver <span class="keyword">is</span> supported. It can <span class="keyword">not</span> be <span class="keyword">changed</span>.</span><br><span class="line">sonar.jdbc.<span class="keyword">url</span>=jdbc:mysql://localhost:<span class="number">3306</span>/sonar?useUnicode=<span class="literal">true</span>&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=<span class="literal">true</span>&amp;useConfigs=maxPerformance&amp;useSSL=<span class="literal">false</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动SonarQube<br>用root无法启动SonarQube，需要另外新建普通用户来启动。创建sonar用户，并修改解压后的文件夹Own为sonar。<br>切换用户，执行：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[sonar@Automation sonarqube-<span class="number">6.7</span><span class="number">.5</span>]$ ./bin/linux-x86-<span class="number">64</span>/sonar.sh start</span><br></pre></td></tr></table></figure>
+<p>启动失败，一直报DB链接错误，需要在MySQL的my.cnf修改<code>bind-address = localhost</code>，重启Mysql，再重启SonarQube就可以了。</p>
+</li>
+<li><p>验证<br>Browser打开<code>http://192.168.220.132:9000/</code>，如下页面<br><img src="/images/sonarqube/startup.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/09/23/2018中秋青岛之行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/23/2018中秋青岛之行/" itemprop="url">2018中秋青岛之行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-23T17:00:10+08:00">
+                2018-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/23/2018中秋青岛之行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/09/23/2018中秋青岛之行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一直说着要带闺女去海边看看，正好我的年初计划也提前完成，去一趟海边也是设好的奖励，再加上毕业12年了，回去看看。</p>
+<h1 id="第一天（栈桥-海军博物馆-第一海水浴场）"><a href="#第一天（栈桥-海军博物馆-第一海水浴场）" class="headerlink" title="第一天（栈桥 + 海军博物馆 + 第一海水浴场）"></a>第一天（栈桥 + 海军博物馆 + 第一海水浴场）</h1><p><img src="/images/izheyi/2018/09/qingdao_000.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_01.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_0.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_00.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_03.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_04.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_05.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_06.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_07.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_08.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_09.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_10.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_20.JPG" alt=""></p>
+<h1 id="第二天（海底世界-出海）"><a href="#第二天（海底世界-出海）" class="headerlink" title="第二天（海底世界 + 出海）"></a>第二天（海底世界 + 出海）</h1><p><img src="/images/izheyi/2018/09/qingdao_13.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_14.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_15.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_16.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_17.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_02.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_21.JPG" alt=""></p>
+<h1 id="第三天-（栈桥-劈材院）"><a href="#第三天-（栈桥-劈材院）" class="headerlink" title="第三天 （栈桥 + 劈材院）"></a>第三天 （栈桥 + 劈材院）</h1><p><img src="/images/izheyi/2018/09/qingdao_19.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_11.JPG" alt=""><br><img src="/images/izheyi/2018/09/qingdao_18.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/09/16/草原两日游玩/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1627,381 +1959,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/08/05/Jmeter-环境及常用插件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/05/Jmeter-环境及常用插件/" itemprop="url">Jmeter - 环境及常用插件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T08:28:27+08:00">
-                2018-08-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/05/Jmeter-环境及常用插件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/08/05/Jmeter-环境及常用插件/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>不做过多介绍，下载后，解压运行，即可使用。</p>
-<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><h1 id="插件管理"><a href="#插件管理" class="headerlink" title="插件管理"></a>插件管理</h1><p>从官网下载<a href="https://jmeter-plugins.org/downloads/all/" target="_blank" rel="external">Plugins Manager Download</a>，将其放入jmeter安装目录下的lib/ext目录，然后重启jmeter，即可。<br><img src="/images/jmeter/plugin_manager.jpg" alt=""></p>
-<h1 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h1><p>插件管理那个我试的时候好像不好用，后来不知道为啥自己又出来了，我们可以手动的来下载配置相应的插件。</p>
-<p>下载<a href="https://jmeter-plugins.org/downloads/old/" target="_blank" rel="external">Old-Style Releases</a></p>
-<ul>
-<li>JMeterPlugins-Standard-1.4.0.zip</li>
-<li>JMeterPlugins-Extras-1.4.0.zip<br>解压，将其拷贝到jmeter的lib/ext目录下。<br><img src="/images/jmeter/plugins.jpg" alt=""></li>
-</ul>
-<h2 id="OS监控"><a href="#OS监控" class="headerlink" title="OS监控"></a>OS监控</h2><p>从此下载<a href="https://github.com/undera/perfmon-agent" target="_blank" rel="external">PerfMon Server Agent</a>。</p>
-<ol>
-<li>上传到Server，并启动。</li>
-<li>客户端监听<br><img src="/images/jmeter/perfmon.jpg" alt=""></li>
-</ol>
-<h2 id="Stepping-Thread-Group-amp-Concurrency-Thread-Group"><a href="#Stepping-Thread-Group-amp-Concurrency-Thread-Group" class="headerlink" title="Stepping Thread Group &amp; Concurrency Thread Group"></a>Stepping Thread Group &amp; Concurrency Thread Group</h2><p><img src="/images/jmeter/thread_group.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/29/Java项目实战-项目部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/29/Java项目实战-项目部署/" itemprop="url">Java项目实战 - 项目部署</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-29T14:08:46+08:00">
-                2018-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/29/Java项目实战-项目部署/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/29/Java项目实战-项目部署/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>项目实现分布式部署。</p>
-<h1 id="系统规划"><a href="#系统规划" class="headerlink" title="系统规划"></a>系统规划</h1><h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><ul>
-<li>zheyi-manager : manager.zheyi.com</li>
-<li>zheyi-portal : www.zheyi.com</li>
-<li>zheyi-rest : rest.zheyi.com</li>
-<li>zheyi-sso : sso.zheyi.com</li>
-<li>zheyi-search : search.zheyi.com</li>
-</ul>
-<p>所有的域名都配置指向代理服务器（Nginx）。</p>
-<ul>
-<li>192.168.22.138 : manager.zheyi.com</li>
-<li>192.168.22.138 : www.zheyi.com</li>
-<li>192.168.22.138 : rest.zheyi.com</li>
-<li>192.168.22.138 : sso.zheyi.com</li>
-<li>192.168.22.138 : search.zheyi.com</li>
-</ul>
-<h2 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h2><ul>
-<li>图片Server</li>
-<li>Redis集群</li>
-<li>Solr集群</li>
-<li>DB Server</li>
-<li>Nginx Server</li>
-<li>zheyi-manager</li>
-<li>zheyi-portal</li>
-<li>zheyi-sso</li>
-<li>zheyi-search</li>
-<li>zheyi-rest</li>
-</ul>
-<p>至少要10台VM。</p>
-<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><p>用Nginx来实现反向代理服务器。</p>
-<h2 id="虚拟主机"><a href="#虚拟主机" class="headerlink" title="虚拟主机"></a>虚拟主机</h2><p>nginx支持三种类型的虚拟主机配置：</p>
-<ol>
-<li>基于ip的虚拟主机</li>
-<li>基于域名的虚拟主机 </li>
-<li>基于端口的虚拟主机<br>一般都用第3种方式来实现。<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2>而反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</li>
-</ol>
-<p>配置：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">upstream</span> manager.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.135:8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">upstream</span> rest.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.136:8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">upstream</span> search.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.136:8081</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">upstream</span> sso.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.136:8082</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">upstream</span> order.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.136:8083</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">upstream</span> www.zheyi.com &#123;</span><br><span class="line">	<span class="title">server</span> <span class="number">192.168.22.137:8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="title">server</span> &#123;</span><br><span class="line">        <span class="title">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="title">server_name</span>  manager.zheyi.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="title">location</span> / &#123;</span><br><span class="line">            <span class="title">proxy_pass</span>   <span class="url">http://manager.zheyi.com</span>;</span><br><span class="line">            <span class="title">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">server</span> &#123;</span><br><span class="line">        <span class="title">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="title">server_name</span>  rest.zheyi.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="title">location</span> / &#123;</span><br><span class="line">            <span class="title">proxy_pass</span>   <span class="url">http://rest.zheyi.com</span>;</span><br><span class="line">            <span class="title">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">server</span> &#123;</span><br><span class="line">        <span class="title">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="title">server_name</span>  search.zheyi.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="title">location</span> / &#123;</span><br><span class="line">            <span class="title">proxy_pass</span>   <span class="url">http://search.zheyi.com</span>;</span><br><span class="line">            <span class="title">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">server</span> &#123;</span><br><span class="line">        <span class="title">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="title">server_name</span>  sso.zheyi.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="title">location</span> / &#123;</span><br><span class="line">            <span class="title">proxy_pass</span>   <span class="url">http://sso.zheyi.com</span>;</span><br><span class="line">            <span class="title">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title">server</span> &#123;</span><br><span class="line">        <span class="title">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="title">server_name</span>  www.zheyi.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#charset koi8-r;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></span><br><span class="line"></span><br><span class="line">        <span class="title">location</span> / &#123;</span><br><span class="line">            <span class="title">proxy_pass</span>   <span class="url">http://www.zheyi.com</span>;</span><br><span class="line">            <span class="title">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>根据不同策略来实现。</p>
-<h1 id="Tomcat热部署"><a href="#Tomcat热部署" class="headerlink" title="Tomcat热部署"></a>Tomcat热部署</h1><p>使用maven实现tomcat的热部署。</p>
-<ol>
-<li><p>在Tomcat中配置用户权限(conf/tomcat-user.xml)</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-gui"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-script"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"tomcat"</span> <span class="attribute">password</span>=<span class="value">"tomcat"</span> <span class="attribute">roles</span>=<span class="value">"manager-gui, manager-script"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改工程pom文件(build)</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">url</span>&gt;</span>http://$&#123;deploy server ip&#125;:8080/manager/text<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">username</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">password</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行Maven Build，即可实现热部署。</p>
-</li>
-</ol>
-<p>整个POC到此完工，明白了基本的开发流程和中间应用到的框架和工具。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2051,7 +2013,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-count">331</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2062,7 +2024,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2073,7 +2035,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,6 +305,314 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Excel-Format-格式-的设置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/Excel-Format-格式-的设置/" itemprop="url">Excel Format(格式)的设置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:29:19+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Excel/" itemprop="url" rel="index">
+                    <span itemprop="name">Excel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/Excel-Format-格式-的设置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Excel-Format-格式-的设置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>)<span class="class">.BORDERS</span><span class="class">.LineStyle</span>=<span class="number">1</span></span><br><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>).HorizontalAlignment=<span class="number">3</span> &amp;&amp;水平(<span class="number">1</span>-默认、<span class="number">2</span>-靠左、<span class="number">3</span>-居中、<span class="number">4</span>-靠右、<span class="number">5</span>-填充、<span class="number">6</span>=两端对齐、<span class="number">7</span>=跨列居中、<span class="number">8</span>=分散对齐)</span><br><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>).VerticalAlignment=<span class="number">2</span> &amp;&amp;垂直(<span class="number">1</span>=靠上、<span class="number">2</span>=居中、<span class="number">3</span>=靠下、<span class="number">4</span>=两端对齐、<span class="number">5</span>=分散对齐)</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.RightFooter</span>=<span class="string">"第&amp;P页 / 共&amp;N页"</span></span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.TopMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置顶边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.BottomMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置左边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.HeaderMargin</span>=<span class="number">1</span>/<span class="number">0.035</span> &amp;&amp;设置页眉到顶端边距为<span class="number">1</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.FooterMargin</span>=<span class="number">1</span>/<span class="number">0.035</span> &amp;&amp;设置页脚到底边距为<span class="number">1</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.LeftMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置左边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.RightMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置右边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.CenterHorizontally</span>=<span class="class">.t</span>. &amp;&amp;设置页面水平居中</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.CenterVertically</span>=<span class="class">.t</span>. &amp;&amp;设置页面垂直居中</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Find-a-File-Recursively-递归查找文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/Find-a-File-Recursively-递归查找文件/" itemprop="url">Find a File Recursively(递归查找文件)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:27:21+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/Find-a-File-Recursively-递归查找文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Find-a-File-Recursively-递归查找文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'-----------------------------------------------------------------------</span></span><br><span class="line">  <span class="comment">'Function: FindFileRecursively</span></span><br><span class="line">  <span class="comment">'Finds the first instance of a file within the root folder or one of its subfolders</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Remarks:</span></span><br><span class="line">  <span class="comment">'   Uses recursion</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Arguments</span></span><br><span class="line">  <span class="comment">'   ByVal strRootFolder - As String (absolute folder)</span></span><br><span class="line">  <span class="comment">'   ByVal strFilename - As String</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Returns:</span></span><br><span class="line">  <span class="comment">'   String with full file pathname based on root folder and file name</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Owner:</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Date:</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'-----------------------------------------------------------------------    </span></span><br><span class="line">   <span class="keyword">Public</span> <span class="keyword">Function</span> FindFileRecursively(<span class="keyword">ByVal</span> strRootFolder, <span class="keyword">ByVal</span> strFilename)</span><br><span class="line">      <span class="keyword">Dim</span> FSO    </span><br><span class="line">      <span class="keyword">Dim</span> strFullPathToSearch    </span><br><span class="line">      <span class="keyword">Dim</span> objSubFolders, subfolder    </span><br><span class="line">   </span><br><span class="line">      <span class="keyword">Set</span> FSO = CreateObject(<span class="string">"Scripting.FileSystemObject"</span>)    </span><br><span class="line">      <span class="comment">'Initialize function    </span></span><br><span class="line">      FindFileRecursively = <span class="string">""</span>    </span><br><span class="line">      <span class="comment">'Check that filename is not empty    </span></span><br><span class="line">      <span class="keyword">If</span> strFileName = <span class="string">""</span> <span class="keyword">Then</span> <span class="keyword">Exit</span> <span class="keyword">Function</span>    </span><br><span class="line">      <span class="comment">'Get full file pathname    </span></span><br><span class="line">      strFullPathToSearch = strRootFolder &amp; <span class="string">"\"</span> &amp; strFilename    </span><br><span class="line">      <span class="comment">'Check if root folder exists    </span></span><br><span class="line">      <span class="keyword">If</span> FSO.FolderExists(strRootFolder) <span class="keyword">Then</span>        </span><br><span class="line">          <span class="comment">'Check if file exists under root folder        </span></span><br><span class="line">          <span class="keyword">If</span> FSO.FileExists(strFullPathToSearch) <span class="keyword">Then</span>            </span><br><span class="line">              FindFileRecursively = strFullPathToSearch        </span><br><span class="line">          <span class="keyword">Else</span>            </span><br><span class="line">              <span class="comment">'Get subfolders            </span></span><br><span class="line">              <span class="keyword">Set</span> objSubFolders = FSO.GetFolder(strRootFolder).SubFolders            </span><br><span class="line">              <span class="keyword">For</span> <span class="keyword">Each</span> subfolder <span class="keyword">in</span> objSubFolders                </span><br><span class="line">                  strFullPathToSearch = strRootFolder &amp; <span class="string">"\"</span> &amp; subfolder.name                </span><br><span class="line">                  FindFileRecursively = FindFileRecursively(strFullPathToSearch, strFilename)                </span><br><span class="line">                  <span class="keyword">If</span> FindFileRecursively &lt;&gt; <span class="string">""</span> <span class="keyword">Then</span>                    </span><br><span class="line">                      <span class="keyword">Exit</span> <span class="keyword">For</span>                </span><br><span class="line">                  <span class="keyword">End</span> <span class="keyword">If</span>            </span><br><span class="line">              <span class="keyword">Next</span>        </span><br><span class="line">          <span class="keyword">End</span> <span class="keyword">If</span>    </span><br><span class="line">      <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">  <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1557,335 +1865,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/17/QTP识别web页面时候结果为winobject/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/17/QTP识别web页面时候结果为winobject/" itemprop="url">QTP识别web页面时候结果为winobject</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-17T14:29:37+08:00">
-                2012-10-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/17/QTP识别web页面时候结果为winobject/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/17/QTP识别web页面时候结果为winobject/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>QTP SPY无法识别此对象，会把所有web对象都识别为winobject。</p>
-<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><ol>
-<li><p>把IE和QTP都关掉，然后先打开QTP，再打开IE，这样就能识别了。</p>
-</li>
-<li><p>如果这样不行的话：</p>
-<ul>
-<li><p>XP下：  查看IE加载项，查看BHOManager Class是否已经被加载，而且状态为Enable.没有做修改，保持现状。（若没有BHOManager Class 加载项，则在QTP安装文件下找到BHOManager.dll（目录为*\QuickTest\MSI\System32,自己搜索下）并复制到C:\WINDOWS\system32下）重新注册此dll，打开命令提示符，运行命令：regsvr32 c:\windows\SysWOW64\BHOManager.dll</p>
-</li>
-<li><p>Win7下：查看IE加载项，查看BHOManager Class是否已经被加载，而且状态为Enable.没有做修改，保持现状。（若没有BHOManager Class 加载项，则在QTP安装文件下找到BHOManager.dll并复制到c:\windows\SysWOW64下）重新注册此dll. 以管理员权限打开命令提示符，运行命令：regsvr32 c:\windows\SysWOW64\BHOManager.dll</p>
-</li>
-</ul>
-</li>
-<li><p>若还不行则在用户账户控制设置里把权限设置到最低。（建议：如果方法1不行，先使用该方法。）</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/09/VBS用FSO改变文件属性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/09/VBS用FSO改变文件属性/" itemprop="url">VBS用FSO改变文件属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-09T12:00:28+08:00">
-                2012-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/09/VBS用FSO改变文件属性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/09/VBS用FSO改变文件属性/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在框架的执行中，我们会碰见这样的情况，从代码库里下来的文件属性都是只读的，在运行的时候就没办法对其操作，我们可以通过以下方式来改变文件的属性：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set fso = <span class="function"><span class="title">CreateObject</span><span class="params">( <span class="string">"Scripting.FileSystemObject"</span> )</span></span></span><br><span class="line">fso.<span class="function"><span class="title">GetFile</span><span class="params">(LogFilePath)</span></span><span class="class">.Attributes</span> = <span class="number">0</span></span><br><span class="line">Set fso = Nothing</span><br></pre></td></tr></table></figure></p>
-<p><strong>Attributes </strong><br>Normal 0 普通文件。没有设置任何属性。<br>ReadOnly 1 只读文件。可读写。<br>Hidden 2 隐藏文件。可读写。<br>System 4 系统文件。可读写。<br>Directory 16 文件夹或目录。只读。<br>Archive 32 上次备份后已更改的文件。可读写。<br>Alias 1024 链接或快捷方式。只读。<br>Compressed 2048 压缩文件。只读。搜索 </p>
-<p><em>如果相应用多种属性，只须把它们的值加起来。</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1935,7 +1919,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-count">331</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1946,7 +1930,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1957,7 +1941,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

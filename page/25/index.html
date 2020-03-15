@@ -305,6 +305,314 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/02/Convert-DataTable-to-Html-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/02/Convert-DataTable-to-Html-format/" itemprop="url">Convert DataTable to Html format</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-02T17:36:44+08:00">
+                2015-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/02/Convert-DataTable-to-Html-format/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/02/Convert-DataTable-to-Html-format/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Need to generate summary report:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GenerateSummarylHtmlReport</span><span class="params">(DataTable table)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> rowCount = table.Rows.Count;</span><br><span class="line">	<span class="keyword">int</span> colCount = table.Columns.Count;</span><br><span class="line">	<span class="built_in">string</span> summaryReport = <span class="string">" &lt;html&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;h1 style='text-align:center'&gt; Test Report&lt;/h1&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;body&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;table border = '1' cellspacing='0' cellpadding='2' width='100%'&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;tr style='background-color:#cccccc'&gt;&lt;th&gt;Select&lt;/th&gt;&lt;th&gt;Page Name&lt;/th&gt;&lt;th&gt;Repository&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;"</span> +</span><br><span class="line">	<span class="string">"&lt;th&gt;Detail&lt;/th&gt;&lt;th&gt;Start Time&lt;/th&gt;&lt;th&gt;End Time&lt;/th&gt;&lt;/tr&gt;"</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rowCount; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		summaryReport += <span class="string">"&lt;tr&gt;"</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; colCount; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (table.Rows[i][j].ToString() == <span class="string">"Failed"</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				summaryReport += <span class="string">"&lt;td style='background-color:red'&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (table.Rows[i][j].ToString().IndexOf(<span class="string">"Passed:"</span>) != -<span class="number">1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">string</span> pageName = table.Rows[i][<span class="number">1</span>].ToString();</span><br><span class="line">				<span class="built_in">string</span> reportTime = table.Rows[i][<span class="number">5</span>].ToString();</span><br><span class="line">				<span class="built_in">string</span> startDate = reportTime.Split(<span class="string">'-'</span>)[<span class="number">0</span>].Trim();</span><br><span class="line">				<span class="built_in">string</span> startTime = reportTime.Split(<span class="string">'-'</span>)[<span class="number">1</span>].Trim();</span><br><span class="line">				<span class="built_in">string</span> formatStartDate = startDate.Split(<span class="string">'/'</span>)[<span class="number">2</span>] + startDate.Split(<span class="string">'/'</span>)[<span class="number">0</span>] + startDate.Split(<span class="string">'/'</span>)[<span class="number">1</span>];</span><br><span class="line">				<span class="built_in">string</span> formatStartTime = startTime.Split(<span class="string">':'</span>)[<span class="number">0</span>] + startTime.Split(<span class="string">':'</span>)[<span class="number">1</span>] + startTime.Split(<span class="string">':'</span>)[<span class="number">2</span>];</span><br><span class="line">				summaryReport += <span class="string">"&lt;td&gt;&lt;a href='"</span> + formatStartDate + <span class="string">"/"</span> + pageName + formatStartTime + <span class="string">".html'&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> </span><br><span class="line">			&#123;</span><br><span class="line">				summaryReport += <span class="string">"&lt;td&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		summaryReport += <span class="string">"&lt;/tr&gt;"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/table&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/body&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">	<span class="keyword">return</span> summaryReport;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/02/Convert-csv-to-Html-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/02/Convert-csv-to-Html-format/" itemprop="url">Convert csv to Html format</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-02T13:24:39+08:00">
+                2015-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/02/Convert-csv-to-Html-format/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/02/Convert-csv-to-Html-format/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>When design selenium object management tool, need to generate html report from csv file, implement as below:<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> static <span class="built_in">string</span> ConvertCsvToHtml(<span class="built_in">string</span> csvText)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//split the CSV, assume no commas or line breaks in text</span></span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt;&gt; splitString = <span class="literal">new</span> <span class="built_in">List</span>&lt;<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt;&gt;();</span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt; lineSplit = csvText<span class="built_in">.</span>Split(<span class="string">'\n'</span>)<span class="built_in">.</span>ToList();</span><br><span class="line">    foreach (<span class="built_in">string</span> line <span class="keyword">in</span> lineSplit)</span><br><span class="line">    &#123;</span><br><span class="line">        splitString<span class="built_in">.</span>Add(line<span class="built_in">.</span>Split(<span class="string">','</span>)<span class="built_in">.</span>ToList());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//encode text safely, and create table</span></span><br><span class="line">    <span class="built_in">string</span> htmlReport = <span class="string">"&lt;html&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;h1 style='text-align:center'&gt; Test Report&lt;/h1&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;body&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;table border = '1' cellspacing='0' cellpadding='2' width='100%'&gt;"</span>;</span><br><span class="line">    foreach(<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt; splitLine <span class="keyword">in</span> splitString)</span><br><span class="line">    &#123;</span><br><span class="line">        htmlReport += <span class="string">"&lt;tr&gt;"</span>;</span><br><span class="line">        foreach(<span class="built_in">string</span> splitText <span class="keyword">in</span> splitLine)</span><br><span class="line">        &#123;</span><br><span class="line">            htmlReport += <span class="string">"&lt;td&gt;"</span> + WebUtility<span class="built_in">.</span>HtmlEncode(splitText) + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        htmlReport += <span class="string">"&lt;/tr&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    htmlReport += <span class="string">"&lt;/table&gt;"</span>;</span><br><span class="line">	htmlReport += <span class="string">"&lt;/body&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">    <span class="keyword">return</span> htmlReport;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/29/c-操作-get-range-异常/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1554,327 +1862,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/06/建国67周年，逛天安门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/10/06/建国67周年，逛天安门/" itemprop="url">建国66周年，逛天安门</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-06T19:23:05+08:00">
-                2015-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/10/06/建国67周年，逛天安门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/10/06/建国67周年，逛天安门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>中国人民抗日战争暨世界反法西斯战争胜利70周年阅兵后，本来说是要去天安门的，不巧那天刚走到颐和园就下雨了，带着闺女就去中关村图书城看书去了。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/10/06/建国67周年，逛天安门/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/01/2015国庆香山游/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/10/01/2015国庆香山游/" itemprop="url">2015国庆香山游</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-01T15:37:09+08:00">
-                2015-10-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/10/01/2015国庆香山游/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/10/01/2015国庆香山游/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天风是可不小，在山顶都差点没把人给吹走，本来还说坐缆车下来呢，谁知缆车也停了。不过玩的很开心。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/10/01/2015国庆香山游/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1924,7 +1916,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">329</span>
+                  <span class="site-state-item-count">331</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1935,7 +1927,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1946,7 +1938,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

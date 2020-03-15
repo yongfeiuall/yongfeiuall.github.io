@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2020-03-08T06:32:00.053Z</updated>
+  <updated>2020-03-14T08:03:38.889Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -14,6 +14,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mitmproxy实现接口信息抓取</title>
+    <link href="http://izheyi.com/2020/03/14/mitmproxy%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/"/>
+    <id>http://izheyi.com/2020/03/14/mitmproxy实现接口信息抓取/</id>
+    <published>2020-03-14T06:40:41.000Z</published>
+    <updated>2020-03-14T08:03:38.889Z</updated>
+    
+    <content type="html">&lt;p&gt;对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到&lt;a href=&quot;https://www.mitmproxy.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mitmproxy&lt;/a&gt;: mitmproxy is a free and open source interactive HTTPS proxy.&lt;/p&gt;
+&lt;p&gt;在windows和Firefox下实验。&lt;/p&gt;
+&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;p&gt;pip直接安装：&lt;br&gt;&lt;code&gt;pip install mitmproxy&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id=&quot;基本使用&quot;&gt;&lt;a href=&quot;#基本使用&quot; class=&quot;headerlink&quot; title=&quot;基本使用&quot;&gt;&lt;/a&gt;基本使用&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;命令行启动&lt;br&gt;  mitmdump&lt;/li&gt;
+&lt;li&gt;常用参数&lt;br&gt;  -p  指定端口号&lt;br&gt;  -w     outfile 将日志输出到本地文件&lt;br&gt;  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)&lt;br&gt;  -s  加载自定义python脚本&lt;/li&gt;
+&lt;li&gt;添加证书&lt;ol&gt;
+&lt;li&gt;配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。&lt;/li&gt;
+&lt;li&gt;选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 &lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;抓取接口信息&quot;&gt;&lt;a href=&quot;#抓取接口信息&quot; class=&quot;headerlink&quot; title=&quot;抓取接口信息&quot;&gt;&lt;/a&gt;抓取接口信息&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建脚本&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;from mitmproxy import http, ctx&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import openpyxl,&lt;span class=&quot;tag&quot;&gt;time&lt;/span&gt;,json&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;class Record:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def __init__(self):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.filter_url&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;&#39;https://reqres.in/api/&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.cur_time&lt;/span&gt; = &lt;span class=&quot;tag&quot;&gt;time&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;strftime&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;%Y%m%d_%H_%M_%S&#39;&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        book = openpyxl.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;Workbook&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;table&lt;/span&gt; = book&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;table&lt;/span&gt;.append([&lt;span class=&quot;string&quot;&gt;&#39;Address&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Request Type&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Param Type&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                      &lt;span class=&quot;string&quot;&gt;&#39;Header&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Param&#39;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        book.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;E:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.format(cur_time=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt; = openpyxl.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;load_workbook&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;e:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.format(tmp=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.title&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;&#39;API&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.table&lt;/span&gt; = self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, flow)&lt;/span&gt;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        url = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.url&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        method = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.method&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        type = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.headers&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.get&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;Content-Type&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; type == &lt;span class=&quot;string&quot;&gt;&#39;application/x-www-form-urlencoded&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;URL_ENCODE&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        elif type == &lt;span class=&quot;string&quot;&gt;&#39;application/json&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;JSON&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        elif type == &lt;span class=&quot;string&quot;&gt;&#39;text/xml&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;XML&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        headers = json.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(dict(flow.request.headers)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;body&lt;/span&gt; = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.get_text&lt;/span&gt;()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.table&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.append&lt;/span&gt;([url, method, type, headers, body])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.save&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;e:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(cur_time=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, flow)&lt;/span&gt;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; self&lt;span class=&quot;class&quot;&gt;.filter_url&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.url&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.startswith&lt;/span&gt;(self.filter_url):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                self.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(flow)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            self.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(flow)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;addons = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;Record&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设置firefox代理&lt;br&gt;设置本地Firefox代理，商品为9999&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;运行mitmdump&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mitmdump -&lt;span class=&quot;tag&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9999&lt;/span&gt; -s &lt;span class=&quot;tag&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.py&lt;/span&gt; --ignore all hosts with https/ssl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;打开测试网站操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;查看结果&lt;br&gt;&lt;img src=&quot;/images/automation/mitm.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到&lt;a href=&quot;https://www.mitmproxy.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mitmproxy&lt;/a
+    
+    </summary>
+    
+      <category term="mitmproxy" scheme="http://izheyi.com/categories/mitmproxy/"/>
+    
+    
+      <category term="mitmproxy" scheme="http://izheyi.com/tags/mitmproxy/"/>
+    
+      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>丁丁画画（三年级下学期）</title>
@@ -161,6 +210,50 @@
       <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
     
       <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网站促销活动前端自动化监控</title>
+    <link href="http://izheyi.com/2019/06/11/%E7%BD%91%E7%AB%99%E4%BF%83%E9%94%80%E6%B4%BB%E5%8A%A8%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9B%91%E6%8E%A7/"/>
+    <id>http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/</id>
+    <published>2019-06-10T22:54:41.000Z</published>
+    <updated>2020-03-14T08:50:46.779Z</updated>
+    
+    <content type="html">&lt;p&gt;商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？&lt;/p&gt;
+&lt;p&gt;对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。&lt;/p&gt;
+&lt;p&gt;活动一般有&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个主页，上面有图片，标题，价格&lt;/li&gt;
+&lt;li&gt;详情页面&lt;/li&gt;
+&lt;li&gt;下单&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;自动化思路：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;从主页通过Selenium来获得所有的图片和产品详细页链接&lt;/li&gt;
+&lt;li&gt;通过Request来检查产品链接和图片存在与否&lt;/li&gt;
+&lt;li&gt;检查详细页的信息正确&lt;/li&gt;
+&lt;li&gt;利用Cookie实现下单流程的实现&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？&lt;/p&gt;
+&lt;p&gt;对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
+    
+    
+      <category term="Requests" scheme="http://izheyi.com/tags/Requests/"/>
+    
+      <category term="Selenium" scheme="http://izheyi.com/tags/Selenium/"/>
+    
+      <category term="python" scheme="http://izheyi.com/tags/python/"/>
+    
+      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
     
   </entry>
   
@@ -656,79 +749,6 @@
     
     
       <category term="SonarQube" scheme="http://izheyi.com/tags/SonarQube/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Centos下配置 Sonarqube+MySQL</title>
-    <link href="http://izheyi.com/2018/09/30/Centos%E4%B8%8B%E9%85%8D%E7%BD%AE-Sonarqube-MySQL/"/>
-    <id>http://izheyi.com/2018/09/30/Centos下配置-Sonarqube-MySQL/</id>
-    <published>2018-09-30T08:51:18.000Z</published>
-    <updated>2018-10-12T07:17:41.649Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;SonarQube&quot;&gt;&lt;a href=&quot;#SonarQube&quot; class=&quot;headerlink&quot; title=&quot;SonarQube&quot;&gt;&lt;/a&gt;SonarQube&lt;/h1&gt;&lt;p&gt;Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了接口支持，可以很方便地在持续集成中使用 Sonar。&lt;br&gt;此外，Sonar 的插件还可以对 Java 以外的其他编程语言（支持的语言包括：Java、PHP、C#、C、Cobol、PL/SQL、Flex等）提供支持，对国际化以及报告文档化也有良好的支持。可以说Sonar是目前最强大的代码质量管理工具之一。&lt;/p&gt;
-&lt;h1 id=&quot;环境前提&quot;&gt;&lt;a href=&quot;#环境前提&quot; class=&quot;headerlink&quot; title=&quot;环境前提&quot;&gt;&lt;/a&gt;环境前提&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Centos 6.7&lt;/li&gt;
-&lt;li&gt;JDK 1.8&lt;/li&gt;
-&lt;li&gt;Mysql 5.6&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建数据库及授权&lt;/p&gt;
-&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;DATABASE&lt;/span&gt; sonar &lt;span class=&quot;built_in&quot;&gt;CHARACTER&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;SET&lt;/span&gt; utf8 &lt;span class=&quot;keyword&quot;&gt;COLLATE&lt;/span&gt; utf8_general_ci;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;USER&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;IDENTIFIED&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;GRANT&lt;/span&gt; ALL &lt;span class=&quot;keyword&quot;&gt;ON&lt;/span&gt; sonar.* &lt;span class=&quot;keyword&quot;&gt;TO&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt;@&lt;span class=&quot;string&quot;&gt;&#39;%&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;IDENTIFIED&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;GRANT&lt;/span&gt; ALL &lt;span class=&quot;keyword&quot;&gt;ON&lt;/span&gt; sonar.* &lt;span class=&quot;keyword&quot;&gt;TO&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt;@&lt;span class=&quot;string&quot;&gt;&#39;localhost&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;IDENTIFIED&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;sonar&#39;&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FLUSH&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;PRIVILEGES&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;下载安装SonarQube&lt;br&gt;从官方下载&lt;a href=&quot;https://www.sonarqube.org/downloads/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Downloads&lt;/a&gt;，下载后放到/opt，解压ZIP文件。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;配置sonar.properties&lt;/p&gt;
-&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# User credentials.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Permissions to &lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;tables&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;indices&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;triggers&lt;/span&gt; must be granted &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; JDBC &lt;span class=&quot;keyword&quot;&gt;user&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# The &lt;span class=&quot;keyword&quot;&gt;schema&lt;/span&gt; must be created &lt;span class=&quot;keyword&quot;&gt;first&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sonar.jdbc.username=sonar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sonar.jdbc.&lt;span class=&quot;keyword&quot;&gt;password&lt;/span&gt;=sonar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;span class=&quot;comment&quot;&gt;----- Embedded Database (default)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# H2 embedded &lt;span class=&quot;keyword&quot;&gt;database&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;server&lt;/span&gt; listening port, &lt;span class=&quot;keyword&quot;&gt;defaults&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9092&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#sonar.embeddedDatabase.port=&lt;span class=&quot;number&quot;&gt;9092&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#&lt;span class=&quot;comment&quot;&gt;----- MySQL 5.6 or greater&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &lt;span class=&quot;keyword&quot;&gt;Only&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;InnoDB&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;storage&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;engine&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; supported (&lt;span class=&quot;keyword&quot;&gt;not&lt;/span&gt; myISAM).&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &lt;span class=&quot;keyword&quot;&gt;Only&lt;/span&gt; the bundled driver &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; supported. It can &lt;span class=&quot;keyword&quot;&gt;not&lt;/span&gt; be &lt;span class=&quot;keyword&quot;&gt;changed&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sonar.jdbc.&lt;span class=&quot;keyword&quot;&gt;url&lt;/span&gt;=jdbc:mysql://localhost:&lt;span class=&quot;number&quot;&gt;3306&lt;/span&gt;/sonar?useUnicode=&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&amp;amp;characterEncoding=utf8&amp;amp;rewriteBatchedStatements=&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&amp;amp;useConfigs=maxPerformance&amp;amp;useSSL=&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;启动SonarQube&lt;br&gt;用root无法启动SonarQube，需要另外新建普通用户来启动。创建sonar用户，并修改解压后的文件夹Own为sonar。&lt;br&gt;切换用户，执行：&lt;/p&gt;
- &lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[sonar@Automation sonarqube-&lt;span class=&quot;number&quot;&gt;6.7&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.5&lt;/span&gt;]$ ./bin/linux-x86-&lt;span class=&quot;number&quot;&gt;64&lt;/span&gt;/sonar.sh start&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;启动失败，一直报DB链接错误，需要在MySQL的my.cnf修改&lt;code&gt;bind-address = localhost&lt;/code&gt;，重启Mysql，再重启SonarQube就可以了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;验证&lt;br&gt;Browser打开&lt;code&gt;http://192.168.220.132:9000/&lt;/code&gt;，如下页面&lt;br&gt;&lt;img src=&quot;/images/sonarqube/startup.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;SonarQube&quot;&gt;&lt;a href=&quot;#SonarQube&quot; class=&quot;headerlink&quot; title=&quot;SonarQube&quot;&gt;&lt;/a&gt;SonarQube&lt;/h1&gt;&lt;p&gt;Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同
-    
-    </summary>
-    
-      <category term="SonarQube" scheme="http://izheyi.com/categories/SonarQube/"/>
-    
-    
-      <category term="SonarQube" scheme="http://izheyi.com/tags/SonarQube/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2018中秋青岛之行</title>
-    <link href="http://izheyi.com/2018/09/23/2018%E4%B8%AD%E7%A7%8B%E9%9D%92%E5%B2%9B%E4%B9%8B%E8%A1%8C/"/>
-    <id>http://izheyi.com/2018/09/23/2018中秋青岛之行/</id>
-    <published>2018-09-23T09:00:10.000Z</published>
-    <updated>2018-10-12T00:13:31.957Z</updated>
-    
-    <content type="html">&lt;p&gt;一直说着要带闺女去海边看看，正好我的年初计划也提前完成，去一趟海边也是设好的奖励，再加上毕业12年了，回去看看。&lt;/p&gt;
-&lt;h1 id=&quot;第一天（栈桥-海军博物馆-第一海水浴场）&quot;&gt;&lt;a href=&quot;#第一天（栈桥-海军博物馆-第一海水浴场）&quot; class=&quot;headerlink&quot; title=&quot;第一天（栈桥 + 海军博物馆 + 第一海水浴场）&quot;&gt;&lt;/a&gt;第一天（栈桥 + 海军博物馆 + 第一海水浴场）&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_000.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_01.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_0.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_00.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_03.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_04.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_05.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_06.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_07.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_08.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_09.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_10.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_20.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;第二天（海底世界-出海）&quot;&gt;&lt;a href=&quot;#第二天（海底世界-出海）&quot; class=&quot;headerlink&quot; title=&quot;第二天（海底世界 + 出海）&quot;&gt;&lt;/a&gt;第二天（海底世界 + 出海）&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_13.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_14.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_16.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_17.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_02.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_21.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;第三天-（栈桥-劈材院）&quot;&gt;&lt;a href=&quot;#第三天-（栈桥-劈材院）&quot; class=&quot;headerlink&quot; title=&quot;第三天 （栈桥 + 劈材院）&quot;&gt;&lt;/a&gt;第三天 （栈桥 + 劈材院）&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_19.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_11.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/09/qingdao_18.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一直说着要带闺女去海边看看，正好我的年初计划也提前完成，去一趟海边也是设好的奖励，再加上毕业12年了，回去看看。&lt;/p&gt;
-&lt;h1 id=&quot;第一天（栈桥-海军博物馆-第一海水浴场）&quot;&gt;&lt;a href=&quot;#第一天（栈桥-海军博物馆-第一海水浴场）&quot; class=&quot;headerl
-    
-    </summary>
-    
-      <category term="丁丁" scheme="http://izheyi.com/categories/%E4%B8%81%E4%B8%81/"/>
-    
-    
-      <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
-    
-      <category term="生活" scheme="http://izheyi.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
