@@ -305,6 +305,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/21/Java项目实战-Redis缓存同步/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/21/Java项目实战-Redis缓存同步/" itemprop="url">Java项目实战 - Redis缓存同步</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-21T18:01:49+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/21/Java项目实战-Redis缓存同步/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/21/Java项目实战-Redis缓存同步/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>缓存有个问题就是如果数据库表中的数据做了修改，缓存是需要同步的，否则查询的还是老数据，所有涉及增、删、改的操作都需要同步缓存。</p>
+<p>我们创建一个rest服务供manager-service层调用。</p>
+<h1 id="Redis-Service"><a href="#Redis-Service" class="headerlink" title="Redis Service"></a>Redis Service</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisServiceImpl</span> <span class="keyword">implements</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"$&#123;CONTENT_KEY&#125;"</span>)</span><br><span class="line">	<span class="keyword">private</span> String CONTENT_KEY;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> RedisUtils redisUtils;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function">TaotaoResult <span class="title">syncContent</span><span class="params">(<span class="keyword">long</span> contentCategoryId)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			redisUtils.hdel(CONTENT_KEY, contentCategoryId + <span class="string">""</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">()</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Redis-Controller"><a href="#Redis-Controller" class="headerlink" title="Redis Controller"></a>Redis Controller</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/cache"</span>)</span><br><span class="line">public class <span class="type">RedisController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">RedisService</span> redisService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/content/&#123;contentCategoryId&#125;"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> syncContent(@<span class="type">PathVariable</span> long contentCategoryId) &#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = redisService.syncContent(contentCategoryId);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Content-Service"><a href="#Content-Service" class="headerlink" title="Content Service"></a>Content Service</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function">TaotaoResult <span class="title">createContent</span><span class="params">(TbContent tbContent)</span> </span>&#123;</span><br><span class="line">	tbContent.setCreated(<span class="keyword">new</span> Date());</span><br><span class="line">	tbContent.setUpdated(<span class="keyword">new</span> Date());</span><br><span class="line">	</span><br><span class="line">	contentMapper.insert(tbContent);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//添加缓存同步</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		HttpClientUtil.doGet(REST_BASE_URL + REST_CONTENT_SYNC_URL + tbContent.getCategoryId());</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>在后台添加一个Content，删除缓存。<br><img src="/images/javaproject/redis_result.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/21/Java项目实战-Redis集成Spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1815,172 +1974,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/" itemprop="url">Java项目实战 - 商品列表展示：with PageHelper</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T12:53:59+08:00">
-                2018-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/15/Java项目实战-商品列表展示：with-PageHelper/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mybatis-PageHelper"><a href="#Mybatis-PageHelper" class="headerlink" title="Mybatis - PageHelper"></a>Mybatis - PageHelper</h1><p>Mybatis的一个插件，PageHelper，非常方便mybatis分页查询。详细请参见：<a href="https://pagehelper.github.io/" target="_blank" rel="external">PageHelper</a></p>
-<p>使用方法：</p>
-<ol>
-<li>引入分页插件</li>
-<li>配置拦截器插件<br>在SqlMapConfig.xml中配置插件。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置分页插件 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">plugin</span> <span class="attribute">interceptor</span>=<span class="value">"com.github.pagehelper.PageHelper"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库--&gt;</span>        </span><br><span class="line">        	<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"dialect"</span> <span class="attribute">value</span>=<span class="value">"mysql"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">plugins</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>逆向工程已经实现了Mapper，不需要再做修改。</p>
-<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>接收分页参数，一个是page一个是rows。<br>调用dao查询商品列表，返回一个EasyUIDataGrid支持的数据格式的商品列表。<br>pojo:<br>把它放到izheyi-manager-common里，代码如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EasyUiDataGridResult</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> total;</span><br><span class="line">	<span class="keyword">private</span> List&lt;?&gt; rows;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTotal</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> total;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotal</span>(<span class="params"><span class="keyword">long</span> total</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.total = total;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> List&lt;?&gt; getRows() &#123;</span><br><span class="line">		<span class="keyword">return</span> rows;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRows</span>(<span class="params">List&lt;?&gt; rows</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.rows = rows;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>接口类：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ItemService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="function">EasyUiDataGridResult <span class="title">getItemList</span>(<span class="params"><span class="keyword">int</span> page, <span class="keyword">int</span> rows</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实现类：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ItemServiceImpl</span> implements <span class="type">ItemService</span> &#123;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">TbItemMapper</span> itemMapper;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getItemList(<span class="type">int</span> page, <span class="type">int</span> rows) &#123;</span><br><span class="line">		//<span class="type">Search</span></span><br><span class="line">		<span class="type">TbItemExample</span> example = new <span class="type">TbItemExample</span>();</span><br><span class="line">		<span class="type">PageHelper</span>.startPage(page, rows);//分页</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">TbItem</span>&gt; list = itemMapper.selectByExample(example);</span><br><span class="line">		</span><br><span class="line">		//创建返回对象</span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = new <span class="type">EasyUiDataGridResult</span>();</span><br><span class="line">		<span class="literal">result</span>.setRows(list);</span><br><span class="line">		</span><br><span class="line">		//总条数</span><br><span class="line">		<span class="type">PageInfo</span>&lt;<span class="type">TbItem</span>&gt; pageInfo = new <span class="type">PageInfo</span>&lt;&gt;(list);</span><br><span class="line">		<span class="literal">result</span>.setTotal(pageInfo.getTotal());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><p>接收页面传递过来的参数page、rows。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ItemController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ItemService itemService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/item/list"</span>)</span><br><span class="line">	<span class="annotation">@ResponseBody</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> EasyUiDataGridResult <span class="title">getItemList</span><span class="params">(<span class="keyword">int</span> page, <span class="keyword">int</span> rows)</span></span>&#123;</span><br><span class="line">		EasyUiDataGridResult tbItem = itemService.getItemList(page, rows);</span><br><span class="line">		<span class="keyword">return</span> tbItem;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/item_list.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2035,7 +2028,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">331</span>
+                  <span class="site-state-item-count">332</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2057,7 +2050,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,6 +305,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/19/AWS-EC2-IAM-Role/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/19/AWS-EC2-IAM-Role/" itemprop="url">AWS - EC2 - IAM Role</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T14:18:28+08:00">
+                2018-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/19/AWS-EC2-IAM-Role/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/19/AWS-EC2-IAM-Role/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>可以使用 Amazon EC2 和 AWS Identity and Access Management (IAM) 的功能，在不共享您的安全凭证情况下允许其他用户、服务和应用程序使用您的 Amazon EC2 资源。</p>
+<p>我们拿EC2和S3来做个例子，SSH到新创建的Instance，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line">Unable to locate credentials. You can configure credentials by running <span class="string">"aws configure"</span>.</span><br></pre></td></tr></table></figure></p>
+<p>必须要Configure，建立Credential之后才能执行该Command。</p>
+<p>我们用IAM Role的方式来处理：</p>
+<ol>
+<li>在IAM新建一个Role，对该EC2授予AmazonS3FullAccess权限。</li>
+<li>把这个Role Attach到EC2上。<br><img src="/images/aws/ec2_iam.jpg" alt=""></li>
+<li>执行同一Command。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line">Unable to locate credentials. You can configure credentials by running <span class="string">"aws configure"</span>.</span><br><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">05</span>:<span class="number">57</span>:<span class="number">09</span> yongfeiuall</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">02</span>:<span class="number">43</span>:<span class="number">42</span> yongfeiuall.cloudfront</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">23</span>:<span class="number">52</span>:<span class="number">51</span> yongfeiuall.lifecycle</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">00</span>:<span class="number">24</span>:<span class="number">46</span> yongfeiuall.staticwebsite</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">22</span>:<span class="number">17</span>:<span class="number">33</span> yongfeiuall.sydney</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/18/AWS-EC2-Security-Group/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1758,166 +1920,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/07/如何看待工资？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/07/如何看待工资？/" itemprop="url">如何看待工资？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-07T13:21:20+08:00">
-                2018-04-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/07/如何看待工资？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/07/如何看待工资？/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在上一家公司的时候就想过这个问题，但是一直没有深思考，说一下自己的一些见解，仅代表个人看法，如有不妥，还请指正。</p>
-<h2 id="工作价值：工资"><a href="#工作价值：工资" class="headerlink" title="工作价值：工资"></a>工作价值：工资</h2><p>我一直觉得工资不是评判一个人价值的唯一指标，就像考试第一名并不能代表你就是最优秀的学生。金钱/成绩确实很重要，但不是唯一。</p>
-<p>但是从另一个角度想想，工资是不是公司衡量你工作价值的一个标准？工资是不是能反应出你的能力和努力后的成长？如果你的工资不高或者涨的不多，你有没有思考过，是不是因为自身的能力在标准之下？</p>
-<h2 id="为什么追求高工资"><a href="#为什么追求高工资" class="headerlink" title="为什么追求高工资"></a>为什么追求高工资</h2><p>如今的我们跟上一辈的不同之处，还在于我们以近乎全裸的方式来到大城市，一无所有，没有亲戚邻居的帮衬，一切都得靠自己去努力，而大城市里的一切又是那么的昂贵，怎么才能活下去？怎么才能在这里扎根？这是要直面的且最基本的需求，所以追求高工资就也无可厚非。其实大家都是普通人，绝大多数人都只能通过努力工作来改变自己的命运，过上所谓的体面生活，而工资对普通人可以说是唯一的收入来源，有的人甚至以牺牲健康的代价去拼命加班，去挣更多的工资，不就是希望自己能在这个所谓的大都市里站住脚，让自己能有安全感。</p>
-<p>活过而立之年，再想想，人追求越来越高的工资，真的就是单纯的为了追求金钱，追求物质？从人的需求层次来看，人最终追求的应该就是自由选择的权利，去做自己想做的事。从古至今来看，金钱好像是能够获得这种权利最容易的方式。</p>
-<h2 id="保持工资持续增长"><a href="#保持工资持续增长" class="headerlink" title="保持工资持续增长"></a>保持工资持续增长</h2><p>从个人自身来看，你要舍得投资自己(ROI最高)，不断输入，去努力，去提升自己的价值，相信不断成长的你，工资也会呈上升曲线。</p>
-<p>如今是一个‘大众创业，万众创新’的时代，是一个在别人嘴里站在风口猪都会飞的时代，也就是大家一直都在说的做事要顺势而为，其实工资也一样，在一个夕阳产业里，你再努力，工作价值再大，工资的增长未必能达到你的预期。所以要选对行业，站对队。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1972,7 +1974,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">331</span>
+                  <span class="site-state-item-count">332</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1994,7 +1996,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

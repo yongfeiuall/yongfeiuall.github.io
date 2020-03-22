@@ -305,6 +305,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/" itemprop="url">Salt - 环境安装的问题：Vagrant Up起不来</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T09:38:46+08:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>按照官网的步骤，执行<code>Vagrant Up</code>，没有反应，只是鼠标闪动，Google了很多，都说是Vagrant和Virtualbox版本不兼容，Windows真不行。就下载了老版本，Vbox: 4.3.40, Vagrant: 1.9.5。</p>
+<h1 id="版本不兼容"><a href="#版本不兼容" class="headerlink" title="版本不兼容"></a>版本不兼容</h1><p><code>Vagrant Up</code>可以运行了，但是有以下错误：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">D</span>:<span class="string">\salt</span> learn<span class="string">\salt-vagrant-demo&gt;vagrant</span> up</span><br><span class="line">Bringing machine <span class="string">'master'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion1'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion2'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">==&gt; <span class="attribute">master</span>: Box <span class="string">'bento/ubuntu-16.04'</span> could <span class="keyword">not</span> be found. Attempting <span class="keyword">to</span> find <span class="keyword">and</span> install...</span><br><span class="line">    <span class="attribute">master</span>: Box <span class="attribute">Provider</span>: virtualbox</span><br><span class="line">    <span class="attribute">master</span>: Box <span class="attribute">Version</span>: &gt;= <span class="number">0</span></span><br><span class="line">The box <span class="string">'bento/ubuntu-16.04'</span> could <span class="keyword">not</span> be found <span class="keyword">or</span></span><br><span class="line">could <span class="keyword">not</span> be accessed <span class="keyword">in</span> the remote catalog. If <span class="keyword">this</span> <span class="keyword">is</span> a private</span><br><span class="line">box <span class="literal">on</span> HashiCorp<span class="string">'s Atlas, please verify you'</span>re logged <span class="keyword">in</span> via</span><br><span class="line">`vagrant login`. Also, please double-check the name. The expanded</span><br><span class="line">URL <span class="keyword">and</span> error message are shown <span class="attribute">below</span>:</span><br><span class="line"></span><br><span class="line"><span class="attribute">URL</span>: [<span class="string">"https://atlas.hashicorp.com/bento/ubuntu-16.04"</span>]</span><br><span class="line"><span class="attribute">Error</span>: The requested URL returned <span class="attribute">error</span>: <span class="number">404</span> Not Found</span><br></pre></td></tr></table></figure></p>
+<p>这是因为：所有的Vagrant boxes都Move到了app.vagrantup.com。</p>
+<p>在Vagrantfile里加入以下命令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vagrant::DEFAULT_SERVER_URL.<span class="function"><span class="title">replace</span><span class="params">(<span class="string">'https://vagrantcloud.com'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>重新<code>Vagrant Up</code>，运行成功。</p>
+<h1 id="配置问题"><a href="#配置问题" class="headerlink" title="配置问题"></a>配置问题</h1><p>下载VM完成后，失败：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">D</span>:<span class="string">\salt</span> learn<span class="string">\salt-vagrant-demo&gt;vagrant</span> up</span><br><span class="line">Bringing machine <span class="string">'master'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion1'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion2'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">==&gt; <span class="attribute">master</span>: Checking <span class="keyword">if</span> box <span class="string">'bento/ubuntu-16.04'</span> <span class="keyword">is</span> up <span class="keyword">to</span> date...</span><br><span class="line">There was an error <span class="keyword">while</span> executing `VBoxManage`, a CLI used <span class="keyword">by</span> Vagrant</span><br><span class="line"><span class="keyword">for</span> controlling VirtualBox. The command <span class="keyword">and</span> stderr <span class="keyword">is</span> shown below.</span><br><span class="line"></span><br><span class="line"><span class="attribute">Command</span>: [<span class="string">"hostonlyif"</span>, <span class="string">"create"</span>]</span><br><span class="line"></span><br><span class="line"><span class="attribute">Stderr</span>: <span class="number">0</span>%...</span><br><span class="line">Progress <span class="attribute">state</span>: E_FAIL</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: Failed <span class="keyword">to</span> create the host-only adapter</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: Code E_FAIL (<span class="number">0x80004005</span>) - Unspecified error (extended info <span class="keyword">not</span> available)</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: <span class="attribute">Context</span>: <span class="string">"int __cdecl handleCreate(struct HandlerArg *,int,int *)"</span> at line <span class="number">66</span> <span class="keyword">of</span> file VBoxManageHostonly.cpp</span><br></pre></td></tr></table></figure></p>
+<p>解决方法：<br>在安装目录下（c:\Program Files (x86)\Vagrant\embedded\gems\gems\vagrant-1.7.4\plugins\providers\virtualbox\action.rb），注释以下代码：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">b</span><span class="class">.use</span> PrepareNFSSettings</span><br><span class="line"><span class="id">#b</span><span class="class">.use</span> ClearNetworkInterfaces</span><br><span class="line"><span class="id">#b</span><span class="class">.use</span> Network</span><br><span class="line"><span class="tag">b</span><span class="class">.use</span> ForwardPorts</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/27/Salt-简单Demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1818,169 +1978,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/01/Consul-集群/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/01/Consul-集群/" itemprop="url">Consul - 集群</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-01T11:11:54+08:00">
-                2018-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consul/" itemprop="url" rel="index">
-                    <span itemprop="name">Consul</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/01/Consul-集群/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/01/Consul-集群/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="搭建集群"><a href="#搭建集群" class="headerlink" title="搭建集群"></a>搭建集群</h1><p>Consul推荐在每个数据中心运行3或5个Servers以避免Server失败导致的数据丢失。</p>
-<p>基于此，我们先用4个虚拟机来做试验：<br>|:—IP Address–:|:—–Role—-:|<br>| 192.168.244.130 | Consul Server |<br>| 192.168.244.131 | Consul Server |<br>| 192.168.244.132 | Consul Server |<br>| 192.168.244.133 | Consul Client |</p>
-<h2 id="Server-Configuration"><a href="#Server-Configuration" class="headerlink" title="Server Configuration"></a>Server Configuration</h2><h3 id="1-生成Key，创建必要配置目录和文件"><a href="#1-生成Key，创建必要配置目录和文件" class="headerlink" title="1. 生成Key，创建必要配置目录和文件"></a>1. 生成Key，创建必要配置目录和文件</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/server</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/consul-server-data</span></span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># ls</span></span><br><span class="line">consul-server-data  <span class="built_in">ping</span>.json  server  web.json</span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># consul keygen</span></span><br><span class="line">Vz3jcuLn6a6Ekq5PbrJO2w==</span><br></pre></td></tr></table></figure>
-<p><em>Key: It should be the same for all the servers and clients in a datacenter. If it’s different the consul members will refuse to join.</em></p>
-<h3 id="2-创建Configration"><a href="#2-创建Configration" class="headerlink" title="2. 创建Configration"></a>2. 创建Configration</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">bind_addr</span>": <span class="value"><span class="string">"192.168.244.130"</span></span>, </span><br><span class="line">"<span class="attribute">datacenter</span>": <span class="value"><span class="string">"dc1"</span></span>,</span><br><span class="line">"<span class="attribute">data_dir</span>": <span class="value"><span class="string">"/etc/consul.d/consul-server-data"</span></span>,</span><br><span class="line">"<span class="attribute">encrypt</span>": <span class="value"><span class="string">"Vz3jcuLn6a6Ekq5PbrJO2w=="</span></span>,</span><br><span class="line">"<span class="attribute">log_level</span>": <span class="value"><span class="string">"INFO"</span></span>,</span><br><span class="line">"<span class="attribute">enable_syslog</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">enable_debug</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">node_name</span>": <span class="value"><span class="string">"ConsulServer1"</span></span>,</span><br><span class="line">"<span class="attribute">server</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">bootstrap_expect</span>": <span class="value"><span class="number">3</span></span>,</span><br><span class="line">"<span class="attribute">rejoin_after_leave</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">retry_join</span>": <span class="value">[ </span><br><span class="line">  <span class="string">"192.168.244.130"</span>,</span><br><span class="line">  <span class="string">"192.168.244.131"</span>,</span><br><span class="line">  <span class="string">"192.168.244.132"</span></span><br><span class="line">  ]</span><br><span class="line"> </span>&#125;</span><br></pre></td></tr></table></figure>
-<p><em>在每一个Server都要以下相同操作, 唯一要修改的就是IP地址和node_name。</em></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/01/Consul-集群/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2035,7 +2032,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">331</span>
+                  <span class="site-state-item-count">332</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2057,7 +2054,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
