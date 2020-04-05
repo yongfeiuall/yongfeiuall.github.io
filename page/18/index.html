@@ -305,6 +305,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/05/16/Robot-Framework-MongoDB-Testing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/16/Robot-Framework-MongoDB-Testing/" itemprop="url">Robot Framework-MongoDB</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-16T18:00:25+08:00">
+                2016-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/16/Robot-Framework-MongoDB-Testing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/05/16/Robot-Framework-MongoDB-Testing/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>要做API或者UI自动化，甚至于手工测试，对于测试数据的准备，我们不可能手动的一条一条添加，正好实验了一把用RF来操控MongoDB。<br>以下只是个简单的实验，证明能够操作MongoDB。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>从官网的Library中查找 MongoDB library，或者直接Github <a href="https://github.com/iPlantCollaborativeOpenSource/Robotframework-MongoDB-Library" target="_blank" rel="external">Robotframework-MongoDB-Library</a>。</p>
+<ol>
+<li><p>安装pymongo</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> pymongo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装Library<br>You can install by pulling down source to ‘C:\Python27\Lib\site-packages’ and executing the following:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup<span class="class">.py</span> install</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>本来对这块也不是很熟悉，之前没用过，折腾了好长时间在这个地方，按照官方的使用方法一直不成功<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Or for an authenticated connection</span></span><br><span class="line"><span class="title">Connect</span> To MongoDB admin:admin<span class="variable">@foo</span>.bar.org <span class="variable">$&#123;27017&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>重新查询了pymongo和mongoClient，这里做个说明：<br>对于authenticated connection，用<code>Connect To Mongodb user:password@ip/db 27017</code>，一直报错<code>FAIL : ValueError: Port must be an integer between 0 and 65535: password@ip/db</code>。<br>这里必须要用MongoDB的URL connection scheme<br><img src="/images/rf/mongodb_connect.jpg" alt=""></p>
+<h1 id="数据库查询"><a href="#数据库查询" class="headerlink" title="数据库查询"></a>数据库查询</h1><p><img src="/images/rf/mongodb_query.jpg" alt=""><br>这里验证了工作中可能要用到的两个查询关键字，有需要的话，再研究剩下的查询关键字。<br><code>Retrieve Some Mongodb Records</code>：根据Jason文件条件在相关数据库和Collection中查询记录。记住：字符串要用双引号，单引号会报告。<br><code>Retrieve Mongodb Records With Desired Fields</code>：查询出指定列的显示， 相当于关系Sql: select a and b from table。记住：对于指定列，常规的直接用key就好；有嵌套的，用dot连接（e.g., address.city）；指定多个列，每个列之间用逗号隔开。</p>
+<h1 id="数据库更新"><a href="#数据库更新" class="headerlink" title="数据库更新"></a>数据库更新</h1><p><img src="/images/rf/mongodb_update.jpg" alt=""><br>这里不做说明，会用就好了。</p>
+<h1 id="数据库插入"><a href="#数据库插入" class="headerlink" title="数据库插入"></a>数据库插入</h1><p><img src="/images/rf/mongodb_insert.jpg" alt=""></p>
+<h1 id="数据库删除"><a href="#数据库删除" class="headerlink" title="数据库删除"></a>数据库删除</h1><p><img src="/images/rf/mongodb_delete.jpg" alt=""></p>
+<p>以上的操作，已经能满足当前工作中的需要，只做这些验证就OK了。</p>
+<p><strong>特别说明：</strong><br>项目中实际用到的Jason文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        "<span class="attribute">_id</span>" : <span class="value">NumberLong(<span class="string">"444206992590551"</span>)</span>,</span><br><span class="line">        "<span class="attribute">name</span>" : <span class="value"><span class="string">"xx"</span></span>,</span><br><span class="line">        "<span class="attribute">createdId</span>" : <span class="value">NumberLong(<span class="string">"884011643699965"</span>)</span>,</span><br><span class="line">        "<span class="attribute">createdDate</span>" : <span class="value">ISODate(<span class="string">"2016-05-17T00:43:43.555Z"</span>)</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>在使用的过程中，只要是用到‘_id’时，就报格式不对的错<code>FAIL : TypeError: id must be an instance of (bytes, unicode, ObjectId), not &lt;type &#39;int&#39;&gt;</code>，查看了一下原码，把下面的代码注释掉就可以了。</p>
+ <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">'_id'</span> <span class="keyword">in</span> recordJSON:</span><br><span class="line">            recordJSON[<span class="string">'_id'</span>] = <span class="function"><span class="title">ObjectId</span><span class="params">(recordJSON[<span class="string">'_id'</span>])</span></span></span><br></pre></td></tr></table></figure>
+<p> 把要用到的函数都一并修改掉。</p>
+</li>
+<li>还有就是时间的问题，如果不是必须的，这些字段就不要添加了。<br>还有这么一种情况，必须要添加日期字段，这里就是有错误：在Json文件中只能用字符串的形式，保存到库里”createdDate” : “2016-05-20 02:48:35.620000”，但是实际上应该是”createdDate” : ISODate(“2016-05-17T03:01:23.145Z”)，目前还没有找到合适的方法，比较头疼，做个标记。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/05/10/Robot-Framework-Restful-API-Testing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1795,180 +1973,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/04/Python-函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/04/Python-函数/" itemprop="url">Python-函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-04T10:56:52+08:00">
-                2016-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/03/04/Python-函数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/04/Python-函数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h1><p>你可以定义一个由自己想要功能的函数，以下是简单的规则：</p>
-<ul>
-<li>函数代码块以def关键词开头，后接函数标识符名称和圆括号()。</li>
-<li>任何传入参数和自变量必须放在圆括号中间。圆括号之间可以用于定义参数。</li>
-<li>函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。</li>
-<li>函数内容以冒号起始，并且缩进。</li>
-<li>Return[expression]结束函数，选择性地返回一个值给调用方。不带表达式的return相当于返回 None。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">functionname</span><span class="params">( parameters )</span>:</span></span><br><span class="line">   <span class="string">"函数_文档字符串"</span></span><br><span class="line">   function_suite</span><br><span class="line">   <span class="keyword">return</span> [expression]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h1><ul>
-<li><strong>必备参数</strong><br>必备参数须以正确的顺序传入函数。调用时的数量必须和声明时的一样。</li>
-<li><strong>默认参数</strong><br>设置默认参数时，有几点要注意： 1. 必选参数在前，默认参数在后，否则Python的解释器会报错； 2. 当函数有多个参数时，把变化大的参数放前面，变化小的参数放后面。变化小的参数就可以作为默认参数。</li>
-<li><p><strong>可变参数</strong><br>加了星号（<em>）的变量名会存放所有未命名的变量参数。</em>args是可变参数，args接收的是一个tuple；</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">functionname</span><span class="params">([formal_args,] *args )</span>:</span></span><br><span class="line">   <span class="string">"函数_文档字符串"</span></span><br><span class="line">   function_suite</span><br><span class="line">   <span class="keyword">return</span> [expression</span><br></pre></td></tr></table></figure>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可写函数说明</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printinfo</span><span class="params">( arg1, *vartuple )</span>:</span></span><br><span class="line">   <span class="string">"打印任何传入的参数"</span></span><br><span class="line">   <span class="keyword">print</span> <span class="string">"输出: "</span></span><br><span class="line">   <span class="keyword">print</span> arg1</span><br><span class="line">   <span class="keyword">for</span> var <span class="keyword">in</span> vartuple:</span><br><span class="line">      <span class="keyword">print</span> var</span><br><span class="line">   <span class="keyword">return</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 调用printinfo 函数</span></span><br><span class="line">printinfo( <span class="number">10</span> );</span><br><span class="line">printinfo( <span class="number">70</span>, <span class="number">60</span>, <span class="number">50</span> );</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/04/Python-函数/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2023,7 +2027,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">332</span>
+                  <span class="site-state-item-count">333</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2045,7 +2049,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

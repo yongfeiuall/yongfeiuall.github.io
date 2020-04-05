@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2020-03-22T03:15:17.242Z</updated>
+  <updated>2020-04-05T05:03:08.962Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Prometheus + Grafana 实时监控Windows</title>
+    <link href="http://izheyi.com/2020/04/05/Prometheus-Grafana-%E7%9B%91%E6%8E%A7Windows/"/>
+    <id>http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/</id>
+    <published>2020-04-05T01:14:47.000Z</published>
+    <updated>2020-04-05T05:03:08.962Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;a href=&quot;https://prometheus.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Prometheus&lt;/a&gt; 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。&lt;br&gt;&lt;a href=&quot;https://grafana.com/grafana/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Grafana&lt;/a&gt; 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。&lt;/p&gt;
+&lt;h2 id=&quot;Windows采集器（wmi-exporter）&quot;&gt;&lt;a href=&quot;#Windows采集器（wmi-exporter）&quot; class=&quot;headerlink&quot; title=&quot;Windows采集器（wmi_exporter）&quot;&gt;&lt;/a&gt;Windows采集器（wmi_exporter）&lt;/h2&gt;&lt;p&gt;要获取服务器运行时的参数，比如当前的CPU负载、内存消耗、硬盘使用、网络IO等等，就可以在服务器上运行一个node_exporter，它能把这些参数收集好，并且暴露出一个HTTP接口以便你访问查询。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下载采集器&lt;br&gt;从&lt;a href=&quot;https://github.com/martinlindhe/wmi_exporter&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wmi_exporter&lt;/a&gt;下载&lt;/li&gt;
+&lt;li&gt;安装&lt;br&gt;直接双击安装即可。&lt;br&gt;Windows默认9182端口。&lt;/li&gt;
+&lt;li&gt;验证&lt;br&gt;访问&lt;a href=&quot;http://127.0.0.1:9182/metrics&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://127.0.0.1:9182/metrics&lt;/a&gt;&lt;br&gt;显示以下数据，数据采集器安装成功。&lt;br&gt;&lt;img src=&quot;/images/performancetesting/vim_exporter.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Prometheus&quot;&gt;&lt;a href=&quot;#Prometheus&quot; class=&quot;headerlink&quot; title=&quot;Prometheus&quot;&gt;&lt;/a&gt;Prometheus&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;下载&lt;br&gt;从&lt;a href=&quot;https://prometheus.io/download/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Prometheus&lt;/a&gt;下载&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置&lt;br&gt;打开prometheus.yml&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# my global config&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;global:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  scrape_interval:     5s # &lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Set&lt;/span&gt; the scrape &lt;span class=&quot;built_in&quot;&gt;interval&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; every &lt;span class=&quot;number&quot;&gt;15&lt;/span&gt; seconds. &lt;span class=&quot;keyword&quot;&gt;Default&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; every &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;minute&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  evaluation_interval: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;s # &lt;span class=&quot;keyword&quot;&gt;Evaluate&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;rules&lt;/span&gt; every &lt;span class=&quot;number&quot;&gt;15&lt;/span&gt; seconds. The &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; every &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;minute&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  # scrape_timeout &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; the &lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;s).&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Alertmanager configuration&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alerting:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  alertmanagers:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  - static_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    - targets:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      # - alertmanager:&lt;span class=&quot;number&quot;&gt;9093&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# &lt;span class=&quot;keyword&quot;&gt;Load&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;rules&lt;/span&gt; once &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; periodically &lt;span class=&quot;keyword&quot;&gt;evaluate&lt;/span&gt; them according &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; the &lt;span class=&quot;keyword&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;evaluation_interval&#39;&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;rule_files:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  # - &lt;span class=&quot;string&quot;&gt;&quot;first_rules.yml&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  # - &lt;span class=&quot;string&quot;&gt;&quot;second_rules.yml&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# A scrape configuration containing exactly one endpoint &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; scrape:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# Here it&lt;span class=&quot;string&quot;&gt;&#39;s Prometheus itself.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;scrape_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  # The job name is added as a label `job=&amp;lt;job_name&amp;gt;` to any timeseries scraped from this config.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  - job_name: &#39;&lt;/span&gt;prometheus&lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    # metrics_path defaults to &#39;&lt;/span&gt;/metrics&lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    # scheme defaults to &#39;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    static_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    - targets: [&#39;&lt;/span&gt;localhost:&lt;span class=&quot;number&quot;&gt;9182&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;运行(将默认端口9090改为8091)&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;prometheus&lt;span class=&quot;class&quot;&gt;.exe&lt;/span&gt; --config.file=prometheus&lt;span class=&quot;class&quot;&gt;.yml&lt;/span&gt; --web.listen-address=:&lt;span class=&quot;number&quot;&gt;8091&lt;/span&gt; &amp;amp;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;验证&lt;br&gt;访问&lt;a href=&quot;http://127.0.0.1:8091/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://127.0.0.1:8091/&lt;/a&gt;&lt;br&gt;目标列表中有你本地的机器，说明Prometheus已经成功监控到本地。&lt;br&gt;&lt;img src=&quot;/images/performancetesting/prometheus.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Grafana&quot;&gt;&lt;a href=&quot;#Grafana&quot; class=&quot;headerlink&quot; title=&quot;Grafana&quot;&gt;&lt;/a&gt;Grafana&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;下载&lt;br&gt;从&lt;a href=&quot;https://grafana.com/grafana/download&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Grafana&lt;/a&gt;下载&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;启动&lt;br&gt;双击安装即可。 进行到安装bin目录下：双击&lt;code&gt;grafana-server.exe&lt;/code&gt;启动&lt;br&gt;访问&lt;a href=&quot;http://127.0.0.1:3000&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://127.0.0.1:3000&lt;/a&gt;&lt;br&gt;默认账号/密码：admin/admin&lt;br&gt;&lt;img src=&quot;/images/performancetesting/grafana_home.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置Prometheus数据库&lt;br&gt;从刚才配置好的prometheus那里获取本地性能数据并展示。&lt;br&gt;&lt;img src=&quot;/images/performancetesting/grafana_prometheus.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;搭建Prometheus仪表盘&lt;br&gt;Import Dashboard: 10467&lt;br&gt;&lt;img src=&quot;/images/performancetesting/grafana_import.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最终显示如下：&lt;br&gt;&lt;img src=&quot;/images/performancetesting/grafana_dashboard.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://prometheus.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Prometheus&lt;/a&gt; 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。&lt;br&gt;&lt;a href=&quot;https://graf
+    
+    </summary>
+    
+      <category term="Performance Testing" scheme="http://izheyi.com/categories/Performance-Testing/"/>
+    
+    
+      <category term="Grafana" scheme="http://izheyi.com/tags/Grafana/"/>
+    
+      <category term="Prometheus" scheme="http://izheyi.com/tags/Prometheus/"/>
+    
+  </entry>
   
   <entry>
     <title>Python生成二维码</title>
@@ -54,9 +106,9 @@
     <link href="http://izheyi.com/2020/03/08/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%AD%A6%E6%9C%9F%EF%BC%89/"/>
     <id>http://izheyi.com/2020/03/08/丁丁画画（三年级下学期）/</id>
     <published>2020-03-08T02:03:16.000Z</published>
-    <updated>2020-03-22T01:19:17.088Z</updated>
+    <updated>2020-04-05T05:02:39.869Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_11.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_10.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_6.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_7.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_8.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_9.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_12.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_11.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_10.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_6.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_7.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_8.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_9.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_12.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_13.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_14.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_16.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -715,39 +767,6 @@
       <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
     
       <category term="生活" scheme="http://izheyi.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SonarQube with Jenkins pipeline</title>
-    <link href="http://izheyi.com/2018/10/14/SonarQube-with-Jenkins-pipeline/"/>
-    <id>http://izheyi.com/2018/10/14/SonarQube-with-Jenkins-pipeline/</id>
-    <published>2018-10-14T07:16:51.000Z</published>
-    <updated>2018-10-12T07:26:30.707Z</updated>
-    
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;Install &lt;code&gt;SonarQube Scanner&lt;/code&gt; plugin in Jenkins.&lt;/li&gt;
-&lt;li&gt;Global Configuration.&lt;br&gt;Log into Jenkins as an administrator and go to &lt;code&gt;Manage Jenkins &amp;gt; Global Tool Configuration&lt;/code&gt;:&lt;br&gt;&lt;img src=&quot;/images/sonarqube/jenkins_config.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Create Pipeline job.&lt;br&gt;Add the below Pipeline script:&lt;/p&gt;
-&lt;figure class=&quot;highlight scala&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;node &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;mvnHome&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;  stage(&lt;span class=&quot;symbol&quot;&gt;&#39;SCM&lt;/span&gt; and configration&#39;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    git &lt;span class=&quot;symbol&quot;&gt;&#39;https&lt;/span&gt;:&lt;span class=&quot;comment&quot;&gt;//github.com/yongfeiuall/spring-boot-example.git&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mvnHome = tool &lt;span class=&quot;symbol&quot;&gt;&#39;M&lt;/span&gt;3&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  stage(&lt;span class=&quot;symbol&quot;&gt;&#39;SonarQube&lt;/span&gt; analysis&#39;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    withSonarQubeEnv(&lt;span class=&quot;symbol&quot;&gt;&#39;SonarQub&lt;/span&gt;e&#39;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      sh &lt;span class=&quot;string&quot;&gt;&quot;&#39;$&amp;#123;mvnHome&amp;#125;/bin/mvn&#39; clean package sonar:sonar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125; &lt;span class=&quot;comment&quot;&gt;// SonarQube taskId is automatically attached to the pipeline context&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Run job.&lt;br&gt;&lt;img src=&quot;/images/sonarqube/jenkins_run.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/sonarqube/jenkins_result.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;ol&gt;
-&lt;li&gt;Install &lt;code&gt;SonarQube Scanner&lt;/code&gt; plugin in Jenkins.&lt;/li&gt;
-&lt;li&gt;Global Configuration.&lt;br&gt;Log into Jenkins as an administrator an
-    
-    </summary>
-    
-      <category term="SonarQube" scheme="http://izheyi.com/categories/SonarQube/"/>
-    
-    
-      <category term="SonarQube" scheme="http://izheyi.com/tags/SonarQube/"/>
     
   </entry>
   
