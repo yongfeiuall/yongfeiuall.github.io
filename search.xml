@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title><![CDATA[Robotframework Automation With Jenkins and Xray]]></title>
+      <url>http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/</url>
+      <content type="html"><![CDATA[<p>Current, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
+<ol>
+<li>use Robotframework design script</li>
+<li>use Jenkins trigger automaion running</li>
+<li>return running result to xray and update execution status</li>
+</ol>
+<h1 id="Pre-Condition"><a href="#Pre-Condition" class="headerlink" title="Pre-Condition"></a>Pre-Condition</h1><ol>
+<li>Create one test case, one execution, and add test case to execution, the default status as below:<br><img src="/images/CI/xray/before_run.jpg" alt=""></li>
+<li>RF demo script:<br><img src="/images/CI/xray/rf_script.jpg" alt=""></li>
+</ol>
+<h1 id="Install-and-config-xray-jenkins-plugin"><a href="#Install-and-config-xray-jenkins-plugin" class="headerlink" title="Install and config xray jenkins plugin"></a>Install and config xray jenkins plugin</h1><p>Use offline way to install, download plugin here: <a href="http://mirrors.jenkins-ci.org/plugins/xray-connector/" target="_blank" rel="external">xray-connector</a>, and install plugin as below:<br><img src="/images/CI/xray/upload_plugin.jpg" alt=""></p>
+<p>Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &gt; Configure System &gt; Xray for Jira configuration.<br><img src="/images/CI/xray/xray_config.jpg" alt=""></p>
+<h1 id="Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray"><a href="#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray" class="headerlink" title="Config jenkins job to run automaiton test and return report to xray"></a>Config jenkins job to run automaiton test and return report to xray</h1><ol>
+<li>Just use RF command to run demo script, config as below:<br><img src="/images/CI/xray/run_rf.jpg" alt=""></li>
+<li>Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.<br><img src="/images/CI/xray/import_result.jpg" alt=""></li>
+<li>Config task with below params:<br><img src="/images/CI/xray/import_result_config.jpg" alt=""><pre><code>- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
+- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
+- Project Key – key of the JIRA project. This is a required parameter
+- Test Execution Key – JIRA issue key where results will be imported. 
+- Test Plan Key – JIRA issue key of the Test Plan. 
+- Test Environments – list of Environments (separated by “,”) where tests are executed.
+</code></pre></li>
+<li>Run jenkins job</li>
+<li>Back to Jira Xray, the status update from TODO to PASS automatically<br><img src="/images/CI/xray/after_run.jpg" alt=""></li>
+<li>Go to Execution detail page to view automaion detail result<br><img src="/images/CI/xray/after_run_detail.jpg" alt=""></li>
+</ol>
+<h1 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h1><p>Other things we could do:</p>
+<ol>
+<li>Create test exceution in xray automatically after automation running</li>
+<li>Even create test case after automation running</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Prometheus + Grafana 实时监控Windows]]></title>
       <url>http://izheyi.com/2020/04/05/Prometheus-Grafana-%E7%9B%91%E6%8E%A7Windows/</url>
       <content type="html"><![CDATA[<p><a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a> 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。<br><a href="https://grafana.com/grafana/" target="_blank" rel="external">Grafana</a> 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。</p>
@@ -53,7 +90,7 @@
     <entry>
       <title><![CDATA[丁丁画画（三年级下学期）]]></title>
       <url>http://izheyi.com/2020/03/08/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%AD%A6%E6%9C%9F%EF%BC%89/</url>
-      <content type="html"><![CDATA[<p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""></p>
+      <content type="html"><![CDATA[<p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_17.JPG" alt=""></p>
 ]]></content>
     </entry>
     
@@ -91,7 +128,7 @@
     <entry>
       <title><![CDATA[奇点绘画画随记（2020）]]></title>
       <url>http://izheyi.com/2020/02/02/%E5%B0%8F%E4%B8%81%E7%94%BB%E4%BD%9C-2020/</url>
-      <content type="html"><![CDATA[<p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""></p>
+      <content type="html"><![CDATA[<p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/7.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/8.JPG" alt=""></p>
 ]]></content>
     </entry>
     

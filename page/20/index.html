@@ -305,6 +305,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/15/Java线程堆栈分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/15/Java线程堆栈分析/" itemprop="url">Java线程堆栈分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-15T09:13:00+08:00">
+                2016-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/01/15/Java线程堆栈分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/15/Java线程堆栈分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>线程堆栈也称作线程调用堆栈。Java线程堆栈是虚拟机中线程（包括锁）状态的一个瞬间快照，即系统在某个时刻所有线程的运行状态,包括每一个线程的调用堆栈，锁的持有情况等信息。</p>
+<p>线程堆栈的信息都包含：</p>
+<ol>
+<li>线程的名字，ID，线程的数量等。</li>
+<li>线程的运行状态，锁的状态（锁被哪个线程持有，哪个线程再等待锁等）。</li>
+<li>调用堆栈（即函数的调用层次关系）。调用堆栈包含完整的类名，所执行的方法，源代码的行数。</li>
+</ol>
+<p>借助线程堆栈，可以分析许多问题，如线程死锁、锁争用、死循环、识别耗时操作等等。在多线程场合下的稳定性问题分析和性能问题分析，线程堆栈分析是最有效的方法，在多数情况下甚至无需对系统了解就可以进行相应的分析。<br>线程堆栈最善于分析如下类型的问题:<br>• 系统无缘无故CPU过高。<br>• 系统挂起，无响应。<br>• 系统运行越来越慢。<br>• 性能瓶颈（如无法充分利用CPU等）<br>• 线程死锁、死循环，饿死等。<br>• 由于线程数量太多导致系统失败（如无法创建线程等）。</p>
+<h1 id="输出线程状态"><a href="#输出线程状态" class="headerlink" title="输出线程状态"></a>输出线程状态</h1><p>Java虚拟机提供了线程转储(Thread dump)的后门，通过这个后门，可以将线程堆栈打印出来。<br>我们这里拿Linux做例子，写了一个简单的java程序在Linux一直运行着：</p>
+<ul>
+<li>kill -3 [java pid]<br>不会在当前终端输出，它会输出到代码执行的或指定的地方去。比如，kill -3 tomcat pid, 输出堆栈到log目录下。</li>
+<li>Jstack [java pid]<br>这个比较简单，在当前终端显示，也可以重定向到指定文件中。</li>
+<li>JvisualVM：Thread Dump<br>不做说明，打开JvisualVM后，都是界面操作，过程还是很简单的。</li>
+</ul>
+<h1 id="解读线程状态"><a href="#解读线程状态" class="headerlink" title="解读线程状态"></a>解读线程状态</h1><h2 id="dump的线程信息"><a href="#dump的线程信息" class="headerlink" title="dump的线程信息"></a>dump的线程信息</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"main"</span> prio=<span class="number">10</span> tid=<span class="number">0</span>x00007f730c008800 nid=<span class="number">0</span>x63eb runnable [<span class="number">0</span>x00007f73117c6000]</span><br><span class="line">   java<span class="class">.lang</span><span class="class">.Thread</span><span class="class">.State</span>: RUNNABLE</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.writeBytes</span>(Native Method)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.write</span>(FileOutputStream<span class="class">.java</span>:<span class="number">345</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flushBuffer</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">82</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flush</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">140</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407ab8&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.BufferedOutputStream</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.write</span>(PrintStream<span class="class">.java</span>:<span class="number">482</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.writeBytes</span>(StreamEncoder<span class="class">.java</span>:<span class="number">221</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.implFlushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">291</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.flushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">104</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407b90&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.OutputStreamWriter</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.OutputStreamWriter</span><span class="class">.flushBuffer</span>(OutputStreamWriter<span class="class">.java</span>:<span class="number">185</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.newLine</span>(PrintStream<span class="class">.java</span>:<span class="number">546</span>)</span><br><span class="line">        - eliminated &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.println</span>(PrintStream<span class="class">.java</span>:<span class="number">737</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at test.<span class="function"><span class="title">fun2</span><span class="params">(test.java:<span class="number">19</span>)</span></span></span><br><span class="line">        at test.<span class="function"><span class="title">fun1</span><span class="params">(test.java:<span class="number">12</span>)</span></span></span><br><span class="line">        at test.<span class="function"><span class="title">main</span><span class="params">(test.java:<span class="number">6</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>线程堆栈里面的最直观的信息是当前线程的调用上下文，即从哪个函数中调用到哪个函数中（从下往上看），正执行到哪个类的哪一行.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/01/15/Java线程堆栈分析/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/10/Linux下JDK安装配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1789,169 +1962,6 @@ mysql&gt; flush privileges;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Load-Runner-VuGen参数化基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/22/Load-Runner-VuGen参数化基础/" itemprop="url">Load Runner - VuGen参数化基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T08:06:58+08:00">
-                2015-12-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
-                    <span itemprop="name">Load Runner</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/22/Load-Runner-VuGen参数化基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/Load-Runner-VuGen参数化基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>参数化的目的就是为了真实。</strong><br><img src="/images/lr/vugen_parameter_list.jpg" alt="Parameter List"></p>
-<h1 id="参数化步骤"><a href="#参数化步骤" class="headerlink" title="参数化步骤"></a>参数化步骤</h1><p>实现步骤也很简单，双击选中要参数化的内容，右键 -&gt; Replace with a Parameter；在替换的参数名处点右键，选择Replace more occurrences进行其他值替换。根据情况不同也可使用Ctrl+H替换。<br>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">	lr_error_message(<span class="string">"test"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>参数化后：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Action</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="tag">lr_error_message</span>(<span class="string">"&#123;message&#125;"</span>);</span><br><span class="line">	<span class="tag">return</span> <span class="tag">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>但执行的结果：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br><span class="line"><span class="keyword">Action</span>.c(<span class="number">3</span>): Error: &#123;message&#125;</span><br><span class="line">Ending <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br></pre></td></tr></table></figure></p>
-<p>lr_error_message只是原样输出双引号里的内容，并没有取出参数值的功能。那我们就要取出参数的值，传给相应函数。<br>The <code>lr_eval_string</code> function returns the input string after evaluating any embedded parameters.<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Action</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="tag">lr_error_message</span>(<span class="function">lr_eval_string</span>(<span class="string">"&#123;message&#125;"</span>));</span><br><span class="line">	<span class="tag">return</span> <span class="tag">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>再次执行结果：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br><span class="line"><span class="keyword">Action</span>.c(<span class="number">3</span>): Error: test</span><br><span class="line">Ending <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/12/22/Load-Runner-VuGen参数化基础/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2006,7 +2016,7 @@ mysql&gt; flush privileges;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">333</span>
+                  <span class="site-state-item-count">334</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

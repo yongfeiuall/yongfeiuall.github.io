@@ -305,6 +305,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/21/AWS-EC2-Elastic-Load-Balancing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/21/AWS-EC2-Elastic-Load-Balancing/" itemprop="url">AWS - Elastic Load Balancing & Auto Scaling</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-21T14:41:16+08:00">
+                2018-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/21/AWS-EC2-Elastic-Load-Balancing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/21/AWS-EC2-Elastic-Load-Balancing/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ELB"><a href="#ELB" class="headerlink" title="ELB"></a>ELB</h1><p>Elastic Load Balancing 在多个可用区中的多个 EC2 实例之间分配应用程序的传入流量。这可以提高应用程序的容错能力。Elastic Load Balancing 会检测运行状况不佳的实例，并且仅将流量路由到运行状况良好的实例。<br><img src="/images/aws/aws_elb_classic.jpg" alt=""></p>
+<p>面向 Internet 的负载均衡器有一个可公开解析的 DNS 名称，因此可以通过 Internet 将请求从客户端路由到已向负载均衡器注册的 EC2 实例。</p>
+<p><img src="/images/aws/aws_elb_internet.jpg" alt=""></p>
+<p>E.g., 创建ELB后，只有一个公共的DNS。<br><img src="/images/aws/aws_elb.jpg" alt=""></p>
+<h1 id="Auto-Scaling"><a href="#Auto-Scaling" class="headerlink" title="Auto Scaling"></a>Auto Scaling</h1><p>You can use Auto Scaling to manage Amazon EC2 capacity automatically, maintain the right number of instances for your application, operate a healthy group of instances, and scale it according to your needs.</p>
+<p>您可创建 EC2 实例的集合，称为 Auto Scaling 组 。您可以指定每个 Auto Scaling 组中最少的实例数量，Auto Scaling 会确保您的组中的实例永远不会低于这个数量。您可以指定每个 Auto Scaling 组中最大的实例数量，Auto Scaling 会确保您的组中的实例永远不会高于这个数量。如果您在创建组的时候或在创建组之后的任何时候指定了所需容量，Auto Scaling 会确保您的组一直具有此数量的实例。如果您指定了扩展策略，则 Auto Scaling 可以在您的应用程序的需求增加或降低时启动或终止实例。<br><img src="/images/aws/aws_scaling.jpg" alt=""></p>
+<p>简单的一个小例子<br><img src="/images/aws/aws_scaling_group.jpg" alt=""></p>
+<p>配置完成后，自动生成3个Instances，并加到配置的ELB中。通过EC2 public ip和ELB DNS都可以正常访问到静态页面。</p>
+<p>我把两个Instances Terminated，因为设置了desired capacity is 3，它会自动再启动两个Instances，并自动加到ELB中。<br><img src="/images/aws/aws_scaling_check.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/19/AWS-EC2-Bootstrap-Script/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1748,170 +1910,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/11/AWS-IAM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/11/AWS-IAM/" itemprop="url">AWS - IAM</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T15:13:52+08:00">
-                2018-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/11/AWS-IAM/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/11/AWS-IAM/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>AWS Identity and Access Management (IAM) 是一种 Web 服务，可以帮助您安全地控制对 AWS 资源的访问。您可以使用 IAM 控制对哪个用户进行身份验证 (登录) 和授权 (具有权限) 以使用资源。</p>
-<h2 id="多重验证-MFA"><a href="#多重验证-MFA" class="headerlink" title="多重验证(MFA)"></a>多重验证(MFA)</h2><p>您可以向您的账户和各个用户添加双重身份验证以实现更高安全性。借助 MFA，您或您的用户不仅必须提供使用账户所需的密码或访问密钥，还必须提供来自经过特殊配置的设备的代码。</p>
-<p>在<code>IAM -&gt; Dashboard</code>来实现这个功能：<br><img src="/images/aws/iam_mfa.jpg" alt=""><br>这里我用了Authy，重新登录后会提示：<br><img src="/images/aws/iam_login.jpg" alt=""></p>
-<h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><p>创建 AWS 账户时，会创建一个 AWS 账户<strong>根用户</strong>身份。使用 根用户，您可以对 AWS 账户中的所有资源进行完全、无限制的访问，包括访问您的账单信息，您还能更改自己的密码。</p>
-<h3 id="User管理"><a href="#User管理" class="headerlink" title="User管理"></a>User管理</h3><p>在<code>IAM -&gt; Users</code>来实现对用户管理(CRUD，Add Permission, Add Group)。<br><img src="/images/aws/iam_user.jpg" alt=""><br>创建成功后，可以用这个<code>https://account_id.signin.aws.amazon.com/console</code>来登录。</p>
-<h3 id="设置密码策略"><a href="#设置密码策略" class="headerlink" title="设置密码策略"></a>设置密码策略</h3><p>在<code>IAM -&gt; Account Settings</code>来实现对密码策略的管理。</p>
-<h3 id="MFA"><a href="#MFA" class="headerlink" title="MFA"></a>MFA</h3><p>在<code>IAM -&gt; Users -&gt; Summary -&gt;  Security Credentials</code>来实现对User启用MFA。</p>
-<h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><p>没什么好说的，在<code>IAM -&gt; Groups</code>来实现对组的管理(CRUD，Add Permission, Add/Remove User)。</p>
-<h2 id="Role"><a href="#Role" class="headerlink" title="Role"></a>Role</h2><p>也没啥说的，在<code>IAM -&gt; Roles</code>来实现对角色的管理(CRUD，Add Permission)。</p>
-<h2 id="Policy"><a href="#Policy" class="headerlink" title="Policy"></a>Policy</h2><p>策略是 AWS 中的一个实体；在附加到身份或资源时，策略定义了它们的权限。在<code>IAM -&gt; Policies</code>来实现对策略的管理。</p>
-<p>做了一些基本的操作，Security Status：<br><img src="/images/aws/iam.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1966,7 +1964,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">333</span>
+                  <span class="site-state-item-count">334</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

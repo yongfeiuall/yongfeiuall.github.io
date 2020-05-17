@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2020-04-05T05:03:08.962Z</updated>
+  <updated>2020-05-17T03:50:50.781Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Robotframework Automation With Jenkins and Xray</title>
+    <link href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/"/>
+    <id>http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/</id>
+    <published>2020-05-17T02:46:52.000Z</published>
+    <updated>2020-05-17T03:50:50.781Z</updated>
+    
+    <content type="html">&lt;p&gt;Current, we use Xray in Jira for test management, now we want to implement our automation as below:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;use Robotframework design script&lt;/li&gt;
+&lt;li&gt;use Jenkins trigger automaion running&lt;/li&gt;
+&lt;li&gt;return running result to xray and update execution status&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;Pre-Condition&quot;&gt;&lt;a href=&quot;#Pre-Condition&quot; class=&quot;headerlink&quot; title=&quot;Pre-Condition&quot;&gt;&lt;/a&gt;Pre-Condition&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;Create one test case, one execution, and add test case to execution, the default status as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/before_run.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;li&gt;RF demo script:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/rf_script.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;Install-and-config-xray-jenkins-plugin&quot;&gt;&lt;a href=&quot;#Install-and-config-xray-jenkins-plugin&quot; class=&quot;headerlink&quot; title=&quot;Install and config xray jenkins plugin&quot;&gt;&lt;/a&gt;Install and config xray jenkins plugin&lt;/h1&gt;&lt;p&gt;Use offline way to install, download plugin here: &lt;a href=&quot;http://mirrors.jenkins-ci.org/plugins/xray-connector/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;xray-connector&lt;/a&gt;, and install plugin as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/upload_plugin.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &amp;gt; Configure System &amp;gt; Xray for Jira configuration.&lt;br&gt;&lt;img src=&quot;/images/CI/xray/xray_config.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray&quot;&gt;&lt;a href=&quot;#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray&quot; class=&quot;headerlink&quot; title=&quot;Config jenkins job to run automaiton test and return report to xray&quot;&gt;&lt;/a&gt;Config jenkins job to run automaiton test and return report to xray&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;Just use RF command to run demo script, config as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/run_rf.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;li&gt;Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.&lt;br&gt;&lt;img src=&quot;/images/CI/xray/import_result.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;li&gt;Config task with below params:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/import_result_config.jpg&quot; alt=&quot;&quot;&gt;&lt;pre&gt;&lt;code&gt;- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
+- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
+- Project Key – key of the JIRA project. This is a required parameter
+- Test Execution Key – JIRA issue key where results will be imported. 
+- Test Plan Key – JIRA issue key of the Test Plan. 
+- Test Environments – list of Environments (separated by “,”) where tests are executed.
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Run jenkins job&lt;/li&gt;
+&lt;li&gt;Back to Jira Xray, the status update from TODO to PASS automatically&lt;br&gt;&lt;img src=&quot;/images/CI/xray/after_run.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;li&gt;Go to Execution detail page to view automaion detail result&lt;br&gt;&lt;img src=&quot;/images/CI/xray/after_run_detail.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;Finally&quot;&gt;&lt;a href=&quot;#Finally&quot; class=&quot;headerlink&quot; title=&quot;Finally&quot;&gt;&lt;/a&gt;Finally&lt;/h1&gt;&lt;p&gt;Other things we could do:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create test exceution in xray automatically after automation running&lt;/li&gt;
+&lt;li&gt;Even create test case after automation running&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Current, we use Xray in Jira for test management, now we want to implement our automation as below:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;use Robotframework desig
+    
+    </summary>
+    
+      <category term="Product Delivery" scheme="http://izheyi.com/categories/Product-Delivery/"/>
+    
+    
+      <category term="CI/CD" scheme="http://izheyi.com/tags/CI-CD/"/>
+    
+      <category term="Jenkins" scheme="http://izheyi.com/tags/Jenkins/"/>
+    
+      <category term="Robot Framework" scheme="http://izheyi.com/tags/Robot-Framework/"/>
+    
+  </entry>
   
   <entry>
     <title>Prometheus + Grafana 实时监控Windows</title>
@@ -106,9 +165,9 @@
     <link href="http://izheyi.com/2020/03/08/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8B%E5%AD%A6%E6%9C%9F%EF%BC%89/"/>
     <id>http://izheyi.com/2020/03/08/丁丁画画（三年级下学期）/</id>
     <published>2020-03-08T02:03:16.000Z</published>
-    <updated>2020-04-05T05:02:39.869Z</updated>
+    <updated>2020-05-17T02:35:16.699Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_11.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_10.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_6.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_7.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_8.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_9.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_12.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_13.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_14.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_16.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_11.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_10.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_6.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_7.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_8.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_9.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_12.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_13.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_14.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_16.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/2_17.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -180,9 +239,9 @@
     <link href="http://izheyi.com/2020/02/02/%E5%B0%8F%E4%B8%81%E7%94%BB%E4%BD%9C-2020/"/>
     <id>http://izheyi.com/2020/02/02/小丁画作-2020/</id>
     <published>2020-02-02T02:31:04.000Z</published>
-    <updated>2020-05-05T01:50:39.561Z</updated>
+    <updated>2020-05-17T02:40:43.286Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/6.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/5.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/6.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/7.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/2020/8.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -742,31 +801,6 @@
     
     
       <category term="Zabbix" scheme="http://izheyi.com/tags/Zabbix/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>混龄猎狐行动</title>
-    <link href="http://izheyi.com/2018/10/25/%E6%B7%B7%E9%BE%84%E7%8C%8E%E7%8B%90%E8%A1%8C%E5%8A%A8/"/>
-    <id>http://izheyi.com/2018/10/25/混龄猎狐行动/</id>
-    <published>2018-10-25T04:56:59.000Z</published>
-    <updated>2018-10-29T05:11:51.440Z</updated>
-    
-    <content type="html">&lt;p&gt;二、四、六年级学生外出到‘世界公园’，开展的定向猎狐综合实践活动。&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/10/liehu_01.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/10/liehu_02.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;还用一幅画的形式，画出自己感受最深的点。&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/10/liehu_03.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;闺女说这个活动不公平，分地图的时候都是指定的，拿到容易的地图就会排名靠前。对‘公平’讨论了很多，世界上没有绝对的公平，这世界远没有你想的那么单纯。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;二、四、六年级学生外出到‘世界公园’，开展的定向猎狐综合实践活动。&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/10/liehu_01.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/10/liehu_02.
-    
-    </summary>
-    
-      <category term="丁丁" scheme="http://izheyi.com/categories/%E4%B8%81%E4%B8%81/"/>
-    
-    
-      <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
-    
-      <category term="生活" scheme="http://izheyi.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   

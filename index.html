@@ -305,6 +305,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="url">Robotframework Automation With Jenkins and Xray</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-17T10:46:52+08:00">
+                2020-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Current, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
+<ol>
+<li>use Robotframework design script</li>
+<li>use Jenkins trigger automaion running</li>
+<li>return running result to xray and update execution status</li>
+</ol>
+<h1 id="Pre-Condition"><a href="#Pre-Condition" class="headerlink" title="Pre-Condition"></a>Pre-Condition</h1><ol>
+<li>Create one test case, one execution, and add test case to execution, the default status as below:<br><img src="/images/CI/xray/before_run.jpg" alt=""></li>
+<li>RF demo script:<br><img src="/images/CI/xray/rf_script.jpg" alt=""></li>
+</ol>
+<h1 id="Install-and-config-xray-jenkins-plugin"><a href="#Install-and-config-xray-jenkins-plugin" class="headerlink" title="Install and config xray jenkins plugin"></a>Install and config xray jenkins plugin</h1><p>Use offline way to install, download plugin here: <a href="http://mirrors.jenkins-ci.org/plugins/xray-connector/" target="_blank" rel="external">xray-connector</a>, and install plugin as below:<br><img src="/images/CI/xray/upload_plugin.jpg" alt=""></p>
+<p>Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &gt; Configure System &gt; Xray for Jira configuration.<br><img src="/images/CI/xray/xray_config.jpg" alt=""></p>
+<h1 id="Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray"><a href="#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray" class="headerlink" title="Config jenkins job to run automaiton test and return report to xray"></a>Config jenkins job to run automaiton test and return report to xray</h1><ol>
+<li>Just use RF command to run demo script, config as below:<br><img src="/images/CI/xray/run_rf.jpg" alt=""></li>
+<li>Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.<br><img src="/images/CI/xray/import_result.jpg" alt=""></li>
+<li>Config task with below params:<br><img src="/images/CI/xray/import_result_config.jpg" alt=""><pre><code>- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
+- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
+- Project Key – key of the JIRA project. This is a required parameter
+- Test Execution Key – JIRA issue key where results will be imported. 
+- Test Plan Key – JIRA issue key of the Test Plan. 
+- Test Environments – list of Environments (separated by “,”) where tests are executed.
+</code></pre></li>
+<li>Run jenkins job</li>
+<li>Back to Jira Xray, the status update from TODO to PASS automatically<br><img src="/images/CI/xray/after_run.jpg" alt=""></li>
+<li>Go to Execution detail page to view automaion detail result<br><img src="/images/CI/xray/after_run_detail.jpg" alt=""></li>
+</ol>
+<h1 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h1><p>Other things we could do:</p>
+<ol>
+<li>Create test exceution in xray automatically after automation running</li>
+<li>Even create test case after automation running</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -751,7 +935,7 @@
       
         
           
-            <p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""></p>
+            <p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_17.JPG" alt=""></p>
 
           
         
@@ -1083,7 +1267,7 @@
       
         
           
-            <p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""></p>
+            <p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/7.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/8.JPG" alt=""></p>
 
           
         
@@ -1766,160 +1950,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/04/08/丁丁画画（二年级下学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/08/丁丁画画（二年级下学期）/" itemprop="url">丁丁画画（二年级下学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-08T12:37:58+08:00">
-                2019-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/08/丁丁画画（二年级下学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/04/08/丁丁画画（二年级下学期）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/2019/2_2_1.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_2.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_3.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_4.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_5.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_6.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1974,7 +2004,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">333</span>
+                  <span class="site-state-item-count">334</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
