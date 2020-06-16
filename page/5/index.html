@@ -305,6 +305,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr发布搜索服务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/22/Java项目实战-solr发布搜索服务/" itemprop="url">Java项目实战 - solr发布搜索服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T17:34:20+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/Java项目实战-solr发布搜索服务/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/22/Java项目实战-solr发布搜索服务/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>发布搜索服务供其它工程调用。</p>
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>要定义返回的POJO：<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchResult</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">List</span>&lt;Item&gt; itemList;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> totalItemCount;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> totalPageCount;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> currentPageNumber;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> currentRowCount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>并实现Dao:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Repository</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SearchDaoImpl</span> <span class="keyword">implements</span> <span class="title">SearchDao</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	private SolrServer solrServer;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	public SearchResult search(SolrQuery query) throws Exception &#123;</span><br><span class="line">		<span class="comment">// return result</span></span><br><span class="line">		SearchResult resultList = <span class="keyword">new</span> SearchResult();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// solr search</span></span><br><span class="line">		QueryResponse response =  solrServer.query(query);</span><br><span class="line">		SolrDocumentList solrDocumentList = response.getResults();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// highlight</span></span><br><span class="line">		<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;&gt;&gt; highlighting = response.getHighlighting();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//get item list</span></span><br><span class="line">		<span class="built_in">List</span>&lt;Item&gt; itemList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (SolrDocument solrDocument : solrDocumentList) &#123;</span><br><span class="line">			Item item = <span class="keyword">new</span> Item();</span><br><span class="line">			</span><br><span class="line">			item.setId((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"id"</span>));</span><br><span class="line">			<span class="comment">//get highlight</span></span><br><span class="line">			<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; list = highlighting.<span class="literal">get</span>(solrDocument.<span class="literal">get</span>(<span class="string">"id"</span>)).<span class="literal">get</span>(<span class="string">"item_title"</span>);</span><br><span class="line">			<span class="built_in">String</span> title = <span class="string">""</span>;</span><br><span class="line">			<span class="keyword">if</span>(list != <span class="keyword">null</span> &amp;&amp; list.size()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">				title = list.<span class="literal">get</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				title = (<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_title"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			item.setTitle(title);</span><br><span class="line">			item.setImage((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_image"</span>));</span><br><span class="line">			item.setPrice((long) solrDocument.<span class="literal">get</span>(<span class="string">"item_price"</span>));</span><br><span class="line">			item.setSell_point((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_sell_point"</span>));</span><br><span class="line">			item.setCategory_name((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_category_name"</span>));</span><br><span class="line">			</span><br><span class="line">			itemList.add(item);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		resultList.setItemList(itemList);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// get total item number</span></span><br><span class="line">		resultList.setTotalItemCount(solrDocumentList.getNumFound());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> resultList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ServiceSearchImpl</span> implements <span class="type">SearchService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">SearchDao</span> searchDao;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">SearchResult</span> search(<span class="type">String</span> query, <span class="type">int</span> page, <span class="type">int</span> rows) throws <span class="type">Exception</span> &#123;</span><br><span class="line">		<span class="type">SolrQuery</span> solrQuery = new <span class="type">SolrQuery</span>();</span><br><span class="line">		</span><br><span class="line">		solrQuery.setQuery(query);</span><br><span class="line">		</span><br><span class="line">		solrQuery.setStart((page -<span class="number">1</span>) * rows);</span><br><span class="line">		solrQuery.setRows(rows);</span><br><span class="line">		</span><br><span class="line">		solrQuery.<span class="type">set</span>(<span class="string">"df"</span>, <span class="string">"item_keywords"</span>);</span><br><span class="line">		</span><br><span class="line">		solrQuery.setHighlight(<span class="literal">true</span>);</span><br><span class="line">		solrQuery.addHighlightField(<span class="string">"item_title"</span>);</span><br><span class="line">		solrQuery.setHighlightSimplePre(<span class="string">"&lt;em style=\"color:red\"&gt;"</span>);</span><br><span class="line">		solrQuery.setHighlightSimplePost(<span class="string">"&lt;/em&gt;"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="type">SearchResult</span> <span class="literal">result</span> = searchDao.search(solrQuery);</span><br><span class="line">		</span><br><span class="line">		long totalItemCount = <span class="literal">result</span>.getTotalItemCount();</span><br><span class="line">		long totalPageCount = totalItemCount / rows;</span><br><span class="line">		<span class="keyword">if</span> (totalItemCount % rows &gt; <span class="number">0</span>)&#123;</span><br><span class="line">			totalPageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="literal">result</span>.setTotalPageCount(totalPageCount);</span><br><span class="line">		<span class="literal">result</span>.setCurrentPageNumber(page);</span><br><span class="line">		<span class="literal">result</span>.setCurrentRowCount(rows);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchServiceController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> SearchService searchService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(value=<span class="string">"/query"</span>, method=RequestMethod.GET)</span><br><span class="line">	<span class="annotation">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span> TaotaoResult search(<span class="annotation">@RequestParam</span>(<span class="string">"q"</span>)String query, </span><br><span class="line">			<span class="annotation">@RequestParam</span>(defaultValue=<span class="string">"1"</span>)Integer page,</span><br><span class="line">			<span class="annotation">@RequestParam</span>(defaultValue=<span class="string">"20"</span>)Integer rows)&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//query is null</span></span><br><span class="line">		<span class="keyword">if</span>(StringUtils.isBlank(query))</span><br><span class="line">			<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">build</span><span class="params">(<span class="number">400</span>, <span class="string">"Should contain query string"</span>)</span></span>;</span><br><span class="line">		</span><br><span class="line">		SearchResult searchResult = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			query = <span class="keyword">new</span> String(query.getBytes(<span class="string">"iso8859-1"</span>), <span class="string">"utf-8"</span>);</span><br><span class="line">			searchResult = searchService.search(query, page, rows);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(searchResult)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/solr_search_service.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr导入索引库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1823,172 +1982,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/16/Java项目实战-图片Server管理和图片上传/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="url">Java项目实战 - 图片Server管理和图片上传</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T13:55:13+08:00">
-                2018-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/16/Java项目实战-图片Server管理和图片上传/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要分布式的环境中，一般会配置一个专门的图片Server。</p>
-<h1 id="图片服务器"><a href="#图片服务器" class="headerlink" title="图片服务器"></a>图片服务器</h1><ul>
-<li>Nginx作为http服务</li>
-<li>ftp上传图片 - linux自带：vsftpd。</li>
-</ul>
-<p>Nginx和vsftpd都需要安装配置，不做说明。</p>
-<h1 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h1><h2 id="文件上传解析器"><a href="#文件上传解析器" class="headerlink" title="文件上传解析器"></a>文件上传解析器</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义文件上传解析器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"multipartResolver"</span></span><br><span class="line">    <span class="attribute">class</span>=<span class="value">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定默认编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"defaultEncoding"</span> <span class="attribute">value</span>=<span class="value">"UTF-8"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定文件上传的最大值5MB，5*1024*1024 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"maxUploadSize"</span> <span class="attribute">value</span>=<span class="value">"5242880"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="创建公共Properties"><a href="#创建公共Properties" class="headerlink" title="创建公共Properties"></a>创建公共Properties</h2><p>在properties下创建resource.properties文件<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#FTP配置</span></span><br><span class="line"><span class="setting">FTP_IP=<span class="value"><span class="number">192.168</span>.<span class="number">220.133</span></span></span></span><br><span class="line"><span class="setting">FTP_PORT=<span class="value"><span class="number">21</span></span></span></span><br><span class="line"><span class="setting">FTP_USERNAME=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_PASSWORD=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_BASE_PATH=<span class="value">/home/ftpuser/www/images</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">#图片Several配置</span></span><br><span class="line"><span class="setting">IMAGE_BASE_PATH=<span class="value">http://<span class="number">192.168</span>.<span class="number">220.133</span>/images</span></span></span><br></pre></td></tr></table></figure></p>
-<p>并修改<code>&lt;context:property-placeholder location=&quot;classpath:properties/db.properties&quot; /&gt;</code> to <code>&lt;context:property-placeholder location=&quot;classpath:properties/*.properties&quot; /&gt;</code></p>
-<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>封装了一个公共的File Upload的方法。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PictureServiceImpl</span> <span class="keyword">implements</span> <span class="title">PictureService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//利用这种方式来取resource.properties的配置</span></span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_IP&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_IP;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PORT&#125;</span>"</span>)</span><br><span class="line">	private Integer FTP_PORT;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_USERNAME&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_USERNAME;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PASSWORD&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_PASSWORD;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_BASE_PATH;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;IMAGE_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> IMAGE_BASE_PATH;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	public <span class="built_in">Map</span> uploadPicture(MultipartFile uploadFile) &#123;</span><br><span class="line">		<span class="built_in">Map</span> resultMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 生成新文件名</span></span><br><span class="line">			<span class="built_in">String</span> oldname = uploadFile.getOriginalFilename();</span><br><span class="line">			<span class="built_in">String</span> newname = UUID.randomUUID().toString();</span><br><span class="line">			newname = newname + oldname.substring(oldname.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//上传图片</span></span><br><span class="line">			<span class="built_in">String</span> filepath = <span class="keyword">new</span> <span class="built_in">DateTime</span>().toString(<span class="string">"/yyyy/MM/dd"</span>);</span><br><span class="line">			boolean result = FtpUtil.uploadFile(FTP_IP, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, </span><br><span class="line">					filepath, newname, uploadFile.getInputStream());</span><br><span class="line">			<span class="keyword">if</span>(!result)&#123;</span><br><span class="line">				resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">				resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">				<span class="keyword">return</span> resultMap;</span><br><span class="line">			&#125;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">0</span>);</span><br><span class="line">			resultMap.put(<span class="string">"url"</span>, IMAGE_BASE_PATH + filepath + <span class="string">"/"</span> + newname);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">			resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">public class <span class="type">PictureController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">PictureService</span> pictureService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/pic/upload"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">String</span> pictureUpload(<span class="type">MultipartFile</span> uploadFile)&#123;</span><br><span class="line">		<span class="type">Map</span> <span class="literal">result</span> = pictureService.uploadPicture(uploadFile);</span><br><span class="line">		<span class="keyword">return</span> <span class="type">JsonUtils</span>.objectToJson(<span class="literal">result</span>);//处理浏览器兼容性</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/item_pic.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2043,7 +2036,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

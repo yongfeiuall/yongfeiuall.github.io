@@ -305,6 +305,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/09/Performance-Testing-操作系统监控/" itemprop="url">Linux操作系统监控</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-09T08:37:33+08:00">
+                2015-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/09/Performance-Testing-操作系统监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/09/Performance-Testing-操作系统监控/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在性能测试的过程中，要监控的地方应该就是以下部分：</p>
+<ul>
+<li>操作系统</li>
+<li>中间件</li>
+<li>Code</li>
+<li>DB</li>
+<li>网络</li>
+</ul>
+<p>这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。</p>
+<h1 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h1><p>CPU监控的关键指标做一个大概的说明：</p>
+<h2 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h2><p>正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。<br><strong>Notes：运行队列长度最大不要超过当前内核数的3倍。</strong><br>Another common system statistic is that of load average. The load on a system is the total amount of running and runnable process. For example, if two processes were running and three were available to run, the system’s load would be five. The load average is the amount of load over a given amount of time. Typically, the load average is taken over <strong>1 minute, 5 minutes, and 15 minutes</strong>. This enables you to see how the load changes over time.</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>To create the illusion that a given single processor runs multiple tasks simultaneously, the Linux kernel constantly switches between different processes. The switch between different processes is called a context switch, because when it happens, the CPU saves all the context information from the old process and retrieves all the context information for the new process.<br>是CPU在不同进程间按时间片轮换，交互性强的需要高优先级，交互性弱的需要低优先级。在linux系统中，有两种优先级：普通优先级和实时优先级。上下文切换不可避免，如果可能最好减少上下文切换。</p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>一般来自于外部硬件中断，中断也是不可避免的。中断就会有上下文切换，但是上正文切换并不都是中断造成的。<br><em>性能测试不需要特别关心内核的问题（中断、上下文切换），而是关注有时因程序写的不好造成的频繁切换（不正常切换）。</em></p>
+<h2 id="资源利用率"><a href="#资源利用率" class="headerlink" title="资源利用率"></a>资源利用率</h2><p>CPU utilization is a straightforward concept. At any given time, the CPU can be doing one of seven things.<br>First, it can be idle, which means that the processor is not actually doing any work and is waiting for something to do. This is “<strong>idle</strong>“ time.<br>Second, the CPU can be running user code, which is specified as “<strong>user</strong>“ time.<br>Third, the CPU can be executing code in the Linux kernel on behalf of the application code. This is “<strong>system</strong>“ time.<br>Fourth, the CPU can be executing user code that has been “nice”ed or set to run at a lower priority than normal processes. （切换线程优先级时消耗的时间)<br>Fifth, the CPU can be in iowait, which mean the system is spending its time waiting for I/O (such as disk or network) to complete.<br>Sixth, the CPU can be in irq state, which means it is in high-priority kernel code handling a hardware interrupt.<br>Finally, the CPU can be in softirq mode, which means it is executing kernel code that was also triggered by an interrupt, but it is running at a lower priority (the bottom-half code). This can happen when a device interrupt occurs, but the kernel needs to do some work with it before it is ready to hand it over to user space (for example, with a network packet).<br>通常我们只关注：idle, user, system, (+wa)。<br><strong>在正常情况下，用户态和系统态的CUP消耗比率是7：3.</strong></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/09/Performance-Testing-操作系统监控/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/08/Centos下Nginx-php-fpm安装配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1772,171 +1943,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Performance-Testing-开篇/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Performance-Testing-开篇/" itemprop="url">Performance Testing-开篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T07:56:15+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Performance-Testing-开篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Performance-Testing-开篇/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对性能测试从工作起就一知半解，感觉很高大尚的东西，之前做过几个项目也参加过简单的培训，对性能测试有了一个初步的认识，之后一直没来得及整理和思考。接下来的这段时间整理一下，总结一下思路和流程，以备后用，也尽量让它们能纳入到自己的知识结构体系中。</p>
-<h1 id="本次整理大概内容"><a href="#本次整理大概内容" class="headerlink" title="本次整理大概内容"></a>本次整理大概内容</h1><ul>
-<li>性能测试基础知识</li>
-<li>Load Runner基本使用</li>
-<li>Java和JVM的简单分析</li>
-<li>Linux的简单分析</li>
-</ul>
-<h1 id="本次记录笔记的一些说明"><a href="#本次记录笔记的一些说明" class="headerlink" title="本次记录笔记的一些说明"></a>本次记录笔记的一些说明</h1><ul>
-<li>是基于Load Runner、Linux、Java来学习的</li>
-<li>内容可能会有些散</li>
-<li><strong>为了减少打字，可能会记录一些当时培训的内容，如果有任何不妥，请告之，做相应处理。</strong></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1991,7 +1997,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

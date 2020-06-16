@@ -305,6 +305,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="url">Robotframework Automation With Jenkins and Xray - pipeline</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T10:46:52+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>From last blog, we integrate RF, Jenkins and Xray, but for now, we usually use ‘Pipeline’ way for better management. Give it a try…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    stages &#123;  </span><br><span class="line">        stage(<span class="string">'Test Execution'</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                bat <span class="string">'robot db.robot'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Publish RF Test Result'</span>)&#123;</span><br><span class="line">             steps &#123;</span><br><span class="line">				step([</span><br><span class="line">                     $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'RobotPublisher'</span>,</span><br><span class="line">                     disableArchiveOutput: false,</span><br><span class="line">                     logFileName: <span class="string">'log.html'</span>,</span><br><span class="line">                     otherFiles: <span class="string">''</span>,</span><br><span class="line">                     outputFileName: <span class="string">'output.xml'</span>,</span><br><span class="line">                     outputPath: <span class="string">''</span>,</span><br><span class="line">                     passThreshold: <span class="number">100</span>,</span><br><span class="line">                     reportFileName: <span class="string">'report.html'</span>,</span><br><span class="line">                     unstableThreshold: <span class="number">0</span></span><br><span class="line">				])</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Import Result To Xray'</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                step([</span><br><span class="line">                    $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'XrayImportBuilder'</span>,</span><br><span class="line">                    endpointName: <span class="string">'/robot'</span>,</span><br><span class="line">                    fixVersion: <span class="string">''</span>,</span><br><span class="line">                    importFilePath: <span class="string">'output.xml'</span>,</span><br><span class="line">                    importToSameExecution: <span class="string">'true'</span>,</span><br><span class="line">                    projectKey: <span class="string">'ISR'</span>,</span><br><span class="line">                    serverInstance: <span class="string">'39c998d7-e25b-4cc7-81d6-dfe14d970cac'</span>,</span><br><span class="line">                    testPlanKey: <span class="string">''</span>,</span><br><span class="line">                    testExecKey: <span class="string">'ISR-8352'</span></span><br><span class="line">				])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>After run job, the result as below:</p>
+<p><img src="/images/CI/xray/pipeline.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -410,7 +567,7 @@
       
         
           
-            <p>Current, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
+            <p>Currently, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
 <ol>
 <li>use Robotframework design script</li>
 <li>use Jenkins trigger automaion running</li>
@@ -1268,6 +1425,7 @@
         
           
             <p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/7.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/8.JPG" alt=""></p>
+<p><img src="/images/izheyi/pic/qidianhui/2020/9.JPG" alt=""></p>
 
           
         
@@ -1782,174 +1940,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/11/网站促销活动前端自动化监控/" itemprop="url">网站促销活动前端自动化监控</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T06:54:41+08:00">
-                2019-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/11/网站促销活动前端自动化监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/06/11/网站促销活动前端自动化监控/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？</p>
-<p>对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。</p>
-<p>活动一般有</p>
-<ul>
-<li>一个主页，上面有图片，标题，价格</li>
-<li>详情页面</li>
-<li>下单</li>
-</ul>
-<p>自动化思路：</p>
-<ol>
-<li>从主页通过Selenium来获得所有的图片和产品详细页链接</li>
-<li>通过Request来检查产品链接和图片存在与否</li>
-<li>检查详细页的信息正确</li>
-<li>利用Cookie实现下单流程的实现</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2004,7 +1994,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

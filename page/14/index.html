@@ -305,6 +305,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/22/Docker-Machine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/22/Docker-Machine/" itemprop="url">Docker-Machine</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-22T15:14:20+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/22/Docker-Machine/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/22/Docker-Machine/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>做为Docker容器集群管理三剑客之一的Docker Machine大大简化了Docker主机部署的复杂度，极大的方便了开发者管理分布式Docker环境。</p>
+<h2 id="创建本地主机实例"><a href="#创建本地主机实例" class="headerlink" title="创建本地主机实例"></a>创建本地主机实例</h2><p>使用virtualbox类型的驱动，创建一台Docker主机，命名为qa。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine.exe <span class="operator"><span class="keyword">create</span> -<span class="keyword">d</span> virtualbox qa</span><br><span class="line">Running pre-<span class="keyword">create</span> checks...</span><br><span class="line">Creating machine...</span><br><span class="line">(qa) Copying <span class="keyword">C</span>:\<span class="keyword">Users</span>\youfei.hu\.docker\machine\<span class="keyword">cache</span>\boot2docker.iso <span class="keyword">to</span> <span class="keyword">C</span>:\<span class="keyword">Users</span>\youfei.hu\.docker\mach                                                                                                                                                   ine\machines\qa\boot2docker.iso...</span><br><span class="line">(qa) Creating VirtualBox VM...</span><br><span class="line">(qa) Creating SSH <span class="keyword">key</span>...</span><br><span class="line">(qa) <span class="keyword">Starting</span> the VM...</span><br><span class="line">(qa) <span class="keyword">Check</span> network <span class="keyword">to</span> re-<span class="keyword">create</span> <span class="keyword">if</span> needed...</span><br><span class="line">(qa) Windows might ask <span class="keyword">for</span> the permission <span class="keyword">to</span> configure a dhcp <span class="keyword">server</span>. Sometimes, such confirmation windo                                                                                                                                                                       w <span class="keyword">is</span> minimized <span class="keyword">in</span> the taskbar.</span><br><span class="line">(qa) Waiting <span class="keyword">for</span> an IP...</span><br><span class="line">Waiting <span class="keyword">for</span> machine <span class="keyword">to</span> be running, this may take a few minutes...</span><br><span class="line">Detecting operating <span class="keyword">system</span> <span class="keyword">of</span> created <span class="keyword">instance</span>...</span><br><span class="line">Waiting <span class="keyword">for</span> SSH <span class="keyword">to</span> be available...</span><br><span class="line">Detecting the provisioner...</span><br><span class="line">Provisioning <span class="keyword">with</span> boot2docker...</span><br><span class="line">Copying certs <span class="keyword">to</span> the <span class="keyword">local</span> machine <span class="keyword">directory</span>...</span><br><span class="line">Copying certs <span class="keyword">to</span> the remote machine...</span><br><span class="line">Setting Docker configuration <span class="keyword">on</span> the remote daemon...</span><br><span class="line">Checking <span class="keyword">connection</span> <span class="keyword">to</span> Docker...</span><br><span class="line">Docker <span class="keyword">is</span> up <span class="keyword">and</span> running!</span><br><span class="line"><span class="keyword">To</span> see how <span class="keyword">to</span> <span class="keyword">connect</span> your Docker <span class="keyword">Client</span> <span class="keyword">to</span> the Docker <span class="keyword">Engine</span> running <span class="keyword">on</span> this <span class="keyword">virtual</span> machine, run: <span class="keyword">C</span>:\Program Files\Docker Toolbox\docker-machine.exe env qa</span></span><br></pre></td></tr></table></figure></p>
+<p>验证创建成功<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine.exe ls</span><br><span class="line">NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</span><br><span class="line"><span class="keyword">default</span>   -        virtualbox   Running   <span class="string">tcp:</span><span class="comment">//192.168.99.100:2376           v17.09.1-ce</span></span><br><span class="line">qa        -        virtualbox   Running   <span class="string">tcp:</span><span class="comment">//192.168.99.102:2376           v17.09.1-ce</span></span><br><span class="line">test      -        virtualbox   Running   <span class="string">tcp:</span><span class="comment">//192.168.99.101:2376           v17.09.1-ce</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/09/Docker-Repository/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1786,170 +1942,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/10/26/Win7-安装curl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/26/Win7-安装curl/" itemprop="url">Win7 安装curl</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-26T13:24:29+08:00">
-                2017-10-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Curl/" itemprop="url" rel="index">
-                    <span itemprop="name">Curl</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/26/Win7-安装curl/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/10/26/Win7-安装curl/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Curl命令可以通过命令行的方式，执行Http请求。</p>
-<p>介绍一下在Window 64位下的安装。</p>
-<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>从<a href="https://curl.haxx.se/download.html" target="_blank" rel="external">Curl</a>,下载工具包，找到相应的版本。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
-<li><p>在解压目录下使用<br>解压后目录’C:\curl-7.57.0\I386’</p>
-</li>
-<li><p>把exe放到System32<br>拷贝I386/curl.exe文件到C:\Windows\System32， 就可以在DOS窗口中任意位置，使用curl命令了。</p>
-</li>
-<li><p>增加环境变量<br>给path加环境变量，效果和第2种一次。</p>
-</li>
-</ol>
-<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;curl</span><br><span class="line">curl: try 'curl --help' or 'curl --manual' for more information</span><br><span class="line"></span><br><span class="line">C:\Users\youfei.hu&gt;curl www.google.com</span><br><span class="line"><span class="tag">&lt;<span class="title">HTML</span>&gt;</span><span class="tag">&lt;<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"content-type"</span> <span class="attribute">content</span>=<span class="value">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">TITLE</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">TITLE</span>&gt;</span><span class="tag">&lt;/<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">BODY</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">H1</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">H1</span>&gt;</span></span><br><span class="line">The document has moved</span><br><span class="line"><span class="tag">&lt;<span class="title">A</span> <span class="attribute">HREF</span>=<span class="value">"http://www.google.com.hk/?gfe_rd=cr&amp;amp;dcr=0&amp;amp;ei=xoAnWqngJ6P48AeVl5SIAw"</span>&gt;</span>here<span class="tag">&lt;/<span class="title">A</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="title">BODY</span>&gt;</span><span class="tag">&lt;/<span class="title">HTML</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2004,7 +1996,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

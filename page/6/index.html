@@ -305,6 +305,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/16/Java项目实战-图片Server管理和图片上传/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="url">Java项目实战 - 图片Server管理和图片上传</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T13:55:13+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/16/Java项目实战-图片Server管理和图片上传/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>要分布式的环境中，一般会配置一个专门的图片Server。</p>
+<h1 id="图片服务器"><a href="#图片服务器" class="headerlink" title="图片服务器"></a>图片服务器</h1><ul>
+<li>Nginx作为http服务</li>
+<li>ftp上传图片 - linux自带：vsftpd。</li>
+</ul>
+<p>Nginx和vsftpd都需要安装配置，不做说明。</p>
+<h1 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h1><h2 id="文件上传解析器"><a href="#文件上传解析器" class="headerlink" title="文件上传解析器"></a>文件上传解析器</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义文件上传解析器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"multipartResolver"</span></span><br><span class="line">    <span class="attribute">class</span>=<span class="value">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定默认编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"defaultEncoding"</span> <span class="attribute">value</span>=<span class="value">"UTF-8"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定文件上传的最大值5MB，5*1024*1024 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"maxUploadSize"</span> <span class="attribute">value</span>=<span class="value">"5242880"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="创建公共Properties"><a href="#创建公共Properties" class="headerlink" title="创建公共Properties"></a>创建公共Properties</h2><p>在properties下创建resource.properties文件<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#FTP配置</span></span><br><span class="line"><span class="setting">FTP_IP=<span class="value"><span class="number">192.168</span>.<span class="number">220.133</span></span></span></span><br><span class="line"><span class="setting">FTP_PORT=<span class="value"><span class="number">21</span></span></span></span><br><span class="line"><span class="setting">FTP_USERNAME=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_PASSWORD=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_BASE_PATH=<span class="value">/home/ftpuser/www/images</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">#图片Several配置</span></span><br><span class="line"><span class="setting">IMAGE_BASE_PATH=<span class="value">http://<span class="number">192.168</span>.<span class="number">220.133</span>/images</span></span></span><br></pre></td></tr></table></figure></p>
+<p>并修改<code>&lt;context:property-placeholder location=&quot;classpath:properties/db.properties&quot; /&gt;</code> to <code>&lt;context:property-placeholder location=&quot;classpath:properties/*.properties&quot; /&gt;</code></p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>封装了一个公共的File Upload的方法。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PictureServiceImpl</span> <span class="keyword">implements</span> <span class="title">PictureService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//利用这种方式来取resource.properties的配置</span></span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_IP&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_IP;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PORT&#125;</span>"</span>)</span><br><span class="line">	private Integer FTP_PORT;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_USERNAME&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_USERNAME;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PASSWORD&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_PASSWORD;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_BASE_PATH;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;IMAGE_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> IMAGE_BASE_PATH;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	public <span class="built_in">Map</span> uploadPicture(MultipartFile uploadFile) &#123;</span><br><span class="line">		<span class="built_in">Map</span> resultMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 生成新文件名</span></span><br><span class="line">			<span class="built_in">String</span> oldname = uploadFile.getOriginalFilename();</span><br><span class="line">			<span class="built_in">String</span> newname = UUID.randomUUID().toString();</span><br><span class="line">			newname = newname + oldname.substring(oldname.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//上传图片</span></span><br><span class="line">			<span class="built_in">String</span> filepath = <span class="keyword">new</span> <span class="built_in">DateTime</span>().toString(<span class="string">"/yyyy/MM/dd"</span>);</span><br><span class="line">			boolean result = FtpUtil.uploadFile(FTP_IP, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, </span><br><span class="line">					filepath, newname, uploadFile.getInputStream());</span><br><span class="line">			<span class="keyword">if</span>(!result)&#123;</span><br><span class="line">				resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">				resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">				<span class="keyword">return</span> resultMap;</span><br><span class="line">			&#125;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">0</span>);</span><br><span class="line">			resultMap.put(<span class="string">"url"</span>, IMAGE_BASE_PATH + filepath + <span class="string">"/"</span> + newname);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">			resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">public class <span class="type">PictureController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">PictureService</span> pictureService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/pic/upload"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">String</span> pictureUpload(<span class="type">MultipartFile</span> uploadFile)&#123;</span><br><span class="line">		<span class="type">Map</span> <span class="literal">result</span> = pictureService.uploadPicture(uploadFile);</span><br><span class="line">		<span class="keyword">return</span> <span class="type">JsonUtils</span>.objectToJson(<span class="literal">result</span>);//处理浏览器兼容性</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/item_pic.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-商品类目选择/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1760,198 +1926,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/08/Java项目实战-环境搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/08/Java项目实战-环境搭建/" itemprop="url">Java项目实战 - 环境搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T10:03:25+08:00">
-                2018-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/08/Java项目实战-环境搭建/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/08/Java项目实战-环境搭建/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过一个Java项目实战，对Java开发框架和流程有个更细的认知和学习。</p>
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ul>
-<li>JDK的安装配置</li>
-<li>Tomcat的安装配置<ul>
-<li>下载解压，运行tomcat目录中的bin/startup.bat，启动tomcat，启动后有浏览器输入<a href="http://localhost:8080/，验证安装。" target="_blank" rel="external">http://localhost:8080/，验证安装。</a></li>
-</ul>
-</li>
-<li>Eclipse的配置<ul>
-<li>默认字符集更改为utf-8</li>
-<li>添加Tomcat运行环境</li>
-<li>添加Tomcat Server</li>
-</ul>
-</li>
-</ul>
-<h1 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h1><p>Github: <a href="https://github.com/yongfeiuall/zheyi-taotao" target="_blank" rel="external">zheyi-taotao</a></p>
-<h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><p>3种打包方式：</p>
-<ul>
-<li>jar<br>jar工程，很显然就是pom工程的子工程，由pom工程来管理。</li>
-<li>war<br>war工程是一个web工程，是可以直接放到tomcat下运行的工程。</li>
-<li>pom<br>pom工程一般都是父工程，管理jar包的版本、maven插件的版本、统一的依赖管理，它是一个聚合工程。其实说白了它只有一个pom.xml文件，一般是作为父工程出现的，只是定义了一些依赖、插件、还有一些版本号等等</li>
-</ul>
-<h2 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h2><p><img src="/images/javaproject/project_tree.jpg" alt=""></p>
-<ul>
-<li>zheyi-parent：父工程，其打包方式是pom，主要管理jar包的版本号。项目中的所有工程都应该继承父工程。</li>
-<li>zheyi-common：存放一些通用的工具类、通用的pojo。其打包方式为jar，被其他的工程所依赖。</li>
-<li>zheyi-manager：服务层工程，又称之为聚合工程或pom工程。<ul>
-<li>zheyi-manager-pojo：这是一个独立的模块，其打包方式是jar。</li>
-<li>zheyi-manager-mapper：这是一个独立的模块，其打包方式是jar。</li>
-<li>zheyi-manager-service：打包方式是jar。</li>
-<li>zheyi-manager-web：表现层工程，打包方式是war。</li>
-</ul>
-</li>
-</ul>
-<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>创建完成后，运行，如下图所示：<br><img src="/images/javaproject/env_verify.jpg" alt=""></p>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
-<li>运行要先Install parent和common</li>
-<li>pageHelper-3.4.2-fix couldn’t download, change to 5.0.1</li>
-<li>要在web下创建web.xml</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2006,7 +1980,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

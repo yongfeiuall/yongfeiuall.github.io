@@ -305,6 +305,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/16/python-json-dump-load-dumps-loads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/16/python-json-dump-load-dumps-loads/" itemprop="url">python json dump/load/dumps/loads</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T08:58:57+08:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/16/python-json-dump-load-dumps-loads/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/02/16/python-json-dump-load-dumps-loads/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="load"><a href="#load" class="headerlink" title="load"></a>load</h1><p>从外部JSON文件变成dict字典(外部文件一定要是json格式)<br><code>json.load(open(&#39;a.json&#39;,&quot;r&quot;))</code></p>
+<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>把dict字典变成json格式，生成到外部文件里面<br><code>json.dump(dict,open(&#39;a.json&#39;,&quot;w&quot;))</code></p>
+<h1 id="dumps"><a href="#dumps" class="headerlink" title="dumps"></a>dumps</h1><p>Convert Python Object (Dict) to JSON<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"> </span><br><span class="line"><span class="keyword">d</span> = &#123;&#125;</span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Name"</span>] = <span class="string">"Luke"</span></span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Country"</span>] = <span class="string">"Canada"</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> json.dumps(<span class="keyword">d</span>, ensure_ascii=False)</span><br><span class="line"># result &#123;<span class="string">"Country"</span>: <span class="string">"Canada"</span>, <span class="string">"Name"</span>: <span class="string">"Luke"</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="loads"><a href="#loads" class="headerlink" title="loads"></a>loads</h1><p>To convert JSON to a Python dict use this:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">json_data = '&#123;<span class="string">"name"</span>: <span class="string">"Brian"</span>, <span class="string">"city"</span>: <span class="string">"BJ"</span>&#125;'</span><br><span class="line">python_obj = json.loads(json_data)</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"name"</span>]</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"city"</span>]</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/05/中国国家科技馆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1740,167 +1897,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/09/12/做性能测试时，怎么判断网络带宽够不够/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/12/做性能测试时，怎么判断网络带宽够不够/" itemprop="url">做性能测试时，怎么判断网络带宽够不够</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-12T15:47:02+08:00">
-                2016-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/09/12/做性能测试时，怎么判断网络带宽够不够/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/09/12/做性能测试时，怎么判断网络带宽够不够/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>简单记录一下怎么判断网络带宽对性能测试的影响。</p>
-<p><em>注：100Mbps = 12.5M/s，带宽是bps</em></p>
-<ol>
-<li><p>压力机和服务器之间的真实带宽<br>这个一般自己来测试一下，可以用工具iperf， 详细请看：<a href="https://iperf.fr/" target="_blank" rel="external">iperf</a><br><img src="/images/performancetesting/iperf.jpg" alt=""><br>这样，就可以获得二者之间的带宽为393M/s</p>
-</li>
-<li><p>单个用户跑业务的吞吐量的平均值<br>假设跑完后的平均值是1000k，那需要的带宽就约是8M；若是想跑100个用户就需要800M，根据第一步测试的结果实际带宽是393M，所以是跑100个用户带宽是不够的。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1955,7 +1951,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">335</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
