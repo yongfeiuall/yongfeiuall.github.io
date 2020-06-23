@@ -4,6 +4,47 @@
   
     
     <entry>
+      <title><![CDATA[Jmeter + Grafana + InfluxDB 性能测试实时监控]]></title>
+      <url>http://izheyi.com/2020/06/14/Jmeter-Grafana-InfluxDB-%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7/</url>
+      <content type="html"><![CDATA[<p>Jmeter原生的监控确实是丑了点，且很难实时的压测过程中的性能状态，用下面的方式来代替原生的监控展示。</p>
+<p>InfluxDB来存Jmeter运行数据，用Grafana来展示数据。Jmeter引入<code>Backend Litener</code>，压测的过程中实时把统计数据发送到InfluxDB中，通过Grafana可视化的展示出来。</p>
+<h1 id="InfluxDB"><a href="#InfluxDB" class="headerlink" title="InfluxDB"></a>InfluxDB</h1><p>一个时序数据库，不做详细说明，可参见官网<a href="https://www.influxdata.com" target="_blank" rel="external">InfluxDB</a></p>
+<ol>
+<li><p>从官网下载</p>
+</li>
+<li><p>修改配置文件，influxdb.conf</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[meta]</span><br><span class="line">  # Where the metadata/raft database is stored</span><br><span class="line">  dir = "C:/influxdb/meta"</span><br><span class="line"></span><br><span class="line">  # Automatically <span class="operator"><span class="keyword">create</span> a <span class="keyword">default</span> <span class="keyword">retention</span> <span class="keyword">policy</span> <span class="keyword">when</span> creating a <span class="keyword">database</span>.</span><br><span class="line">  # <span class="keyword">retention</span>-autocreate = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # <span class="keyword">If</span> <span class="keyword">log</span> messages <span class="keyword">are</span> printed <span class="keyword">for</span> the meta service</span><br><span class="line">  # <span class="keyword">logging</span>-enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">data</span>]</span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores TSM files.</span><br><span class="line">  dir = <span class="string">"C:/influxdb/data"</span></span><br><span class="line"></span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores WAL files.</span><br><span class="line">  wal-dir = <span class="string">"C:/influxdb/wal"</span></span><br><span class="line">  </span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">http</span>]</span><br><span class="line">  # Determines whether <span class="keyword">HTTP</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> <span class="keyword">logging</span> <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-<span class="keyword">log</span>-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # The bind address used <span class="keyword">by</span> the <span class="keyword">HTTP</span> service.</span><br><span class="line"> bind-address = <span class="string">":8086"</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>创建相应Folder： data, meta, wal</p>
+</li>
+<li><p>双击influxd.exe，运行influxDB</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">8888888</span>           .d<span class="number">888 888</span>                   <span class="number">8888888</span>b.  888888b.</span><br><span class="line">   888            d88P"  888                   888  "Y88b 888  "88b</span><br><span class="line">   888            888    888                   888    <span class="number">888 888</span>  .88P</span><br><span class="line">   888   88888b.  <span class="number">888888 88</span>8 888  <span class="number">888 888</span>  <span class="number">888 888</span>    <span class="number">888 88888</span>88K.</span><br><span class="line">   888   888 "88b 888    <span class="number">888 888</span>  888  Y8bd8P' 888    <span class="number">888 888</span>  "Y88b</span><br><span class="line">   888   888  <span class="number">888 888</span>    <span class="number">888 888</span>  888   X88K   888    <span class="number">888 888</span>    888</span><br><span class="line">   888   888  <span class="number">888 888</span>    888 Y88b 888 .d8""8b. 888  .d88P 888   d88P</span><br><span class="line"> <span class="number">8888888 88</span>8  <span class="number">888 888</span>    888  "Y<span class="number">88888 888</span>  <span class="number">888 88888</span>88P"  <span class="number">8888888</span>P"</span><br><span class="line"></span><br><span class="line"><span class="number">2020-06-23</span>T<span class="number">06:34:00.42</span>1889Z     info    InfluxDB starting       &#123;"log_id": "0NZyzDPG000", "version": "1.8.0", "branch": "1.8", "commit": "781490de<span class="number">48220d7695</span>a<span class="number">05c29e5a36</span>f<span class="number">550a4568</span>f5"&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Jmeter"><a href="#Jmeter" class="headerlink" title="Jmeter"></a>Jmeter</h1><ol>
+<li><p>在InfluxDB创建DB</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Connected to http://localhost:8086 version 1.8.0</span><br><span class="line">InfluxDB shell version: 1.8.0</span><br><span class="line">&gt; create database jmeter</span><br><span class="line">&gt; show databases</span><br><span class="line">name: databases</span><br><span class="line"><span class="header">name</span><br><span class="line">----</span></span><br><span class="line"><span class="emphasis">_internal</span><br><span class="line">jmeter</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 Jmeter Backend Listerner</p>
+<p><img src="/images/performancetesting/backend_listener.jpg" alt=""></p>
+</li>
+</ol>
+<h1 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h1><ol>
+<li><p>配置数据源</p>
+<p><img src="/images/performancetesting/grafana_influxdb.jpg" alt=""></p>
+</li>
+<li><p>搭建Dashboard</p>
+<p>Import Dashboard: 5496</p>
+</li>
+</ol>
+<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>运行Jmeter脚本，查看数据展示：</p>
+<p><img src="/images/performancetesting/grafana_jmeter.jpg" alt=""></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Robotframework Automation With Jenkins and Xray - pipeline]]></title>
       <url>http://izheyi.com/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/</url>
       <content type="html"><![CDATA[<p>From last blog, we integrate RF, Jenkins and Xray, but for now, we usually use ‘Pipeline’ way for better management. Give it a try…</p>
@@ -51,6 +92,50 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Prometheus + Grafana 实时监控Linux]]></title>
+      <url>http://izheyi.com/2020/04/18/Prometheus-Grafana-%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7Linux/</url>
+      <content type="html"><![CDATA[<p>上篇中介绍了Prometheus， Grafana，并实现了实时监控Windows，回顾：<a href="/2020/04/05/Prometheus-Grafana-监控Windows/">Prometheus + Grafana 实时监控Windows</a></p>
+<p>本篇来介绍一下Linux。</p>
+<h1 id="node-exporter安装配置"><a href="#node-exporter安装配置" class="headerlink" title="node exporter安装配置"></a>node exporter安装配置</h1><ol>
+<li><p>下载 node exporter </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/prometheus/node_exporter/releases/download/v0.<span class="number">18.1</span>/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加系统服务 (vi /usr/lib/systemd/system/node_exporter.service)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=https://prometheus.io</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Restart=on-failure</span><br><span class="line">ExecStart=/opt/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64/node_exporter</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start node_exporter</span><br><span class="line">systemctl status node_exporter</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@izheyi node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64]<span class="comment"># curl http://localhost:9100/metrics</span></span><br><span class="line"><span class="comment"># HELP go_gc_duration_seconds A summary of the GC invocation durations.</span></span><br><span class="line"><span class="comment"># TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.25"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.5"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.75"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"1"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_sum <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_count <span class="number">0</span></span><br><span class="line"><span class="comment"># HELP go_goroutines Number of goroutines that currently exist.</span></span><br><span class="line"><span class="comment"># TYPE go_goroutines gauge</span></span><br><span class="line">go_goroutines <span class="number">6</span></span><br><span class="line"><span class="comment"># HELP go_info Information about the Go environment.</span></span><br><span class="line"><span class="comment"># TYPE go_info gauge</span></span><br><span class="line">go_info&#123;version=<span class="string">"go1.12.5"</span>&#125; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Prometheus配置"><a href="#Prometheus配置" class="headerlink" title="Prometheus配置"></a>Prometheus配置</h1><ol>
+<li><p>添加prometheus相关配置， prometheus.yml</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> <span class="symbol">job_name:</span> <span class="string">'linux'</span></span><br><span class="line"></span>  static_configs:</span><br><span class="line">  -<span class="ruby"> <span class="symbol">targets:</span> [<span class="string">'192.168.174.128:9100'</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启prometheus</p>
+</li>
+<li><p>验证</p>
+<p><img src="/images/performancetesting/prometheus_target.png" alt=""></p>
+</li>
+</ol>
+<h1 id="Grafana配置"><a href="#Grafana配置" class="headerlink" title="Grafana配置"></a>Grafana配置</h1><ol>
+<li><p>配置Prometheus数据源</p>
+</li>
+<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 8919</p>
+</li>
+<li><p>验证</p>
+<p><img src="/images/performancetesting/grafana_linux.png" alt=""></p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Prometheus + Grafana 实时监控Windows]]></title>
       <url>http://izheyi.com/2020/04/05/Prometheus-Grafana-%E7%9B%91%E6%8E%A7Windows/</url>
       <content type="html"><![CDATA[<p><a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a> 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。<br><a href="https://grafana.com/grafana/" target="_blank" rel="external">Grafana</a> 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。</p>
@@ -75,7 +160,7 @@
 <li>下载<br>从<a href="https://grafana.com/grafana/download" target="_blank" rel="external">Grafana</a>下载</li>
 <li><p>启动<br>双击安装即可。 进行到安装bin目录下：双击<code>grafana-server.exe</code>启动<br>访问<a href="http://127.0.0.1:3000" target="_blank" rel="external">http://127.0.0.1:3000</a><br>默认账号/密码：admin/admin<br><img src="/images/performancetesting/grafana_home.jpg" alt=""></p>
 </li>
-<li><p>配置Prometheus数据库<br>从刚才配置好的prometheus那里获取本地性能数据并展示。<br><img src="/images/performancetesting/grafana_prometheus.jpg" alt=""></p>
+<li><p>配置Prometheus数据源<br>从刚才配置好的prometheus那里获取本地性能数据并展示。<br><img src="/images/performancetesting/grafana_prometheus.jpg" alt=""></p>
 </li>
 <li><p>搭建Prometheus仪表盘<br>Import Dashboard: 10467<br><img src="/images/performancetesting/grafana_import.jpg" alt=""></p>
 </li>

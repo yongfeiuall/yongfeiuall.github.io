@@ -305,6 +305,334 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Centos下Mysql远程访问/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/22/Centos下Mysql远程访问/" itemprop="url">Centos下Mysql远程访问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T21:18:41+08:00">
+                2015-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/22/Centos下Mysql远程访问/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/Centos下Mysql远程访问/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mysql默认是不可以通过远程机器访问的,通过下面的配置可以开启远程访问 </p>
+<p>在MySQL Server端：<br>执行mysql 命令进入mysql命令模式， </p>
+<pre><code>mysql&gt; use mysql;   
+mysql&gt; GRANT ALL ON *.* TO admin@&apos;%&apos; IDENTIFIED BY &apos;admin&apos; WITH GRANT OPTION;  
+mysql&gt; flush privileges;
+</code></pre><p>授权命令的意思是允许任何IP地址（上面的%就是这个意思）的电脑用admin帐户和密码（admin）来访问这个MySQL Server。<br>不要用root帐户远程登录的。</p>
+<p>做了以上操作，发现远程还是不行，报错：<code>Can&#39;t connect to MySQL server on x.x.x.x (10061)</code>。<br>我们要去<code>/etc/my.cnf</code>文件里，修改/增加以下内容<br><code>[mysqld]</code><br><code>bing-address=0.0.0.0</code><br>By setting the bind-address to 0.0.0.0 Mysql will now listen on all interfaces.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/" itemprop="url">CentOS命令登录MySQL时，ERROR 1045 (28000): Access denied for user root@localhost (using password: NO)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T14:42:16+08:00">
+                2015-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用命令行来登录Mysql时，就会出现这个错误。</p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><ol>
+<li>停用mysql服务： <code>[root@Automation ~]# service mysqld stop</code></li>
+<li>输入命令：<code>[root@Automation ~]# mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</code> </li>
+<li><p>另打开一个SSH，登入数据库：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@Automation</span> ~]<span class="comment"># mysql -u root mysql·</span></span><br><span class="line">mysql&gt; <span class="keyword">use</span> mysql</span><br><span class="line">mysql&gt; UPDATE user SET Password=PASSWORD(<span class="string">'newpassword'</span>)where USER=<span class="string">'newuser'</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; <span class="keyword">exit</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除mysqld_safe：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># ps -A | grep mysql</span></span><br><span class="line"> <span class="number">3297</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> mysqld_safe</span><br><span class="line"> <span class="number">3399</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> mysqld</span><br><span class="line">[root@Automation ~]<span class="preprocessor"># kill -<span class="number">9</span> <span class="number">3297</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启用mysql服务： <code>[root@Automation ~]# service mysqld start</code></p>
+</li>
+<li>登录数据库<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">[</span>root@Automation ~]<span class="comment"># mysql -uadmin -padmin</span></span><br><span class="line">Welcome to the MySQ<span class="class">L monitor.  Commands end with ;</span><span class="instruction"> or </span>\g.</span><br><span class="line">Your MySQL connection id is 5</span><br><span class="line">Server version: 5.1.73 Source distribution</span><br><span class="line"></span><br><span class="line">Copyright<span class="function"> (</span>c<span class="function">)</span> 2000, 2013, Oracle<span class="instruction"> and/or </span>its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation<span class="instruction"> and/or </span>its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type 'help;'<span class="instruction"> or </span>'\h' for help. Type '\c' to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Load-Runner-VuGen参数化方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1651,357 +1979,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/Load-Runner-VuGen脚本开发基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="url">Load Runner - VuGen脚本开发基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T13:32:08+08:00">
-                2015-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
-                    <span itemprop="name">Load Runner</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/10/Load-Runner-VuGen脚本开发基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Load-Runner"><a href="#Load-Runner" class="headerlink" title="Load Runner"></a>Load Runner</h1><p>主要由以下工具构成</p>
-<ul>
-<li>VuGen（Virtual User Generator） - 开发脚本（录制+编写）</li>
-<li>Controller - 体现多线程，VuGen中也有体现</li>
-<li>Analysis - 结果分析</li>
-<li>Load generator - 压力机（客户端），可以跨平台。</li>
-</ul>
-<h1 id="VuGen工具使用"><a href="#VuGen工具使用" class="headerlink" title="VuGen工具使用"></a>VuGen工具使用</h1><h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><p>录制目的是帮助快速生成脚本。<br><strong>录制原理</strong>：录制的是在B和S之间基本协议的数据包。Lr在B和S之间，相当于一个截取的功能。<br><strong>录制设置</strong>：主要有以下两个方面</p>
-<ol>
-<li>设置字符集编码：Advanced –&gt; Support charset (选中Checkbox和UTF-8)</li>
-<li>设置HTTP/HTML Level： Recording –&gt; HTML-based script –&gt; HTML Advanced –&gt; Script type (选择第2个选项)</li>
-</ol>
-<p><em>Notes：在‘开始录制’窗口，不选择‘Record the application startup’，打开页面后就不会自动录制，到希望录制的地方点击‘Record’再开始录制。</em></p>
-<h2 id="回放"><a href="#回放" class="headerlink" title="回放"></a>回放</h2><p><strong>回放原理</strong>：回放时不需要启动被测试程序（浏览器）不打开浏览器，LR可以模拟多线程。<br><strong>回放设置</strong>：脚本运行顺序、迭代，思考时间，网速模拟等等。</p>
-<h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
-<h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
-<ol>
-<li>主界面Replay Log<br><em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
-<li>业务是否成功View –&gt;TestResults下 Submit Data</li>
-<li>关联 General Log</li>
-</ol>
-<p>脚本老是失败原因：参数化、关联、思考时间。</p>
-<p><em>Notes: 脚本开发最好是用以下组合（LR11 + Win7 + IE9）</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/TestNG-命令行运行/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/10/TestNG-命令行运行/" itemprop="url">TestNG 命令行运行</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T08:59:54+08:00">
-                2015-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/10/TestNG-命令行运行/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/TestNG-命令行运行/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前一直是在Eclipse里运行测试的，本次简单介绍一下怎么样来实现命令行来执行TestNG。<br>Assuming that you have TestNG in your class path, the simplest way to invoke TestNG is as follows:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java org<span class="class">.testng</span><span class="class">.TestNG</span> testng1<span class="class">.xml</span> [testng2<span class="class">.xml</span> testng3<span class="class">.xml</span> ...]</span><br></pre></td></tr></table></figure></p>
-<p>主要是在Windows下做的配置（<em>有步骤已经做过，请忽略</em>）：</p>
-<ol>
-<li>下载JDK安装，配置环境变量。</li>
-<li>下载testng-6.8.8.jar包，放在C:\TestNG, 并配置了环境变量<ul>
-<li>TESTNG_HOME 为 C:\TESTNG</li>
-<li>CLASSPATH 为 %CLASSPATH%;%TESTNG_HOME%\testng-6.8.jar;  </li>
-</ul>
-</li>
-<li><p>在F:\testng下创建一个java文件command.java</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> org.testng.annotations.Test;</span><br><span class="line"> <span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String str = <span class="string">"TestNG is working fine"</span>;</span><br><span class="line">	assertEquals(<span class="string">"TestNG is working fine"</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编译java文件</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">javac</span> <span class="tag">Command</span><span class="class">.java</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在同目录下，创建testng.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">name</span>=<span class="value">"Suite1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">classes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Command"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">classes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">test</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用java调用testng.xml</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\testng&gt;java org.testng.TestNG testng.xml</span><br><span class="line">[TestNG] Running:</span><br><span class="line">F:\testng\testng.xml</span><br><span class="line"></span><br><span class="line">===============================================</span><br><span class="line">Suite1</span><br><span class="line">Total tests run: 1, Failures: 0, Skips: 0</span><br><span class="line">===============================================</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2056,7 +2033,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">335</span>
+                  <span class="site-state-item-count">337</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2078,7 +2055,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

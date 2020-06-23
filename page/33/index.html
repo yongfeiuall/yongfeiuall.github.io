@@ -305,6 +305,319 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/09/QTP使用小提示/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/09/QTP使用小提示/" itemprop="url">QTP使用小提示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-09T08:06:43+08:00">
+                2013-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/09/QTP使用小提示/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/09/QTP使用小提示/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="不要使用Reuable-Action"><a href="#不要使用Reuable-Action" class="headerlink" title="不要使用Reuable Action"></a>不要使用Reuable Action</h1><p>　　用Function，不要用Reusable Action。没有一种通用的语言里有Reusable Action这个概念。而且通过Function等一些标准的程序设计语言的元素，你能够实现任何Reusable Action可以实现的功能，而且更好，更快，更易于维护。</p>
+<h1 id="不要用Smart-Identification"><a href="#不要用Smart-Identification" class="headerlink" title="不要用Smart Identification"></a>不要用Smart Identification</h1><p>　 　有一天，我发现一个奇怪的现象，一个testcase里某一个点击logout button的步骤运行非常慢，大概要20秒，但是最终它还能成功点击。不巧的是每一个testcase几乎都会点击这个button，所有我还必须把这个问题找出来。最后发现这是因为button的name有了变化，但是因为Smart Identification是被enable，所以QTP会试图去适应这个变化，但是这个“适应”的效果非常不理想。</p>
+<p>　　我认为测试开发者应该完全控制对象的识别。把选择权交给对被测程序业务一无所知的工具是毫无道理的。我想不到任何使用SmartIdentification的原因。所以，从那之后，任何Testcase的Smart Identification我都禁止了。</p>
+<h1 id="不要在base目录里添加两个或以上目录"><a href="#不要在base目录里添加两个或以上目录" class="headerlink" title="不要在base目录里添加两个或以上目录"></a>不要在base目录里添加两个或以上目录</h1><p>　　Base目录是用来只能识别相对路径的目录。其配置在Menu: Tools-&gt;Options-&gt;Folders。我的建议是这里只放项目根目录。其他目录都不要放进去。</p>
+<h1 id="不要用keyword-view，而是提供业务逻辑封装层"><a href="#不要用keyword-view，而是提供业务逻辑封装层" class="headerlink" title="不要用keyword view，而是提供业务逻辑封装层"></a>不要用keyword view，而是提供业务逻辑封装层</h1><p>　　如果你要让你的testcase简单，直接，那么你应该通过合理的抽象提供完善的业务逻辑封装层，它会使得你的testcase script读起来像testcase descript一样。这个时候，你根本不需要keyword view。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/" itemprop="url">VBS Adding Quotes(为字符串加双引号)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-05T14:42:39+08:00">
+                2013-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/05/VBS-Adding-Quotes-为字符串加双引号/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newSAtr = <span class="function"><span class="title">Chr</span><span class="params">( <span class="number">34</span> )</span></span> &amp; <span class="function"><span class="title">Environment</span><span class="params">( <span class="string">"ProductDir"</span> )</span></span> &amp; <span class="function"><span class="title">Chr</span><span class="params">( <span class="number">34</span> )</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/VBS/Add_Quotes.jpg" alt="Execute Result"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/12/31/QTP添加Resource或Action时，不弹出相关路径窗/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1568,315 +1881,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/07/20/Generate-Random-String-产生随机数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/20/Generate-Random-String-产生随机数/" itemprop="url">Generate Random String(产生随机数)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-07-20T09:08:40+08:00">
-                2012-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/20/Generate-Random-String-产生随机数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/07/20/Generate-Random-String-产生随机数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Function</span> RandomString( <span class="keyword">ByVal</span> strLen )     </span><br><span class="line">    <span class="keyword">Dim</span> str     </span><br><span class="line">    <span class="keyword">Const</span> LETTERS = <span class="string">"abcdefghijklmnopqrstuvwxyz0123456789"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">For</span> i = <span class="number">1</span> <span class="keyword">to</span> strLen      </span><br><span class="line">        str = str &amp; <span class="built_in">Mid</span>( LETTERS, RandomNumber( <span class="number">1</span>, <span class="built_in">Len</span>( LETTERS ) ), <span class="number">1</span> )     </span><br><span class="line">    <span class="keyword">Next</span>     </span><br><span class="line"></span><br><span class="line">    RandomString = str </span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/06/09/vbs引用-include-外部函数库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/06/09/vbs引用-include-外部函数库/" itemprop="url">vbs引用(include)外部函数库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-06-09T09:00:28+08:00">
-                2012-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/06/09/vbs引用-include-外部函数库/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/06/09/vbs引用-include-外部函数库/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我们经常会碰见这样的情况，脚本A中想引用脚本B中的方法，VBS中可能通过以下方法来实现：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">﻿     <span class="keyword">Function</span> Include(strFileName)</span><br><span class="line">        <span class="keyword">Dim</span> objFileContent</span><br><span class="line">        <span class="keyword">Set</span> objFileContent = <span class="built_in">CreateObject</span>(<span class="string">"Scripting.FileSystemObject"</span>).OpenTextFile(strFileName,<span class="number">1</span>,<span class="literal">False</span>) </span><br><span class="line">        <span class="keyword">ExecuteGlobal</span> objFileContent.ReadAll</span><br><span class="line">        <span class="keyword">Set</span> objFileContent = <span class="literal">Nothing</span>   </span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure></p>
-<p>在脚本A中加入这个Function，调用此Function：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call <span class="function"><span class="title">Include</span><span class="params">(ProjectPath + <span class="string">"脚本B.vbs"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>这样即可实现外部函数的调用。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1931,7 +1935,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">335</span>
+                  <span class="site-state-item-count">337</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1953,7 +1957,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

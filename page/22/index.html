@@ -305,6 +305,357 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/Load-Runner-VuGen脚本开发基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="url">Load Runner - VuGen脚本开发基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T13:32:08+08:00">
+                2015-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/10/Load-Runner-VuGen脚本开发基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Load-Runner"><a href="#Load-Runner" class="headerlink" title="Load Runner"></a>Load Runner</h1><p>主要由以下工具构成</p>
+<ul>
+<li>VuGen（Virtual User Generator） - 开发脚本（录制+编写）</li>
+<li>Controller - 体现多线程，VuGen中也有体现</li>
+<li>Analysis - 结果分析</li>
+<li>Load generator - 压力机（客户端），可以跨平台。</li>
+</ul>
+<h1 id="VuGen工具使用"><a href="#VuGen工具使用" class="headerlink" title="VuGen工具使用"></a>VuGen工具使用</h1><h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><p>录制目的是帮助快速生成脚本。<br><strong>录制原理</strong>：录制的是在B和S之间基本协议的数据包。Lr在B和S之间，相当于一个截取的功能。<br><strong>录制设置</strong>：主要有以下两个方面</p>
+<ol>
+<li>设置字符集编码：Advanced –&gt; Support charset (选中Checkbox和UTF-8)</li>
+<li>设置HTTP/HTML Level： Recording –&gt; HTML-based script –&gt; HTML Advanced –&gt; Script type (选择第2个选项)</li>
+</ol>
+<p><em>Notes：在‘开始录制’窗口，不选择‘Record the application startup’，打开页面后就不会自动录制，到希望录制的地方点击‘Record’再开始录制。</em></p>
+<h2 id="回放"><a href="#回放" class="headerlink" title="回放"></a>回放</h2><p><strong>回放原理</strong>：回放时不需要启动被测试程序（浏览器）不打开浏览器，LR可以模拟多线程。<br><strong>回放设置</strong>：脚本运行顺序、迭代，思考时间，网速模拟等等。</p>
+<h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
+<h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
+<ol>
+<li>主界面Replay Log<br><em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
+<li>业务是否成功View –&gt;TestResults下 Submit Data</li>
+<li>关联 General Log</li>
+</ol>
+<p>脚本老是失败原因：参数化、关联、思考时间。</p>
+<p><em>Notes: 脚本开发最好是用以下组合（LR11 + Win7 + IE9）</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/TestNG-命令行运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/10/TestNG-命令行运行/" itemprop="url">TestNG 命令行运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T08:59:54+08:00">
+                2015-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/10/TestNG-命令行运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/TestNG-命令行运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直是在Eclipse里运行测试的，本次简单介绍一下怎么样来实现命令行来执行TestNG。<br>Assuming that you have TestNG in your class path, the simplest way to invoke TestNG is as follows:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java org<span class="class">.testng</span><span class="class">.TestNG</span> testng1<span class="class">.xml</span> [testng2<span class="class">.xml</span> testng3<span class="class">.xml</span> ...]</span><br></pre></td></tr></table></figure></p>
+<p>主要是在Windows下做的配置（<em>有步骤已经做过，请忽略</em>）：</p>
+<ol>
+<li>下载JDK安装，配置环境变量。</li>
+<li>下载testng-6.8.8.jar包，放在C:\TestNG, 并配置了环境变量<ul>
+<li>TESTNG_HOME 为 C:\TESTNG</li>
+<li>CLASSPATH 为 %CLASSPATH%;%TESTNG_HOME%\testng-6.8.jar;  </li>
+</ul>
+</li>
+<li><p>在F:\testng下创建一个java文件command.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> org.testng.annotations.Test;</span><br><span class="line"> <span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String str = <span class="string">"TestNG is working fine"</span>;</span><br><span class="line">	assertEquals(<span class="string">"TestNG is working fine"</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译java文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">javac</span> <span class="tag">Command</span><span class="class">.java</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在同目录下，创建testng.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">name</span>=<span class="value">"Suite1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">classes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Command"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">classes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">test</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用java调用testng.xml</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\testng&gt;java org.testng.TestNG testng.xml</span><br><span class="line">[TestNG] Running:</span><br><span class="line">F:\testng\testng.xml</span><br><span class="line"></span><br><span class="line">===============================================</span><br><span class="line">Suite1</span><br><span class="line">Total tests run: 1, Failures: 0, Skips: 0</span><br><span class="line">===============================================</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1616,333 +1967,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Excel-Unprotect-Macro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Excel-Unprotect-Macro/" itemprop="url">Excel-Unprotect-Macro</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T15:32:19+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Excel/" itemprop="url" rel="index">
-                    <span itemprop="name">Excel</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Excel-Unprotect-Macro/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Excel-Unprotect-Macro/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Today i use a previous excel with Macro, but forget the protected password, we can use the following way to unprotect macro password.</p>
-<ol>
-<li>Download the “unprotect_macro.xlsm” file.<br><a href="/images/excel/unprotect_macro.xlsm">Unprotect Macro</a></li>
-<li>Open these 2 documents.</li>
-<li>Run “unprotected()” in “unprotect_macro.xlsm” file.</li>
-<li>Should be upprotect now.</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Performance-Testing-基本介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Performance-Testing-基本介绍/" itemprop="url">Performance Testing-基本介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T12:11:21+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Performance-Testing-基本介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Performance-Testing-基本介绍/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="自动化测试的基本认识"><a href="#自动化测试的基本认识" class="headerlink" title="自动化测试的基本认识"></a>自动化测试的基本认识</h1><p>也做了很多年的手动测试和功能自动化测试，其实说到底，测试从本质上来看其实就是“数据+执行+验证”的过程。<br>自动化测试从分层的角度来看：</p>
-<ul>
-<li>单元 &amp; API测试 - 基于代码层面</li>
-<li>功能自动化 - 基于UI层面</li>
-<li>性能测试 - 基于协议层面</li>
-</ul>
-<h1 id="什么是性能测试"><a href="#什么是性能测试" class="headerlink" title="什么是性能测试"></a>什么是性能测试</h1><p>理论上的知识自己Google。性能测试与功能测试不同，不再是验证功能是否正确，而是重点关注实现得好不好，重心是关注瓶颈所在。有时也会关注功能问题中的死锁、内存泄漏等问题。</p>
-<ul>
-<li>性能类型的一些说明：<br>压力测试 - 什么时候压死<br>负载测试 - 不同压力下的表现<br>基准测试 - 正常情况下的压力</li>
-<li>测试工具<br>Load Runner<br>Jmeter<br>…
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/27/Performance-Testing-基本介绍/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1997,7 +2021,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">335</span>
+                  <span class="site-state-item-count">337</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2019,7 +2043,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
