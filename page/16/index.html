@@ -305,6 +305,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/06/06/Spring-Boot-介绍和环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/06/Spring-Boot-介绍和环境搭建/" itemprop="url">Spring Boot - 介绍和环境搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-06T15:45:10+08:00">
+                2017-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/06/Spring-Boot-介绍和环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/06/Spring-Boot-介绍和环境搭建/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Spring Boot简化了基于Spring的应用开发，你只需要”run”就能创建一个独立的，产品级别的Spring应用。话不多说，直接参见官网<a href="https://http://projects.spring.io/spring-boot/">Spring Boot</a></p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ol>
+<li><p>安装JDK<br><code>java -version</code> - 检查Java安装<br>安装后添加环境变量。</p>
+</li>
+<li><p>安装Maven<br>我的是Windows，方法如下：<br>Adding to PATH: Add the unpacked distribution’s bin directory to your user PATH environment variable by opening up the system properties (WinKey + Pause), selecting the “Advanced” tab, and the “Environment Variables” button, then adding or selecting the PATH variable in the user variables with the value C:\Program Files\apache-maven-3.5.0\bin. The same dialog can be used to set JAVA_HOME to the location of your JDK, e.g. C:\Program Files\Java\jdk1.7.0_51<br>Open a new command prompt (Winkey + R then type cmd) and run mvn -v to verify the installation.</p>
+</li>
+<li><p>新建文件夹作为Project根目录，创建POM</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span>  </span><br><span class="line">    <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>myFirstproject<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parent</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.4.0.BUILD-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">parent</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Add typical dependencies for a web application --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Package as an executable jar --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">build</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">plugins</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">plugin</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="title">plugin</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">plugins</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">build</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Add Spring repositories --&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- (you don't need this if you are using a .RELEASE version) --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">repositories</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">repository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-snapshots<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/snapshot<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">snapshots</span>&gt;</span><span class="tag">&lt;<span class="title">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="title">enabled</span>&gt;</span><span class="tag">&lt;/<span class="title">snapshots</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">repository</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">repository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-milestones<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/milestone<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">repository</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">repositories</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">pluginRepositories</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-snapshots<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/snapshot<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-milestones<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/milestone<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">pluginRepositories</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/06/Spring-Boot-介绍和环境搭建/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/05/09/Gatling-install-start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1747,166 +1914,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/10/15/SoapUI-change-endpoint-for-TestCase/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/15/SoapUI-change-endpoint-for-TestCase/" itemprop="url">SoapUI - change endpoint for TestCase</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-15T14:47:58+08:00">
-                2016-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SoapUI/" itemprop="url" rel="index">
-                    <span itemprop="name">SoapUI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/15/SoapUI-change-endpoint-for-TestCase/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/10/15/SoapUI-change-endpoint-for-TestCase/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在用SoapUI时，会碰到baseUrl改变的情况，需要对所有的Case修改成最新的endpoint。</p>
-<p>我们可以在Project中统一的变更来实现：</p>
-<ol>
-<li>在Project Tab中双击左侧导航栏的Service URL；</li>
-<li>选择‘Endpoints’；</li>
-<li>修改Endpoint。<br><img src="/images/soapui/endpoint_url.jpg" alt=""></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1961,7 +1968,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">337</span>
+                  <span class="site-state-item-count">338</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

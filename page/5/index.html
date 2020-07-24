@@ -305,6 +305,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/28/Java项目实战-SSO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/28/Java项目实战-SSO/" itemprop="url">Java项目实战-SSO</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-28T16:49:00+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/28/Java项目实战-SSO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/28/Java项目实战-SSO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>创建一个新工程zheyi-sso，要用到Redis和DB。</p>
+<h1 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h1><p>在注册用户之前，要先检查注册的用户信息的正确性。</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * check user date</span><br><span class="line"> * @see com.izheyi.sso.service.SsoService#checkUserData(java.lang.String, java.lang.Integer)</span><br><span class="line"> */</span></span><br><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> TaotaoResult checkUserData(<span class="built_in">String</span> content, <span class="built_in">Integer</span> <span class="keyword">type</span>) &#123;</span><br><span class="line">	TbUserExample userExample = <span class="literal">new</span> TbUserExample();</span><br><span class="line">	Criteria criteria = userExample<span class="built_in">.</span>createCriteria();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">type</span> == <span class="number">1</span>) &#123;</span><br><span class="line">		criteria<span class="built_in">.</span>andUsernameEqualTo(content);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">type</span> == <span class="number">2</span>) &#123;</span><br><span class="line">		criteria<span class="built_in">.</span>andPhoneEqualTo(content);</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		criteria<span class="built_in">.</span>andEmailEqualTo(content);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">List</span>&lt;TbUser&gt; <span class="built_in">list</span> = userMapper<span class="built_in">.</span>selectByExample(userExample);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">list</span> == <span class="built_in">null</span> <span class="subst">||</span> <span class="built_in">list</span><span class="built_in">.</span>size() == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>ok(<span class="literal">true</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>ok(<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * create user</span><br><span class="line"> * @see com.izheyi.sso.service.SsoService#createUser(com.izheyi.pojo.TbUser)</span><br><span class="line"> */</span></span><br><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> TaotaoResult createUser(TbUser user) &#123;</span><br><span class="line">	user<span class="built_in">.</span>setCreated(<span class="literal">new</span> <span class="built_in">Date</span>());</span><br><span class="line">	user<span class="built_in">.</span>setUpdated(<span class="literal">new</span> <span class="built_in">Date</span>());</span><br><span class="line">	</span><br><span class="line">	user<span class="built_in">.</span>setPassword(DigestUtils<span class="built_in">.</span>md5DigestAsHex(user<span class="built_in">.</span>getPassword()<span class="built_in">.</span>getBytes()));</span><br><span class="line">	userMapper<span class="built_in">.</span>insert(user);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>ok();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">	 * check user data</span><br><span class="line">	 */</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/check/&#123;param&#125;/&#123;type&#125;"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">Object</span> checkUserData(@<span class="type">PathVariable</span> <span class="type">String</span> param, @<span class="type">PathVariable</span> <span class="type">Integer</span> <span class="keyword">type</span>, <span class="type">String</span> callback) &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = null;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="literal">result</span> = ssoService.checkUserData(param, <span class="keyword">type</span>);</span><br><span class="line">		&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (!<span class="type">StringUtils</span>.isBlank(callback)) &#123;</span><br><span class="line">			<span class="type">MappingJacksonValue</span> mappingJacksonValue = new <span class="type">MappingJacksonValue</span>(<span class="literal">result</span>);</span><br><span class="line">			mappingJacksonValue.setJsonpFunction(callback);</span><br><span class="line">			<span class="keyword">return</span> mappingJacksonValue;</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/*</span><br><span class="line">	 * create user</span><br><span class="line">	 */</span><br><span class="line">	@<span class="type">RequestMapping</span>(value=<span class="string">"/register"</span>, <span class="keyword">method</span>=<span class="type">RequestMethod</span>.<span class="type">POST</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createUser(<span class="type">TbUser</span> user) &#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = null;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="literal">result</span> = ssoService.createUser(user);</span><br><span class="line">			</span><br><span class="line">		&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/sso_user_register.jpg" alt=""></p>
+<h1 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h1><h2 id="Service-1"><a href="#Service-1" class="headerlink" title="Service"></a>Service</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	<span class="keyword">public</span> TaotaoResult userLogin(<span class="built_in">String</span> username, <span class="built_in">String</span> password) &#123;</span><br><span class="line">		TbUserExample example = <span class="literal">new</span> TbUserExample();</span><br><span class="line">		Criteria criteria = example<span class="built_in">.</span>createCriteria();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// username</span></span><br><span class="line">		criteria<span class="built_in">.</span>andUsernameEqualTo(username);</span><br><span class="line">		<span class="built_in">List</span>&lt;TbUser&gt; <span class="built_in">list</span> = userMapper<span class="built_in">.</span>selectByExample(example);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">list</span> == <span class="built_in">null</span> <span class="subst">||</span> <span class="built_in">list</span><span class="built_in">.</span>size() == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>build(<span class="number">400</span>, <span class="string">"username or password wrong"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// password</span></span><br><span class="line">		TbUser user = <span class="built_in">list</span><span class="built_in">.</span>get(<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="subst">!</span>DigestUtils<span class="built_in">.</span>md5DigestAsHex(password<span class="built_in">.</span>getBytes())<span class="built_in">.</span><span class="keyword">equals</span>(user<span class="built_in">.</span>getPassword())) &#123;</span><br><span class="line">			<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>build(<span class="number">400</span>, <span class="string">"username or password wrong"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// token</span></span><br><span class="line">		<span class="built_in">String</span> token = UUID<span class="built_in">.</span>randomUUID()<span class="built_in">.</span>toString();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// add redis</span></span><br><span class="line">		redisPool<span class="built_in">.</span><span class="built_in">set</span>(SSO_SESSION_KEY + <span class="string">":"</span> + token, JsonUtils<span class="built_in">.</span>objectToJson(user));</span><br><span class="line">		redisPool<span class="built_in">.</span>expire(SSO_SESSION_KEY + <span class="string">":"</span> + token, SSO_SESSION_EXPIRE);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//return token</span></span><br><span class="line">		<span class="keyword">return</span> TaotaoResult<span class="built_in">.</span>ok(token);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller-1"><a href="#Controller-1" class="headerlink" title="Controller"></a>Controller</h2><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">RequestMapping</span>(value=<span class="string">"/login"</span>, <span class="keyword">method</span>=<span class="type">RequestMethod</span>.<span class="type">POST</span>)</span><br><span class="line">@<span class="type">ResponseBody</span></span><br><span class="line">public <span class="type">TaotaoResult</span> userLogin(<span class="type">String</span> username, <span class="type">String</span> password)&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = ssoService.userLogin(username, password);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		<span class="keyword">return</span> <span class="type">TaotaoResult</span>.build(<span class="number">500</span>, <span class="type">ExceptionUtil</span>.getStackTrace(e));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/sso_user_login.jpg" alt=""></p>
+<h1 id="查询用户-By-Token"><a href="#查询用户-By-Token" class="headerlink" title="查询用户 By Token"></a>查询用户 By Token</h1><h2 id="Service-2"><a href="#Service-2" class="headerlink" title="Service"></a>Service</h2><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Override</span></span><br><span class="line">public <span class="type">TaotaoResult</span> getUserByToken(<span class="type">String</span> token) &#123;</span><br><span class="line">	<span class="type">String</span> <span class="literal">result</span> = redisPool.get(<span class="type">SSO_SESSION_KEY</span> + <span class="string">":"</span> + token);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (<span class="type">StringUtils</span>.isBlank(<span class="literal">result</span>)) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="type">TaotaoResult</span>.build(<span class="number">400</span>, <span class="string">"session expired, please relogin"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	redisPool.expire(<span class="type">SSO_SESSION_KEY</span> + <span class="string">":"</span> + token, <span class="type">SSO_SESSION_EXPIRE</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="type">TaotaoResult</span>.ok(<span class="type">JsonUtils</span>.jsonToPojo(<span class="literal">result</span>, <span class="type">TbUser</span>.class));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller-2"><a href="#Controller-2" class="headerlink" title="Controller"></a>Controller</h2><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/token/&#123;token&#125;"</span>)</span><br><span class="line">@<span class="type">ResponseBody</span></span><br><span class="line">public <span class="type">Object</span> getUserByToken(@<span class="type">PathVariable</span> <span class="type">String</span> token, <span class="type">String</span> callback) &#123;</span><br><span class="line">	<span class="type">TaotaoResult</span> <span class="literal">result</span> = null;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="literal">result</span> = ssoService.getUserByToken(token);</span><br><span class="line">	&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		<span class="literal">result</span> = <span class="type">TaotaoResult</span>.build(<span class="number">500</span>, <span class="type">ExceptionUtil</span>.getStackTrace(e));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (!<span class="type">StringUtils</span>.isBlank(callback)) &#123;</span><br><span class="line">		<span class="type">MappingJacksonValue</span> mappingJacksonValue = new <span class="type">MappingJacksonValue</span>(<span class="literal">result</span>);</span><br><span class="line">		mappingJacksonValue.setJsonpFunction(callback);</span><br><span class="line">		<span class="keyword">return</span> mappingJacksonValue;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/sso_user_token.jpg" alt=""></p>
+<h1 id="实现SSO功能"><a href="#实现SSO功能" class="headerlink" title="实现SSO功能"></a>实现SSO功能</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="annotation">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/register"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">registerPage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"register"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">loginPage</span><span class="params">(String redirect, Model model)</span> </span>&#123;</span><br><span class="line">		model.addAttribute(<span class="string">"redirect"</span>, redirect);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这，登录和注册的功能在SSO系统中完成，其他系统可调用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/25/Java项目实战-展示商品详情页/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1793,177 +1959,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/19/Java项目实战-前台工程搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/19/Java项目实战-前台工程搭建/" itemprop="url">Java项目实战 - 前台工程搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-19T14:27:14+08:00">
-                2018-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/19/Java项目实战-前台工程搭建/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/19/Java项目实战-前台工程搭建/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>把Service和Frontend分离，创建两个独立的war工程：</p>
-<h1 id="zheyi-rest"><a href="#zheyi-rest" class="headerlink" title="zheyi-rest"></a>zheyi-rest</h1><p>要配置的项：</p>
-<ul>
-<li>Mybatis</li>
-<li>Spring</li>
-<li>Springmvc</li>
-<li>web.xml<br><img src="/images/javaproject/rest_project_config.jpg" alt=""></li>
-</ul>
-<p>运行：<br><img src="/images/javaproject/rest_project.jpg" alt=""></p>
-<h1 id="zheyi-portal"><a href="#zheyi-portal" class="headerlink" title="zheyi-portal"></a>zheyi-portal</h1><p>要配置的项：</p>
-<ul>
-<li>Spring</li>
-<li>Springmvc</li>
-<li>Jstl、jQuery</li>
-<li>web.xml<br><img src="/images/javaproject/portal_project_config.jpg" alt=""></li>
-</ul>
-<p>添加前端相关静态资源。</p>
-<p>运行：<br><img src="/images/javaproject/portal_project.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2018,7 +2013,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">337</span>
+                  <span class="site-state-item-count">338</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

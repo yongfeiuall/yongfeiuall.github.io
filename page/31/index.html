@@ -305,6 +305,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/06/09/VBS-add-hyperlink-in-Excel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/06/09/VBS-add-hyperlink-in-Excel/" itemprop="url">VBS add hyperlink in Excel</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-06-09T09:00:28+08:00">
+                2013-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/06/09/VBS-add-hyperlink-in-Excel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/06/09/VBS-add-hyperlink-in-Excel/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Need to handle this situation when design framework. please refer the below:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Dim objExcel</span><br><span class="line">Set objExcel = WScript.<span class="function"><span class="title">CreateObject</span><span class="params">(<span class="string">"Excel.Application"</span>)</span></span></span><br><span class="line"></span><br><span class="line">objExcel<span class="class">.Visible</span> = TRUE</span><br><span class="line">objExcel<span class="class">.Workbooks</span><span class="class">.Open</span> <span class="string">"C:\test.xlsx"</span></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.Activate</span></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Worksheets</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Range</span><span class="params">(<span class="string">"A1"</span>)</span></span><span class="class">.Select</span></span><br><span class="line"></span><br><span class="line">Dim sLinkAddress</span><br><span class="line">sLinkAddress = <span class="string">"http://www.izheyi.com"</span></span><br><span class="line"></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Worksheets</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.Hyperlinks</span><span class="class">.Add</span> objExcel<span class="class">.Selection</span>, sLinkAddress</span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.SaveAs</span> <span class="string">"C:\test.xlsx"</span></span><br><span class="line">objExcel<span class="class">.Quit</span></span><br><span class="line"></span><br><span class="line">set objExcel = nothing</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/06/02/C-将QTP结果-XML-XSL文档-转换为HTML格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1720,159 +1874,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/03/01/DataGridView单元格设置日期格式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/03/01/DataGridView单元格设置日期格式/" itemprop="url">DataGridView单元格设置日期格式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-03-01T09:32:43+08:00">
-                2013-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Winform/" itemprop="url" rel="index">
-                    <span itemprop="name">Winform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/03/01/DataGridView单元格设置日期格式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/03/01/DataGridView单元格设置日期格式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs <span class="keyword">e</span>) </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">e</span>.ColumnIndex == dataGridView1.Columns[<span class="string">"StartTime"</span>].Index || <span class="keyword">e</span>.ColumnIndex == dataGridView1.Columns[<span class="string">"EndTime"</span>].Index) </span><br><span class="line">            &#123; </span><br><span class="line">                <span class="keyword">if</span> (dpString.dTrim(<span class="keyword">e</span>.Value) != <span class="string">""</span>) </span><br><span class="line">                &#123; </span><br><span class="line">                    <span class="keyword">e</span>.Value = Convert.ToDateTime(<span class="keyword">e</span>.Value).<span class="keyword">ToString</span>(<span class="string">"MM/dd/yyyy - HH:mm:ss"</span>); </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1927,7 +1928,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">337</span>
+                  <span class="site-state-item-count">338</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
