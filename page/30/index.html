@@ -305,6 +305,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/10/Linux-vi编辑器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/08/10/Linux-vi编辑器/" itemprop="url">Linux-vi编辑器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-08-10T12:13:54+08:00">
+                2013-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/08/10/Linux-vi编辑器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/08/10/Linux-vi编辑器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vi编辑器是所有Unix及Linux系统下标准的编辑器，他就相当于windows系统中的记事本一样。<br>vim可以当作vi的升级版本，他可以用多种颜色的方式来显示一些特殊的信息。</p>
+<h1 id="三种模式"><a href="#三种模式" class="headerlink" title="三种模式"></a>三种模式</h1><p>基本上vi可以分为三种状态，分别是一般模式、编辑模式和命令行模式，各模式的功能区分如下：</p>
+<ul>
+<li>一般模式<br>以vi打开一个文件就直接进入一般模式了(这是默认的模式)。在这个模式中， 你可以使用上下左右按键来移动光标，你可以使用删除字符或删除整行来处理文件内容， 也可以使用复制、粘贴来处理你的文件数据。</li>
+<li>编辑模式<br>在一般模式中可以进行删除、复制、粘贴等的操作，但是却无法编辑文件的内容，只有当到你按下【i, I, o, O, a, A, r, R】等任何一个字母之后才会进入编辑模式。这时候屏幕的左下方会出现【INSERT或 REPLACE】的字样，此时才可以进行编辑。而如果要回到一般模式时， 则必须要按下【Esc】即可退出编辑模式。</li>
+<li>命令行模式<br>输入【 : / ? 】三个中的任何一个，就可以将光标移动到最底下那一行。在这个模式中， 可以提供查找、读取、存盘、替换字符、离开vi、显示行号等的动作则是在此模式中完成的！<br><img src="/images/linux/vi_module.jpg" alt=""></li>
+</ul>
+<h1 id="按键说明"><a href="#按键说明" class="headerlink" title="按键说明"></a>按键说明</h1><ul>
+<li><p>基本常用命令<br><img src="/images/linux/vi_insert.jpg" alt=""><br><img src="/images/linux/vi_locate.jpg" alt=""><br><img src="/images/linux/vi_find.jpg" alt=""><br><img src="/images/linux/vi_copy.jpg" alt=""><br><img src="/images/linux/vi_replace.jpg" alt=""><br><img src="/images/linux/vi_delete.jpg" alt=""><br><img src="/images/linux/vi_quit.jpg" alt=""></p>
+</li>
+<li><p>高级命令<br>J 将当前行和下一行连接为一行<br>&lt;&lt; 将当前行左移一个单位（一个缩进宽度）<br>‘&gt;&gt; 将当前行右移一个单位（一个缩进宽度）<br>~ 改变当前字符的大小写<br>^G Ctrl+G组合键可以显示当前文件名和状态<br>U 撤销对当前行所做的修改<br>u 撤销上次操作，再次按 ‘u’ 恢复该次操作<br>:f 以百分号(%)的形式显示当前光标在文件中的位置、文件名和文件的总行数<br>:f filename 将文件重命名为 filename<br>:w filename 保存修改到 filename<br>:e filename 打开另一个文件名为 filename 的文件<br>:cd dirname 改变当前工作目录到 dirname<br>:e # 在两个打开的文件之间进行切换<br>:n 如果用 vi 打开了多个文件，可以使用 :n 切换到下一个文件<br>:p 如果用 vi 打开了多个文件，可以使用 :n 切换到上一个文件<br>:N 如果用 vi 打开了多个文件，可以使用 :n 切换到上一个文件<br>:r file 读取文件并在当前行的后边插入<br>:nr file 读取文件并在第 n 行后边插入 </p>
+</li>
+</ul>
+<p>这里罗列了常用的命令，不建议背，多练习，熟悉了基本的操作应该就没有啥问题了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/05/Linux-用户和用户组管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1774,166 +1941,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/06/21/关键字驱动测试框架之六-Action管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/06/21/关键字驱动测试框架之六-Action管理/" itemprop="url">关键字驱动测试框架之六 - Action管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-06-21T12:08:52+08:00">
-                2013-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/06/21/关键字驱动测试框架之六-Action管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/06/21/关键字驱动测试框架之六-Action管理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要是对框架用的的Action关键字进行管理，根据Category设置该Action隶属于Step还是Keyword，Type来设置该Action是Built-in还是User-defined。<br><img src="/images/QTP/keyword_frame_action.jpg" alt="Action Center"></p>
-<p>对此些事情况会有不同的处理方式：</p>
-<ol>
-<li>如果Category是Test Object，此Action关键字会在添加测试用例步骤时按Step添加时的Aciton列表里，这些关键字会在生动生成脚本的时候，动态地用“RegisterUserFunc”注册到相应的对象上。</li>
-<li>如果Category是Function，此Aciton关键字会在添加测试用例步骤时按Keyword添加时的Keyword列表里，和用户自定义的Keyword一起显示。</li>
-</ol>
-<p>BTW，我们要对用到的Built-in和User-defined Action关键字手动添加到这列表里。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1988,7 +1995,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">338</span>
+                  <span class="site-state-item-count">339</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2010,7 +2017,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,6 +305,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/18/java内存泄露分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/02/18/java内存泄露分析/" itemprop="url">java内存泄露分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-18T13:35:59+08:00">
+                2016-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/02/18/java内存泄露分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/18/java内存泄露分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>在这里，我们还是先温习一下‘对象气球’：<br>对象就像一个充满氢气的气球，我们没有办法直接去得到它，要想对它的使用都必须通过一根连着它的绳子来访问，这根绳子就是对象的引用。<br>一根绳子同时只能连着一个气球，就像一个引用同时只能指向一个对象；<br>可以用多根绳子同时连接一个气球，也就是可以有多个引用同时指向同一个对象；<br>如果某个气球没有任何绳子连着它，那它就会飞走，同样，某个对象如果没有引用连接它，它就会成为垃圾，等着被java的垃圾收集器回收；<br>如果某根绳子没有连接任何气球，那么它就是一个空引用，对它的访问没有意义。<br>同样，某个引用如果没有指向对象，那么对它的访问将会抛出NullPointerException</p>
+</blockquote>
+<h1 id="Java内存回收机制"><a href="#Java内存回收机制" class="headerlink" title="Java内存回收机制"></a>Java内存回收机制</h1><p> Java 的内存管理就是对象的分配和释放问题。分配内存的方式多种多样，取决于该种语言的语法结构。但不论是哪一种语言的内存分配方式，最后都要返回所分配的内存块的起始地址，即返回一个指针到内存块的首地址。在Java 中所有对象都是在堆（Heap）中分配的，对象的创建通常都是采用new或者是反射的方式，但对象释放却有直接的手段，所以对象的回收都是由Java虚拟机通过垃圾收集器去完成的。这种收支两条线的方法确实简化了程序员的工作，但同时也加重了JVM的工作，这也是Java 程序运行速度较慢的原因之一。因为，GC 为了能够正确释放对象，GC 必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC 都需要进行监控。监视对象状态是为了更加准确地、及时地释放对象，而释放对象的根本原则就是该对象不再被引用。</p>
+<h1 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h1><h2 id="GC类型"><a href="#GC类型" class="headerlink" title="GC类型"></a>GC类型</h2><ul>
+<li><strong>新生代的GC</strong><br>Minor GC（新生代回收）的触发条件比较简单，Eden空间不足就开始进行Minor GC回收新生代。</li>
+<li><strong>老年代GC</strong><br>而Full GC（老年代回收，一般伴随一次Minor GC）则有几种触发条件：<br>（1）老年代空间不足<br>（2）PermSpace空间不足<br>（3）统计得到的Minor GC晋升到老年代的平均大小大于老年代的剩余空间</li>
+</ul>
+<h2 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h2><ul>
+<li>Java堆内存</li>
+<li>Perm内存</li>
+<li>Java进程本地内存</li>
+</ul>
+<h1 id="瓶颈分析"><a href="#瓶颈分析" class="headerlink" title="瓶颈分析"></a>瓶颈分析</h1><p>定位分析：</p>
+<ol>
+<li>生成堆的dump文件</li>
+<li>分析dump文件<br>详细参考文章相关章节：<a href="http://wenku.baidu.com/link?url=p6SRx-GOp_awHt2oBbNoLYJ5jKa7ygsa7LbqVWXGkQFtCForji55bQGuGVzfcoBaIhzOYnCZordP1NFR7L5CeJPcUb2lW5TEWRoJ4HE2j_y" target="_blank" rel="external">分析</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/10/大虾真好吃/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1748,164 +1919,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/25/2015圣诞节/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/25/2015圣诞节/" itemprop="url">2015圣诞节</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-25T08:43:02+08:00">
-                2015-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/25/2015圣诞节/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/25/2015圣诞节/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>圣诞节到了，小丁也长大了，好像明白了是咋回事了，我们去了上地华联，又去了中关村，可高兴坏了。<br><img src="/images/izheyi/2015/xmas_0.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_1.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_2.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_3.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/12/25/2015圣诞节/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1960,7 +1973,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">338</span>
+                  <span class="site-state-item-count">339</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1982,7 +1995,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

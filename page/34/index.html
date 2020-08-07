@@ -305,6 +305,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/09/VBS-send-mail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/10/09/VBS-send-mail/" itemprop="url">VBS send mail</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-09T09:00:28+08:00">
+                2012-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/10/09/VBS-send-mail/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/09/VBS-send-mail/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>2 methods:</p>
+<h1 id="Sending-Mail-with-OutLook"><a href="#Sending-Mail-with-OutLook" class="headerlink" title="Sending Mail with OutLook"></a>Sending Mail with OutLook</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Function</span> SendMail()</span><br><span class="line"> <span class="keyword">Dim</span> objOutlook, Mail, PopupLocate</span><br><span class="line"></span><br><span class="line"><span class="comment">'  Create Email object</span></span><br><span class="line">    <span class="keyword">Set</span> objOutlook=CreateObject(<span class="string">"Outlook.Application"</span>)</span><br><span class="line">    <span class="keyword">Set</span> objMail=objOutlook.CreateItem(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' Setting receiver</span></span><br><span class="line">    objMail.<span class="keyword">to</span>= <span class="string">"yongfeiuall@163.com"</span></span><br><span class="line">	objMail.cc=  <span class="string">"yongfeiuall@163.com"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'  Setting title &amp; content  &amp; attached</span></span><br><span class="line">    objMail.Subject=<span class="string">"自动化测试结果"</span></span><br><span class="line">    objMail.Body=<span class="string">"自动化测试结果"</span></span><br><span class="line">    objMail.Attachments.Add(<span class="string">"e:\test.htm"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' Mail  send</span></span><br><span class="line">   	SystemUtil.Run  <span class="string">"..\QTP\OutlookSecurityPopup.vbs"</span></span><br><span class="line">    objMail.Send</span><br><span class="line"></span><br><span class="line"><span class="comment">' 注销Email对象</span></span><br><span class="line">    objOutlook.Quit</span><br><span class="line">    <span class="keyword">Set</span> objMail = <span class="literal">Nothing</span></span><br><span class="line">    <span class="keyword">Set</span> objOutlook = <span class="literal">Nothing</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+<p><strong>OutlookSecurityPopup</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">Set</span> fso = CreateObject(<span class="string">"WScript.Shell"</span>)</span><br><span class="line"><span class="keyword">if</span> fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>) = <span class="literal">FALSE</span> <span class="keyword">then</span></span><br><span class="line">	wscript.<span class="keyword">Sleep</span> <span class="number">10000</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>  fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>) = <span class="literal">true</span> <span class="keyword">then</span></span><br><span class="line">	wscript.<span class="keyword">Sleep</span> <span class="number">1000</span></span><br><span class="line">	fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>)</span><br><span class="line">	fso.SendKeys <span class="string">"&#123;tab&#125;"</span></span><br><span class="line">	fso.SendKeys <span class="string">"&#123;tab&#125;"</span></span><br><span class="line">	wscript.<span class="keyword">sleep</span> <span class="number">1000</span></span><br><span class="line">	fso.SendKeys <span class="string">"&#123;ENTER&#125;"</span>	</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span></span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Sending-mail-without-a-security-popup"><a href="#Sending-mail-without-a-security-popup" class="headerlink" title="Sending mail without a security popup"></a>Sending mail without a security popup</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Const</span> SMTPSERVER = <span class="string">"xxxxxx"</span></span><br><span class="line"><span class="keyword">Const</span> MailFrom = <span class="string">"xxxxxx"</span> <span class="comment">'发件人邮箱 </span></span><br><span class="line"><span class="keyword">Const</span> MailPWD = <span class="string">"xxxxxx"</span> <span class="comment">'发件人邮箱密码 </span></span><br><span class="line"><span class="keyword">Const</span> SendTo = <span class="string">"yongfeiuall@163.com"</span> <span class="comment">'收件人邮箱 </span></span><br><span class="line"><span class="keyword">Const</span> Body = <span class="string">"&lt;a href=""http://www.izheyi.com"" &gt;Click Here&lt;/a&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Dim</span> objMail, UseHTML</span><br><span class="line"></span><br><span class="line"><span class="comment">'Create Email object</span></span><br><span class="line"><span class="keyword">Set</span> objMail = CreateObject(<span class="string">"CDO.Message"</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">'Setting sender &amp; receiver</span></span><br><span class="line">objMail.<span class="keyword">From</span> = MailFrom</span><br><span class="line">objMail.<span class="keyword">To</span> = SendTo</span><br><span class="line"><span class="comment">'objMail.CC = CC</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'Setting title &amp; content  &amp; attached</span></span><br><span class="line">objMail.Subject = <span class="string">"Subject"</span></span><br><span class="line">objMail.AddAttachment(ExcelReport)</span><br><span class="line">objMail.HTMLBody =  <span class="string">"&lt;H5&gt;Below is the example of email with Hyperlink&lt;/H5&gt;&lt;br&gt;"</span>  + Body</span><br><span class="line"></span><br><span class="line"><span class="comment">'Define mail configuration</span></span><br><span class="line"><span class="keyword">Const</span> schema = <span class="string">"http://schemas.microsoft.com/cdo/configuration/"</span> </span><br><span class="line"><span class="keyword">With</span> objMail.Configuration.Fields </span><br><span class="line">.Item(schema &amp; <span class="string">"sendusing"</span>) = <span class="number">2</span> </span><br><span class="line">.Item(schema &amp; <span class="string">"smtpserver"</span>) = SMTPSERVER</span><br><span class="line">.Item(schema &amp; <span class="string">"smtpauthenticate"</span>) = <span class="number">1</span> </span><br><span class="line">.Item(schema &amp; <span class="string">"sendusername"</span>) = MailFrom </span><br><span class="line">.Item(schema &amp; <span class="string">"sendpassword"</span>) = MailPWD  </span><br><span class="line">.Item(schema &amp; <span class="string">"smtpconnectiontimeout"</span>) = <span class="number">60</span> </span><br><span class="line">.Update </span><br><span class="line"><span class="keyword">End</span> <span class="keyword">With</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">'Send mail</span></span><br><span class="line">objMail.Send</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/08/08/Pad-Number-String-with-Zeroes-在字符串左侧补0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1599,7 +1755,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">338</span>
+                  <span class="site-state-item-count">339</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1621,7 +1777,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

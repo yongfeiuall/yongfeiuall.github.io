@@ -305,6 +305,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/03/02/winform中改变DataGridView中符合条件的字体的颜色/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/03/02/winform中改变DataGridView中符合条件的字体的颜色/" itemprop="url">winform中改变DataGridView中符合条件的字体的颜色</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-03-02T09:34:04+08:00">
+                2013-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Winform/" itemprop="url" rel="index">
+                    <span itemprop="name">Winform</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/03/02/winform中改变DataGridView中符合条件的字体的颜色/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/03/02/winform中改变DataGridView中符合条件的字体的颜色/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在设计框架的时候，把QTP Report中的运行结果状态根据结果显示为不同的颜色：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs <span class="keyword">e</span>) </span><br><span class="line">       &#123; </span><br><span class="line">           <span class="keyword">if</span> (<span class="keyword">e</span>.RowIndex &lt; 0) </span><br><span class="line">               <span class="keyword">return</span>; </span><br><span class="line"> </span><br><span class="line">           <span class="keyword">if</span> (<span class="keyword">e</span>.ColumnIndex == dataGridView1.Columns[<span class="string">"CaseStatus"</span>].Index) </span><br><span class="line">           &#123; </span><br><span class="line">               <span class="keyword">if</span> (dataGridView1.Rows[<span class="keyword">e</span>.RowIndex].Cells[<span class="keyword">e</span>.ColumnIndex].Value.<span class="keyword">ToString</span>() == <span class="string">"Passed"</span>) </span><br><span class="line">               &#123; </span><br><span class="line">                   <span class="keyword">e</span>.CellStyle.ForeColor = Color.Green; </span><br><span class="line">               &#125; </span><br><span class="line">               <span class="keyword">else</span> <span class="keyword">if</span> (dataGridView1.Rows[<span class="keyword">e</span>.RowIndex].Cells[<span class="keyword">e</span>.ColumnIndex].Value.<span class="keyword">ToString</span>() == <span class="string">"Failed"</span>) </span><br><span class="line">               &#123; </span><br><span class="line">                   <span class="keyword">e</span>.CellStyle.ForeColor = Color.Red; </span><br><span class="line">               &#125; </span><br><span class="line">               <span class="keyword">else</span> <span class="keyword">if</span> (dataGridView1.Rows[<span class="keyword">e</span>.RowIndex].Cells[<span class="keyword">e</span>.ColumnIndex].Value.<span class="keyword">ToString</span>() == <span class="string">"Warning"</span>) </span><br><span class="line">               &#123; </span><br><span class="line">                   <span class="keyword">e</span>.CellStyle.ForeColor = Color.Goldenrod; </span><br><span class="line">               &#125; </span><br><span class="line">               <span class="keyword">else</span> <span class="keyword">if</span> (dataGridView1.Rows[<span class="keyword">e</span>.RowIndex].Cells[<span class="keyword">e</span>.ColumnIndex].Value.<span class="keyword">ToString</span>() == <span class="string">"No Run"</span>) </span><br><span class="line">               &#123; </span><br><span class="line">                   <span class="keyword">e</span>.CellStyle.ForeColor = Color.Gray; </span><br><span class="line">               &#125; </span><br><span class="line">           &#125; </span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/03/01/DataGridView单元格设置日期格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1698,159 +1852,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/" itemprop="url">Random WebList & Write to Report(随机选择Weblist并写入测试报告)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:24:09+08:00">
-                2013-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">' 用 封装"items count" 属性来获取WebList下有几个选项</span></span><br><span class="line">itemCount =  Browser(<span class="string">"XXX"</span>).Page(<span class="string">"XXX|"</span>).WebList(<span class="string">"XXX"</span>).GetROProperty(<span class="string">"items count"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' 用RandomNumber随机选取范围内的index</span></span><br><span class="line">tValue = RandomNumber(<span class="number">0</span>, itemCount - <span class="number">1</span>)</span><br><span class="line">Browser(<span class="string">"XXX"</span>).Page(<span class="string">"XXX"</span>).WebList(<span class="string">"XXX"</span>).<span class="keyword">Select</span> tValue</span><br><span class="line"></span><br><span class="line"><span class="comment">' 将随机选择的结果写入测试报告</span></span><br><span class="line">Reporter.ReportEvent micDone, <span class="string">"本次运行随机选择了INDEX: &lt;"</span> &amp; tValue &amp; <span class="string">"&gt;"</span>, <span class="string">" "</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1905,7 +1906,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">338</span>
+                  <span class="site-state-item-count">339</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1927,7 +1928,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

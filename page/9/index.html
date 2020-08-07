@@ -305,6 +305,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/" itemprop="url">CI/CD - 环境搭建(2) - Webhook实现Jenkins Job自动运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-09T16:06:00+08:00">
+                2018-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>When Github have commit，will trigger Jenkins job run automatically。</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><p><em>Note: GitHub would not know how to contact “localhost” or 127.0.0.1: what GitHub would consider “local” is not your local machine.</em></p>
+<p>Use Ngrok to expose our local host to the Internet. </p>
+<ol>
+<li>Download <a href="https://ngrok.com/download" target="_blank" rel="external">ngrok</a></li>
+<li>Config and run<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@Automation</span> src]<span class="comment"># ./ngrok authtoken 3rsqkJTsPKW432XeLzEZ2_2uVdSyDqgLsTuSSb7FhaH</span></span><br><span class="line">Authtoken saved <span class="keyword">to</span> configuration <span class="attribute">file</span>: <span class="pi">/root/</span>.ngrok2/ngrok.yml</span><br><span class="line">[root<span class="property">@Automation</span> src]<span class="comment"># ./ngrok http 8080</span></span><br><span class="line"></span><br><span class="line">ngrok <span class="keyword">by</span> <span class="property">@inconshreveable</span>                                                                                                                                                   (Ctrl+C <span class="keyword">to</span> quit)</span><br><span class="line">                                                                                                                                                                                            </span><br><span class="line">Session Status                online                                                                                                                                                        </span><br><span class="line">Account                       yongfeiuall (<span class="attribute">Plan</span>: Free)                                                                                                                                      </span><br><span class="line">Version                       <span class="number">2.2</span>.<span class="number">8</span>                                                                                                                                                         </span><br><span class="line">Region                        United States (us)                                                                                                                                            </span><br><span class="line">Web Interface                 <span class="attribute">http</span>:<span class="pi">//127.0.0.1:4040                                                                                                                                         </span><br><span class="line">Forwarding                    http://</span><span class="number">5a</span>6d5b8a.ngrok.io<span class="function"> -&gt;</span> <span class="attribute">localhost</span>:<span class="number">8080</span>                                                                                                                    </span><br><span class="line">Forwarding                    <span class="attribute">https</span>:<span class="pi">//v.ngrok.io -&gt; localhost:8080                                                                                                                   </span><br><span class="line">                                                                                                                                                                                            </span><br><span class="line">Connections                   ttl     opn     rt1     rt5     p50     p90                                                                                                                   </span><br><span class="line">                              35      0       0.00    0.00    5.37    14.10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Create-a-Personal-Access-Token-in-GitHub"><a href="#Create-a-Personal-Access-Token-in-GitHub" class="headerlink" title="Create a Personal Access Token in GitHub"></a>Create a Personal Access Token in GitHub</h1><p><img src="/images/CI/jenkins_git_addtoken.jpg" alt=""><br>Copy the token<br><img src="/images/CI/jenkins_git_token.jpg" alt=""></p>
+<h1 id="Set-Up-Jenkins-Access-to-GitHub-with-Token"><a href="#Set-Up-Jenkins-Access-to-GitHub-with-Token" class="headerlink" title="Set Up Jenkins Access to GitHub with Token"></a>Set Up Jenkins Access to GitHub with Token</h1><h2 id="Add-Token-to-Jenkins"><a href="#Add-Token-to-Jenkins" class="headerlink" title="Add Token to Jenkins"></a>Add Token to Jenkins</h2><p>Jenkins &gt; Credentials<br><img src="/images/CI/jenkins_credential.jpg" alt=""></p>
+<h2 id="Config-Access-to-Github"><a href="#Config-Access-to-Github" class="headerlink" title="Config Access to Github"></a>Config Access to Github</h2><p>Jenkins &gt; Manage Jenkins &gt; Configure System<br><img src="/images/CI/jenkins_githubserver.jpg" alt=""></p>
+<h1 id="Config-the-Webhook"><a href="#Config-the-Webhook" class="headerlink" title="Config the Webhook"></a>Config the Webhook</h1><p>Jenkins does not automatically configure webhooks after config pipeline, need to run the job the first time.</p>
+<p><em>In order to connect to Github, need to use the below format:<br><code>git credentialsId: &#39;xxxxxxxxxxxxx&#39;, url: &#39;https://github.com/yongfeiuall/artifactory-maven-example.git&#39;</code></em></p>
+<p>Then config this job again and save it without any updating, go to Github to check webhook in Repository setting page.<br><img src="/images/CI/jenkins_git_webhook.jpg" alt=""></p>
+<h1 id="Check-trigger-automatically"><a href="#Check-trigger-automatically" class="headerlink" title="Check trigger automatically"></a>Check trigger automatically</h1><p>Update script and commit to Github, Jenkins job run automatically<br><img src="/images/CI/jenkins_pipeline_trigger.jpg" alt=""></p>
+<p>Download the <code>ArtifactoryJenkins-0.0.1-SNAPSHOT.jar</code> file, and extract source code, build successfully.<br><img src="/images/CI/jenkins_pipeline_trigger_check.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/09/CI-CD-环境搭建-1-Jenkins-Pipeline-Github/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1891,186 +2060,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/Terraform-基础/" itemprop="url">Terraform - 基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:08:22+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/Terraform-基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里我们基于前面学习的AWS进行学习。</p>
-<p>Terraform 是一个 IT 基础架构自动化编排工具，IaaS, 基础架构即代码。具体的说就是可以用代码来管理维护IT资源。并且在真正运行之前可以看到执行计划。由于状态保存到文件中，因此能够离线方式查看资源情况。</p>
-<p>可以去官网查看更多详细信息：<a href="https://www.terraform.io/" target="_blank" rel="external">Terraform</a></p>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>下载安装包<a href="https://www.terraform.io/downloads.html" target="_blank" rel="external">Here</a>，解压压缩包，为了更好的应用，把它添加环境变量PATH。</p>
-<p>打开命令行，验证能用：<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;terraform --version</span><br><span class="line">Terraform v0.11.7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="HashiCorp-Configuration-Language-HCL"><a href="#HashiCorp-Configuration-Language-HCL" class="headerlink" title="HashiCorp Configuration Language (HCL)"></a>HashiCorp Configuration Language (HCL)</h1><p>Terraform用HCL来编写，并保存在后缀有.tf的文件。</p>
-<h2 id="provider"><a href="#provider" class="headerlink" title="provider"></a>provider</h2><p>在main.tf文件中<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line"><span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>用AWS做为Provider。</li>
-<li>部署你的infrastructure到US-EAST-1 Region。</li>
-</ul>
-<h2 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h2><p>对每一种Provider，都有很多不同的Resources进行管理。<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource <span class="string">"PROVIDER_TYPE"</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="string">[CONFIG ...]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>PROVIDER</strong> is the name of a provider</li>
-<li><strong>TYPE</strong> is the type of resources to create in that provider</li>
-<li><strong>NAME</strong> is an identifier you can use throughout the Terraform code to refer to this resource</li>
-<li><strong>CONFIG</strong> consists of one or more configuration parameters that are specific to that resource<br>E.g.,<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">resource</span> <span class="string">"aws_instance"</span> <span class="string">"example"</span> &#123;</span><br><span class="line"><span class="title">ami</span> = <span class="string">"ami-40d28157"</span></span><br><span class="line">instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><p>命令行进入到main.tf的目录执行 Terraform Command。</p>
-<h2 id="terrafrom-plan"><a href="#terrafrom-plan" class="headerlink" title="terrafrom plan"></a>terrafrom plan</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; terraform plan</span><br><span class="line">Refreshing Terraform <span class="keyword">state</span> in-memory prior <span class="keyword">to</span> plan...</span><br><span class="line">(...)</span><br><span class="line">+ aws_instance.example</span><br><span class="line">ami: <span class="string">"ami-40dddded"</span></span><br><span class="line">(...)</span><br></pre></td></tr></table></figure>
-<p>The plan command lets you see what Terraform will do before actually making<br>any changes。</p>
-<ul>
-<li>resources with a plus sign (+) are going to be created</li>
-<li>resources with a minus sign (–) are going to be deleted</li>
-<li>resources with a tilde sign (~) are going to be modified.<h2 id="terraform-apply"><a href="#terraform-apply" class="headerlink" title="terraform apply"></a>terraform apply</h2>这才是真正执行命令，去AWS上进行相应的操作。<h2 id="terraform-graph"><a href="#terraform-graph" class="headerlink" title="terraform graph"></a>terraform graph</h2>To show the dependency graph</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2125,7 +2114,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">338</span>
+                  <span class="site-state-item-count">339</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2147,7 +2136,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
