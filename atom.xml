@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2020-08-07T08:21:05.901Z</updated>
+  <updated>2020-12-15T05:00:09.036Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -14,6 +14,178 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jacoco功能测试覆盖率</title>
+    <link href="http://izheyi.com/2020/09/02/Jacoco%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87/"/>
+    <id>http://izheyi.com/2020/09/02/Jacoco功能测试覆盖率/</id>
+    <published>2020-09-02T02:17:10.000Z</published>
+    <updated>2020-12-15T05:00:09.036Z</updated>
+    
+    <content type="html">&lt;p&gt;对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。&lt;/p&gt;
+&lt;p&gt;我们需要这两个jar： &lt;code&gt;jacocoagent.jar&lt;/code&gt;和&lt;code&gt;jacococli.jar&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;一样是和Git，Jenkins集成，说一下思路&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;同样&lt;code&gt;mvn install&lt;/code&gt;，打包生成jar包&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;项目启动的时候，配置jacoco agent&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;java -javaagent:/jacocoagent.jar=includes=*,output=tcpserver,address=localhost,port=&lt;span class=&quot;number&quot;&gt;11111&lt;/span&gt; -jar ./target/project-&lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.1&lt;/span&gt;-SNAPSHOT.jar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;启动后，生成报告&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;java -jar jacococli.jar dump --address localhost --port &lt;span class=&quot;number&quot;&gt;11111&lt;/span&gt; --destfile ./jacoco-demo.&lt;span class=&quot;keyword&quot;&gt;exec&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;java -jar jacococli.jar report ./jacoco-demo.&lt;span class=&quot;keyword&quot;&gt;exec&lt;/span&gt; --classfiles ./target/classes --html ./report&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;没有做任何澧，覆盖率极低。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;做一些测试之后，生成报告&lt;/p&gt;
+&lt;p&gt;反映出实时的测试覆盖率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以上只是简单例子，也可以在Tomcat里配置。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。&lt;/p&gt;
+&lt;p&gt;我们需要这两个jar： &lt;code&gt;jacocoagent.jar&lt;/code&gt;和&lt;code&gt;jacococli.jar&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;一样是和Git，J
+    
+    </summary>
+    
+      <category term="Product Delivery" scheme="http://izheyi.com/categories/Product-Delivery/"/>
+    
+    
+      <category term="Jacoco" scheme="http://izheyi.com/tags/Jacoco/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jacoco自动化代码覆盖率</title>
+    <link href="http://izheyi.com/2020/08/22/Jacoco%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87/"/>
+    <id>http://izheyi.com/2020/08/22/Jacoco自动化代码覆盖率/</id>
+    <published>2020-08-22T02:16:54.000Z</published>
+    <updated>2020-12-15T04:58:28.705Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。官网(Jacoco)[&lt;a href=&quot;https://www.eclemma.org/jacoco/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.eclemma.org/jacoco/&lt;/a&gt;]&lt;/p&gt;
+&lt;h2 id=&quot;覆盖率计数器&quot;&gt;&lt;a href=&quot;#覆盖率计数器&quot; class=&quot;headerlink&quot; title=&quot;覆盖率计数器&quot;&gt;&lt;/a&gt;覆盖率计数器&lt;/h2&gt;&lt;h6 id=&quot;1-行覆盖&quot;&gt;&lt;a href=&quot;#1-行覆盖&quot; class=&quot;headerlink&quot; title=&quot;1. 行覆盖&quot;&gt;&lt;/a&gt;1. 行覆盖&lt;/h6&gt;&lt;h6 id=&quot;2-类覆盖&quot;&gt;&lt;a href=&quot;#2-类覆盖&quot; class=&quot;headerlink&quot; title=&quot;2. 类覆盖&quot;&gt;&lt;/a&gt;2. 类覆盖&lt;/h6&gt;&lt;h6 id=&quot;3-方法覆盖&quot;&gt;&lt;a href=&quot;#3-方法覆盖&quot; class=&quot;headerlink&quot; title=&quot;3. 方法覆盖&quot;&gt;&lt;/a&gt;3. 方法覆盖&lt;/h6&gt;&lt;h6 id=&quot;4-分支覆盖&quot;&gt;&lt;a href=&quot;#4-分支覆盖&quot; class=&quot;headerlink&quot; title=&quot;4. 分支覆盖&quot;&gt;&lt;/a&gt;4. 分支覆盖&lt;/h6&gt;&lt;h6 id=&quot;5-指令覆盖&quot;&gt;&lt;a href=&quot;#5-指令覆盖&quot; class=&quot;headerlink&quot; title=&quot;5. 指令覆盖&quot;&gt;&lt;/a&gt;5. 指令覆盖&lt;/h6&gt;&lt;h6 id=&quot;6-圈复杂度&quot;&gt;&lt;a href=&quot;#6-圈复杂度&quot; class=&quot;headerlink&quot; title=&quot;6. 圈复杂度&quot;&gt;&lt;/a&gt;6. 圈复杂度&lt;/h6&gt;&lt;h1 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h1&gt;&lt;p&gt;Jacoco使用插桩的方式来记录覆盖率数据。&lt;br&gt; 插桩模式有两种：&lt;/p&gt;
+&lt;h6 id=&quot;1-on-the-fly模式&quot;&gt;&lt;a href=&quot;#1-on-the-fly模式&quot; class=&quot;headerlink&quot; title=&quot;1. on-the-fly模式&quot;&gt;&lt;/a&gt;1. on-the-fly模式&lt;/h6&gt;&lt;blockquote&gt;
+&lt;p&gt;JVM通过 -javaagent参数指定jar文件启动代理程序，代理程序在ClassLoader装载一个class前判断是否修改class文件，并将探针插入class文件，探针不改变原有方法的行为，只是记录是否已经执行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h6 id=&quot;2-offline模式&quot;&gt;&lt;a href=&quot;#2-offline模式&quot; class=&quot;headerlink&quot; title=&quot;2. offline模式&quot;&gt;&lt;/a&gt;2. offline模式&lt;/h6&gt;&lt;blockquote&gt;
+&lt;p&gt;在测试之前先对文件进行插桩，生成插过桩的class或jar包，测试插过桩的class和jar包，生成覆盖率信息到文件，最后统一处理，生成报告。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;集成Maven&quot;&gt;&lt;a href=&quot;#集成Maven&quot; class=&quot;headerlink&quot; title=&quot;集成Maven&quot;&gt;&lt;/a&gt;集成Maven&lt;/h1&gt;&lt;p&gt;下载配置JDK，Maven，Jacoco&lt;/p&gt;
+&lt;p&gt;Manven配置(Maven Plug-in)[&lt;a href=&quot;https://www.eclemma.org/jacoco/trunk/doc/maven.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.eclemma.org/jacoco/trunk/doc/maven.html&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;用下载的Jacoco的example里的例子演示&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;C:\Test\Jacoco&amp;gt;mvn install&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] Scanning &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; projects...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] ----------------&amp;lt; org.jacoco:org.jacoco.examples.maven &amp;gt;----------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] Building JaCoCo Maven plug-&lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; example &lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] --------------------------------[ jar ]---------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] --- jacoco-maven-plugin:&lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.6&lt;/span&gt;:prepare-agent (default-prepare-agent) @ org.jacoco.examples.maven ---&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[INFO] argLine set to -&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Maven构建成功之后，生成代码覆盖报告（\target\site\jacoco）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/jacoco\report.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;集成Git和Jenkins&quot;&gt;&lt;a href=&quot;#集成Git和Jenkins&quot; class=&quot;headerlink&quot; title=&quot;集成Git和Jenkins&quot;&gt;&lt;/a&gt;集成Git和Jenkins&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;把example上传到Github上&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置Jenkins，回传报告&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/jacoco\jenkins.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置Jacoco Coverage Report&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/jacoco\coverage.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Coverage Trend&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/jacoco\trend.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件
+    
+    </summary>
+    
+      <category term="Product Delivery" scheme="http://izheyi.com/categories/Product-Delivery/"/>
+    
+    
+      <category term="Jacoco" scheme="http://izheyi.com/tags/Jacoco/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pycharm2020.1.2激活</title>
+    <link href="http://izheyi.com/2020/08/08/Pycharm2020-1-2%E6%BF%80%E6%B4%BB/"/>
+    <id>http://izheyi.com/2020/08/08/Pycharm2020-1-2激活/</id>
+    <published>2020-08-08T13:20:39.000Z</published>
+    <updated>2020-12-15T00:58:20.866Z</updated>
+    
+    <content type="html">&lt;p&gt;从方法网络取得，仅供学习研究，请勿用于商业用途！&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装Pycharm&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;下载&lt;/p&gt;
+&lt;p&gt;链接: &lt;a href=&quot;https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA&lt;/a&gt; 提取码: fti8 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;打开Pycharm， 把下载的zip拖拽到IDE窗口，重启Pycharm&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在弹出的JetbrainsAgent Helper对话框中，点击‘为Pycharm安装’&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;重启Pycharm即可&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从方法网络取得，仅供学习研究，请勿用于商业用途！&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装Pycharm&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;下载&lt;/p&gt;
+&lt;p&gt;链接: &lt;a href=&quot;https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMK
+    
+    </summary>
+    
+      <category term="Python" scheme="http://izheyi.com/categories/Python/"/>
+    
+    
+      <category term="Pycharm" scheme="http://izheyi.com/tags/Pycharm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>navicat for mysql 无需激活码破解版</title>
+    <link href="http://izheyi.com/2020/08/08/navicat-for-mysql-%E6%97%A0%E9%9C%80%E6%BF%80%E6%B4%BB%E7%A0%81%E7%A0%B4%E8%A7%A3%E7%89%88/"/>
+    <id>http://izheyi.com/2020/08/08/navicat-for-mysql-无需激活码破解版/</id>
+    <published>2020-08-08T13:04:05.000Z</published>
+    <updated>2020-12-15T00:58:34.252Z</updated>
+    
+    <content type="html">&lt;p&gt;从方法网络取得，仅供学习研究，请勿用于商业用途！&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;下载&lt;/p&gt;
+&lt;p&gt;链接: &lt;a href=&quot;https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw&lt;/a&gt; 提取码: 2dav &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;解压安装&lt;/p&gt;
+&lt;p&gt;安装 navicat for mysql&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;激活&lt;/p&gt;
+&lt;p&gt;打开Patch.ext，选择navicat for mysql安装目录下的navicat.exe即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从方法网络取得，仅供学习研究，请勿用于商业用途！&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;下载&lt;/p&gt;
+&lt;p&gt;链接: &lt;a href=&quot;https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw&quot; target=&quot;_blank&quot; rel=&quot;ext
+    
+    </summary>
+    
+      <category term="Mysql" scheme="http://izheyi.com/categories/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://izheyi.com/tags/Mysql/"/>
+    
+      <category term="Navicat" scheme="http://izheyi.com/tags/Navicat/"/>
+    
+  </entry>
   
   <entry>
     <title>Customized test report with Jira and Xray</title>
@@ -674,159 +846,6 @@
       <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
     
       <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>奇点绘画画随记（2019）</title>
-    <link href="http://izheyi.com/2019/01/15/%E5%B0%8F%E4%B8%81%E7%94%BB%E4%BD%9C-2019/"/>
-    <id>http://izheyi.com/2019/01/15/小丁画作-2019/</id>
-    <published>2019-01-15T08:08:57.000Z</published>
-    <updated>2020-03-08T02:44:55.071Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/16.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/17.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/18.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/19.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/20.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/21.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/22.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/23.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/24.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/25.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/26.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/27.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/28.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/29.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/30.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/31.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/32.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/33.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/34.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/35.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/36.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/37.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/15.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/qidianhui/16.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izh
-    
-    </summary>
-    
-      <category term="丁丁" scheme="http://izheyi.com/categories/%E4%B8%81%E4%B8%81/"/>
-    
-    
-      <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
-    
-      <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2019 - Flag</title>
-    <link href="http://izheyi.com/2019/01/06/2019-Flag/"/>
-    <id>http://izheyi.com/2019/01/06/2019-Flag/</id>
-    <published>2019-01-06T04:41:23.000Z</published>
-    <updated>2019-05-29T00:31:36.403Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;读书&lt;br&gt;基于去年的不足，今年细化，每月一本书，读书笔记到Blog。&lt;/li&gt;
-&lt;li&gt;PMP&lt;br&gt;这个东西几年前有看过，一直没付诸行动，挤时间，逼自己一把，今年拿下证书。&lt;/li&gt;
-&lt;li&gt;工作&lt;br&gt;a. 保持技术的更新，有自己的想法和应对方法。&lt;br&gt;b. 更全面的看待，处理事情。&lt;/li&gt;
-&lt;li&gt;英语&lt;br&gt;a. 再看一下英语基础，试着找一下快速提升的方法。&lt;br&gt;b. 搞定Friends前三季。&lt;/li&gt;
-&lt;li&gt;生活&lt;br&gt;a. 控制脾气，控制脾气，控制脾气。&lt;br&gt;b. 放下手机，活的仪式感一些。&lt;br&gt;c. 培养一个兴趣。&lt;/li&gt;
-&lt;li&gt;其他&lt;br&gt;a. Blog，尽量更新。&lt;br&gt;b. 每周运动三次，发圈Track。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;奖励&quot;&gt;&lt;a href=&quot;#奖励&quot; class=&quot;headerlink&quot; title=&quot;奖励&quot;&gt;&lt;/a&gt;奖励&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;拿到PMP证书，看音乐会。&lt;/li&gt;
-&lt;li&gt;国内游。&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：&lt;/
-    
-    </summary>
-    
-      <category term="随想" scheme="http://izheyi.com/categories/%E9%9A%8F%E6%83%B3/"/>
-    
-    
-      <category term="工作" scheme="http://izheyi.com/tags/%E5%B7%A5%E4%BD%9C/"/>
-    
-      <category term="随想" scheme="http://izheyi.com/tags/%E9%9A%8F%E6%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2018画展</title>
-    <link href="http://izheyi.com/2018/12/31/2018%E7%94%BB%E5%B1%95/"/>
-    <id>http://izheyi.com/2018/12/31/2018画展/</id>
-    <published>2018-12-31T05:45:35.000Z</published>
-    <updated>2019-01-03T05:44:17.226Z</updated>
-    
-    <content type="html">&lt;p&gt;为了画展，让孩子们画了好多次课，这种行为不知道好还是不好，为了一个展览连续的不学新的课程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/12/1.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;作品&quot;&gt;&lt;a href=&quot;#作品&quot; class=&quot;headerlink&quot; title=&quot;作品&quot;&gt;&lt;/a&gt;作品&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/12/2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/2018/12/3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;strong&gt;帽子&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;在无限的黑色网状里，人变的压抑和渺小，红蓝相间的圆点帽子，却又充满活力，色彩艳丽。二者交互辉映，仿佛把人带到一个奇妙的世界，融洽、平静，有一种使人安静下来的力量，我自风情万种，与世无争。&lt;/em&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;为了画展，让孩子们画了好多次课，这种行为不知道好还是不好，为了一个展览连续的不学新的课程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/izheyi/2018/12/1.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;作品&quot;&gt;&lt;a href=&quot;#作品&quot; class=
-    
-    </summary>
-    
-      <category term="丁丁" scheme="http://izheyi.com/categories/%E4%B8%81%E4%B8%81/"/>
-    
-    
-      <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
-    
-      <category term="生活" scheme="http://izheyi.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-      <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2018 - 总结</title>
-    <link href="http://izheyi.com/2018/12/25/2018-%E6%80%BB%E7%BB%93/"/>
-    <id>http://izheyi.com/2018/12/25/2018-总结/</id>
-    <published>2018-12-25T06:29:52.000Z</published>
-    <updated>2019-01-02T05:40:23.359Z</updated>
-    
-    <content type="html">&lt;p&gt;2018年马上过完，年初的时候有个工作计划 &lt;a href=&quot;/2018/01/11/2018-学习计划/&quot;&gt;2018 - 学习计划&lt;/a&gt;，也简单做个总结。&lt;/p&gt;
-&lt;h2 id=&quot;工作&quot;&gt;&lt;a href=&quot;#工作&quot; class=&quot;headerlink&quot; title=&quot;工作&quot;&gt;&lt;/a&gt;工作&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;随着公司Agile的转型成功，还是学到了很多东西，结果重要，但过程同样重要。&lt;/li&gt;
-&lt;li&gt;年终最后一次上线竟然出现了几个Critical的Issues，新项目和现有的6个项目都有交集，诸多原因，确实也遗漏了一些东西。通过Retro知道了不足，以及How could be better in next stage。但也有一些体会：Agile强调整个Team对质量负责，真正出了问题，还是QA背锅，终究是没有逃脱0和-1游戏规则。有些事情虽不爽，但是要敢于承认错误，力争把工作做到挑不出毛病。某些人，劝你评价别人的时候请先看看自己。唯有自己强大，其他都是浮云。&lt;/li&gt;
-&lt;li&gt;今年学了不少新技术，在测试应用到的技术这块有了一个很明显的提升。&lt;ul&gt;
-&lt;li&gt;基于AWS，Salt，Atrifactory，Terraform，Jenkins，Github实现CI/CD&lt;/li&gt;
-&lt;li&gt;基于SSM的java项目开发流程和实现&lt;/li&gt;
-&lt;li&gt;Zookeeper，Dubbo和Docker的基本应用&lt;/li&gt;
-&lt;li&gt;基于Pact的CDC测试&lt;/li&gt;
-&lt;li&gt;性能测试的一些思考&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;通过一些渠道也知道了在技术的全局观上还有待于提高，项目和质量的整体把控上也有欠缺，也要提高一下技术快速落地的能力。&lt;/li&gt;
-&lt;li&gt;参加了一些课程，学到了不少新的思路和知识。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;其他&quot;&gt;&lt;a href=&quot;#其他&quot; class=&quot;headerlink&quot; title=&quot;其他&quot;&gt;&lt;/a&gt;其他&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;基本能保持每周一次的Blog更新，内容多是学习笔记。&lt;/li&gt;
-&lt;li&gt;孩子教育是个很大的事情，还得继续努力。&lt;/li&gt;
-&lt;li&gt;力争生活和工作的Balance。&lt;/li&gt;
-&lt;li&gt;对自己也有一次奖励，去青岛玩了一趟。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;遗憾-不足&quot;&gt;&lt;a href=&quot;#遗憾-不足&quot; class=&quot;headerlink&quot; title=&quot;遗憾/不足&quot;&gt;&lt;/a&gt;遗憾/不足&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;2018只剩下个位数，读的书也只有个位数，来年需要一个更详细一点的计划。&lt;/li&gt;
-&lt;li&gt;英语，跟着公司还花钱报了个课程，效果不是很明显，进步不大，需要反思。&lt;/li&gt;
-&lt;li&gt;十一之后，一直不在状态，要做阶段性总结反思，把目标分拆的更细小，严格要求自己，并做好时间管理。&lt;/li&gt;
-&lt;li&gt;情绪的掌控有待提高，团队管理和沟通要进一步加强。&lt;/li&gt;
-&lt;li&gt;技术很重要，但工作不仅仅是技术。&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;2018年马上过完，年初的时候有个工作计划 &lt;a href=&quot;/2018/01/11/2018-学习计划/&quot;&gt;2018 - 学习计划&lt;/a&gt;，也简单做个总结。&lt;/p&gt;
-&lt;h2 id=&quot;工作&quot;&gt;&lt;a href=&quot;#工作&quot; class=&quot;headerlink&quot; title=&quot;工
-    
-    </summary>
-    
-      <category term="随想" scheme="http://izheyi.com/categories/%E9%9A%8F%E6%83%B3/"/>
-    
-    
-      <category term="工作" scheme="http://izheyi.com/tags/%E5%B7%A5%E4%BD%9C/"/>
-    
-      <category term="随想" scheme="http://izheyi.com/tags/%E9%9A%8F%E6%83%B3/"/>
     
   </entry>
   

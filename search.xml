@@ -4,6 +4,102 @@
   
     
     <entry>
+      <title><![CDATA[Jacoco功能测试覆盖率]]></title>
+      <url>http://izheyi.com/2020/09/02/Jacoco%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87/</url>
+      <content type="html"><![CDATA[<p>对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。</p>
+<p>我们需要这两个jar： <code>jacocoagent.jar</code>和<code>jacococli.jar</code>。</p>
+<p>一样是和Git，Jenkins集成，说一下思路</p>
+<ol>
+<li><p>同样<code>mvn install</code>，打包生成jar包</p>
+</li>
+<li><p>项目启动的时候，配置jacoco agent</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:/jacocoagent.jar=includes=*,output=tcpserver,address=localhost,port=<span class="number">11111</span> -jar ./target/project-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动后，生成报告</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar dump --address localhost --port <span class="number">11111</span> --destfile ./jacoco-demo.<span class="keyword">exec</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar report ./jacoco-demo.<span class="keyword">exec</span> --classfiles ./target/classes --html ./report</span><br></pre></td></tr></table></figure>
+<p>没有做任何澧，覆盖率极低。</p>
+</li>
+<li><p>做一些测试之后，生成报告</p>
+<p>反映出实时的测试覆盖率。</p>
+</li>
+</ol>
+<p>以上只是简单例子，也可以在Tomcat里配置。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Jacoco自动化代码覆盖率]]></title>
+      <url>http://izheyi.com/2020/08/22/Jacoco%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87/</url>
+      <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。官网(Jacoco)[<a href="https://www.eclemma.org/jacoco/" target="_blank" rel="external">https://www.eclemma.org/jacoco/</a>]</p>
+<h2 id="覆盖率计数器"><a href="#覆盖率计数器" class="headerlink" title="覆盖率计数器"></a>覆盖率计数器</h2><h6 id="1-行覆盖"><a href="#1-行覆盖" class="headerlink" title="1. 行覆盖"></a>1. 行覆盖</h6><h6 id="2-类覆盖"><a href="#2-类覆盖" class="headerlink" title="2. 类覆盖"></a>2. 类覆盖</h6><h6 id="3-方法覆盖"><a href="#3-方法覆盖" class="headerlink" title="3. 方法覆盖"></a>3. 方法覆盖</h6><h6 id="4-分支覆盖"><a href="#4-分支覆盖" class="headerlink" title="4. 分支覆盖"></a>4. 分支覆盖</h6><h6 id="5-指令覆盖"><a href="#5-指令覆盖" class="headerlink" title="5. 指令覆盖"></a>5. 指令覆盖</h6><h6 id="6-圈复杂度"><a href="#6-圈复杂度" class="headerlink" title="6. 圈复杂度"></a>6. 圈复杂度</h6><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Jacoco使用插桩的方式来记录覆盖率数据。<br> 插桩模式有两种：</p>
+<h6 id="1-on-the-fly模式"><a href="#1-on-the-fly模式" class="headerlink" title="1. on-the-fly模式"></a>1. on-the-fly模式</h6><blockquote>
+<p>JVM通过 -javaagent参数指定jar文件启动代理程序，代理程序在ClassLoader装载一个class前判断是否修改class文件，并将探针插入class文件，探针不改变原有方法的行为，只是记录是否已经执行。</p>
+</blockquote>
+<h6 id="2-offline模式"><a href="#2-offline模式" class="headerlink" title="2. offline模式"></a>2. offline模式</h6><blockquote>
+<p>在测试之前先对文件进行插桩，生成插过桩的class或jar包，测试插过桩的class和jar包，生成覆盖率信息到文件，最后统一处理，生成报告。</p>
+</blockquote>
+<h1 id="集成Maven"><a href="#集成Maven" class="headerlink" title="集成Maven"></a>集成Maven</h1><p>下载配置JDK，Maven，Jacoco</p>
+<p>Manven配置(Maven Plug-in)[<a href="https://www.eclemma.org/jacoco/trunk/doc/maven.html" target="_blank" rel="external">https://www.eclemma.org/jacoco/trunk/doc/maven.html</a>]</p>
+<p>用下载的Jacoco的example里的例子演示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Test\Jacoco&gt;mvn install</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] ----------------&lt; org.jacoco:org.jacoco.examples.maven &gt;----------------</span><br><span class="line">[INFO] Building JaCoCo Maven plug-<span class="keyword">in</span> example <span class="number">0.8</span><span class="number">.6</span></span><br><span class="line">[INFO] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] --- jacoco-maven-plugin:<span class="number">0.8</span><span class="number">.6</span>:prepare-agent (default-prepare-agent) @ org.jacoco.examples.maven ---</span><br><span class="line">[INFO] argLine set to -</span><br></pre></td></tr></table></figure>
+<p>Maven构建成功之后，生成代码覆盖报告（\target\site\jacoco）</p>
+<p><img src="/images/jacoco\report.jpg" alt=""></p>
+<h1 id="集成Git和Jenkins"><a href="#集成Git和Jenkins" class="headerlink" title="集成Git和Jenkins"></a>集成Git和Jenkins</h1><ol>
+<li><p>把example上传到Github上</p>
+</li>
+<li><p>配置Jenkins，回传报告</p>
+<p><img src="/images/jacoco\jenkins.jpg" alt=""></p>
+</li>
+<li><p>配置Jacoco Coverage Report</p>
+<p><img src="/images/jacoco\coverage.jpg" alt=""></p>
+</li>
+<li><p>Coverage Trend</p>
+<p><img src="/images/jacoco\trend.jpg" alt=""></p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Pycharm2020.1.2激活]]></title>
+      <url>http://izheyi.com/2020/08/08/Pycharm2020-1-2%E6%BF%80%E6%B4%BB/</url>
+      <content type="html"><![CDATA[<p>从方法网络取得，仅供学习研究，请勿用于商业用途！</p>
+<ol>
+<li><p>安装Pycharm</p>
+</li>
+<li><p>下载</p>
+<p>链接: <a href="https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA" target="_blank" rel="external">https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA</a> 提取码: fti8 </p>
+</li>
+<li><p>打开Pycharm， 把下载的zip拖拽到IDE窗口，重启Pycharm</p>
+</li>
+<li><p>在弹出的JetbrainsAgent Helper对话框中，点击‘为Pycharm安装’</p>
+</li>
+<li><p>重启Pycharm即可</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[navicat for mysql 无需激活码破解版]]></title>
+      <url>http://izheyi.com/2020/08/08/navicat-for-mysql-%E6%97%A0%E9%9C%80%E6%BF%80%E6%B4%BB%E7%A0%81%E7%A0%B4%E8%A7%A3%E7%89%88/</url>
+      <content type="html"><![CDATA[<p>从方法网络取得，仅供学习研究，请勿用于商业用途！</p>
+<ol>
+<li><p>下载</p>
+<p>链接: <a href="https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw" target="_blank" rel="external">https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw</a> 提取码: 2dav </p>
+</li>
+<li><p>解压安装</p>
+<p>安装 navicat for mysql</p>
+</li>
+<li><p>激活</p>
+<p>打开Patch.ext，选择navicat for mysql安装目录下的navicat.exe即可。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Customized test report with Jira and Xray]]></title>
       <url>http://izheyi.com/2020/07/07/Customized-test-report-with-Jira-and-Xray/</url>
       <content type="html"><![CDATA[<p>We could define one online report to know test status easily. here just setup some widget. use the below tech:</p>

@@ -305,6 +305,678 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/08/10/Load-Runner-响应时间VS事务时间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/10/Load-Runner-响应时间VS事务时间/" itemprop="url">Load Runner - 响应时间VS事务时间</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-10T15:22:09+08:00">
+                2016-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/10/Load-Runner-响应时间VS事务时间/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/08/10/Load-Runner-响应时间VS事务时间/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="响应时间"><a href="#响应时间" class="headerlink" title="响应时间"></a>响应时间</h1><p>响应时间是通过记录用户请求的开始时间和服务器返回内容到用户的时间差值来计算用户操作响应时间的。<br><img src="/images/performancetesting/rt.jpg" alt=""></p>
+<ul>
+<li>网络时间： N1…N6</li>
+<li>Web服务器时间： WT</li>
+<li>App服务器时间： AT</li>
+<li>DB服务器时间： DT<br>在现实中，Web Server，App Server，Database Server一般都放在一个高速的局域网中，所以它们之间的网络时间s可以忽略。</li>
+</ul>
+<h1 id="事务时间"><a href="#事务时间" class="headerlink" title="事务时间"></a>事务时间</h1><p>事务的官方定义：事务是指用户在客户端做一种或多种业务所需要的操作集(actions)，通过事务开始和结束函数可以标记完成该业务所需要的操作内容(脚本section)。<br>对于一个事务时间来说，一般由4个部分组成：<br><strong>[Tr = RT + Tt + Wasted Time]</strong></p>
+<ul>
+<li><p>响应时间</p>
+</li>
+<li><p>Think Time<br>Think Time是为了更加真实的模拟用户场景。</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">	lr_start_transaction(<span class="string">"自身时间"</span>);</span><br><span class="line">	lr_think_time(<span class="number">3</span>);</span><br><span class="line">	lr_end_transaction(<span class="string">"自身时间"</span>, LR_AUTO);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要在Run-time Settings中设置Think Time，启用Replay Think Time。Replay Log:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Starting iteration <span class="number">1</span>.</span><br><span class="line">Starting action Action.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">3</span>)</span></span>: Notify: Transaction <span class="string">"自身时间"</span> started.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: lr_think_time: <span class="number">3.00</span> seconds.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">5</span>)</span></span>: Notify: Transaction <span class="string">"自身时间"</span> ended with <span class="string">"Pass"</span> status (Duration: <span class="number">3.0053</span> Think Time: <span class="number">2.9992</span>).</span><br><span class="line">Ending action Action.</span><br><span class="line">Ending iteration <span class="number">1</span>.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事务自身时间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">	lr_start_transaction(<span class="string">"自身时间"</span>);</span><br><span class="line">	lr_end_transaction(<span class="string">"自身时间"</span>, LR_AUTO);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Replay Log:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">Starting</span> iteration <span class="number">1</span>.</span><br><span class="line"><span class="variable">Starting</span> action <span class="variable">Action</span>.</span><br><span class="line"><span class="variable">Action</span>.c(<span class="number">3</span>): <span class="variable">Notify</span>: <span class="variable">Transaction</span> <span class="string">"自身时间"</span> started.</span><br><span class="line"><span class="variable">Action</span>.c(<span class="number">5</span>): <span class="variable">Notify</span>: <span class="variable">Transaction</span> <span class="string">"自身时间"</span> ended with <span class="string">"Pass"</span> status (<span class="variable">Duration</span>: <span class="number">0.0016</span>).</span><br><span class="line"><span class="variable">Ending</span> action <span class="variable">Action</span>.</span><br><span class="line"><span class="variable">Ending</span> iteration <span class="number">1</span>.</span><br></pre></td></tr></table></figure>
+<p>事务中哪怕没有操作，也是需要时间的，不过这个时间一般都非常少，所以可以忽略。</p>
+</li>
+<li><p>Wasted Time<br>在默认情况下，LoadRunner会将自身脚本运行浪费的时间自动记录Wasted Time，例如执行关联，检查点等函数的时间。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">    lr_start_transaction(<span class="string">"waste time"</span>);</span><br><span class="line">	web_url(<span class="string">"baidu"</span>, <span class="string">"URL=http://baidu.com/"</span>, LAST);</span><br><span class="line">    lr_end_transaction(<span class="string">"waste time"</span>, LR_AUTO);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Replay Log:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">3</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> started.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Detected non-resource <span class="string">"http://www.baidu.com/"</span> <span class="keyword">in</span> <span class="string">"http://baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26574</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/bd_logo1.png"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/baidu_jgylogo3.gif"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194.js"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: <span class="function"><span class="title">web_url</span><span class="params">(<span class="string">"baidu"</span>)</span></span> was successful, <span class="number">69095</span> <span class="tag">body</span> bytes, <span class="number">2403</span> <span class="tag">header</span> bytes, <span class="number">13</span> chunking overhead bytes  	[MsgId: MMSG-<span class="number">26385</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">5</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> ended with <span class="string">"Pass"</span> status (Duration: <span class="number">9.6275</span> Wasted Time: <span class="number">0.3107</span>).</span><br></pre></td></tr></table></figure>
+<p>某些时候外部接口进行处理所消耗的时间也会影响事务的时间，这个时间LoadRunner无法处理。比如对用户的加密/解密。就需要计算这些时间开销，并且将这个开销的时间记入Wasted Time中：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//<span class="operator"><span class="keyword">use</span> timers <span class="keyword">to</span> <span class="keyword">collect</span> wasted <span class="keyword">time</span>, <span class="keyword">and</span> the <span class="keyword">use</span> lr_wasted_time <span class="keyword">to</span> remove that wasted <span class="keyword">time</span> <span class="keyword">from</span> the transactions. </span><br><span class="line">timer = lr_start_timer();</span></span><br><span class="line">wasteTime = lr_end_timer(timer);</span><br><span class="line">lr_wasted_time(wasteTime);</span><br></pre></td></tr></table></figure>
+<p>注：在做删除的时候要看好了，别忘了加上LoadRunner自身的时间。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/07/25/读书真的无用吗？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/25/读书真的无用吗？/" itemprop="url">读书真的无用吗？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-25T08:53:24+08:00">
+                2016-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/25/读书真的无用吗？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/07/25/读书真的无用吗？/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>上世纪末以来，特别是进入21世纪，在经济大潮冲击下，金钱成为衡量人的价值的标准，加上大学生难就业，工资低等多种因素，就又有了这种讨论。</p>
+</blockquote>
+<p><img src="/images/shenghuo/book.jpg" alt=""></p>
+<p>刚大学毕业拿不到高工资才是正常的呀，毕业后的前三年，工资的涨幅也不会太大，而三年之后大多会成倍增长。</p>
+<p>人生本就短短几十年，一定要长远来看待，不要只看眼前的利益。所谓的读书无用，我还没有看到这个，倒是看见很多后悔没有上学读书，后悔没有拿到本科文凭的人。</p>
+<p>小A在我们老家那算是干啥啥不会，弄啥啥不中，要是当时不读书，都说在老家待着就饿死了。</p>
+<p>小A成绩一直都很一般，高考也没考上本科，但是只要想上，老爸砸锅卖铁也支持，村里的人就不这么认为了，专科又不是好学校，上了再找不到工作，白花钱；邻居拿自家儿子做比较，高中毕业去打工一年挣4万，你这上学一年花2万，几年下来差几万，你毕业了工资也不见得比打工高。十年后的今天我想现在请问一下，你35岁了还靠出力打工吗？现在的经济下，你还能那么好挣钱吗？可是小A因为读书增长了见识，因为读书有了梦想和目标，因为读书留在了你们所不屑的大城市（蜗居，节奏快），因为读书有了不会被饿死的稳定工作，因为读书可以跟你侃一天都不带重样的（内向，从小到大都没跟邻居说过话）……</p>
+<p>有的孩子，父母是研究生学历，早早就让孩子看书看电影，学英语练舞蹈。这样家庭出身的孩子，一旦选择努力，那么他们拥有的视野和从小养成的习惯，会帮助他们看得很远很远。所以对于大多数像我们这样的农村孩子来说，就要更加努力，读书对我们来说就是唯一的出路。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/07/20/陪小曦姐姐暑假游玩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/20/陪小曦姐姐暑假游玩/" itemprop="url">陪小曦姐姐暑假游玩</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-20T10:21:06+08:00">
+                2016-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/20/陪小曦姐姐暑假游玩/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/07/20/陪小曦姐姐暑假游玩/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>直接上图好了，不想说太多话，这段时间两个孩子在一块，感触很多，父母的陪伴永远也替代不了小朋友之间的相处，或许是真的要好好想一下闺女一直说的想要一个小弟弟/妹妹的想法。</p>
+<p>话说你是来打酱油的？还是来抢镜的？<br><img src="/images/izheyi/2016/07/qiang_0.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_1.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_2.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_3.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_4.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_5.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_6.jpg" alt=""><br><img src="/images/izheyi/2016/07/qiang_7.jpg" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/07/20/陪小曦姐姐暑假游玩/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/07/11/Load-Runner-VuGen参数化高阶说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/11/Load-Runner-VuGen参数化高阶说明/" itemprop="url">Load Runner - VuGen参数化高阶说明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-11T10:56:42+08:00">
+                2016-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/11/Load-Runner-VuGen参数化高阶说明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/07/11/Load-Runner-VuGen参数化高阶说明/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面我们说了为什么要做参数化，以及参数化的具体实现，其实说到底就是要实现数据驱动，其实不管是做性能还是功能自动化，都是相通的，是个要考虑的问题，我们这里拿Load Runner做个说明。</p>
+<h1 id="1-录制-编写基本脚本"><a href="#1-录制-编写基本脚本" class="headerlink" title="1. 录制/编写基本脚本"></a>1. 录制/编写基本脚本</h1><p>通过录制/编写来实现基本的业务流程，这种情况下，数据是Hard Code在脚本中的，在并发性能的时候，这种数据是很不真实的场景。</p>
+<h1 id="2-实现参数化-数据驱动"><a href="#2-实现参数化-数据驱动" class="headerlink" title="2. 实现参数化(数据驱动)"></a>2. 实现参数化(数据驱动)</h1><p>为了模拟更真实的场景，保证业务功能的正确性，我们要做数据的参数化，具体请参考 <a href="/2015/12/22/Load-Runner-VuGen参数化基础/">LR参数化实现</a></p>
+<h1 id="3-实现动态参数化"><a href="#3-实现动态参数化" class="headerlink" title="3. 实现动态参数化"></a>3. 实现动态参数化</h1><p>参数化把数据和脚本分离开来，但是有时候会有问题。比如下面这个购物场景，我想随机进入一个商品品类中再选择一件商品，对品类进行参数化，即把所有品类都放到外部数据文件中，那万一品类有增加/减少了，都得再回去修改数据文件，这也是一个很头疼的工作。<br>理想的状态下，应该是在选择品类之前，先从页面上动态获取当前所有的品类，然后再进行品类选择，这样不管在什么情况下，业务的正确性都是能够保证的。<br>在Load Runner中，我们就要用到关联了：</p>
+<ol>
+<li><p>获取所有的商品品类</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">web_reg_save_param(<span class="string">"categorties"</span>,</span><br><span class="line">		<span class="string">"LB=cat="</span>,</span><br><span class="line">		<span class="string">"RB=\"</span>&gt;<span class="string">",</span></span><br><span class="line">		<span class="string">"Ord=All"</span>,</span><br><span class="line">		LAST);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取随机的商品品类</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lr_save_string<span class="list">(<span class="keyword">lr_paramarr_random</span><span class="list">(<span class="string">"categorties"</span>)</span>, <span class="string">"category"</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进行后续的操作</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">web_url</span>(<span class="string">"Homepage"</span>, </span><br><span class="line">		<span class="string">"URL=http://xxx.com/list.html?cat=&#123;category&#125;"</span>, </span><br><span class="line">		LAST);</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/06/29/测试的一些思考/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1304,681 +1976,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/05/16/Robot-Framework-MongoDB-Testing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/16/Robot-Framework-MongoDB-Testing/" itemprop="url">Robot Framework-MongoDB</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-16T18:00:25+08:00">
-                2016-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
-                    <span itemprop="name">Robot Framework</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/16/Robot-Framework-MongoDB-Testing/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/05/16/Robot-Framework-MongoDB-Testing/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要做API或者UI自动化，甚至于手工测试，对于测试数据的准备，我们不可能手动的一条一条添加，正好实验了一把用RF来操控MongoDB。<br>以下只是个简单的实验，证明能够操作MongoDB。</p>
-<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>从官网的Library中查找 MongoDB library，或者直接Github <a href="https://github.com/iPlantCollaborativeOpenSource/Robotframework-MongoDB-Library" target="_blank" rel="external">Robotframework-MongoDB-Library</a>。</p>
-<ol>
-<li><p>安装pymongo</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> pymongo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装Library<br>You can install by pulling down source to ‘C:\Python27\Lib\site-packages’ and executing the following:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup<span class="class">.py</span> install</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>本来对这块也不是很熟悉，之前没用过，折腾了好长时间在这个地方，按照官方的使用方法一直不成功<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Or for an authenticated connection</span></span><br><span class="line"><span class="title">Connect</span> To MongoDB admin:admin<span class="variable">@foo</span>.bar.org <span class="variable">$&#123;27017&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>重新查询了pymongo和mongoClient，这里做个说明：<br>对于authenticated connection，用<code>Connect To Mongodb user:password@ip/db 27017</code>，一直报错<code>FAIL : ValueError: Port must be an integer between 0 and 65535: password@ip/db</code>。<br>这里必须要用MongoDB的URL connection scheme<br><img src="/images/rf/mongodb_connect.jpg" alt=""></p>
-<h1 id="数据库查询"><a href="#数据库查询" class="headerlink" title="数据库查询"></a>数据库查询</h1><p><img src="/images/rf/mongodb_query.jpg" alt=""><br>这里验证了工作中可能要用到的两个查询关键字，有需要的话，再研究剩下的查询关键字。<br><code>Retrieve Some Mongodb Records</code>：根据Jason文件条件在相关数据库和Collection中查询记录。记住：字符串要用双引号，单引号会报告。<br><code>Retrieve Mongodb Records With Desired Fields</code>：查询出指定列的显示， 相当于关系Sql: select a and b from table。记住：对于指定列，常规的直接用key就好；有嵌套的，用dot连接（e.g., address.city）；指定多个列，每个列之间用逗号隔开。</p>
-<h1 id="数据库更新"><a href="#数据库更新" class="headerlink" title="数据库更新"></a>数据库更新</h1><p><img src="/images/rf/mongodb_update.jpg" alt=""><br>这里不做说明，会用就好了。</p>
-<h1 id="数据库插入"><a href="#数据库插入" class="headerlink" title="数据库插入"></a>数据库插入</h1><p><img src="/images/rf/mongodb_insert.jpg" alt=""></p>
-<h1 id="数据库删除"><a href="#数据库删除" class="headerlink" title="数据库删除"></a>数据库删除</h1><p><img src="/images/rf/mongodb_delete.jpg" alt=""></p>
-<p>以上的操作，已经能满足当前工作中的需要，只做这些验证就OK了。</p>
-<p><strong>特别说明：</strong><br>项目中实际用到的Jason文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        "<span class="attribute">_id</span>" : <span class="value">NumberLong(<span class="string">"444206992590551"</span>)</span>,</span><br><span class="line">        "<span class="attribute">name</span>" : <span class="value"><span class="string">"xx"</span></span>,</span><br><span class="line">        "<span class="attribute">createdId</span>" : <span class="value">NumberLong(<span class="string">"884011643699965"</span>)</span>,</span><br><span class="line">        "<span class="attribute">createdDate</span>" : <span class="value">ISODate(<span class="string">"2016-05-17T00:43:43.555Z"</span>)</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>在使用的过程中，只要是用到‘_id’时，就报格式不对的错<code>FAIL : TypeError: id must be an instance of (bytes, unicode, ObjectId), not &lt;type &#39;int&#39;&gt;</code>，查看了一下原码，把下面的代码注释掉就可以了。</p>
- <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">'_id'</span> <span class="keyword">in</span> recordJSON:</span><br><span class="line">            recordJSON[<span class="string">'_id'</span>] = <span class="function"><span class="title">ObjectId</span><span class="params">(recordJSON[<span class="string">'_id'</span>])</span></span></span><br></pre></td></tr></table></figure>
-<p> 把要用到的函数都一并修改掉。</p>
-</li>
-<li>还有就是时间的问题，如果不是必须的，这些字段就不要添加了。<br>还有这么一种情况，必须要添加日期字段，这里就是有错误：在Json文件中只能用字符串的形式，保存到库里”createdDate” : “2016-05-20 02:48:35.620000”，但是实际上应该是”createdDate” : ISODate(“2016-05-17T03:01:23.145Z”)，目前还没有找到合适的方法，比较头疼，做个标记。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/05/10/Robot-Framework-Restful-API-Testing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/10/Robot-Framework-Restful-API-Testing/" itemprop="url">Robot Framework-Restful API Testing </a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-10T17:34:47+08:00">
-                2016-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
-                    <span itemprop="name">Robot Framework</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/10/Robot-Framework-Restful-API-Testing/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/05/10/Robot-Framework-Restful-API-Testing/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>目前项目用的是SOUPUI做的API测试，但同事反映还是有诸多的问题，考虑到本组的接口不多，且没有做几个自动化的，也问了很多朋友，用RF的非常多，所以就用RF做一个简单的Demo，以后直接转移过来。</p>
-<h1 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h1><p>从官网的Library中查找HTTP library (Requests)，或者直接Github <a href="https://github.com/bulkan/robotframework-requests/" target="_blank" rel="external">robotframework-requests</a>， 按照说明安装即可。</p>
-<h1 id="例子实现"><a href="#例子实现" class="headerlink" title="例子实现"></a>例子实现</h1><ol>
-<li><p>先把库引用进来</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> Settings <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>							</span><br><span class="line">Library	RequestsLibrary</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用封装好的关键字来实现脚本<br><img src="/images/rf/api_script.jpg" alt=""></p>
-</li>
-</ol>
-<p><em>为了更好的理解和使用，得去学习一下 <a href="http://python-requests.org" target="_blank" rel="external">Python HTTP Requests for Humans™</a></em></p>
-<p>这里只是个简单的使用，在以后使用的过程中，会把知识点记录下来，如果有必要。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/26/Robot-Framework-Table-Handling/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/26/Robot-Framework-Table-Handling/" itemprop="url">Robot Framework-Table Handling</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-26T15:53:14+08:00">
-                2016-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
-                    <span itemprop="name">Robot Framework</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/26/Robot-Framework-Table-Handling/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/26/Robot-Framework-Table-Handling/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Robot Framework provide some table handling keyword, one for get cell text, rest are for check point keyword,actually, it’s not enouth for us to handle table actions in script designing.</p>
-<p>When we use Java or other languages to design script under Selenium Webdriver, we also need to customize class to implement relevant methods, such as, getTableRowCount, clickLinkInTableCell…..</p>
-<p>But for Robot Framework, search from Google, seems there not a good solution，think about many ways，finally, find the below method to handle table actions, maybe it’s not the best way, anyway, it’s worked.</p>
-<h1 id="Get-Table-Row-Count"><a href="#Get-Table-Row-Count" class="headerlink" title="Get Table Row Count"></a>Get Table Row Count</h1><p>We can use ‘Get Matching Xpath Count’ method to get table row count.<br><img src="/images/rf/table_get_row_count.jpg" alt=""><br>Here, the locator is the row(tr) locator rather than table locator,  and need to use xpath.</p>
-<h1 id="Get-Row-By-Cell-Text"><a href="#Get-Row-By-Cell-Text" class="headerlink" title="Get Row By Cell Text"></a>Get Row By Cell Text</h1><p>Based on ‘Get Table Row Count’ keyword, use for loop to judge text in which row, to Get Row By Cell Textget current row index/number.<br><img src="/images/rf/table_get_row_by_text.jpg" alt=""></p>
-<h1 id="Click-Link-In-Table-Cell"><a href="#Click-Link-In-Table-Cell" class="headerlink" title="Click Link In Table Cell"></a>Click Link In Table Cell</h1><p>From ‘Get Row By Cell Text’, get the current row index, then we can the link in table cell.<br><img src="/images/rf/table_click_link_in_cell.jpg" alt=""></p>
-<h1 id="Example-And-More"><a href="#Example-And-More" class="headerlink" title="Example And More"></a>Example And More</h1><ul>
-<li>We can use the customized method like the below way<br><img src="/images/rf/table_call.jpg" alt=""><br><strong>Notes:</strong> we will get the below error if we define locator with prefix ‘xpath=’, i am not sure why, or maybe only happened on my laptop, so please don’t use the prefix when define tr locator.<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InvalidSelectorException</span>: <span class="type">Message</span>: <span class="type">The</span> given selector xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr <span class="keyword">is</span> either invalid <span class="keyword">or</span> does <span class="keyword">not</span> <span class="literal">result</span> <span class="keyword">in</span> a <span class="type">WebElement</span>. <span class="type">The</span> following error occurred:</span><br><span class="line"><span class="type">InvalidSelectorError</span>: <span class="type">Unable</span> to locate an element <span class="keyword">with</span> the xpath expression xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr because <span class="keyword">of</span> the following error:</span><br><span class="line"><span class="type">TypeError</span>: <span class="type">The</span> expression cannot be converted to <span class="keyword">return</span> the specified <span class="keyword">type</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="Do-more-jobs"><a href="#Do-more-jobs" class="headerlink" title="Do more jobs"></a>Do more jobs</h1><p>We can implement more actions based on the above major implementation, such as ‘Get Table Column Count’, ‘Select Checkbox In Table Cell’, ‘Select From List In Table Cell’………</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/21/Robot-Framework-基础知识学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/21/Robot-Framework-基础知识学习/" itemprop="url">Robot Framework-基础知识学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-21T17:36:41+08:00">
-                2016-04-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
-                    <span itemprop="name">Robot Framework</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/21/Robot-Framework-基础知识学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/21/Robot-Framework-基础知识学习/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我觉得不管学什么东西，最先要知道是什么，原理是什么，能做什么，基础的操作，对于细节性的东西，技术点相关知识，可以在日后的工作中再慢慢的补充，以便形成自己的知识体系。</p>
-<p>周末和晚上的时间，学习了一些基础知识，这里只罗列一些点，想更详细的说明和学习，就去Robot Framework官网查看<a href="http://robotframework.org/robotframework/#user-guide" target="_blank" rel="external">User Guide</a></p>
-<ol>
-<li>Robot Framework是个什么样的框架</li>
-<li>RIDE的基本操作：各种组件的创建和脚本运行等</li>
-<li>Test Suite、Resource、Keyword之前的关系</li>
-<li>一些主要是关键字的了解</li>
-<li>RF里的分层</li>
-</ol>
-<p>对于分层，这里还是有点困惑的，有说要做到流程和数据的分离，有的说本来就是关键字驱动，直接都写到Case里就行，封装的层太多了，也不见得是个好事；有说应该分四层，或者五层，有的说三层就够了，封的多了也是麻烦。这就跟什么是测试框架这个问题一样，一百人可能就有一百种对测试框架的理解和定义。不管怎么分，分几层，对当前的项目适合，能把控的了，应该就是没有太大问题的。</p>
-<p><em>但是现在对于分层，跟Team有一些不同见解:(</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2028,7 +2030,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2050,7 +2052,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

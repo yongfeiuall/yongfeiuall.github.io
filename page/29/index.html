@@ -305,6 +305,640 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/09/QTP-Recovery-Scenario-Specification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/10/09/QTP-Recovery-Scenario-Specification/" itemprop="url">QTP Recovery Scenario Specification</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-10-09T12:12:28+08:00">
+                2014-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/09/QTP-Recovery-Scenario-Specification/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/10/09/QTP-Recovery-Scenario-Specification/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>When we run script under our new framework, we found that will missing the “FrameworkErrorHandler.vbs” in Recovery Scenario.  </p>
+</blockquote>
+<p><strong>Issue:</strong><br>For the better transplantation, we use the relevant path for all items in new framework, but once we generate the QRS file, the relevant path will change to absolute path, and we can’t modify this path any more.<br><img src="/images/QTP/rs_issue.jpg" alt=""></p>
+<p><strong>Solution:</strong><br>Now that this file is change to absolute path, and need to in keeping with relevant path in framework, I thought a way to specify a path, and generate the “FrameworkErrorHandler.vbs” dynamically:<br><img src="/images/QTP/rs_solution.jpg" alt=""></p>
+<p>Before we run the test cases, copy the “FrameworkErrorHandler.vbs” in framework to root directory of C disk.<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set fso = <span class="function"><span class="title">CreateObject</span><span class="params">( <span class="string">"Scripting.FileSystemObject"</span> )</span></span></span><br><span class="line">fso<span class="class">.CopyFile</span> oParentFolder + <span class="string">"FrameworkErrorHandler.vbs"</span>, <span class="string">"c:\FrameworkErrorHandler.vbs"</span></span><br><span class="line">fso.<span class="function"><span class="title">GetFile</span><span class="params">(<span class="string">"c:\FrameworkErrorHandler.vbs"</span>)</span></span><span class="class">.Attributes</span> = <span class="number">0</span> <span class="string">'set file attribute to nomal</span></span><br></pre></td></tr></table></figure></p>
+<p>No matter you put the framework in anywhere of your PC, QRS file can find and read the custom recovery scenario function file successfully.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/09/Run-VBS-file-with-command-and-pass-parameter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/10/09/Run-VBS-file-with-command-and-pass-parameter/" itemprop="url">Run VBS file with command line and pass parameter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-10-09T09:00:28+08:00">
+                2014-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/09/Run-VBS-file-with-command-and-pass-parameter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/10/09/Run-VBS-file-with-command-and-pass-parameter/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>VBS Code:</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">Set</span> args = WScript.Arguments</span><br><span class="line"><span class="keyword">If</span> args.<span class="keyword">Count</span> = <span class="number">1</span> <span class="keyword">Then</span></span><br><span class="line">	<span class="keyword">test</span>= WScript.Arguments(<span class="number">0</span>)</span><br><span class="line">	MsgBox <span class="string">"test  "</span> &amp; <span class="keyword">name</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span></span><br></pre></td></tr></table></figure></p>
+<p>Save this code in test.vbs file.</p>
+<p><strong>Command Code:</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wscript<span class="class">.exe</span> test<span class="class">.vbs</span> helloworld</span><br></pre></td></tr></table></figure></p>
+<p>The result will be “test Helloworld”.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/09/20/定制元素属性检查，并写到ReportNG中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/09/20/定制元素属性检查，并写到ReportNG中/" itemprop="url">定制元素属性检查，并写到ReportNG中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-09-20T07:46:52+08:00">
+                2014-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/09/20/定制元素属性检查，并写到ReportNG中/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/09/20/定制元素属性检查，并写到ReportNG中/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>QTP 和Selenium 都会有这种要检查某一个控件元素属性的情况，比如去检查一个Button的显示文字是什么？</p>
+<p>为了更方便的书写程序，并优美的显示到HTML测试报告中，做了以下几个小小的封装，只是小小的尝试，让大家做个参考，抛砖引玉了。。</p>
+<h1 id="脚本实现"><a href="#脚本实现" class="headerlink" title="脚本实现"></a>脚本实现</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void verifyAttribute(WebElement we, String weName, String propertyName, String expectValue)</span><br><span class="line">	&#123;</span><br><span class="line">		String actualValue = we.getAttribute(propertyName);</span><br><span class="line">		</span><br><span class="line">		log("INFO", "Verify &#123;" + propertyName + "&#125; attribute for element [" + weName + "]");</span><br><span class="line"></span><br><span class="line">		if (actualValue.equals(expectValue))&#123;</span><br><span class="line">			Reporter.log("<span class="tag">&lt;<span class="title">TABLE</span> <span class="attribute">border</span>=<span class="value">'1'</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Actual Value<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>"+actualValue+"<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Expected Value<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>"+expectValue+"<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Checkpoint Status<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span> <span class="attribute">style</span>=<span class="value">'background-color:green'</span>&gt;</span><span class="tag">&lt;<span class="title">b</span>&gt;</span>Passed<span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;/<span class="title">TABLE</span>&gt;</span>");</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			Reporter.log("<span class="tag">&lt;<span class="title">TABLE</span> <span class="attribute">border</span>=<span class="value">'1'</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Actual Value<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>"+actualValue+"<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Expected Value<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>"+expectValue+"<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TR</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span>&gt;</span>Checkpoint Status<span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;<span class="title">TD</span> <span class="attribute">style</span>=<span class="value">'background-color:red'</span>&gt;</span><span class="tag">&lt;<span class="title">b</span>&gt;</span>Failed<span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">TD</span>&gt;</span><span class="tag">&lt;/<span class="title">TR</span>&gt;</span><span class="tag">&lt;/<span class="title">TABLE</span>&gt;</span>");</span><br><span class="line">			handleFailure("Error Case Research: ");</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		Assert.assertEquals(actualValue, expectValue);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public static void <span class="built_in">log</span>(String <span class="built_in">log</span>Type, String <span class="built_in">log</span>Info)&#123;</span><br><span class="line">		System.setProperty(<span class="string">"org.uncommons.reportng.escape-output"</span>, <span class="string">"false"</span>);</span><br><span class="line">		System.setProperty(<span class="string">"com.testng.reporter.escape-output"</span>, <span class="string">"false"</span>);</span><br><span class="line">		</span><br><span class="line">		switch(<span class="built_in">log</span>Type)&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"INFO"</span>:</span><br><span class="line">			Reporter.log(<span class="built_in">log</span>Time + <span class="string">"&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;font color='gray'&gt;&lt;strong&gt;INFO&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/strong&gt;&lt;/font&gt;"</span> + <span class="built_in">log</span>Info);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"PASS"</span>:</span><br><span class="line">			Reporter.log(<span class="built_in">log</span>Time + <span class="string">"&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;font color='green'&gt;&lt;strong&gt;PASS&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/strong&gt;&lt;/font&gt;"</span> + <span class="built_in">log</span>Info);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"FAIL"</span>:</span><br><span class="line">			Reporter.log(<span class="built_in">log</span>Time + <span class="string">"&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;font color='red'&gt;&lt;strong&gt;FAIL&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/strong&gt;&lt;/font&gt;"</span> + <span class="built_in">log</span>Info);</span><br><span class="line">			<span class="built_in">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p> 这里只是个例子，要区别一下getAttribute和getText。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/09/20/定制元素属性检查，并写到ReportNG中/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/08/08/Selenium如何处理Table/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/08/08/Selenium如何处理Table/" itemprop="url">Selenium如何处理Table</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-08-08T16:08:13+08:00">
+                2014-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/08/08/Selenium如何处理Table/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/08/08/Selenium如何处理Table/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于webdriver中没有专门的table类，所以我们需要简单的封装出一个易用易扩展的Table类来帮助简化代码。</p>
+<p>以下是我之前用Java语言来实现的一个简单的封装：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name:<span class="variable">&lt;/b&gt;</span> WebTable<span class="variable">&lt;/br&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span>This class is used to handling</span><br><span class="line"> <span class="keyword">*</span> web table<span class="variable">&lt;/br&gt;</span></span><br><span class="line"> <span class="keyword">*</span> </span><br><span class="line"> <span class="keyword">*</span> <span class="comment">@author &lt;i&gt;Yongfei Hu&lt;/i&gt;</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line"></span><br><span class="line">public class WebTable &#123;</span><br><span class="line"></span><br><span class="line">	private WebElement webTable;</span><br><span class="line">	StartingSelenium ss = new StartingSelenium();</span><br><span class="line"></span><br><span class="line">	public WebTable(WebElement webTable) &#123;</span><br><span class="line">		this.webTable = webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public WebElement getWebTable() &#123;</span><br><span class="line">		return webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableRows<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get table</span><br><span class="line">	 <span class="keyword">*</span> rows list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableRows</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableRows() &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableRows = webTable.findElements(By.tagName(<span class="string">"tr"</span>));</span><br><span class="line">		return tableRows;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableColumns<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> table columns list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param currentRow</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableColumns</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableColumns(WebElement currentRow) &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = currentRow.findElements(By</span><br><span class="line">				.tagName(<span class="string">"td"</span>));</span><br><span class="line">		return tableColumns;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table row count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowCount() &#123;</span><br><span class="line">		int rowCount = getTableRows().size();</span><br><span class="line">		Reporter.log(<span class="string">"Rows in the table: "</span> + rowCount, true);</span><br><span class="line">		return rowCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getColumnCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table column count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return columnCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getColumnCount() &#123;</span><br><span class="line">		WebElement headerRow = getTableRows().get(0);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(headerRow);</span><br><span class="line">		int columnCount = tableColumns.size();</span><br><span class="line">		Reporter.log(<span class="string">"Column in the table: "</span> + columnCount, true);</span><br><span class="line">		return columnCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> specific cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return cellText</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public String getCellText(int row, int column) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(currentRow);</span><br><span class="line">		return tableColumns.get(column).getText();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowByCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> the row number by the cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param cellText</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowNumber</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowByCellText(String cellText) &#123;</span><br><span class="line">		int rowCount = getRowCount();</span><br><span class="line">		int colCount = getColumnCount();</span><br><span class="line">		int getRow = 0;</span><br><span class="line">		boolean flag;</span><br><span class="line"></span><br><span class="line">		for (int i = 0; i <span class="variable">&lt; rowCount; i++) &#123;</span><br><span class="line">			flag = false;</span><br><span class="line"></span><br><span class="line">			for (int j = 0; j &lt; colCount; j++) &#123;</span><br><span class="line">				if (getCellText(i, j).equals(cellText)) &#123;</span><br><span class="line">					getRow = i;</span><br><span class="line">					flag = true;</span><br><span class="line">					Reporter.log("The text: " + cellText + " in row number: "</span><br><span class="line">							+ getRow, true);</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (flag) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return getRow;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * &lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index).click();</span><br><span class="line">		Reporter.log(<span class="string">"Clickin a link on the row: "</span> + row, true);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param linkName</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index, String linkName) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		WebElement we = currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index);</span><br><span class="line">		ss.clickUsingJS(we, linkName);</span><br><span class="line">		try &#123;</span><br><span class="line">			Thread.sleep(3000);</span><br><span class="line">		&#125; catch (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/07/10/dataProvider实现数据驱动/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1242,642 +1876,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/03/16/IEDriverServer在进程中没有关闭？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="url">IEDriverServer在进程中没有关闭？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-03-16T15:32:21+08:00">
-                2014-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/03/16/IEDriverServer在进程中没有关闭？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有时候跑完脚本后，IEDriverServer.exe进程没杀掉。</p>
-<p><strong>解决方法：</strong></p>
-<p>在关闭driver时用Driver.Quit();不要用Driver.Close();<br>Driver.Quit() – Quit this dirver, closing every associated windows;<br>Driver.Close() – Close the current window, quiting the browser if it is the last window currently open.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/01/02/获取ToolTip几种方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/01/02/获取ToolTip几种方法/" itemprop="url">获取ToolTip几种方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-01-02T09:41:59+08:00">
-                2014-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/01/02/获取ToolTip几种方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/01/02/获取ToolTip几种方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">' Mouseover </span></span><br><span class="line">Browser(<span class="string">"XXXX"</span>).Page(<span class="string">"YYYY"</span>).Link(<span class="string">"Link A"</span>).MouseOver </span><br><span class="line"><span class="comment">' Wait 1 second to get the tool tip displayed. </span></span><br><span class="line">wait <span class="number">1</span></span><br><span class="line"><span class="comment">' Capture the text of the tooltip object </span></span><br><span class="line">txt= Window(<span class="string">"nativeclass:=tooltips_class32"</span>).GetROProperty(<span class="string">"text"</span>) </span><br><span class="line">msgbox txt</span><br></pre></td></tr></table></figure>
-<h1 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp=Brower(<span class="string">"name"</span>).Page(<span class="string">"page"</span>).Image(<span class="string">"imagename).GetROProperty("</span>alt<span class="string">") </span></span><br><span class="line">msgbox temp</span><br></pre></td></tr></table></figure>
-<h1 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp=Brower(<span class="string">"name"</span>).Page(<span class="string">"page"</span>).Image(<span class="string">"imagename).GetROProperty("</span>tooltip<span class="string">") </span></span><br><span class="line">msgbox temp</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/12/02/关键字驱动测试框架之十-后话/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/12/02/关键字驱动测试框架之十-后话/" itemprop="url">关键字驱动测试框架之十 - 后话</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-12-02T12:08:52+08:00">
-                2013-12-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/12/02/关键字驱动测试框架之十-后话/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/12/02/关键字驱动测试框架之十-后话/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本来这个框架的设计就是在POC阶段而已，由于各种方面的原因，没有真正能够应用起来，不过在研究的过程中，还是学到了很多思想，技术 ==，能够从更高一点LEVEL去看自动化测试。</p>
-<p>后来本人也看了robotframework的关键字驱动测试框架，感觉思路上大体都是相通的，但是学习成本个人感觉还是蛮高的。</p>
-<p>看过一篇文章<a href="http://www.cnblogs.com/jackei/archive/2012/11/25/2787231.html" target="_blank" rel="external">关键字驱动的过去和未来</a>，作者：陈雷 (Jackei)。非常有感触，贴到这以便查看。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/15/Linux-管道和过滤器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/08/15/Linux-管道和过滤器/" itemprop="url">Linux-管道和过滤器 & 阶段总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-08-15T20:13:54+08:00">
-                2013-08-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/08/15/Linux-管道和过滤器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/08/15/Linux-管道和过滤器/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="管道和过滤器"><a href="#管道和过滤器" class="headerlink" title="管道和过滤器"></a>管道和过滤器</h1><p>有时候，我们可以把两个命令连起来使用，一个命令的输出作为另一个命令的输入，这就叫做管道。为了建立管道，需要在两个命令之间使用竖线(|)连接。<br>能够接受数据，过滤（处理或筛选）后再输出的工具，称为过滤器。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation /]<span class="preprocessor"># ps | grep bash</span></span><br><span class="line"> <span class="number">3326</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3396</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3477</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3521</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3568</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3711</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">3759</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br><span class="line"> <span class="number">4282</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> bash</span><br></pre></td></tr></table></figure></p>
-<p>grep 是一个强大的文本搜索工具，可以使用正则表达式，并返回匹配的行，grep 可以看做是一个过滤器。</p>
-<p>这里不做深入学习，知道管道是什么，怎么怎么用就好了，以后用到了再细学吧。</p>
-<h1 id="本阶段学习总结"><a href="#本阶段学习总结" class="headerlink" title="本阶段学习总结"></a>本阶段学习总结</h1><p>主要学了一下Linux的基本架构、命令和应用，能够在Linux下进行简单的操作。<br>还了解以下方面的基本使用：</p>
-<ul>
-<li>进程的简单操作</li>
-<li>网络的基本命令</li>
-<li>打包解包</li>
-<li>环境变量的设置等</li>
-</ul>
-<p>命令查看：<a href="http://man.linuxde.net/" target="_blank" rel="external">Linux命令大全</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1927,7 +1930,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1949,7 +1952,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

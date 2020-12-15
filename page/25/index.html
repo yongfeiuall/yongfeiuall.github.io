@@ -305,6 +305,669 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/11/Git分支-基础与基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/11/Git分支-基础与基本操作/" itemprop="url">Git分支-基础与基本操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-11T14:43:15+08:00">
+                2015-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/11/Git分支-基础与基本操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/11/Git分支-基础与基本操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>分支本质上其实就是一个指向某次提交的可变指针。Git的默认分支名字为master 。而我们是怎么知道当前处于哪个分支当中呢？答案就是在于HEAD这个十分特殊的指针，它专门用于指向于本地分支中的当前分支。</p>
+<p><em>Note: 测试数据准备</em><br> 创建新文件“branch.txt”，并提交三个版本<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span> Is test branch.</span><br></pre></td></tr></table></figure></p>
+<h1 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line"><span class="comment">* master</span></span><br><span class="line">  <span class="keyword">test</span></span><br></pre></td></tr></table></figure>
+<p>命令会列出所有分支，当前分支前面会标一个*号。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/11/11/Git分支-基础与基本操作/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-远程仓库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/10/Git仓库-远程仓库/" itemprop="url">Git仓库-远程仓库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-10T13:20:41+08:00">
+                2015-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/10/Git仓库-远程仓库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/10/Git仓库-远程仓库/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>远程仓库是指托管在因特网或其他网络中的你的项目的版本库。本节只介绍一些很基础的操作应用。</p>
+<p><em>说明：这里我们用github任务远程仓库，需要注册github账号。 </em></p>
+<h1 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h1><p>为了便于管理，Git要求每个远程主机都必须指定一个主机名。git remote命令就用于管理主机名。</p>
+<ol>
+<li>在github创建一个新库<br>请参见：<a href="https://help.github.com/articles/create-a-repo/">Create A Repo</a></li>
+<li>关联本地仓库到GitHub仓库<br>运行 git remote add [remote-name] [url] 添加一个新的远程Git仓库，有以下两种方式：</li>
+</ol>
+<ul>
+<li><p>HTTPS</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote <span class="built_in">add</span> origin http<span class="variable">s:</span>//github.<span class="keyword">com</span>/yongfeiuall/yongfeiuall.github.io.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SSH<br>本地Git仓库和GitHub仓库之间的传输是通过SSH加密，需要设置：<a href="https://help.github.com/articles/generating-ssh-keys/">Generating SSH keys</a></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github<span class="class">.com</span>:yongfeiuall/yongfeiuall<span class="class">.github</span><span class="class">.io</span><span class="class">.git</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的。</p>
+<p><em>Notes: 使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。</em><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/11/10/Git仓库-远程仓库/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-版本回退/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/10/Git仓库-版本回退/" itemprop="url">Git仓库-版本回滚</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-10T11:15:02+08:00">
+                2015-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/10/Git仓库-版本回退/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/10/Git仓库-版本回退/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="回滚到之前的版本"><a href="#回滚到之前的版本" class="headerlink" title="回滚到之前的版本"></a>回滚到之前的版本</h1><h2 id="创建新文件“build-txt”，并提交三个版本"><a href="#创建新文件“build-txt”，并提交三个版本" class="headerlink" title="创建新文件“build.txt”，并提交三个版本"></a>创建新文件“build.txt”，并提交三个版本</h2><ul>
+<li><p>build 1</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">st</span> build.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build 2</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>st build.</span><br><span class="line"><span class="number">2</span>nd build.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build 3</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>st build.</span><br><span class="line"><span class="number">2</span>nd build.</span><br><span class="line"><span class="number">3</span>rd build.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/11/10/Git仓库-版本回退/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/10/Git仓库-基本操作/" itemprop="url">Git仓库-基本操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-10T08:29:07+08:00">
+                2015-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/10/Git仓库-基本操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/10/Git仓库-基本操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h1><p>Git跟踪并管理的是修改，而非文件。<br>每次修改，如果不add到暂存区，那就不会加入到commit中。<br>(可以多次add, 一次commit)第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add …… -&gt; git commit</p>
+<h1 id="撤消操作"><a href="#撤消操作" class="headerlink" title="撤消操作"></a>撤消操作</h1><p>在任何一个阶段，你都有可能想要撤消某些操作。有时候我们提交完了才发现漏掉了几个文件没有添加，或者提交信息写错了。 此时，可以运行带有 –amend 选项的提交命令尝试重新提交：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="operator"><span class="keyword">commit</span> -<span class="keyword">m</span> <span class="string">'initial commit'</span></span><br><span class="line">$ git <span class="keyword">add</span> <span class="keyword">status</span>.txt</span><br><span class="line">$ git <span class="keyword">commit</span> <span class="comment">--amend</span></span></span><br></pre></td></tr></table></figure></p>
+<p>最终你只会有一个提交 - 第二次提交将代替第一次提交的结果。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/11/10/Git仓库-基本操作/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-查看提交历史/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1271,637 +1934,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/04/MongoDB-Replica-Sets-Sharding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/04/MongoDB-Replica-Sets-Sharding/" itemprop="url">MongoDB: Replica Sets + Sharding</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-04T13:44:58+08:00">
-                2015-11-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
-                    <span itemprop="name">MongoDB</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/04/MongoDB-Replica-Sets-Sharding/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/04/MongoDB-Replica-Sets-Sharding/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>想学习一下集群的思想和思路，我在一台Windows机器下搭建了一个 Replica Sets + Sharding 测试集群环境。</p>
-<h1 id="概念说明"><a href="#概念说明" class="headerlink" title="概念说明"></a>概念说明</h1><p><strong>Replica Set</strong><br>副本集。简单的说集群中包含了多份数据，保证主节点挂掉了，备用节点继续提供数据服务。使用Replica Set来实现读写分离，通过在连接时指定或者在主库指定slaveOk，由Secondary来分担读的压力，Primary只承担写操作。<br>副本集使其组内的每个成员（member）在不同的mongod实例中具有相同的数据备份，这样可以将来自应用服务器的请求访问（request visit）得以均匀的分布在Replica Set的每一个成员所在的mongod实例上，用以减缓单台mongod服务器在请求负载上的压力。在一定时限内Replica Set能完成其组内成员数据的最终一致，这种备份机制是自动且对用户透明的。<br>详细请参考：<a href="https://docs.mongodb.org/manual/core/replication-introduction/">Replication Introduction</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/04/MongoDB-Replica-Sets-Sharding/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/03/秋游长城/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/03/秋游长城/" itemprop="url">秋游长城</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-03T21:40:38+08:00">
-                2015-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/03/秋游长城/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/03/秋游长城/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/images/shenghuo/changcheng_1.jpg" alt=""></p>
-<p>N年前来过两次，每次都是在暑假的时候陪别人来的，回去都晒掉一层皮，说好的打死也不来了，本家弟弟过来，还是一块去了。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/03/秋游长城/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/02/Convert-DataTable-to-Html-format/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/02/Convert-DataTable-to-Html-format/" itemprop="url">Convert DataTable to Html format</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-02T17:36:44+08:00">
-                2015-11-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/02/Convert-DataTable-to-Html-format/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/02/Convert-DataTable-to-Html-format/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Need to generate summary report:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">GenerateSummarylHtmlReport</span><span class="params">(DataTable table)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> rowCount = table.Rows.Count;</span><br><span class="line">	<span class="keyword">int</span> colCount = table.Columns.Count;</span><br><span class="line">	<span class="built_in">string</span> summaryReport = <span class="string">" &lt;html&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;h1 style='text-align:center'&gt; Test Report&lt;/h1&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;body&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;table border = '1' cellspacing='0' cellpadding='2' width='100%'&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;tr style='background-color:#cccccc'&gt;&lt;th&gt;Select&lt;/th&gt;&lt;th&gt;Page Name&lt;/th&gt;&lt;th&gt;Repository&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;"</span> +</span><br><span class="line">	<span class="string">"&lt;th&gt;Detail&lt;/th&gt;&lt;th&gt;Start Time&lt;/th&gt;&lt;th&gt;End Time&lt;/th&gt;&lt;/tr&gt;"</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rowCount; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		summaryReport += <span class="string">"&lt;tr&gt;"</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; colCount; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (table.Rows[i][j].ToString() == <span class="string">"Failed"</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				summaryReport += <span class="string">"&lt;td style='background-color:red'&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (table.Rows[i][j].ToString().IndexOf(<span class="string">"Passed:"</span>) != -<span class="number">1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">string</span> pageName = table.Rows[i][<span class="number">1</span>].ToString();</span><br><span class="line">				<span class="built_in">string</span> reportTime = table.Rows[i][<span class="number">5</span>].ToString();</span><br><span class="line">				<span class="built_in">string</span> startDate = reportTime.Split(<span class="string">'-'</span>)[<span class="number">0</span>].Trim();</span><br><span class="line">				<span class="built_in">string</span> startTime = reportTime.Split(<span class="string">'-'</span>)[<span class="number">1</span>].Trim();</span><br><span class="line">				<span class="built_in">string</span> formatStartDate = startDate.Split(<span class="string">'/'</span>)[<span class="number">2</span>] + startDate.Split(<span class="string">'/'</span>)[<span class="number">0</span>] + startDate.Split(<span class="string">'/'</span>)[<span class="number">1</span>];</span><br><span class="line">				<span class="built_in">string</span> formatStartTime = startTime.Split(<span class="string">':'</span>)[<span class="number">0</span>] + startTime.Split(<span class="string">':'</span>)[<span class="number">1</span>] + startTime.Split(<span class="string">':'</span>)[<span class="number">2</span>];</span><br><span class="line">				summaryReport += <span class="string">"&lt;td&gt;&lt;a href='"</span> + formatStartDate + <span class="string">"/"</span> + pageName + formatStartTime + <span class="string">".html'&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> </span><br><span class="line">			&#123;</span><br><span class="line">				summaryReport += <span class="string">"&lt;td&gt;"</span> + table.Rows[i][j] + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		summaryReport += <span class="string">"&lt;/tr&gt;"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/table&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/body&gt;"</span>;</span><br><span class="line">	summaryReport += <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">	<span class="keyword">return</span> summaryReport;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/02/Convert-csv-to-Html-format/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/02/Convert-csv-to-Html-format/" itemprop="url">Convert csv to Html format</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-02T13:24:39+08:00">
-                2015-11-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/02/Convert-csv-to-Html-format/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/02/Convert-csv-to-Html-format/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>When design selenium object management tool, need to generate html report from csv file, implement as below:<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> static <span class="built_in">string</span> ConvertCsvToHtml(<span class="built_in">string</span> csvText)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//split the CSV, assume no commas or line breaks in text</span></span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt;&gt; splitString = <span class="literal">new</span> <span class="built_in">List</span>&lt;<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt;&gt;();</span><br><span class="line">    <span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt; lineSplit = csvText<span class="built_in">.</span>Split(<span class="string">'\n'</span>)<span class="built_in">.</span>ToList();</span><br><span class="line">    foreach (<span class="built_in">string</span> line <span class="keyword">in</span> lineSplit)</span><br><span class="line">    &#123;</span><br><span class="line">        splitString<span class="built_in">.</span>Add(line<span class="built_in">.</span>Split(<span class="string">','</span>)<span class="built_in">.</span>ToList());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//encode text safely, and create table</span></span><br><span class="line">    <span class="built_in">string</span> htmlReport = <span class="string">"&lt;html&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;h1 style='text-align:center'&gt; Test Report&lt;/h1&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;body&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;table border = '1' cellspacing='0' cellpadding='2' width='100%'&gt;"</span>;</span><br><span class="line">    foreach(<span class="built_in">List</span>&lt;<span class="built_in">string</span>&gt; splitLine <span class="keyword">in</span> splitString)</span><br><span class="line">    &#123;</span><br><span class="line">        htmlReport += <span class="string">"&lt;tr&gt;"</span>;</span><br><span class="line">        foreach(<span class="built_in">string</span> splitText <span class="keyword">in</span> splitLine)</span><br><span class="line">        &#123;</span><br><span class="line">            htmlReport += <span class="string">"&lt;td&gt;"</span> + WebUtility<span class="built_in">.</span>HtmlEncode(splitText) + <span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        htmlReport += <span class="string">"&lt;/tr&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    htmlReport += <span class="string">"&lt;/table&gt;"</span>;</span><br><span class="line">	htmlReport += <span class="string">"&lt;/body&gt;"</span>;</span><br><span class="line">    htmlReport += <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">    <span class="keyword">return</span> htmlReport;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1951,7 +1988,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1973,7 +2010,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

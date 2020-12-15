@@ -305,6 +305,679 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="url">Prometheus + Grafana 实时监控Windows</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-05T09:14:47+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/05/Prometheus-Grafana-监控Windows/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a> 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。<br><a href="https://grafana.com/grafana/" target="_blank" rel="external">Grafana</a> 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。</p>
+<h2 id="Windows采集器（wmi-exporter）"><a href="#Windows采集器（wmi-exporter）" class="headerlink" title="Windows采集器（wmi_exporter）"></a>Windows采集器（wmi_exporter）</h2><p>要获取服务器运行时的参数，比如当前的CPU负载、内存消耗、硬盘使用、网络IO等等，就可以在服务器上运行一个node_exporter，它能把这些参数收集好，并且暴露出一个HTTP接口以便你访问查询。</p>
+<ol>
+<li>下载采集器<br>从<a href="https://github.com/martinlindhe/wmi_exporter" target="_blank" rel="external">wmi_exporter</a>下载</li>
+<li>安装<br>直接双击安装即可。<br>Windows默认9182端口。</li>
+<li>验证<br>访问<a href="http://127.0.0.1:9182/metrics" target="_blank" rel="external">http://127.0.0.1:9182/metrics</a><br>显示以下数据，数据采集器安装成功。<br><img src="/images/performancetesting/vim_exporter.jpg" alt=""></li>
+</ol>
+<h2 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h2><ol>
+<li>下载<br>从<a href="https://prometheus.io/download/" target="_blank" rel="external">Prometheus</a>下载</li>
+<li><p>配置<br>打开prometheus.yml</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># my global config</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     5s # <span class="operator"><span class="keyword">Set</span> the scrape <span class="built_in">interval</span> <span class="keyword">to</span> every <span class="number">15</span> seconds. <span class="keyword">Default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  evaluation_interval: <span class="number">5</span>s # <span class="keyword">Evaluate</span> <span class="keyword">rules</span> every <span class="number">15</span> seconds. The <span class="keyword">default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  # scrape_timeout <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> the <span class="keyword">global</span> <span class="keyword">default</span> (<span class="number">10</span>s).</span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      # - alertmanager:<span class="number">9093</span></span><br><span class="line"></span><br><span class="line"># <span class="keyword">Load</span> <span class="keyword">rules</span> once <span class="keyword">and</span> periodically <span class="keyword">evaluate</span> them according <span class="keyword">to</span> the <span class="keyword">global</span> <span class="string">'evaluation_interval'</span>.</span><br><span class="line">rule_files:</span><br><span class="line">  # - <span class="string">"first_rules.yml"</span></span><br><span class="line">  # - <span class="string">"second_rules.yml"</span></span><br><span class="line"></span><br><span class="line"># A scrape configuration containing exactly one endpoint <span class="keyword">to</span> scrape:</span><br><span class="line"># Here it<span class="string">'s Prometheus itself.</span><br><span class="line">scrape_configs:</span><br><span class="line">  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span><br><span class="line">  - job_name: '</span>prometheus<span class="string">'</span><br><span class="line"></span><br><span class="line">    # metrics_path defaults to '</span>/metrics<span class="string">'</span><br><span class="line">    # scheme defaults to '</span><span class="keyword">http</span><span class="string">'.</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: ['</span>localhost:<span class="number">9182</span><span class="string">']</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行(将默认端口9090改为8091)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prometheus<span class="class">.exe</span> --config.file=prometheus<span class="class">.yml</span> --web.listen-address=:<span class="number">8091</span> &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证<br>访问<a href="http://127.0.0.1:8091/" target="_blank" rel="external">http://127.0.0.1:8091/</a><br>目标列表中有你本地的机器，说明Prometheus已经成功监控到本地。<br><img src="/images/performancetesting/prometheus.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h2><ol>
+<li>下载<br>从<a href="https://grafana.com/grafana/download" target="_blank" rel="external">Grafana</a>下载</li>
+<li><p>启动<br>双击安装即可。 进行到安装bin目录下：双击<code>grafana-server.exe</code>启动<br>访问<a href="http://127.0.0.1:3000" target="_blank" rel="external">http://127.0.0.1:3000</a><br>默认账号/密码：admin/admin<br><img src="/images/performancetesting/grafana_home.jpg" alt=""></p>
+</li>
+<li><p>配置Prometheus数据源<br>从刚才配置好的prometheus那里获取本地性能数据并展示。<br><img src="/images/performancetesting/grafana_prometheus.jpg" alt=""></p>
+</li>
+<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 10467<br><img src="/images/performancetesting/grafana_import.jpg" alt=""></p>
+</li>
+</ol>
+<p>最终显示如下：<br><img src="/images/performancetesting/grafana_dashboard.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/22/Python生成二维码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/22/Python生成二维码/" itemprop="url">Python生成二维码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-22T10:16:33+08:00">
+                2020-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/22/Python生成二维码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/03/22/Python生成二维码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工作中用二维码扫描功能能带来不少的便利，简单看了一下，用Python和qrcode包来生成二维码其实很简单，</p>
+<p>qrcode，详细信息查看<a href="https://pypi.org/project/qrcode/" target="_blank" rel="external">pip qrcode</a>，安装直接用pip命令安装即可。</p>
+<h1 id="纯文本二维码"><a href="#纯文本二维码" class="headerlink" title="纯文本二维码"></a>纯文本二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'text.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>二维码显示：<br><img src="/images/automation/text.png" alt=""></p>
+<h1 id="带Logo二维码"><a href="#带Logo二维码" class="headerlink" title="带Logo二维码"></a>带Logo二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image(fill_color=<span class="string">"green"</span>, back_color=<span class="string">"white"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 添加logo</span></span><br><span class="line">    icon = Image.open(<span class="string">"logo.jpg"</span>) <span class="comment"># 打开logo照片</span></span><br><span class="line">    img_w, img_h = img.size <span class="comment"># 图片的宽高</span></span><br><span class="line"></span><br><span class="line">    factor = <span class="number">6</span></span><br><span class="line">    size_w = int(img_w / factor)</span><br><span class="line">    size_h = int(img_h / factor)</span><br><span class="line">    icon_w, icon_h = icon.size</span><br><span class="line">    <span class="keyword">if</span> icon_w &gt; size_w:</span><br><span class="line">        icon_w = size_w</span><br><span class="line">    <span class="keyword">if</span> icon_h &gt; size_h:</span><br><span class="line">        icon_h = size_h</span><br><span class="line"></span><br><span class="line">    icon = icon.resize((icon_w, icon_h), Image.ANTIALIAS)</span><br><span class="line">    w = int((img_w - icon_w) / <span class="number">2</span>)</span><br><span class="line">    h = int((img_h - icon_h) / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    img.paste(icon, (w, h), mask=<span class="keyword">None</span>) <span class="comment"># 添加logo照</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 6. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'logo.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>二维码显示：<br><img src="/images/automation/logo.png" alt=""></p>
+<p>还可以把二维码嵌入到页面中，以便更好的使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/08/丁丁画画（三年级下学期）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/08/丁丁画画（三年级下学期）/" itemprop="url">丁丁画画（三年级下学期）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-08T10:03:16+08:00">
+                2020-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/08/丁丁画画（三年级下学期）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/03/08/丁丁画画（三年级下学期）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_17.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/14/mitmproxy实现接口信息抓取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/14/mitmproxy实现接口信息抓取/" itemprop="url">mitmproxy实现接口信息抓取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T14:40:41+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mitmproxy/" itemprop="url" rel="index">
+                    <span itemprop="name">mitmproxy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/14/mitmproxy实现接口信息抓取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/14/mitmproxy实现接口信息抓取/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到<a href="https://www.mitmproxy.org/" target="_blank" rel="external">mitmproxy</a>: mitmproxy is a free and open source interactive HTTPS proxy.</p>
+<p>在windows和Firefox下实验。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>pip直接安装：<br><code>pip install mitmproxy</code></p>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><ul>
+<li>命令行启动<br>  mitmdump</li>
+<li>常用参数<br>  -p  指定端口号<br>  -w     outfile 将日志输出到本地文件<br>  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)<br>  -s  加载自定义python脚本</li>
+<li>添加证书<ol>
+<li>配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。</li>
+<li>选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 </li>
+</ol>
+</li>
+</ul>
+<h1 id="抓取接口信息"><a href="#抓取接口信息" class="headerlink" title="抓取接口信息"></a>抓取接口信息</h1><ol>
+<li><p>创建脚本</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from mitmproxy import http, ctx</span><br><span class="line">import openpyxl,<span class="tag">time</span>,json</span><br><span class="line"></span><br><span class="line">class Record:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self<span class="class">.filter_url</span> = <span class="string">'https://reqres.in/api/'</span></span><br><span class="line">        self<span class="class">.cur_time</span> = <span class="tag">time</span>.<span class="function"><span class="title">strftime</span><span class="params">(<span class="string">'%Y%m%d_%H_%M_%S'</span>)</span></span></span><br><span class="line">        book = openpyxl.<span class="function"><span class="title">Workbook</span><span class="params">()</span></span></span><br><span class="line">        <span class="tag">table</span> = book<span class="class">.active</span></span><br><span class="line">        <span class="tag">table</span>.append([<span class="string">'Address'</span>, <span class="string">'Request Type'</span>, <span class="string">'Param Type'</span>,</span><br><span class="line">                      <span class="string">'Header'</span>, <span class="string">'Param'</span>])</span><br><span class="line">        book.<span class="function"><span class="title">save</span><span class="params">(<span class="string">'E:/&#123;cur_time&#125;.xlsx'</span>.format(cur_time=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span> = openpyxl.<span class="function"><span class="title">load_workbook</span><span class="params">(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.format(tmp=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.active</span><span class="class">.title</span> = <span class="string">'API'</span></span><br><span class="line">        self<span class="class">.table</span> = self<span class="class">.workbook</span><span class="class">.active</span></span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">write_to_excel</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        url = flow<span class="class">.request</span><span class="class">.url</span></span><br><span class="line">        method = flow<span class="class">.request</span><span class="class">.method</span></span><br><span class="line">        type = flow<span class="class">.request</span><span class="class">.headers</span><span class="class">.get</span>(<span class="string">'Content-Type'</span>)</span><br><span class="line">        <span class="keyword">if</span> type == <span class="string">'application/x-www-form-urlencoded'</span>:</span><br><span class="line">            type = <span class="string">'URL_ENCODE'</span></span><br><span class="line">        elif type == <span class="string">'application/json'</span>:</span><br><span class="line">            type = <span class="string">'JSON'</span></span><br><span class="line">        elif type == <span class="string">'text/xml'</span>:</span><br><span class="line">            type = <span class="string">'XML'</span></span><br><span class="line">        headers = json.<span class="function"><span class="title">dumps</span><span class="params">(dict(flow.request.headers)</span></span>)</span><br><span class="line">        <span class="tag">body</span> = flow<span class="class">.request</span><span class="class">.get_text</span>()</span><br><span class="line">        self<span class="class">.table</span><span class="class">.append</span>([url, method, type, headers, body])</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.save</span>(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.<span class="function"><span class="title">format</span><span class="params">(cur_time=self.cur_time)</span></span>)</span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">response</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        <span class="keyword">if</span> self<span class="class">.filter_url</span>:</span><br><span class="line">            <span class="keyword">if</span> flow<span class="class">.request</span><span class="class">.url</span><span class="class">.startswith</span>(self.filter_url):</span><br><span class="line">                self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addons = [</span><br><span class="line">    <span class="function"><span class="title">Record</span><span class="params">()</span></span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置firefox代理<br>设置本地Firefox代理，商品为9999</p>
+</li>
+<li><p>运行mitmdump</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmdump -<span class="tag">p</span> <span class="number">9999</span> -s <span class="tag">a</span><span class="class">.py</span> --ignore all hosts with https/ssl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开测试网站操作</p>
+</li>
+<li>查看结果<br><img src="/images/automation/mitm.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/02/小丁画作-2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1248,672 +1921,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/15/小丁画作-2019/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/15/小丁画作-2019/" itemprop="url">奇点绘画画随记（2019）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-15T16:08:57+08:00">
-                2019-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/15/小丁画作-2019/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/15/小丁画作-2019/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/qidianhui/15.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/16.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/17.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/18.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/19.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/20.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/21.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/22.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/23.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/24.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/25.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/26.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/27.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/28.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/29.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/30.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/31.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/32.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/33.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/34.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/35.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/36.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/37.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/06/2019-Flag/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/06/2019-Flag/" itemprop="url">2019 - Flag</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-06T12:41:23+08:00">
-                2019-01-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/06/2019-Flag/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/06/2019-Flag/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。</p>
-</blockquote>
-<p>2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：</p>
-<ol>
-<li>读书<br>基于去年的不足，今年细化，每月一本书，读书笔记到Blog。</li>
-<li>PMP<br>这个东西几年前有看过，一直没付诸行动，挤时间，逼自己一把，今年拿下证书。</li>
-<li>工作<br>a. 保持技术的更新，有自己的想法和应对方法。<br>b. 更全面的看待，处理事情。</li>
-<li>英语<br>a. 再看一下英语基础，试着找一下快速提升的方法。<br>b. 搞定Friends前三季。</li>
-<li>生活<br>a. 控制脾气，控制脾气，控制脾气。<br>b. 放下手机，活的仪式感一些。<br>c. 培养一个兴趣。</li>
-<li>其他<br>a. Blog，尽量更新。<br>b. 每周运动三次，发圈Track。</li>
-</ol>
-<h1 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h1><ol>
-<li>拿到PMP证书，看音乐会。</li>
-<li>国内游。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/12/31/2018画展/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/31/2018画展/" itemprop="url">2018画展</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T13:45:35+08:00">
-                2018-12-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/31/2018画展/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/12/31/2018画展/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>为了画展，让孩子们画了好多次课，这种行为不知道好还是不好，为了一个展览连续的不学新的课程。</p>
-<p><img src="/images/izheyi/2018/12/1.JPG" alt=""></p>
-<h1 id="作品"><a href="#作品" class="headerlink" title="作品"></a>作品</h1><p><img src="/images/izheyi/2018/12/2.JPG" alt=""><br><img src="/images/izheyi/2018/12/3.JPG" alt=""><br><strong>帽子</strong></p>
-<p><em>在无限的黑色网状里，人变的压抑和渺小，红蓝相间的圆点帽子，却又充满活力，色彩艳丽。二者交互辉映，仿佛把人带到一个奇妙的世界，融洽、平静，有一种使人安静下来的力量，我自风情万种，与世无争。</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/12/25/2018-总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/25/2018-总结/" itemprop="url">2018 - 总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T14:29:52+08:00">
-                2018-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/25/2018-总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/12/25/2018-总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2018年马上过完，年初的时候有个工作计划 <a href="/2018/01/11/2018-学习计划/">2018 - 学习计划</a>，也简单做个总结。</p>
-<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><ol>
-<li>随着公司Agile的转型成功，还是学到了很多东西，结果重要，但过程同样重要。</li>
-<li>年终最后一次上线竟然出现了几个Critical的Issues，新项目和现有的6个项目都有交集，诸多原因，确实也遗漏了一些东西。通过Retro知道了不足，以及How could be better in next stage。但也有一些体会：Agile强调整个Team对质量负责，真正出了问题，还是QA背锅，终究是没有逃脱0和-1游戏规则。有些事情虽不爽，但是要敢于承认错误，力争把工作做到挑不出毛病。某些人，劝你评价别人的时候请先看看自己。唯有自己强大，其他都是浮云。</li>
-<li>今年学了不少新技术，在测试应用到的技术这块有了一个很明显的提升。<ul>
-<li>基于AWS，Salt，Atrifactory，Terraform，Jenkins，Github实现CI/CD</li>
-<li>基于SSM的java项目开发流程和实现</li>
-<li>Zookeeper，Dubbo和Docker的基本应用</li>
-<li>基于Pact的CDC测试</li>
-<li>性能测试的一些思考</li>
-</ul>
-</li>
-<li>通过一些渠道也知道了在技术的全局观上还有待于提高，项目和质量的整体把控上也有欠缺，也要提高一下技术快速落地的能力。</li>
-<li>参加了一些课程，学到了不少新的思路和知识。</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>基本能保持每周一次的Blog更新，内容多是学习笔记。</li>
-<li>孩子教育是个很大的事情，还得继续努力。</li>
-<li>力争生活和工作的Balance。</li>
-<li>对自己也有一次奖励，去青岛玩了一趟。</li>
-</ol>
-<h2 id="遗憾-不足"><a href="#遗憾-不足" class="headerlink" title="遗憾/不足"></a>遗憾/不足</h2><ol>
-<li>2018只剩下个位数，读的书也只有个位数，来年需要一个更详细一点的计划。</li>
-<li>英语，跟着公司还花钱报了个课程，效果不是很明显，进步不大，需要反思。</li>
-<li>十一之后，一直不在状态，要做阶段性总结反思，把目标分拆的更细小，严格要求自己，并做好时间管理。</li>
-<li>情绪的掌控有待提高，团队管理和沟通要进一步加强。</li>
-<li>技术很重要，但工作不仅仅是技术。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1963,7 +1975,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1985,7 +1997,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

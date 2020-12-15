@@ -305,6 +305,661 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/10/Linux下JDK安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/10/Linux下JDK安装配置/" itemprop="url">Linux下JDK安装配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-10T09:48:14+08:00">
+                2016-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/01/10/Linux下JDK安装配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/10/Linux下JDK安装配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>java可以运行，只能说明JRE环境变量配置正确；javac不能运行，说明JDK没安装或者环境变量配置错误。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li><p>创建安装文件夹</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> usr]<span class="preprocessor"># mkdir /usr/java</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制安装文件到新建的文件夹</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> usr]<span class="preprocessor"># cd java</span></span><br><span class="line">[root<span class="constant">@Automation</span> java]<span class="preprocessor"># mv /tmp/jdk-7u80-linux-x64.rpm .</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@Automation</span> java]<span class="comment"># rpm -ivh jdk-7u80-linux-x64.rpm</span></span><br><span class="line">Preparing...                <span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment"># [100%]</span></span><br><span class="line">   <span class="number">1</span>:jdk                    <span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment"># [100%]</span></span><br><span class="line">Unpacking JAR files...</span><br><span class="line">        rt.jar...</span><br><span class="line">        jsse.jar...</span><br><span class="line">        charsets.jar...</span><br><span class="line">        tools.jar...</span><br><span class="line">        localedata.jar...</span><br><span class="line">        jfxrt.jar...</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>我的机器安装完jd后，不用配置环境变量也可以正常执行javac、java –version操作，但还是做一下说明。</p>
+<ol>
+<li><p>修改系统环境变量文件：</p>
+ <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> java]<span class="preprocessor"># vi /etc/profile</span></span><br></pre></td></tr></table></figure>
+<p> 向文件里追加</p>
+ <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk1.<span class="number">7.0_80</span></span><br><span class="line">JRE_HOME=/usr/java/jdk1.<span class="number">7.0_80</span>/jre</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA</span>_HOME/bin:<span class="variable">$JRE</span>_HOME/bin</span><br><span class="line">CLASSPATH=.:<span class="variable">$JAVA</span>_HOME/lib/dt.jar:<span class="variable">$JAVA</span>_HOME/lib/tools.jar:<span class="variable">$JRE</span>_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使修改生效</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation java]# <span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span><br><span class="line">[root@Automation java]# echo $PATH</span><br><span class="line"><span class="regexp">/usr/</span>lib64<span class="regexp">/qt-3.3/</span>bin:<span class="regexp">/usr/</span>local<span class="regexp">/sbin:/u</span>sr<span class="regexp">/local/</span>bin:<span class="regexp">/sbin:/</span>bin:<span class="regexp">/usr/</span>sbin:<span class="regexp">/usr/</span>bin:<span class="regexp">/root/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>jre<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>Notes：在64位下安装32位JDK，会有错误，要安装对应位数的版本。</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/08/闺女第一次给Daddy洗脚/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/08/闺女第一次给Daddy洗脚/" itemprop="url">闺女第一次给Daddy洗脚</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-08T10:20:37+08:00">
+                2016-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/01/08/闺女第一次给Daddy洗脚/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/08/闺女第一次给Daddy洗脚/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天闺女第一次给Daddy洗脚，不让洗都不愿意，留念一下，也有了大概以下的对话：<br><strong>F: </strong>我老了你还能这么给我洗脚吗？<br><strong>D: </strong>我也不知道我长大了会变成什么样子。。。<br><strong>F: </strong>还会给我洗吗？<br><strong>D: </strong>不知道。。。。</p>
+<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjc5MDg3Ng==" frameborder="0" allowfullscreen></iframe>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/05/元旦回老家，兴奋的很/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/05/元旦回老家，兴奋的很/" itemprop="url">元旦回老家，兴奋的很</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-05T08:44:43+08:00">
+                2016-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/01/05/元旦回老家，兴奋的很/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/05/元旦回老家，兴奋的很/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>现在的小丁对回老家这件事很是向往和兴奋，提前两周自己就在倒计时，可以不上学，但一定要回老家。希望你长大了，也能保持这份热情:)</p>
+<p>大城市的玩伴本来就少，回老家就不一样了，太多的小朋友，没有了所谓的规矩，也不粘着大人了，除了晚上睡觉的时候给读个故事，其他时间根本就不用管，真是玩疯了。</p>
+<p>回老家的火车上，碰见了一个小朋友，高兴的玩了一路。<br><img src="/images/izheyi/2016/01/huijia.jpg" alt="你睡的真舒服么^_^"></p>
+<p>回京的路上，我们读了故事书，也有了下面的一些小对话：</p>
+<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg4OTY1Ng==" frameborder="0" allowfullscreen></iframe>
+
+<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg5MDY1Mg==" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/30/小丁的第一个元旦演出/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/30/小丁的第一个元旦演出/" itemprop="url">小丁的第一次元旦演出</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-30T08:43:38+08:00">
+                2015-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/30/小丁的第一个元旦演出/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/30/小丁的第一个元旦演出/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>由于种种原因，都上大班了，才有了第一次的元旦文艺演出，小丁的表现真是可圈可点，处处都争取表现到最好，精神可嘉！</p>
+<p>好几个节目，小丁好像都是领舞呢:)</p>
+<h1 id="歌舞串烧"><a href="#歌舞串烧" class="headerlink" title="歌舞串烧"></a>歌舞串烧</h1><p>我有一只小毛驴 + 新年好</p>
+<p><iframe height=498 width=510 src="http://player.youku.com/embed/XMTQ0MjcwNzM5Ng==" frameborder=0 allowfullscreen></iframe><br><img src="/images/izheyi/2015/chuan_1.jpg" alt=""><br><img src="/images/izheyi/2015/chuan_2.jpg" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/30/小丁的第一个元旦演出/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/25/2015圣诞节/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1297,700 +1952,11 @@ mysql&gt; flush privileges;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/" itemprop="url">QTP can't get the latest update after updating in extenal library file</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-21T12:37:48+08:00">
-                2015-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Sometimes QTP doesn’t pick up the latest library file change if the script is already open.   </p>
-<p>When we update an external library file, in QTP, even if close the updating file and open it again, the change might not get picked up the next time you run it.   </p>
-<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Open the library in QTP and do a syntax check by using <code>Ctrl+F7</code>.<br>That seems to force QTP to read the latest content.  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/20/Load-Runner-VuGen-Get-Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="url">Load Runner - VuGen Get & Post</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-20T07:31:56+08:00">
-                2015-12-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
-                    <span itemprop="name">Load Runner</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/20/Load-Runner-VuGen-Get-Post/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>性能测试中大部的都是基于HTTP协议的，脚本里的90%都是Get和Post，多数是Get请求。我们用以下两个方法来实现HTTP请求：</p>
-<h1 id="Get-web-url"><a href="#Get-web-url" class="headerlink" title="Get - web_url()"></a>Get - web_url()</h1><p>此函数用来模拟用户请求，它也是在脚本中最常使用的函数之一。<br>语法：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Int Web_url(<span class="keyword">const</span> <span class="built_in">char</span> *StepName, <span class="keyword">const</span> <span class="built_in">char</span> * url, &lt;Lists <span class="keyword">of</span> Attributes&gt;, [EXTRARES,&lt;Lists <span class="keyword">of</span> Resource Attributes&gt;,LAST)</span><br></pre></td></tr></table></figure></p>
-<p>例子：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">web_url<span class="list">(<span class="string">"Open Login Page"</span>,</span><br><span class="line">        <span class="string">"URL=http://10.11.2.22/"</span>,</span><br><span class="line">        <span class="string">"Resource=0"</span>,</span><br><span class="line">        <span class="string">"RecContentType=text/html"</span>,</span><br><span class="line">        <span class="string">"Referer="</span>,</span><br><span class="line">        <span class="string">"Snapshot=t1.inf"</span>,</span><br><span class="line">        <span class="string">"Mode=HTML"</span>,</span><br><span class="line">        EXTRARES,</span><br><span class="line">        <span class="string">"URL=/common/login/button.gif"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/main.jpg"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/head_bg.gif"</span>, ENDITEM,</span><br><span class="line">        LAST)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
-<p>参数的几点说明:</p>
-<ol>
-<li>最基本的三个参数是StepName，url, LAST，在不能录制的情况下，可以自己用这三个参数写代码。</li>
-<li>Resource - 指定一个值说明这个URL是否是一个资源，0 表示非资源，1 表示资源。</li>
-<li>RecContentType - 指定接受服务器什么格式文件。</li>
-<li>EXTRARES 是由script、active、java applet、flash、CSS产生的请求，在页面上都找不到。<ul>
-<li>每一个都是一个请求。</li>
-<li>加不加额外资源，会影响下载量。</li>
-<li>能不能删除此处脚本，取决于是不是全部都是图片或样式的请求，有没有特殊的请求存在。(原则上只要是录制时录下来的，不是无关的内容，就保留下来。)</li>
-<li>如果在脚本回放时不想下载图片、样式表等，设置：<br>  Run-time Setting -&gt; Browser Emulation -&gt; Download non-html resources。只关心业务处理能力，带宽受限时取消此选项。默认是选中的。</li>
-</ul>
-</li>
-</ol>
-<p><em>Notes: 排错，只关注url部分即可，数据要是有变化的话，要进行参数化。</em></p>
-<h1 id="Post-web-submit-data"><a href="#Post-web-submit-data" class="headerlink" title="Post - web_submit_data()"></a>Post - web_submit_data()</h1><p>与Get请求的web_url函数相比，多了ITEMDATA。<br><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int web_submit_data( <span class="keyword">const</span> char *StepName, <span class="keyword">const</span> char *Action, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Attributes&gt;, ITEMDATA, &lt;<span class="built_in">List</span> <span class="keyword">of</span> data&gt;, [ EXTRARES, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Resource Attributes&gt;,] LAST );</span><br></pre></td></tr></table></figure></p>
-<p>例子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">web_submit_data("<span class="operator"><span class="keyword">start</span><span class="string">", </span><br><span class="line">"</span><span class="keyword">Action</span>=login.asp<span class="string">", </span><br><span class="line">"</span>Method=POST<span class="string">",</span><br><span class="line">ITEMDATA, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">user</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">password</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=sessionID<span class="string">", "</span><span class="keyword">value</span>=<span class="number">20151220</span><span class="string">", ENDITEM, </span><br><span class="line">LAST);</span></span></span><br></pre></td></tr></table></figure></p>
-<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
-<p>参数的几点说明：</p>
-<ol>
-<li>Action：Form中的ACTION属性，指定了完成Form中的操作用到的URL。 </li>
-<li>Method：表单提交方法：POST或GET（默认是POST）。 </li>
-<li>ITEMDATA：数据域和属性的分隔符。 <ul>
-<li>List of Data：<br>数据域列表定义了表单提交的内容。由于此请求是上下文无关的，因此数据域包含了所有的隐含域。使用Form的编码规则组织数据域。<br>数据域列表可以使用下面任意一种格式：<br>“name=n1”, “value=v1”, ENDITEM,<br>“name=n2”, “EncryptedValue=qwerty”, ENDITEM, </li>
-<li>如果要自己写脚本的话，用HTTPWATCH工具，在POST_DATA中可以看到提交对应的参数名和参数值,与脚本一致。</li>
-</ul>
-</li>
-</ol>
-<p><em>Notes：排错，两个地方：1. Action 2. ITEMDATA提交的数据不合法。</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Linux运行级别和chkconfig/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/18/Linux运行级别和chkconfig/" itemprop="url">Linux运行级别和chkconfig/service</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T13:52:46+08:00">
-                2015-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/18/Linux运行级别和chkconfig/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Linux运行级别和chkconfig/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h1><p>什么是运行级别呢？简单点来说，运行级别就是操作系统当前正在运行的功能级别。级别是从0到6(7个运行级别)，具有不同的功能。<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# more /etc/inittab</span><br><span class="line"><span class="preprocessor"># inittab is only used by upstart for the default runlevel.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># ADDING OTHER CONFIGURATION HERE WILL HAVE NO EFFECT ON YOUR SYSTEM.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># System initialization is started by /etc/init/rcS.conf</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Individual runlevels are started by /etc/init/rc.conf</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Ctrl-Alt-Delete is handled by /etc/init/control-alt-delete.conf</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Terminal gettys are handled by /etc/init/tty.conf and /etc/init/serial.conf,</span></span><br><span class="line"><span class="preprocessor"># with configuration in /etc/sysconfig/init.</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># For information on how to write upstart event handlers, or how</span></span><br><span class="line"><span class="preprocessor"># upstart works, see init(5), init(8), and initctl(8).</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Default runlevel. The runlevels used are:</span></span><br><span class="line"><span class="preprocessor">#   0 - halt (Do NOT set initdefault to this)</span></span><br><span class="line"><span class="preprocessor">#   1 - Single user mode</span></span><br><span class="line"><span class="preprocessor">#   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</span></span><br><span class="line"><span class="preprocessor">#   3 - Full multiuser mode</span></span><br><span class="line"><span class="preprocessor">#   4 - unused</span></span><br><span class="line"><span class="preprocessor">#   5 - X11</span></span><br><span class="line"><span class="preprocessor">#   6 - reboot (Do NOT set initdefault to this)</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line">id:<span class="number">5</span>:initdefault:</span><br></pre></td></tr></table></figure></p>
-<p>简单说明：</p>
-<ol>
-<li>查看运行级别用：runlevel</li>
-<li>进入其它运行级别用：init N，如果init 3则进入终端模式，init 5则又登录图形GUI模式</li>
-<li>标准的Linux运行级别为3或5，如果是3的话，系统就在多用户状态；如果是5的话，则是运行着X Window系统。</li>
-<li>不同的运行级别有不同的用处，也应该根据自己的不同情形来设置。例如，如果丢失了root口令，那么可以让机器启动进入单用户状态来设置。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/12/18/Linux运行级别和chkconfig/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Java线程状态及分析工具/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/18/Java线程状态及分析工具/" itemprop="url">Java线程状态及监控工具</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T07:32:08+08:00">
-                2015-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/18/Java线程状态及分析工具/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Java线程状态及分析工具/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h1><p>在监控的过程中，要弄明白下边这6种状态(我们主要关注分析的：Runnable, Blocked, Waiting)：</p>
-<ol>
-<li>NEW<br>　 当线程对象对创建后，即进入了新建状态</li>
-<li>RUNNABLE<br>　 当调用线程对象的start()方法，线程即进入就绪状态。正在 Java 虚拟机中执行的线程处于这种状态。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</li>
-<li>BLOCKED<br>　 处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：<ul>
-<li>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</li>
-<li>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</li>
-<li>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</li>
-</ul>
-</li>
-<li>WAITING<br>　 无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。某一线程因为调用下列方法之一而处于等待状态：<ul>
-<li>不带超时值的 Object.wait</li>
-<li>不带超时值的 Thread.join</li>
-<li>LockSupport.park</li>
-</ul>
-</li>
-<li>TIMED_WAITING<br>　 具有指定等待时间的某一等待线程的线程状态。某一线程因为调用以下带有指定正等待时间的方法之一而处于定时等待状态：<ul>
-<li>Thread.sleep</li>
-<li>带有超时值的 Object.wait</li>
-<li>带有超时值的 Thread.join</li>
-<li>LockSupport.parkNanos</li>
-<li>LockSupport.parkUntil</li>
-</ul>
-</li>
-<li>TERMINATED<br>　　已终止线程的线程状态。线程已经结束执行。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/12/18/Java线程状态及分析工具/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2040,7 +2006,7 @@ mysql&gt; flush privileges;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2062,7 +2028,7 @@ mysql&gt; flush privileges;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

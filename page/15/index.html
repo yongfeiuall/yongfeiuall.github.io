@@ -305,6 +305,666 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/07/Python-read-remote-file-from-linux-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/07/Python-read-remote-file-from-linux-server/" itemprop="url">Python read remote file from linux server </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-07T14:41:10+08:00">
+                2017-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/07/Python-read-remote-file-from-linux-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/07/Python-read-remote-file-from-linux-server/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>自动化要读取Server上的文件来判断Json的正确与否，还是通过Paramiko实现，这里一个简单例子：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    hostname = <span class="string">'xxx'</span></span><br><span class="line">    port = <span class="number">22</span></span><br><span class="line">    username = <span class="string">'xxx'</span></span><br><span class="line">    password = <span class="string">'xxx'</span></span><br><span class="line"></span><br><span class="line">    s = paramiko.<span class="function"><span class="title">SSHClient</span><span class="params">()</span></span></span><br><span class="line">    s.<span class="function"><span class="title">set_missing_host_key_policy</span><span class="params">(paramiko.AutoAddPolicy()</span></span>)</span><br><span class="line">    s.<span class="function"><span class="title">connect</span><span class="params">(hostname, port, username, password)</span></span></span><br><span class="line"></span><br><span class="line">    sftp_client = s.<span class="function"><span class="title">open_sftp</span><span class="params">()</span></span></span><br><span class="line">    remote_file = sftp_client.<span class="function"><span class="title">open</span><span class="params">(<span class="string">'/tmp/file'</span>)</span></span></span><br><span class="line">    try:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> remote_file:</span><br><span class="line">            print line</span><br><span class="line">    finally:</span><br><span class="line">        remote_file.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line">    	s.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/02/Docker-Dockerfile-Customize-Image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/02/Docker-Dockerfile-Customize-Image/" itemprop="url">Docker - Dockerfile Customize Image</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-02T16:05:30+08:00">
+                2017-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/02/Docker-Dockerfile-Customize-Image/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/02/Docker-Dockerfile-Customize-Image/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>镜像的定制实际上就是定制每一层所添加的配置、文件。<code>Dockerfile</code>是一个文本文件，其内包含了一条条的指令，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><p>例子：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">FROM</span> nginx</span><br><span class="line"><span class="built_in">RUN</span> <span class="bash"><span class="built_in">echo</span> <span class="string">'&lt;h1&gt;Hello, Docker!&lt;/h1&gt;'</span> &gt; /usr/share/nginx/html/index.html</span></span><br></pre></td></tr></table></figure></p>
+<p>这里只介绍两个最基本的，还有很多，用到的时候再学习。</p>
+<h2 id="From"><a href="#From" class="headerlink" title="From"></a>From</h2><p>指定基础image，在其上进行定制，必须要有且是第一条指令。</p>
+<h2 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h2><p>是用来执行命令行命令的。主要有两种格式：</p>
+<ul>
+<li>Shell<br><code>RUN &lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。</li>
+<li>Exec<br><code>RUN [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</code>，这更像是函数调用中的格式。</li>
+</ul>
+<p><em>Union FS 是有最大层数限制的，所以别用太多Run命令建很多层，如果有多条命令要执行，使用 &amp;&amp; 将各个所需命令串联起来。</em><br><em>Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。</em></p>
+<p>到此，要定制的内容就完成了，下面就是构建了。</p>
+<h1 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h1><p>用 docker build 命令来构建镜像。</p>
+<p>例子：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~/myngix$ docker build -t nginx:v5 .</span><br><span class="line">Sending build context <span class="keyword">to</span> Docker daemon  <span class="number">2.048</span>kB</span><br><span class="line"><span class="keyword">Step</span> <span class="number">1</span>/<span class="number">2</span> : <span class="keyword">FROM</span> nginx</span><br><span class="line"> ---&gt; <span class="number">9e7424</span>e5dbae</span><br><span class="line"><span class="keyword">Step</span> <span class="number">2</span>/<span class="number">2</span> : RUN echo <span class="comment">'<span class="xmlDocTag">&lt;h1&gt;</span>Hello, Docker!<span class="xmlDocTag">&lt;/h1&gt;</span>' &gt; /usr/share/nginx/html/index.html</span></span><br><span class="line"> ---&gt; Running <span class="keyword">in</span> <span class="number">0</span>f77e86fba64</span><br><span class="line"> ---&gt; d725428dfdad</span><br><span class="line">Removing intermediate container <span class="number">0</span>f77e86fba64</span><br><span class="line">Successfully built d725428dfdad</span><br><span class="line">Successfully tagged nginx:v5</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~/myngix$ docker image ls -a</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx               v5                  d725428dfdad        <span class="number">16</span> seconds ago      <span class="number">108</span>MB</span><br><span class="line">nginx               latest              <span class="number">9e7424</span>e5dbae        <span class="number">2</span> weeks ago         <span class="number">108</span>MB</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/28/Docker-Container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/28/Docker-Container/" itemprop="url">Docker-Container</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-28T16:28:47+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/28/Docker-Container/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/28/Docker-Container/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Docker运行容器前需要本地存在对应的镜像，如果镜像不存在本地，Docker会从镜像仓库下载（默认是Docker Hub）。<br>当利用<code>docker run</code>来创建容器时，Docker在后台运行的标准操作包括：</p>
+<ul>
+<li>检查本地是否存在指定的镜像，不存在就从公有仓库下载</li>
+<li>利用镜像创建并启动一个容器</li>
+<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
+<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
+<li>从地址池配置一个 ip 地址给容器</li>
+<li>执行用户指定的应用程序</li>
+<li>执行完毕后容器被终止</li>
+</ul>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><p>启动容器有两种方式，一种是基于镜像新建一个容器并启动，另外一个是将在终止状态（stopped）的容器重新启动。</p>
+<h2 id="新建启动"><a href="#新建启动" class="headerlink" title="新建启动"></a>新建启动</h2><p>所用的命令 <code>docker run</code>。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker container run centos /bin/echo <span class="string">'hello world'</span></span><br><span class="line">hello world</span><br></pre></td></tr></table></figure></p>
+<p>经常用的Options：-it –rm<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker run -it centos /bin/bash</span><br><span class="line">[root<span class="variable">@6d1e9498e298</span> /]<span class="comment"># pwd</span></span><br><span class="line">/</span><br></pre></td></tr></table></figure></p>
+<p>需要让Docker在后台运行而不是直接把执行命令的结果输出在当前宿主机下，可以通过添加<code>-d</code>参数来实现。</p>
+<h2 id="终止的容器启动"><a href="#终止的容器启动" class="headerlink" title="终止的容器启动"></a>终止的容器启动</h2><p>直接将一个已经终止的容器启动运行, 命令<code>docker container start</code>。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker container ls -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS               NAMES</span><br><span class="line">6d1e9498e298        centos              "/bin/bash"              2 minutes ago       Exited (130) 5 seconds ago                       hardcore_mclean</span><br><span class="line">docker@default:~$ docker container <span class="operator"><span class="keyword">start</span> <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Usage</span>:  docker <span class="keyword">container</span> <span class="keyword">start</span> [OPTIONS] <span class="keyword">CONTAINER</span> [<span class="keyword">CONTAINER</span>...]</span><br><span class="line"></span><br><span class="line"><span class="keyword">Start</span> one <span class="keyword">or</span> more stopped containers</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -a, <span class="comment">--attach               Attach STDOUT/STDERR and forward signals</span></span><br><span class="line">      <span class="comment">--detach-keys string   Override the key sequence for detaching a container</span></span><br><span class="line">      <span class="comment">--help                 Print usage</span></span><br><span class="line">  -<span class="keyword">i</span>, <span class="comment">--interactive          Attach container's STDIN</span></span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker <span class="keyword">start</span> <span class="number">6</span>d1e9498e298</span><br><span class="line"><span class="number">6</span>d1e9498e298</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker <span class="keyword">container</span> ls -a</span><br><span class="line"><span class="keyword">CONTAINER</span> <span class="keyword">ID</span>        IMAGE               COMMAND                  CREATED             <span class="keyword">STATUS</span>                     PORTS               <span class="keyword">NAMES</span></span><br><span class="line"><span class="number">6</span>d1e9498e298        centos              <span class="string">"/bin/bash"</span>              <span class="number">5</span> minutes ago       Up <span class="number">11</span> seconds                                  hardcore_mclean</span></span><br></pre></td></tr></table></figure></p>
+<p>此外，<code>docker restart</code>命令会将一个运行态的容器终止，然后再重新启动它。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/28/Docker-Container/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/19/Docker-Image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/19/Docker-Image/" itemprop="url">Docker - Image</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:01:33+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/19/Docker-Image/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/19/Docker-Image/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。Docker使用Union FS，相同的层只需要保存一份即可。</p>
+<p>镜像层数量可能会很多，所有镜像层会联合在一起组成一个统一的文件系统。</p>
+<p>新镜像是从base镜像一层一层叠加生成的。每安装一个软件，就在现有镜像的基础上增加一层。</p>
+<h1 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h1><p>可以到<a href="https://hub.docker.com/explore/">Docker Hub</a>去查找镜像。</p>
+<p>从Docker Registry获取镜像的命令是<code>docker image pull</code>。其命令格式为：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image pull <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line">Usage:  docker image pull [OPTIONS] NAME[:TAG|@DIGEST]</span><br><span class="line"></span><br><span class="line">Pull <span class="operator">an</span> image <span class="operator">or</span> <span class="operator">a</span> repository <span class="built_in">from</span> <span class="operator">a</span> registry</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="operator">a</span>, <span class="comment">--all-tags                Download all tagged images in the repository</span></span><br><span class="line">      <span class="comment">--disable-content-trust   Skip image verification (default true)</span></span><br><span class="line">      <span class="comment">--help                    Print usage</span></span><br></pre></td></tr></table></figure></p>
+<p>默认地址是 Docker Hub。如果不用默认，地址的格式一般是 &lt;域名/IP&gt;[:端口号]。</p>
+<p>例子：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="annotation">@default</span>:~$ git image pull mongo</span><br><span class="line">Using <span class="keyword">default</span> <span class="string">tag:</span> latest</span><br><span class="line"><span class="string">latest:</span> Pulling from library/mongo</span><br><span class="line"><span class="string">d13d02fa248d:</span> Pull complete</span><br><span class="line"><span class="string">bc8e2652ce92:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">cc856886986:</span> Pull complete</span><br><span class="line"><span class="string">c319e9ec4517:</span> Pull complete</span><br><span class="line"><span class="string">b4cbf8808f94:</span> Pull complete</span><br><span class="line"><span class="string">cb98a53e6676:</span> Pull complete</span><br><span class="line"><span class="string">f0485050cd8a:</span> Pull complete</span><br><span class="line"><span class="string">ac36cdc414b3:</span> Pull complete</span><br><span class="line"><span class="number">61814e3</span><span class="string">c487b:</span> Pull complete</span><br><span class="line"><span class="number">523</span><span class="string">a9f1da6b9:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">b4beaef77a2:</span> Pull complete</span><br><span class="line"><span class="string">Digest:</span> <span class="string">sha256:</span>d13c897516e497e898c229e2467f4953314b63e48d4990d3215d876ef9d1fc7c</span><br><span class="line"><span class="string">Status:</span> Downloaded newer image <span class="keyword">for</span> <span class="string">mongo:</span>latest</span><br></pre></td></tr></table></figure></p>
+<h1 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h1><p>想查看已经下载的镜像， 格式：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image ls --help</span><br><span class="line"></span><br><span class="line">Usage:  docker image ls [OPTIONS] [REPOSITORY[:TAG]]</span><br><span class="line"></span><br><span class="line">List images</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="ruby">a, --all             <span class="constant">Show</span> all images (default hides intermediate images)</span><br><span class="line"></span>      -<span class="ruby">-digests         <span class="constant">Show</span> digests</span><br><span class="line"></span>  -<span class="ruby">f, --filter filter   <span class="constant">Filter</span> output based on conditions provided</span><br><span class="line"></span>      -<span class="ruby">-format string   <span class="constant">Pretty</span>-print images using a <span class="constant">Go</span> template</span><br><span class="line"></span>      -<span class="ruby">-help            <span class="constant">Print</span> usage</span><br><span class="line"></span>      -<span class="ruby">-no-trunc        <span class="constant">Don</span><span class="string">'t truncate output</span><br><span class="line"></span></span>  -<span class="ruby"><span class="string">q, --quiet           Only show numeric IDs</span></span></span><br></pre></td></tr></table></figure></p>
+<p>不只可以列出所有的镜像，还可以列出特定的某个镜像。</p>
+<p>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">mongo               latest              d22888af0ce0        <span class="number">3</span> weeks ago         <span class="number">361</span>MB</span><br><span class="line">hello-world         latest              <span class="number">725</span>dcfab7d63        <span class="number">3</span> weeks ago         <span class="number">1.84</span>kB</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/19/Docker-Image/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/18/Docker-基础和安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1265,648 +1925,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/09/20/Business-Trip-to-Boston/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/20/Business-Trip-to-Boston/" itemprop="url">Business Trip to Boston</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-20T16:52:21+08:00">
-                2017-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/20/Business-Trip-to-Boston/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/09/20/Business-Trip-to-Boston/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一些留念。</p>
-<p><img src="/images/shenghuo/boston_000.JPG" alt=""><br><img src="/images/shenghuo/boston_00.JPG" alt=""><br><img src="/images/shenghuo/boston_0.JPG" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/20/Business-Trip-to-Boston/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/07/26/日日新成长记录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/26/日日新成长记录/" itemprop="url">日日新幼儿园成长记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-26T13:37:19+08:00">
-                2017-07-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/26/日日新成长记录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/07/26/日日新成长记录/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>就像老师说的一样，在这短暂的三年中，你进步了，也成长了，从不敢去学校，到转学校，再到表现的足够好（在大人的眼里）。希望你一直都能够做最好的自己。<br><img src="/images/izheyi/2017/07/0.JPG" alt=""><br><img src="/images/izheyi/2017/07/1.JPG" alt=""><br><img src="/images/izheyi/2017/07/2.JPG" alt=""><br><img src="/images/izheyi/2017/07/3.JPG" alt=""><br><img src="/images/izheyi/2017/07/4.JPG" alt=""><br><img src="/images/izheyi/2017/07/5.JPG" alt=""><br><img src="/images/izheyi/2017/07/6.JPG" alt=""><br><img src="/images/izheyi/2017/07/7.JPG" alt=""><br><img src="/images/izheyi/2017/07/8.JPG" alt=""><br><img src="/images/izheyi/2017/07/9.JPG" alt=""><br><img src="/images/izheyi/2017/07/10.JPG" alt=""><br><img src="/images/izheyi/2017/07/11.JPG" alt=""><br><img src="/images/izheyi/2017/07/12.JPG" alt=""><br><img src="/images/izheyi/2017/07/13.JPG" alt=""><br><img src="/images/izheyi/2017/07/14.JPG" alt=""><br><img src="/images/izheyi/2017/07/15.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/07/09/丁丁学前班春节汇演/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/09/丁丁学前班春节汇演/" itemprop="url">丁丁学前班春节汇演</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-09T12:55:55+08:00">
-                2017-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/09/丁丁学前班春节汇演/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/07/09/丁丁学前班春节汇演/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本来是年前迎新春的活动，一直没有拿到底片，再加上最近也是忙的脚不连地，补上。</p>
-<p>一直都很有节奏感，每次都领舞，棒棒的！</p>
-<h1 id="开场-盛世欢歌"><a href="#开场-盛世欢歌" class="headerlink" title="开场 - 盛世欢歌"></a>开场 - 盛世欢歌</h1><iframe frameborder="0" width="640" height="498" src="https://v.qq.com/iframe/player.html?vid=e05237jwkbl&tiny=0&auto=0" allowfullscreen></iframe>
-
-<h1 id="舞蹈-5678Going"><a href="#舞蹈-5678Going" class="headerlink" title="舞蹈 - 5678Going"></a>舞蹈 - 5678Going</h1><iframe frameborder="0" width="640" height="498" src="https://v.qq.com/iframe/player.html?vid=e0523wnqb1x&tiny=0&auto=0" allowfullscreen></iframe>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/06/21/Gatling-Simulation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/21/Gatling-Simulation/" itemprop="url">Gatling - Simulation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-21T14:47:46+08:00">
-                2017-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Gatling/" itemprop="url" rel="index">
-                    <span itemprop="name">Gatling</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/21/Gatling-Simulation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/21/Gatling-Simulation/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A simulation is a description of the load test. It describes how, possibly several, user populations will run: which scenario they will execute and how new virtual users will be injected.</p>
-<p>A Simulation is a real Scala class containing 4 different parts:</p>
-<ul>
-<li>The HTTP protocol configuration</li>
-<li>The headers definition</li>
-<li>The scenario definition</li>
-<li>The simulation definition</li>
-</ul>
-<p>Can see the demo there:  <a href="/2017/05/09/Gatling-install-start/" title="Recorder">Recoder Demo</a></p>
-<h3 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h3><p>Gatling provides two hooks:</p>
-<ul>
-<li>before<br>for executing some code before the simulation actually runs</li>
-<li>after<br>for executing some code after the simulation actually runs</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1956,7 +1979,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">339</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1978,7 +2001,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
