@@ -305,6 +305,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Execute-Commands‘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/04/Salt-Execute-Commands‘/" itemprop="url">Salt - Execute Commands</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-04T16:55:30+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/04/Salt-Execute-Commands‘/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/04/Salt-Execute-Commands‘/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SaltStak用下面的方式来远程执行命令（run shell commands, update packages, and distribute files to all managed systems simultaneously. ）：<br><img src="/images/salt/command.jpg" alt=""></p>
+<ul>
+<li><p>cmd 模块是常用的执行远程命令模块，具有强大的功能</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@Automation ~]</span># salt <span class="number">192.168.244.130</span> cmd.run 'ls  /etc/salt'</span><br><span class="line"><span class="number">192.168.244.130</span>:</span><br><span class="line">    minion</span><br><span class="line">    minion.d</span><br><span class="line">    pki</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sys.doc: 类似linux的man命令，可以显示minion支持的模块的详细操作说明</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># salt 192.168.244.130 sys.doc pkg.version</span></span><br><span class="line">'pkg.<span class="property">version</span>:'</span><br><span class="line"></span><br><span class="line">    Returns a <span class="type">string</span> representing <span class="keyword">the</span> package <span class="property">version</span> <span class="keyword">or</span> an empty <span class="type">string</span> <span class="keyword">if</span> <span class="keyword">not</span></span><br><span class="line">    installed. If more than one package <span class="property">name</span> <span class="keyword">is</span> specified, a dict <span class="keyword">of</span></span><br><span class="line">    <span class="property">name</span>/<span class="property">version</span> pairs <span class="keyword">is</span> returned.</span><br><span class="line"></span><br><span class="line">    CLI Example:</span><br><span class="line"></span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package <span class="property">name</span>&gt;</span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package1&gt; &lt;package2&gt; &lt;package3&gt; ...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装package</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># salt <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span> pkg.install cowsay</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    cowsay:</span><br><span class="line">        ----------</span><br><span class="line">        <span class="keyword">new</span>:</span><br><span class="line">            <span class="number">3.03</span>-<span class="number">8.</span>el6</span><br><span class="line">        old:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>只是简单介绍一下命令执行，saltstack有非常多的模块来进行服务器管理，有需要再深入。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Targeting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1811,163 +1977,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/15/小强升职记-时间管理故事书/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/15/小强升职记-时间管理故事书/" itemprop="url">小强升职记 - 时间管理故事书</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T12:22:53+08:00">
-                2018-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/15/小强升职记-时间管理故事书/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/15/小强升职记-时间管理故事书/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>双十一打包买的书，以为是职场的书，没啥可看的，结果发现是写时间管理的书，非常值的读。</p>
-<p>一直都会有思考，职业价值观是什么？通俗的讲可能应当是活着是为了啥？每天忙来忙去的工作到底是为了什么？为什么每天弄的都这么忙？从这本书里感受到了共鸣，找到了一些答案，很有启发。</p>
-<p><em>新窗口打开查看大图</em><br><img src="/images/reading/time.jpg" alt=""></p>
-<p>衣柜整理法流程图：<br><img src="/images/reading/yigui.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2022,7 +2031,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">343</span>
+                  <span class="site-state-item-count">344</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2044,7 +2053,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

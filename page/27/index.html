@@ -305,6 +305,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/13/vbs把数组导到Excel中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/10/13/vbs把数组导到Excel中/" itemprop="url">vbs把数组导到Excel中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-13T16:06:32+08:00">
+                2015-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/10/13/vbs把数组导到Excel中/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/10/13/vbs把数组导到Excel中/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近做框架的时候，遇到一个问题，要把Array中的数据导出到Excel中去。</p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dim <span class="function"><span class="title">arr</span><span class="params">(<span class="number">10</span>,<span class="number">5</span>)</span></span>  </span><br><span class="line"><span class="keyword">for</span> i=<span class="number">0</span> to <span class="number">10</span>  </span><br><span class="line">	<span class="keyword">for</span> j = <span class="number">0</span> to <span class="number">5</span> </span><br><span class="line">	<span class="function"><span class="title">arr</span><span class="params">(i,j)</span></span>=i*j  </span><br><span class="line">	next  </span><br><span class="line">next  </span><br><span class="line"></span><br><span class="line">set excel = <span class="function"><span class="title">CreateObject</span><span class="params">(<span class="string">"Excel.Application"</span>)</span></span>  </span><br><span class="line">excel<span class="class">.Visible</span> = true   </span><br><span class="line">set oWB = excel<span class="class">.Workbooks</span><span class="class">.Add</span>  </span><br><span class="line">set oSheet = oWB<span class="class">.ActiveSheet</span>  </span><br><span class="line">set xlsheet = oWB.<span class="function"><span class="title">Worksheets</span><span class="params">(<span class="number">1</span>)</span></span>  </span><br><span class="line"><span class="keyword">for</span> i=oWB<span class="class">.Worksheets</span><span class="class">.count</span> to <span class="number">2</span> step -<span class="number">1</span>  </span><br><span class="line">	oWB.<span class="function"><span class="title">Worksheets</span><span class="params">(i)</span></span>.<span class="function"><span class="title">Delete</span><span class="params">()</span></span>  </span><br><span class="line">next  </span><br><span class="line">oSheet.<span class="function"><span class="title">Range</span><span class="params">(<span class="string">"a1"</span>)</span></span>.<span class="function"><span class="title">resize</span><span class="params">(<span class="number">10</span>,<span class="number">5</span>)</span></span>=arr  </span><br><span class="line">set excel=nothing</span><br></pre></td></tr></table></figure>
+<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p><img src="/images/VBS/Array_To_Excel.jpg" alt="Execute Result"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/12/Selenium-Webdriver-Object-Repository-and-Object-Recognition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1702,160 +1858,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/24/使用Java操作MongoDB-Update/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/12/24/使用Java操作MongoDB-Update/" itemprop="url">使用Java操作MongoDB - Update</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-24T13:01:15+08:00">
-                2014-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
-                    <span itemprop="name">MongoDB</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/12/24/使用Java操作MongoDB-Update/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/24/使用Java操作MongoDB-Update/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Update</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Mongo mg = new Mongo(<span class="string">"localhost"</span>, 27017);</span><br><span class="line"><span class="comment">// get db</span></span><br><span class="line"><span class="keyword">db</span> = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"><span class="comment">// get collection</span></span><br><span class="line">dc = <span class="keyword">db</span>.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Update</span></span><br><span class="line">BasicDBObject <span class="keyword">query</span> = new BasicDBObject();</span><br><span class="line"><span class="keyword">query</span>.put(<span class="string">"name"</span>, <span class="string">"hulu22"</span>);</span><br><span class="line"><span class="keyword">query</span>.put(<span class="string">"title"</span>, <span class="string">"PO"</span>);</span><br><span class="line">BasicDBObject newDoc = new BasicDBObject();</span><br><span class="line">newDoc.put(<span class="string">"$set"</span>, new BasicDBObject(<span class="string">"title"</span>, <span class="string">"PM"</span>).<span class="keyword">append</span>(<span class="string">"name"</span>, <span class="string">"hulu22"</span>));<span class="comment">// $unset: Removes the specified field from a document.</span></span><br><span class="line"></span><br><span class="line">dc.<span class="keyword">update</span>(<span class="keyword">query</span>, newDoc);</span><br><span class="line"></span><br><span class="line">dc.<span class="keyword">update</span>(<span class="keyword">query</span>, newDoc, false, false);</span><br><span class="line"></span><br><span class="line">dc.updateMulti(<span class="keyword">query</span>, newDoc);</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1910,7 +1912,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">343</span>
+                  <span class="site-state-item-count">344</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1932,7 +1934,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

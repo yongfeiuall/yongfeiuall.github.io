@@ -305,6 +305,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/09/Docker-Repository/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/09/Docker-Repository/" itemprop="url">Docker - Repository</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T14:57:04+08:00">
+                2017-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/09/Docker-Repository/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/09/Docker-Repository/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。</p>
+<h1 id="公有仓库"><a href="#公有仓库" class="headerlink" title="公有仓库"></a>公有仓库</h1><p>Docker官方的一个公共仓库<a href="https://hub.docker.com/" target="_blank" rel="external">Docker Hub</a></p>
+<p>可以注册登录，去进行仓库的管理。也可以通过命令行的交互方式进行登录管理。</p>
+<h1 id="私有仓库"><a href="#私有仓库" class="headerlink" title="私有仓库"></a>私有仓库</h1><p>Dockers不仅提供了一个中央仓库，同时也允许我们使用registry搭建本地私有仓库。<br>‘docker-registry’是官方提供的工具，可以用于构建私有的镜像仓库。</p>
+<h2 id="安装运行docker-registry"><a href="#安装运行docker-registry" class="headerlink" title="安装运行docker-registry"></a>安装运行docker-registry</h2><ol>
+<li><p>下载resistry镜像</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="annotation">@default</span>:~$ docker image pull registry</span><br><span class="line">Using <span class="keyword">default</span> <span class="string">tag:</span> latest</span><br><span class="line"><span class="string">latest:</span> Pulling from library/registry</span><br><span class="line"><span class="string">ab7e51e37a18:</span> Pull complete</span><br><span class="line"><span class="string">c8ad8919ce25:</span> Pull complete</span><br><span class="line"><span class="number">5808405</span><span class="string">bc62f:</span> Pull complete</span><br><span class="line"><span class="string">f6000d7b276c:</span> Pull complete</span><br><span class="line"><span class="string">f792fdcd8ff6:</span> Pull complete</span><br><span class="line"><span class="string">Digest:</span> <span class="string">sha256:</span><span class="number">9</span>d295999d330eba2552f9c78c9f59828af5c9a9c15a3fbd1351df03eaad04c6a</span><br><span class="line"><span class="string">Status:</span> Downloaded newer image <span class="keyword">for</span> <span class="string">registry:</span>latest</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动容器</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker container run -d -p <span class="number">5000</span>:<span class="number">5000</span> registry</span><br><span class="line"><span class="number">36</span>eddf7acb88e4cc3972c7070ef00d444930ff099dce6e150e504849a429e595</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker container ls -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS                    NAMES</span><br><span class="line"><span class="number">36</span>eddf7acb88        registry            <span class="string">"/entrypoint.sh /e..."</span>   <span class="number">15</span> seconds ago      Up <span class="number">14</span> seconds                 <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">5000</span>-&gt;<span class="number">5000</span>/tcp   nifty_jackson</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>默认情况下，会将仓库存放于容器内的/tmp/registry目录下，这样如果容器被删除，则存放于容器中的镜像也会丢失，所以我们一般情况下会指定本地一个目录挂载到容器内的/tmp/registry下，如下：<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container run -d -p <span class="number">5000</span>:<span class="number">5000</span> -v /opt/data/<span class="keyword">registry</span>:/tmp/<span class="keyword">registry</span> <span class="keyword">registry</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="私有仓库管理"><a href="#私有仓库管理" class="headerlink" title="私有仓库管理"></a>私有仓库管理</h2><ol>
+<li><p>上传<br>a. 这里用’hello-world’做例子（已经下载了在本地）。<br>b. 接着修改一下此镜像的Tag(格式：<code>docker tag IMAGE[:TAG] [REGISTRY_HOST[:REGISTRY_PORT]/]REPOSITORY[:TAG]</code>):<br><em>在一个Server上做的测试，所以Host是本机</em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image tag hello-world <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world:v5</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls -a</span><br><span class="line">REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world   v5                  f2a91732366c        <span class="number">2</span> weeks ago         <span class="number">1.85</span>kB</span><br><span class="line">hello-world                  latest              f2a91732366c        <span class="number">2</span> weeks ago         <span class="number">1.85</span>kB</span><br></pre></td></tr></table></figure>
+<p>c. 接下来把打了tag的镜像上传到私有仓库。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image push <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world</span><br><span class="line">The push refers to a repository [<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world]</span><br><span class="line">f999ae22f308: Pushed</span><br><span class="line">v5: digest: sha256:<span class="number">8072</span>a54ebb3bc136150e2f2860f00a7bf45f13eeb917cca2430fcd0054c8e51b size: <span class="number">524</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>搜索<br>在Private Registry2中查看或检索Repository或images，将不能用docker search，会报下边的错误</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker search <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world</span><br><span class="line">Error response from daemon: Unexpected status code <span class="number">404</span></span><br></pre></td></tr></table></figure>
+<p>但通过v2版本的API，我们可以实现相同目的，必须按照<code>IP:port/v2/_catalog</code>格式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ curl <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/v2/_catalog</span><br><span class="line">&#123;<span class="string">"repositories"</span>:[<span class="string">"hello-world"</span>]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载<br>a. 先删除已有镜像</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image rm <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world:v5</span><br><span class="line">Untagged: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world:v5</span><br><span class="line">Untagged: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world@sha256:<span class="number">8072</span>a54ebb3bc136150e2f2860f00a7bf45f13eeb917cca2430fcd0054c8e51b</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls -a</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">hello-world         latest              f2a91732366c        <span class="number">2</span> weeks ago         <span class="number">1.85</span>kB</span><br></pre></td></tr></table></figure>
+<p>b. 再pull验证</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ocker@<span class="keyword">default</span>:~$ docker image pull <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world:v5</span><br><span class="line">v5: Pulling from hello-world</span><br><span class="line">Digest: sha256:<span class="number">8072</span>a54ebb3bc136150e2f2860f00a7bf45f13eeb917cca2430fcd0054c8e51b</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world:v5</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls -a</span><br><span class="line">REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5000</span>/hello-world   v5                  f2a91732366c        <span class="number">2</span> weeks ago         <span class="number">1.85</span>kB</span><br><span class="line">hello-world                  latest              f2a91732366c        <span class="number">2</span> weeks ago         <span class="number">1.85</span>kB</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/07/Python-read-remote-file-from-linux-server/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1768,163 +1950,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/10/17/Python-run-command-on-romote-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/17/Python-run-command-on-romote-linux/" itemprop="url">Python run command on romote linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-17T14:32:02+08:00">
-                2017-10-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/17/Python-run-command-on-romote-linux/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/10/17/Python-run-command-on-romote-linux/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>自动化需要，要远程执行Linux命令，使用了<a href="http://www.paramiko.org/" target="_blank" rel="external">Paramiko</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>非常简单<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> paramiko</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ssh_exec</span><span class="params">(hostname, port, username, password, execmd)</span>:</span></span><br><span class="line"></span><br><span class="line">    s = paramiko.SSHClient()</span><br><span class="line">    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"></span><br><span class="line">    s.connect(hostname=hostname, port=port, username=username, password=password)</span><br><span class="line">    stdin, stdout, stderr = s.exec_command(execmd)</span><br><span class="line">    stdin.write(<span class="string">"Y"</span>)  <span class="comment"># Generally speaking, the first connection, need a simple interaction.</span></span><br><span class="line"></span><br><span class="line">    s.close()</span><br></pre></td></tr></table></figure>
-<p>调用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    hostname = <span class="string">'xxx.com'</span></span><br><span class="line">    port = <span class="number">22</span></span><br><span class="line">    username = <span class="string">'xxx'</span></span><br><span class="line">    password = <span class="string">'xxx'</span></span><br><span class="line">    execmd = <span class="string">"cd /home/qa/"</span> <span class="comment"># 执行多条命令用分号分隔</span></span><br><span class="line"></span><br><span class="line">    ssh_<span class="built_in">exec</span>(hostname, port, username, password, execmd)</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1979,7 +2004,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">343</span>
+                  <span class="site-state-item-count">344</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2001,7 +2026,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

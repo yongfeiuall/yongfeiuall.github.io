@@ -4,6 +4,34 @@
   
     
     <entry>
+      <title><![CDATA[pytest + allure + jenkins集成]]></title>
+      <url>http://izheyi.com/2020/09/15/pytest-allure-jenkins%E9%9B%86%E6%88%90/</url>
+      <content type="html"><![CDATA[<p>Pytest的报告有点简单，把报告换成了allure，可以一并集成到Jenkins上去。</p>
+<ol>
+<li><p>安装插件<a href="https://plugins.jenkins.io/allure-jenkins-plugin" target="_blank" rel="external">Allure Jenkins Plugin</a></p>
+</li>
+<li><p>Allure Commandline 配置</p>
+<p>“全局工具配置”页面 <path里不包含bin目录></path里不包含bin目录></p>
+<p><img src="/images/allure/config.jpg" alt=""></p>
+</li>
+<li><p>创建Job</p>
+<ol>
+<li><p>build</p>
+<p><img src="/images/allure/build.jpg" alt=""></p>
+</li>
+<li><p>post build</p>
+<p><img src="/images/allure/post.jpg" alt=""></p>
+</li>
+</ol>
+</li>
+<li><p>支行Job</p>
+<p><img src="/images/allure/result.jpg" alt=""></p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Jacoco功能测试覆盖率]]></title>
       <url>http://izheyi.com/2020/09/02/Jacoco%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87/</url>
       <content type="html"><![CDATA[<p>对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。</p>
@@ -18,7 +46,7 @@
 <li><p>启动后，生成报告</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar dump --address localhost --port <span class="number">11111</span> --destfile ./jacoco-demo.<span class="keyword">exec</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar report ./jacoco-demo.<span class="keyword">exec</span> --classfiles ./target/classes --html ./report</span><br></pre></td></tr></table></figure>
-<p>没有做任何澧，覆盖率极低。</p>
+<p>没有做任何测试，覆盖率极低。</p>
 </li>
 <li><p>做一些测试之后，生成报告</p>
 <p>反映出实时的测试覆盖率。</p>
@@ -454,21 +482,53 @@
     <entry>
       <title><![CDATA[2019 - Flag]]></title>
       <url>http://izheyi.com/2019/01/06/2019-Flag/</url>
-      <content type="html"><![CDATA[<blockquote>
+      <content type="html"><![CDATA[<h1 id="lt-lt-lt-lt-lt-lt-lt-HEAD"><a href="#lt-lt-lt-lt-lt-lt-lt-HEAD" class="headerlink" title="&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</h1><blockquote>
 <p>4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。</p>
-</blockquote>
-<p>2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>cf95e98… switch pc<br>2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：</p>
 <ol>
 <li>读书<br>基于去年的不足，今年细化，每月一本书，读书笔记到Blog。</li>
 <li>PMP<br>这个东西几年前有看过，一直没付诸行动，挤时间，逼自己一把，今年拿下证书。</li>
 <li>工作<br>a. 保持技术的更新，有自己的想法和应对方法。<br>b. 更全面的看待，处理事情。</li>
 <li>英语<br>a. 再看一下英语基础，试着找一下快速提升的方法。<br>b. 搞定Friends前三季。</li>
-<li>生活<br>a. 控制脾气，控制脾气，控制脾气。<br>b. 放下手机，活的仪式感一些。<br>c. 培养一个兴趣。</li>
-<li>其他<br>a. Blog，尽量更新。<br>b. 每周运动三次，发圈Track。</li>
+<li>生活<br>a. 控制脾气，控制脾气，控制脾气。<br>b. 放下手机，活的仪式感一些。<br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>c. 培养一个兴趣，报个钢琴班。</li>
+<li>Blog<br>隔周一更。</li>
 </ol>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <h1 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h1><ol>
 <li>拿到PMP证书，看音乐会。</li>
-<li>国内游。</li>
+<li><h1 id="国内游。"><a href="#国内游。" class="headerlink" title="国内游。"></a>国内游。</h1>c. 培养一个兴趣。</li>
+<li>其他<br>a. Blog，尽量更新。<br>b. 每周运动三次，发圈Track。</li>
+</ol>
+<h1 id="奖励-1"><a href="#奖励-1" class="headerlink" title="奖励"></a>奖励</h1><ol>
+<li>拿到PMP证书，看音乐会。</li>
+<li>国内游。<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>cf95e98… switch pc</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
 </ol>
 ]]></content>
     </entry>
@@ -6868,9 +6928,12 @@ mysql&gt; flush privileges;
 <h1 id="四岁"><a href="#四岁" class="headerlink" title="四岁"></a>四岁</h1><p><img src="/images/izheyi/life/4_0.jpg" alt=""><br><img src="/images/izheyi/life/4_1.jpg" alt="和姐姐一块"><br><img src="/images/izheyi/life/4_2.jpg" alt="Home"><br><img src="/images/izheyi/life/4_3.jpg" alt="香山"><br><img src="/images/izheyi/life/4_4.jpg" alt="天安门广场"></p>
 <h1 id="五岁"><a href="#五岁" class="headerlink" title="五岁"></a>五岁</h1><p><img src="/images/izheyi/life/5_0.jpg" alt="Happy Birthday"><br><img src="/images/izheyi/life/5_1.jpg" alt=""><br><img src="/images/izheyi/life/5_2.jpg" alt=""><br><img src="/images/izheyi/life/5_3.jpg" alt=""></p>
 <h1 id="六岁"><a href="#六岁" class="headerlink" title="六岁"></a>六岁</h1><p><img src="/images/izheyi/life/6_1.jpg" alt=""><br><img src="/images/izheyi/life/6_2.jpg" alt=""><br><img src="/images/izheyi/life/6_3.jpg" alt=""><br><img src="/images/izheyi/life/6_4.jpg" alt=""></p>
-<h1 id="七岁"><a href="#七岁" class="headerlink" title="七岁"></a>七岁</h1><p><img src="/images/izheyi/life/7_1.jpg" alt=""><br><img src="/images/izheyi/life/7_2.jpg" alt=""><br><img src="/images/izheyi/life/7_3.jpg" alt=""><br><img src="/images/izheyi/life/7_4.jpg" alt=""><br><img src="/images/izheyi/life/7_5.JPG" alt=""><br><img src="/images/izheyi/life/7_6.JPG" alt=""></p>
+<h1 id="七岁"><a href="#七岁" class="headerlink" title="七岁"></a>七岁</h1><p><img src="/images/izheyi/life/7_1.jpg" alt=""><br><img src="/images/izheyi/life/7_2.jpg" alt=""><br><img src="/images/izheyi/life/7_3.jpg" alt=""></p>
+<p><img src="/images/izheyi/life/7_4.jpg" alt=""><br><img src="/images/izheyi/life/7_5.JPG" alt=""><br><img src="/images/izheyi/life/7_6.JPG" alt=""></p>
 <h1 id="八岁"><a href="#八岁" class="headerlink" title="八岁"></a>八岁</h1><p><img src="/images/izheyi/life/8_1.JPG" alt=""><br><img src="/images/izheyi/life/8_2.JPG" alt=""><br><img src="/images/izheyi/life/8_3.JPG" alt=""><br><img src="/images/izheyi/life/8_4.JPG" alt=""><br><img src="/images/izheyi/life/8_5.JPG" alt=""><br><img src="/images/izheyi/life/8_6.JPG" alt=""></p>
 <h1 id="九岁"><a href="#九岁" class="headerlink" title="九岁"></a>九岁</h1><p><img src="/images/izheyi/life/9_1.JPG" alt=""><br><img src="/images/izheyi/life/9_2.JPG" alt=""></p>
+<p><img src="/images/izheyi/life/9_3.JPG" alt=""></p>
+<p><img src="/images/izheyi/life/9_4.JPG" alt=""></p>
 ]]></content>
     </entry>
     
