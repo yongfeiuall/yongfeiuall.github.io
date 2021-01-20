@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Java,MongoDB,自动化测试," />
+  <meta name="keywords" content="MongoDB,自动化测试," />
 
 
 
@@ -84,21 +84,24 @@
 
 
 <meta name="description" content="首先，下载mongoDB对Java支持的驱动包     驱动包下载
-    
-下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHos">
+
+下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.
+1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHostEx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Java操作MongoDB">
 <meta property="og:url" content="http://izheyi.com/2014/12/20/使用Java操作MongoDB/index.html">
 <meta property="og:site_name" content="YONGFEIUALL">
 <meta property="og:description" content="首先，下载mongoDB对Java支持的驱动包     驱动包下载
-    
-下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHos">
-<meta property="og:updated_time" content="2016-05-20T05:48:03.444Z">
+
+下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.
+1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHostEx">
+<meta property="og:updated_time" content="2021-01-17T06:27:41.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Java操作MongoDB">
 <meta name="twitter:description" content="首先，下载mongoDB对Java支持的驱动包     驱动包下载
-    
-下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHos">
+
+下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.
+1234567891011121314151617public class MongoDb &amp;#123;    public static void main(String[] args) throws UnknownHostEx">
 
 
 
@@ -418,9 +421,10 @@
 
       
         <ol>
-<li>首先，下载mongoDB对Java支持的驱动包 <br>    <a href="https://github.com/mongodb/mongo-java-driver/downloads" target="_blank" rel="external">驱动包下载</a>
-    </li>
-<li>下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> MongoDb &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> UnknownHostException &#123;</span><br><span class="line">        MongoClient mg = <span class="keyword">new</span> MongoClient();</span><br><span class="line">        DB db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"></span><br><span class="line">        DBCollection users = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line">        DBCursor cur = users.<span class="keyword">find</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (cur.hasNext()) &#123;</span><br><span class="line">            System.out.<span class="keyword">println</span>(cur.<span class="keyword">next</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.<span class="keyword">count</span>());</span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.getCursorId());</span><br><span class="line">        System.out.<span class="keyword">println</span>(JSON.serialize(cur));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>首先，下载mongoDB对Java支持的驱动包 <br>    <a href="https://github.com/mongodb/mongo-java-driver/downloads" target="_blank" rel="external">驱动包下载</a></p>
+</li>
+<li><p>下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> MongoDb &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> UnknownHostException &#123;</span><br><span class="line">        MongoClient mg = <span class="keyword">new</span> MongoClient();</span><br><span class="line">        DB db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"></span><br><span class="line">        DBCollection users = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line">        DBCursor cur = users.<span class="keyword">find</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (cur.hasNext()) &#123;</span><br><span class="line">            System.out.<span class="keyword">println</span>(cur.<span class="keyword">next</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.<span class="keyword">count</span>());</span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.getCursorId());</span><br><span class="line">        System.out.<span class="keyword">println</span>(JSON.serialize(cur));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 
@@ -494,8 +498,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
           
@@ -716,7 +718,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
