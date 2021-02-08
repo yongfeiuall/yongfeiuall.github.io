@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2020-12-30T06:49:00.389Z</updated>
+  <updated>2021-02-08T03:38:04.223Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -14,6 +14,128 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pytest - 获取用例执行结果(pytest_runtest_makereport)</title>
+    <link href="http://izheyi.com/2020/11/08/Pytest-%E8%8E%B7%E5%8F%96%E7%94%A8%E4%BE%8B%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C-pytest-runtest-makereport/"/>
+    <id>http://izheyi.com/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/</id>
+    <published>2020-11-08T03:26:54.000Z</published>
+    <updated>2021-02-08T03:38:04.223Z</updated>
+    
+    <content type="html">&lt;p&gt;可以通过pytest hook 来实现用例执行结果的统计。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;初步实现&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;CASES = &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;error&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@pytest.hookimpl(hookwrapper=True, tryfirst=True)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;pytest_runtest_makereport&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(item, call)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    result = &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    report = result.get_result()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(report)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(report.nodeid)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; report.when == &lt;span class=&quot;string&quot;&gt;&#39;setup&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; report.outcome == &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        CASES[&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;] += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        CASES[&lt;span class=&quot;string&quot;&gt;&#39;error&#39;&lt;/span&gt;] += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; report.when == &lt;span class=&quot;string&quot;&gt;&#39;call&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        CASES[&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;] += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; report.outcome == &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            CASES[&lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;] += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; report.outcome == &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            CASES[&lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;] += &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(CASES)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这样有一个问题，当有失败重跑情况时，会把每次重跑都统计一次运行结果，结果会有偏差，不应该包含重跑的结果，因为是同一个Case。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;换个方式&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;CASES = &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;RUN_RESULT = &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@pytest.hookimpl(hookwrapper=True, tryfirst=True)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;pytest_runtest_makereport&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(item, call)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    result = &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    report = result.get_result()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(report)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (report.when == &lt;span class=&quot;string&quot;&gt;&#39;setup&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; report.when == &lt;span class=&quot;string&quot;&gt;&#39;teardown&#39;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;and&lt;/span&gt; report.outcome == &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        RUN_RESULT[report.nodeid] = &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; report.when == &lt;span class=&quot;string&quot;&gt;&#39;call&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        RUN_RESULT[report.nodeid] = report.outcome&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(RUN_RESULT)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    CASES[&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;] = len(RUN_RESULT)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    CASES[&lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;] = len(&amp;#123;k: v &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; k, v &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; RUN_RESULT.items() &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; v == &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    CASES[&lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;] = len(&amp;#123;k: v &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; k, v &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; RUN_RESULT.items() &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; v == &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(CASES)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结果&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;test_demo.py::test_demo01[zhangsan]&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;test_demo.py::test_demo01[lisi]&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;test_demo.py::test_demo01[wangwu]&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;test_demo.py::test_demo02&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;passed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;failed&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;可以通过pytest hook 来实现用例执行结果的统计。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;初步实现&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;l
+    
+    </summary>
+    
+      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
+    
+    
+      <category term="Pytest" scheme="http://izheyi.com/tags/Pytest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>allure 定制详细报告</title>
+    <link href="http://izheyi.com/2020/10/20/Allure-%E5%AE%9A%E5%88%B6%E8%AF%A6%E7%BB%86%E6%8A%A5%E5%91%8A/"/>
+    <id>http://izheyi.com/2020/10/20/Allure-定制详细报告/</id>
+    <published>2020-10-20T03:21:19.000Z</published>
+    <updated>2021-02-02T03:31:20.630Z</updated>
+    
+    <content type="html">&lt;p&gt;默认的allure报告不能详细的显示出来脚本执行的步骤，能做到跟Log里一样的每一步操作。&lt;/p&gt;
+&lt;p&gt;用&lt;code&gt;@allure.step()&lt;/code&gt;装饰器来实现。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@allure.step(&quot;Input text &amp;#123;text&amp;#125; in [&amp;#123;element&amp;#125;]&quot;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;input_text&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, element, text)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;&quot;&quot;**Description**:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            Fill text to the page_element located by locator&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    :param element: The locator to locate the page_element.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    :param text: value to set to the page_element&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    :return:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ele = self.find_element(element)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ele.clear()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ele.send_keys(text)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    logger.info(f&lt;span class=&quot;string&quot;&gt;&#39;Input [&amp;#123;text&amp;#125;] in &amp;#123;element&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;运行结果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/allure/step.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;默认的allure报告不能详细的显示出来脚本执行的步骤，能做到跟Log里一样的每一步操作。&lt;/p&gt;
+&lt;p&gt;用&lt;code&gt;@allure.step()&lt;/code&gt;装饰器来实现。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;
+    
+    </summary>
+    
+      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
+    
+    
+      <category term="Allure" scheme="http://izheyi.com/tags/Allure/"/>
+    
+      <category term="Pytest" scheme="http://izheyi.com/tags/Pytest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>钉钉自定义机器人</title>
+    <link href="http://izheyi.com/2020/10/09/%E9%92%89%E9%92%89%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    <id>http://izheyi.com/2020/10/09/钉钉自定义机器人/</id>
+    <published>2020-10-09T08:50:45.000Z</published>
+    <updated>2021-02-01T09:21:44.121Z</updated>
+    
+    <content type="html">&lt;p&gt;有想法是把自动化执行的结果实时发送到钉钉群里，及时提醒。&lt;/p&gt;
+&lt;p&gt;简单看了一下，可以通过Webhook自定义机器人来实现：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;为钉钉群创建自定义机器人 ，会产生webhook。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;https://github.com/zhuifengshen/DingtalkChatbot&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DingtalkChatbot&lt;/a&gt;来实现&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发送机器人信息&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; dingtalkchatbot.chatbot &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; DingtalkChatbot&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;webhook = &lt;span class=&quot;string&quot;&gt;&#39;https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxx&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xiaoding = DingtalkChatbot(webhook)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# xiaoding.send_text(msg=&#39;我就是小丁，测试我是小机器人！&#39;, is_at_all=True)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# xiaoding.send_text(msg=&#39;我就是小丁，测试只@一人&#39;, at_mobiles=[150xxxxxxxx])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# xiaoding.send_link(title=&#39;测试小丁&#39;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#                    text=&#39;我是小机器人&#39;, message_url=&#39;http://izheyi.com/&#39;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#                    pic_url=&#39;http://izheyi.com/uploads/avatar.jpg&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xiaoding.send_markdown(title=&lt;span class=&quot;string&quot;&gt;&#39;我就是测试小丁！&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                       text=&lt;span class=&quot;string&quot;&gt;&#39;哈哈，测试我是小机器人发送Markdown\n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;![izheyi](http://izheyi.com/uploads/avatar.jpg)\n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;&amp;gt;这里是引用显示&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                       is_at_all=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;p&gt;我就是小丁，测试我是小机器人！&lt;a href=&quot;app://desktop.dingtalk.com/web_content/chatbox.html?isFourColumnMode=false#&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@所有人&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;​             收到      回复&lt;/p&gt;
+&lt;p&gt;基本上实现了Python通过小机器人发送信息，下面就可以把测试的结果发到群里了。&lt;/p&gt;
+&lt;p&gt;比如：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;xiaoding.send_markdown(title=&lt;span class=&quot;string&quot;&gt;&#39;我就是测试小丁！&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                       text=&lt;span class=&quot;string&quot;&gt;&#39;Automation Test Result: \n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;&amp;gt;Total:  25\n\n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;&amp;gt; &amp;lt;font size=4 color=#D2691E&amp;gt; Passed:  20 &amp;lt;/font&amp;gt;\n\n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;&amp;gt; Failed:  4\n\n&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                            &lt;span class=&quot;string&quot;&gt;&#39;&amp;gt; Error:  1\n\n&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                       is_at_all=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;   Automaton Test Result：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Total:  25&lt;/p&gt;
+&lt;p&gt;Passed: 20&lt;/p&gt;
+&lt;p&gt;Failed: 4&lt;/p&gt;
+&lt;p&gt;Error: 1&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有想法是把自动化执行的结果实时发送到钉钉群里，及时提醒。&lt;/p&gt;
+&lt;p&gt;简单看了一下，可以通过Webhook自定义机器人来实现：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;为钉钉群创建自定义机器人 ，会产生webhook。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;ht
+    
+    </summary>
+    
+      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
+    
+    
+      <category term="DingDing" scheme="http://izheyi.com/tags/DingDing/"/>
+    
+      <category term="Python" scheme="http://izheyi.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>pytest + allure + jenkins集成</title>
@@ -759,116 +881,6 @@
     
     
       <category term="Python" scheme="http://izheyi.com/tags/Python/"/>
-    
-      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分布式持续压测平台</title>
-    <link href="http://izheyi.com/2019/10/19/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8C%81%E7%BB%AD%E5%8E%8B%E6%B5%8B%E5%B9%B3%E5%8F%B0/"/>
-    <id>http://izheyi.com/2019/10/19/分布式持续压测平台/</id>
-    <published>2019-10-19T05:25:28.000Z</published>
-    <updated>2020-12-15T05:56:56.705Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;压测平台介绍&quot;&gt;&lt;a href=&quot;#压测平台介绍&quot; class=&quot;headerlink&quot; title=&quot;压测平台介绍&quot;&gt;&lt;/a&gt;压测平台介绍&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;QA设计场景和脚本，Github管理&lt;/li&gt;
-&lt;li&gt;QA创建Jenkins测试job&lt;/li&gt;
-&lt;li&gt;Dev利用Jenkins持续执行测试，直到达到预期性能&lt;/li&gt;
-&lt;li&gt;QA对主要接口进行验收测试，验证符合上线性能预期&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;压测平台设计&quot;&gt;&lt;a href=&quot;#压测平台设计&quot; class=&quot;headerlink&quot; title=&quot;压测平台设计&quot;&gt;&lt;/a&gt;压测平台设计&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;脚本编写和执行 – Jmeter&lt;/li&gt;
-&lt;li&gt;脚本管理 – Github&lt;/li&gt;
-&lt;li&gt;驱动执行 – Taurus&lt;/li&gt;
-&lt;li&gt;测试调度 – Jenkins&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&quot;/images/performancetesting/platform.jpg&quot; alt=&quot;Performace Platform&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;压测平台介绍&quot;&gt;&lt;a href=&quot;#压测平台介绍&quot; class=&quot;headerlink&quot; title=&quot;压测平台介绍&quot;&gt;&lt;/a&gt;压测平台介绍&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;QA设计场景和脚本，Github管理&lt;/li&gt;
-&lt;li&gt;QA创建Jenkins测试job&lt;/li
-    
-    </summary>
-    
-      <category term="Performance Testing" scheme="http://izheyi.com/categories/Performance-Testing/"/>
-    
-    
-      <category term="Jmeter" scheme="http://izheyi.com/tags/Jmeter/"/>
-    
-      <category term="Performance Testing" scheme="http://izheyi.com/tags/Performance-Testing/"/>
-    
-      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>丁丁画画（三年级上学期）</title>
-    <link href="http://izheyi.com/2019/09/08/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E4%B8%89%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%AD%A6%E6%9C%9F%EF%BC%89/"/>
-    <id>http://izheyi.com/2019/09/08/丁丁画画（三年级上学期）/</id>
-    <published>2019-09-08T02:03:01.000Z</published>
-    <updated>2020-12-15T05:56:56.700Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_3.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_4.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_5.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_1.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_2.JPG&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/izheyi/pic/3/1_3.
-    
-    </summary>
-    
-      <category term="丁丁" scheme="http://izheyi.com/categories/%E4%B8%81%E4%B8%81/"/>
-    
-    
-      <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
-    
-      <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网站促销活动前端自动化监控</title>
-    <link href="http://izheyi.com/2019/06/11/%E7%BD%91%E7%AB%99%E4%BF%83%E9%94%80%E6%B4%BB%E5%8A%A8%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9B%91%E6%8E%A7/"/>
-    <id>http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/</id>
-    <published>2019-06-10T22:54:41.000Z</published>
-    <updated>2020-12-15T05:56:56.709Z</updated>
-    
-    <content type="html">&lt;p&gt;商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？&lt;/p&gt;
-&lt;p&gt;对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。&lt;/p&gt;
-&lt;p&gt;活动一般有&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一个主页，上面有图片，标题，价格&lt;/li&gt;
-&lt;li&gt;详情页面&lt;/li&gt;
-&lt;li&gt;下单&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;自动化思路：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;从主页通过Selenium来获得所有的图片和产品详细页链接&lt;/li&gt;
-&lt;li&gt;通过Request来检查产品链接和图片存在与否&lt;/li&gt;
-&lt;li&gt;检查详细页的信息正确&lt;/li&gt;
-&lt;li&gt;利用Cookie实现下单流程的实现&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？&lt;/p&gt;
-&lt;p&gt;对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
-    
-    
-      <category term="Requests" scheme="http://izheyi.com/tags/Requests/"/>
-    
-      <category term="Selenium" scheme="http://izheyi.com/tags/Selenium/"/>
-    
-      <category term="python" scheme="http://izheyi.com/tags/python/"/>
     
       <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
     

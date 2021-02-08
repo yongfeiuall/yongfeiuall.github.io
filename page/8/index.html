@@ -305,6 +305,552 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/12/Java项目实战-SSM整合：思路/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/12/Java项目实战-SSM整合：思路/" itemprop="url">Java项目实战 - SSM整合：思路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T17:15:32+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/12/Java项目实战-SSM整合：思路/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/12/Java项目实战-SSM整合：思路/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SSM框架是spring MVC ，spring和mybatis框架的整合，是标准的MVC模式，将整个系统划分为表现层，controller层，service层，DAO层四层</p>
+<ul>
+<li>spring MVC负责请求的转发和视图管理</li>
+<li>spring实现业务对象管理</li>
+<li>mybatis作为数据对象的持久化引擎, mapper代理开发方式开发Dao</li>
+</ul>
+<p><img src="/images/javaproject/ssm.jpg" alt=""></p>
+<p><strong>DataBase ===&gt; Entity ===&gt; Mapper.xml ===&gt; Mapper.Java ===&gt; Service.java ===&gt; Controller.java ===&gt; Jsp.  </strong></p>
+<h3 id="Dao层"><a href="#Dao层" class="headerlink" title="Dao层"></a>Dao层</h3><p>mybatis整合spring，通过spring管理SqlSessionFactory、mapper代理对象。</p>
+<ul>
+<li>SqlMapConfig.xml - Mybatis核心配置文件</li>
+<li>applicationContext-dao.xml <ul>
+<li>数据库连接池。</li>
+<li>SqlSessionFactory对象。</li>
+<li>配置mapper文件扫描器。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Service层"><a href="#Service层" class="headerlink" title="Service层"></a>Service层</h3><p>所有的service实现类都要放到spring容器中管理。</p>
+<ul>
+<li>applicationContext-service.xml文件中配置包扫描器，扫描带@service注解的类。</li>
+<li>applicationContext-trans.xml文件中配置事务。</li>
+</ul>
+<h3 id="表现层"><a href="#表现层" class="headerlink" title="表现层"></a>表现层</h3><p>表现层就一个springmvc框架，由springmvc来管理controller。</p>
+<ul>
+<li>包扫描器，扫描带@Controller注解的类。</li>
+<li>配置注解驱动。</li>
+<li>配置视图解析器。</li>
+</ul>
+<h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><ul>
+<li>配置Spring容器</li>
+<li>配置前端控制器</li>
+<li>配置Post乱码过滤器</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/08/Java项目实战-MyBatis及逆向工程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/08/Java项目实战-MyBatis及逆向工程/" itemprop="url">Java项目实战 - MyBatis及逆向工程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T14:48:51+08:00">
+                2018-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/08/Java项目实战-MyBatis及逆向工程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/08/Java项目实战-MyBatis及逆向工程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>先创建Mysql DB，并准备数据。<br><img src="/images/javaproject/mysql.jpg" alt=""></p>
+<h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><p><img src="/images/javaproject/mybatis.jpg" alt=""></p>
+<ul>
+<li>SqlMapConfig.xml，此文件作为mybatis的全局配置文件，配置了mybatis的运行环境等信息。mapper.xml文件即sql映射文件，文件中配置了操作数据库的sql语句，此文件需要在SqlMapConfig.xml中加载。</li>
+<li>通过mybatis环境等配置信息构造SqlSessionFactory(即会话工厂)。</li>
+<li>由会话工厂创建sqlSession即会话，操作数据库需要通过sqlSession进行。</li>
+<li>mybatis底层自定义了Executor执行器接口操作数据库，Executor接口有两个实现，一个是基本执行器、一个是缓存执行器。</li>
+<li>MappedStatement也是mybatis一个底层封装对象，它包装了mybatis配置信息及sql映射信息等。mapper.xml文件中一个sql对应一个MappedStatement对象，sql的id即是MappedStatement的id。</li>
+<li>MappedStatement对sql执行输入参数进行定义，包括HashMap、基本类型、pojo，Executor通过MappedStatement在执行sql前将输入的java对象映射至sql中，输入参数映射就是JDBC编程中对preparedStatement设置参数。</li>
+<li>MappedStatement对sql执行输出结果进行定义，包括HashMap、基本类型、pojo，Executor通过MappedStatement在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于JDBC编程中对结果的解析处理过程。</li>
+</ul>
+<h1 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h1><p><img src="/images/javaproject/nixiang.jpg" alt=""></p>
+<p><strong>generatorConfig.xml</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE generatorConfiguration</span><br><span class="line">  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span><br><span class="line">  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">generatorConfiguration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context</span> <span class="attribute">id</span>=<span class="value">"testTables"</span> <span class="attribute">targetRuntime</span>=<span class="value">"MyBatis3"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">commentGenerator</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 是否去除自动生成的注释 true：是 ： false:否 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"suppressAllComments"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">commentGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--数据库连接的信息：驱动类、连接地址、用户名、密码 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">jdbcConnection</span> <span class="attribute">driverClass</span>=<span class="value">"com.mysql.jdbc.Driver"</span></span><br><span class="line">			<span class="attribute">connectionURL</span>=<span class="value">"jdbc:mysql://localhost:3306/zheyi"</span> <span class="attribute">userId</span>=<span class="value">"root"</span></span><br><span class="line">			<span class="attribute">password</span>=<span class="value">""</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">jdbcConnection</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 </span><br><span class="line">			NUMERIC 类型解析为java.math.BigDecimal --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaTypeResolver</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"forceBigDecimals"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaTypeResolver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- targetProject:生成PO类的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaModelGenerator</span> <span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.pojo"</span></span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 从数据库返回的值被清理前后的空格 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"trimStrings"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaModelGenerator</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetProject:mapper映射文件生成的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">sqlMapGenerator</span> <span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.mapper"</span> </span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">sqlMapGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- targetPackage：mapper接口生成的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaClientGenerator</span> <span class="attribute">type</span>=<span class="value">"XMLMAPPER"</span></span><br><span class="line">			<span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.mapper"</span> </span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaClientGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 指定数据库表 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_content"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_content_category"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_cat"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_desc"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_param"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_param_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order_shipping"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_user"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="title">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意：逆向工程多次执行后，它不会把原来的文件覆盖，而是会在原来文件的内容里面再追加。 要再生成，要把已经生成的删除。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/08/Java项目实战-环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/08/Java项目实战-环境搭建/" itemprop="url">Java项目实战 - 环境搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T10:03:25+08:00">
+                2018-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/08/Java项目实战-环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/08/Java项目实战-环境搭建/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>通过一个Java项目实战，对Java开发框架和流程有个更细的认知和学习。</p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ul>
+<li>JDK的安装配置</li>
+<li>Tomcat的安装配置<ul>
+<li>下载解压，运行tomcat目录中的bin/startup.bat，启动tomcat，启动后有浏览器输入<a href="http://localhost:8080/，验证安装。" target="_blank" rel="external">http://localhost:8080/，验证安装。</a></li>
+</ul>
+</li>
+<li>Eclipse的配置<ul>
+<li>默认字符集更改为utf-8</li>
+<li>添加Tomcat运行环境</li>
+<li>添加Tomcat Server</li>
+</ul>
+</li>
+</ul>
+<h1 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h1><p>Github: <a href="https://github.com/yongfeiuall/zheyi-taotao" target="_blank" rel="external">zheyi-taotao</a></p>
+<h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><p>3种打包方式：</p>
+<ul>
+<li>jar<br>jar工程，很显然就是pom工程的子工程，由pom工程来管理。</li>
+<li>war<br>war工程是一个web工程，是可以直接放到tomcat下运行的工程。</li>
+<li>pom<br>pom工程一般都是父工程，管理jar包的版本、maven插件的版本、统一的依赖管理，它是一个聚合工程。其实说白了它只有一个pom.xml文件，一般是作为父工程出现的，只是定义了一些依赖、插件、还有一些版本号等等</li>
+</ul>
+<h2 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h2><p><img src="/images/javaproject/project_tree.jpg" alt=""></p>
+<ul>
+<li>zheyi-parent：父工程，其打包方式是pom，主要管理jar包的版本号。项目中的所有工程都应该继承父工程。</li>
+<li>zheyi-common：存放一些通用的工具类、通用的pojo。其打包方式为jar，被其他的工程所依赖。</li>
+<li>zheyi-manager：服务层工程，又称之为聚合工程或pom工程。<ul>
+<li>zheyi-manager-pojo：这是一个独立的模块，其打包方式是jar。</li>
+<li>zheyi-manager-mapper：这是一个独立的模块，其打包方式是jar。</li>
+<li>zheyi-manager-service：打包方式是jar。</li>
+<li>zheyi-manager-web：表现层工程，打包方式是war。</li>
+</ul>
+</li>
+</ul>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p>创建完成后，运行，如下图所示：<br><img src="/images/javaproject/env_verify.jpg" alt=""></p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
+<li>运行要先Install parent和common</li>
+<li>pageHelper-3.4.2-fix couldn’t download, change to 5.0.1</li>
+<li>要在web下创建web.xml</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/01/人生苦短，莫辜负自己，做一个努力上进的好同学/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1437,483 +1983,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/01/少先队员入队-Mini世界实践/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/01/少先队员入队-Mini世界实践/" itemprop="url">少先队员入队 - Mini世界实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T20:59:30+08:00">
-                2018-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/01/少先队员入队-Mini世界实践/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/01/少先队员入队-Mini世界实践/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>期盼了很长时间，也练习了很长时间，系红领巾，站队，唱歌。。。终于入队了。<br><img src="/images/izheyi/2018/06/rudui_01.JPG" alt=""><br><img src="/images/izheyi/2018/06/rudui_02.JPG" alt=""></p>
-<p>正好赶上六一儿童节，学校有心的带领着大家去迷你世界体验馆感受了一把。<br><img src="/images/izheyi/2018/06/mini_01.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_02.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_03.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_04.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_05.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_06.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_07.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/31/CI-CD-环境搭建-7-集成Terraform/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="url">CI/CD - 环境搭建(7) - 集成Terraform</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-31T16:09:49+08:00">
-                2018-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>实现Jenkins + Terraform在AWS上创建基本环境。</p>
-<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
-<li>Terraform，please refer: <a href="/categories/Terraform/">Terraform知识</a></li>
-</ul>
-<h1 id="Terraform-Config"><a href="#Terraform-Config" class="headerlink" title="Terraform Config"></a>Terraform Config</h1><p>创建<code>main.tf</code>，并push到Github上。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"integration with jenkins"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="Jenkins-Config"><a href="#Jenkins-Config" class="headerlink" title="Jenkins Config"></a>Jenkins Config</h1><p>创建Pipeline Job：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'Preparation'</span>) &#123; // for display purposes</span><br><span class="line">      // Get some code from a GitHub repository</span><br><span class="line">      git credentialsId: <span class="string">'ee7a726b-e672-424d-9b78-e8015668d55a'</span>, url: <span class="string">'git@github.com:yongfeiuall/pipeline-terraform-example.git'</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'variable file'</span>) &#123;</span><br><span class="line">      sh <span class="string">'sudo cp ~/variables.tf ~/.jenkins/workspace/ci-terraform'</span></span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'init'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform --version"</span></span><br><span class="line">        sh <span class="string">"terraform init"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'plan'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform plan"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'apply'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform apply -auto-approve"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>说明：</p>
-<ul>
-<li>Terraform预先安装在了Server上，没有用Jenkins安装</li>
-<li>AWS access key和secret key不能公开，所以加了<code>stage(&#39;variable file)</code>，提前放到Server上去</li>
-<li><code>terraform apply</code>加上<code>-auto-approve</code></li>
-</ul>
-<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p><img src="/images/CI/jenkins_terraform.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/27/南戴河游玩/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/27/南戴河游玩/" itemprop="url">南戴河游玩</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-27T13:23:23+08:00">
-                2018-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/27/南戴河游玩/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/27/南戴河游玩/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>两周前的周末跟妈妈去了南戴河玩，妈妈公司组织的活动，爸爸没有去。</p>
-<p>玩的很开心，下次带你看更大的海^_^</p>
-<p><img src="/images/izheyi/2018/05/1.JPG" alt=""><br><img src="/images/izheyi/2018/05/2.JPG" alt=""><br><img src="/images/izheyi/2018/05/3.JPG" alt=""><br><img src="/images/izheyi/2018/05/4.JPG" alt=""><br><img src="/images/izheyi/2018/05/5.JPG" alt=""><br><img src="/images/izheyi/2018/05/6.JPG" alt=""><br><img src="/images/izheyi/2018/05/7.JPG" alt=""><br><img src="/images/izheyi/2018/05/8.JPG" alt=""><br><img src="/images/izheyi/2018/05/9.JPG" alt=""><br><img src="/images/izheyi/2018/05/10.JPG" alt=""><br><img src="/images/izheyi/2018/05/11.JPG" alt=""><br><img src="/images/izheyi/2018/05/12.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1968,7 +2037,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1990,7 +2059,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

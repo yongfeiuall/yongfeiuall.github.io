@@ -305,6 +305,495 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/11/20/利用MonteScreenRecorder录制视频/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/11/20/利用MonteScreenRecorder录制视频/" itemprop="url">利用MonteScreenRecorder录制视频</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-11-20T20:01:09+08:00">
+                2014-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/11/20/利用MonteScreenRecorder录制视频/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/11/20/利用MonteScreenRecorder录制视频/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我们可以用以下方式在Selenium Webdriver中capture video.</p>
+<h1 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h1><ol>
+<li>从<a href="http://www.randelshofer.ch/monte/">Monte Screen Recorder</a>，下载“MonteScreenRecorder.jar” </li>
+<li>添加Jar包到你的selenium/webdriver eclipse project</li>
+<li><p>利用“ScreenRecorder” 类创建一个capture对象方法，脚本如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//If we didn't name the folder, after execution test script, </span></span><br><span class="line">	<span class="comment">//video file is generated under “Video” folder of current user folder in  Windows machine </span></span><br><span class="line">	<span class="comment">//and “Movies” folder on Mac machine.</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startRecording</span><span class="params">()</span> throws Exception</span><br><span class="line">	</span>&#123;       </span><br><span class="line">		GraphicsConfiguration gc = GraphicsEnvironment</span><br><span class="line">		              .getLocalGraphicsEnvironment()</span><br><span class="line">		              .getDefaultScreenDevice()</span><br><span class="line">		              .getDefaultConfiguration();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">this</span>.screenRecorder = <span class="keyword">new</span> ScreenRecorder(gc,</span><br><span class="line">		              <span class="keyword">new</span> Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),</span><br><span class="line">		              <span class="keyword">new</span> Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,</span><br><span class="line">		                   CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,</span><br><span class="line">		                   DepthKey, <span class="number">24</span>, FrameRateKey, Rational.valueOf(<span class="number">15</span>),</span><br><span class="line">		                   QualityKey, <span class="number">1.0f</span>,</span><br><span class="line">		                   KeyFrameIntervalKey, <span class="number">15</span> * <span class="number">60</span>),</span><br><span class="line">		              <span class="keyword">new</span> Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, <span class="string">"black"</span>,</span><br><span class="line">		                   FrameRateKey, Rational.valueOf(<span class="number">30</span>)),</span><br><span class="line">		              null);</span><br><span class="line">		<span class="keyword">this</span>.screenRecorder.start();    </span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在测试脚本的开始处调用 “screenRecorder.start()” 方法，在结尾调用”screenRecorder.stop()”方法，脚本如下所示：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span><br><span class="line"></span>&#123;</span><br><span class="line"> openBrowser();</span><br><span class="line"> startingRecording();</span><br><span class="line"> </span><br><span class="line"> openURL();</span><br><span class="line"> BaiduSearch yy = <span class="keyword">new</span> BaiduSearch(driver);</span><br><span class="line"> yy.searchFor(<span class="string">"searchTest"</span>);</span><br><span class="line"></span><br><span class="line"> driver.quit();</span><br><span class="line"> stopRecording();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/11/20/利用MonteScreenRecorder录制视频/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/11/18/Java操作Sql-Server-2008数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/11/18/Java操作Sql-Server-2008数据库/" itemprop="url">Java操作Sql Server 2008数据库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-11-18T08:49:31+08:00">
+                2014-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/11/18/Java操作Sql-Server-2008数据库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/11/18/Java操作Sql-Server-2008数据库/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在做自动化的过程中，遇到了这种情况，做个记录。</p>
+<ol>
+<li>直接去官网下载即可，<a href="https://msdn.microsoft.com/zh-cn/data/aa937724.aspx" target="_blank" rel="external">Microsoft JDBC Driver for SQL Server</a><br>下载解压文件，得到sqljdbc.jar和sqljdbc4.jar。如果你使用的是jre1.7版本，则忽略sqljdbc.jar（因为它用不了，而且如果和sqljdbc4.jar一起用会出错），只留下sqljdbc4.jar。</li>
+<li>配置Classpath<br>网上有很多人说要配置这个路径，我没有配置，但是也通过，这里不记录，如果有问题了，就知道可能是Classpath的问题：）</li>
+<li>Eclipse应用<br>打开Eclipse，创建新工程，把sqljdbc4.jar包添加到工程中。</li>
+<li>创建脚本测试 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class ExecuteSql &#123; </span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> [] args) </span><br><span class="line">     &#123; </span><br><span class="line">        <span class="keyword">String</span> dbURL=<span class="string">"jdbc:你的数据库名   "</span>; </span><br><span class="line">        <span class="keyword">String</span> userName=<span class="string">"填写你的用户名，我的是sa"</span>; </span><br><span class="line">        <span class="keyword">String</span> userPwd=<span class="string">"填写你的密码"</span>; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123; </span><br><span class="line">            Class.forName(driverName);</span><br><span class="line">            Connection dbConn=DriverManager.getConnection(dbURL,userName,userPwd); </span><br><span class="line">            System.out.<span class="built_in">println</span>(<span class="string">"连接数据库成功"</span>); </span><br><span class="line">        &#125; <span class="keyword">catch</span>(Exception e) &#123; </span><br><span class="line">            e.printStackTrace(); </span><br><span class="line">            System.out.<span class="built_in">print</span>(<span class="string">"连接失败"</span>); </span><br><span class="line">        &#125;     </span><br><span class="line">     &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/23/How-to-learn-test-automation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/10/23/How-to-learn-test-automation/" itemprop="url">How to learn test automation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-10-23T14:53:23+08:00">
+                2014-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/23/How-to-learn-test-automation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/10/23/How-to-learn-test-automation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Automation is very important in the whole SDLC, especially in the agile, the iteration time for each sprint is very short, it’s impossible to only rely on manual testing. </p>
+<p>i attened many seminar or meeting, or discuss with person(they are top notch in software testing), the word most times metoned is “automaton”.</p>
+<p><strong>here i want to dscribe my opinions based on UI automaiton.</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/10/23/How-to-learn-test-automation/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/20/Selenium处理Windows程序-进程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1408,481 +1897,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/23/ReportNG替换TestNG默认结果报告/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/05/23/ReportNG替换TestNG默认结果报告/" itemprop="url">ReportNG替换TestNG默认结果报告</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-23T15:46:35+08:00">
-                2014-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/05/23/ReportNG替换TestNG默认结果报告/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/23/ReportNG替换TestNG默认结果报告/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>TestNG默认的报告虽然内容挺全，但是展现效果却不太理想，不易阅读。因此我们想利用ReportNG来替代TestNG默认的report。</p>
-<p>什么是ReportNG呢？这里不多说，请直接参见<a href="http://reportng.uncommons.org/">ReprotNG</a></p>
-<p>要替换默认报告，我们需要做以下操作：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2014/05/23/ReportNG替换TestNG默认结果报告/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/" itemprop="url">Prop.Properties配置测试应用的环境和其他配置项</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-20T08:14:58+08:00">
-                2014-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>prop.propertiesfile contains important info that needs to be changed before the test is run, such as: Browser type (browser =), Product (test-prod). Depend your test setup; you may not need the test-env and other configurations.</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Browser type</span></span><br><span class="line"><span class="preprocessor"># 1 =&gt; FireFox</span></span><br><span class="line"><span class="preprocessor"># 2 =&gt; IE</span></span><br><span class="line"><span class="preprocessor"># 3 =&gt; Chrome</span></span><br><span class="line"><span class="preprocessor"># 4 =&gt; Safari</span></span><br><span class="line">BrowserType = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Test server and login information</span></span><br><span class="line">BaseURL = http:<span class="comment">//www.site.com/</span></span><br><span class="line">UserName = </span><br><span class="line">UserPwd = </span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># UI actions' timeout in millisecond</span></span><br><span class="line">Timeout = <span class="number">30000</span></span><br></pre></td></tr></table></figure>
-<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalSetting</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Properties prop = getProperties();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String baseURL = prop.getProperty(<span class="string">"BaseURL"</span>);</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> browserType = Integer.parseInt(prop.getProperty(<span class="string">"BrowserType"</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">String <span class="title">getProperty</span><span class="params">(String property)</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> prop.<span class="title">getProperty</span><span class="params">(property)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">Properties <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Properties prop = <span class="keyword">new</span> Properties();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			FileInputStream file = <span class="keyword">new</span> FileInputStream(<span class="string">"prop1.properties"</span>);</span><br><span class="line">			prop.load(file);</span><br><span class="line">			file.close();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> prop;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#引用<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">Test</span></span><br><span class="line">public void <span class="function">doTest</span>()</span>&#123;</span><br><span class="line">	<span class="tag">System</span><span class="class">.out</span><span class="class">.Println</span>(<span class="tag">GlobalSetting</span><span class="class">.baseURL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/19/Selenium抓图并保存到TestNG报告中/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/05/19/Selenium抓图并保存到TestNG报告中/" itemprop="url">Selenium抓图并保存到TestNG报告中</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-19T15:38:15+08:00">
-                2014-05-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/05/19/Selenium抓图并保存到TestNG报告中/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/19/Selenium抓图并保存到TestNG报告中/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里不讲解怎么在Eclipse安装配置TestNG，网上一搜一大把，大家自己去实践一下。<br>在这里主要说一下用Java来实现Selenium Webdriver的截图功能和把截图写到TestNG的报告中。</p>
-<h1 id="Capture-screenshot"><a href="#Capture-screenshot" class="headerlink" title="Capture screenshot"></a>Capture screenshot</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Capture screenshot</span></span><br><span class="line"><span class="keyword">public</span> String captureScreenShot() </span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    String dir = <span class="string">"screenshot"</span>; </span><br><span class="line">    String date = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyyMMdd"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">    String time = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"HHmmss"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">    String screenShotPath = dir + <span class="keyword">File</span>.separator + date + <span class="keyword">File</span>.separator + time + <span class="string">".png"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">File</span> <span class="keyword">source</span> = ((TakesScreenshot)driver).getScreenshotAs(OutputType.<span class="keyword">FILE</span>);</span><br><span class="line">        FileUtils.copyFile(<span class="keyword">source</span>, <span class="keyword">new</span> <span class="keyword">File</span>(screenShotPath)); </span><br><span class="line">        screenShotPath = screenShotPath.substring(screenShotPath.indexOf(<span class="string">"\\"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(IOException e) </span><br><span class="line">    &#123;</span><br><span class="line">        screenShotPath = <span class="string">"Failed to capture screenshot: "</span> + e.getMessage();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> screenShotPath; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Write-to-TestNG"><a href="#Write-to-TestNG" class="headerlink" title="Write to TestNG"></a>Write to TestNG</h1><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="literal">void</span> writeToTestNG(<span class="built_in">String</span> proMessage) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">String</span> png = captureScreenShot();</span><br><span class="line">    Reporter<span class="built_in">.</span><span class="keyword">log</span>(<span class="string">"["</span> + logTime + <span class="string">"] "</span> + proMessage);</span><br><span class="line">    <span class="built_in">String</span> <span class="keyword">log</span> = <span class="literal">new</span> File(<span class="string">"screenshot"</span>)<span class="built_in">.</span>getAbsolutePath();</span><br><span class="line">    Reporter<span class="built_in">.</span><span class="keyword">log</span>(<span class="string">"&lt;br/&gt;&lt;img src=\""</span> + <span class="keyword">log</span>  + <span class="string">"/"</span> + png + <span class="string">"\" /&gt;"</span>);</span><br></pre></td></tr></table></figure>
-<h1 id="Call-function"><a href="#Call-function" class="headerlink" title="Call function"></a>Call function</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    openURL();</span><br><span class="line">    BaiduSearch yy = <span class="keyword">new</span> BaiduSearch(driver);</span><br><span class="line">    yy.searchFor(<span class="string">"searchTest"</span>);</span><br><span class="line">    writeToTestNG(<span class="string">"testing "</span>);</span><br><span class="line">    driver.quit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p><img src="/images/Selenium/capture_pic_to_report.jpg" alt="TestNG"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1937,7 +1951,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1959,7 +1973,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

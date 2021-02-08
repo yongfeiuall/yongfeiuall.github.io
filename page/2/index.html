@@ -305,6 +305,535 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/" itemprop="url">Jmeter + Grafana + InfluxDB 性能测试实时监控</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-14T14:07:33+08:00">
+                2020-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Jmeter原生的监控确实是丑了点，且很难实时的压测过程中的性能状态，用下面的方式来代替原生的监控展示。</p>
+<p>InfluxDB来存Jmeter运行数据，用Grafana来展示数据。Jmeter引入<code>Backend Listener</code>，压测的过程中实时把统计数据发送到InfluxDB中，通过Grafana可视化的展示出来。</p>
+<h1 id="InfluxDB"><a href="#InfluxDB" class="headerlink" title="InfluxDB"></a>InfluxDB</h1><p>一个时序数据库，不做详细说明，可参见官网<a href="https://www.influxdata.com" target="_blank" rel="external">InfluxDB</a></p>
+<ol>
+<li><p>从官网下载</p>
+</li>
+<li><p>修改配置文件，influxdb.conf</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[meta]</span><br><span class="line">  # Where the metadata/raft database is stored</span><br><span class="line">  dir = "C:/influxdb/meta"</span><br><span class="line"></span><br><span class="line">  # Automatically <span class="operator"><span class="keyword">create</span> a <span class="keyword">default</span> <span class="keyword">retention</span> <span class="keyword">policy</span> <span class="keyword">when</span> creating a <span class="keyword">database</span>.</span><br><span class="line">  # <span class="keyword">retention</span>-autocreate = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # <span class="keyword">If</span> <span class="keyword">log</span> messages <span class="keyword">are</span> printed <span class="keyword">for</span> the meta service</span><br><span class="line">  # <span class="keyword">logging</span>-enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">data</span>]</span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores TSM files.</span><br><span class="line">  dir = <span class="string">"C:/influxdb/data"</span></span><br><span class="line"></span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores WAL files.</span><br><span class="line">  wal-dir = <span class="string">"C:/influxdb/wal"</span></span><br><span class="line">  </span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">http</span>]</span><br><span class="line">  # Determines whether <span class="keyword">HTTP</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> <span class="keyword">logging</span> <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-<span class="keyword">log</span>-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # The bind address used <span class="keyword">by</span> the <span class="keyword">HTTP</span> service.</span><br><span class="line"> bind-address = <span class="string">":8086"</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>创建相应Folder： data, meta, wal</p>
+</li>
+<li><p>双击influxd.exe，运行influxDB</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">8888888</span>           .d<span class="number">888 888</span>                   <span class="number">8888888</span>b.  888888b.</span><br><span class="line">   888            d88P"  888                   888  "Y88b 888  "88b</span><br><span class="line">   888            888    888                   888    <span class="number">888 888</span>  .88P</span><br><span class="line">   888   88888b.  <span class="number">888888 88</span>8 888  <span class="number">888 888</span>  <span class="number">888 888</span>    <span class="number">888 88888</span>88K.</span><br><span class="line">   888   888 "88b 888    <span class="number">888 888</span>  888  Y8bd8P' 888    <span class="number">888 888</span>  "Y88b</span><br><span class="line">   888   888  <span class="number">888 888</span>    <span class="number">888 888</span>  888   X88K   888    <span class="number">888 888</span>    888</span><br><span class="line">   888   888  <span class="number">888 888</span>    888 Y88b 888 .d8""8b. 888  .d88P 888   d88P</span><br><span class="line"> <span class="number">8888888 88</span>8  <span class="number">888 888</span>    888  "Y<span class="number">88888 888</span>  <span class="number">888 88888</span>88P"  <span class="number">8888888</span>P"</span><br><span class="line"></span><br><span class="line"><span class="number">2020-06-23</span>T<span class="number">06:34:00.42</span>1889Z     info    InfluxDB starting       &#123;"log_id": "0NZyzDPG000", "version": "1.8.0", "branch": "1.8", "commit": "781490de<span class="number">48220d7695</span>a<span class="number">05c29e5a36</span>f<span class="number">550a4568</span>f5"&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Jmeter"><a href="#Jmeter" class="headerlink" title="Jmeter"></a>Jmeter</h1><ol>
+<li><p>在InfluxDB创建DB</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Connected to http://localhost:8086 version 1.8.0</span><br><span class="line">InfluxDB shell version: 1.8.0</span><br><span class="line">&gt; create database jmeter</span><br><span class="line">&gt; show databases</span><br><span class="line">name: databases</span><br><span class="line"><span class="header">name</span><br><span class="line">----</span></span><br><span class="line"><span class="emphasis">_internal</span><br><span class="line">jmeter</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 Jmeter Backend Listerner</p>
+<p><img src="/images/performancetesting/backend_listener.jpg" alt=""></p>
+</li>
+</ol>
+<h1 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h1><ol>
+<li><p>配置数据源</p>
+<p><img src="/images/performancetesting/grafana_influxdb.jpg" alt=""></p>
+</li>
+<li><p>搭建Dashboard</p>
+<p>Import Dashboard: 5496</p>
+</li>
+</ol>
+<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>运行Jmeter脚本，查看数据展示：</p>
+<p><img src="/images/performancetesting/grafana_jmeter.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="url">Robotframework Automation With Jenkins and Xray - pipeline</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T10:46:52+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>From last blog, we integrate RF, Jenkins and Xray, but for now, we usually use ‘Pipeline’ way for better management. Give it a try…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    stages &#123;  </span><br><span class="line">        stage(<span class="string">'Test Execution'</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                bat <span class="string">'robot db.robot'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Publish RF Test Result'</span>)&#123;</span><br><span class="line">             steps &#123;</span><br><span class="line">				step([</span><br><span class="line">                     $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'RobotPublisher'</span>,</span><br><span class="line">                     disableArchiveOutput: false,</span><br><span class="line">                     logFileName: <span class="string">'log.html'</span>,</span><br><span class="line">                     otherFiles: <span class="string">''</span>,</span><br><span class="line">                     outputFileName: <span class="string">'output.xml'</span>,</span><br><span class="line">                     outputPath: <span class="string">''</span>,</span><br><span class="line">                     passThreshold: <span class="number">100</span>,</span><br><span class="line">                     reportFileName: <span class="string">'report.html'</span>,</span><br><span class="line">                     unstableThreshold: <span class="number">0</span></span><br><span class="line">				])</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Import Result To Xray'</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                step([</span><br><span class="line">                    $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'XrayImportBuilder'</span>,</span><br><span class="line">                    endpointName: <span class="string">'/robot'</span>,</span><br><span class="line">                    fixVersion: <span class="string">''</span>,</span><br><span class="line">                    importFilePath: <span class="string">'output.xml'</span>,</span><br><span class="line">                    importToSameExecution: <span class="string">'true'</span>,</span><br><span class="line">                    projectKey: <span class="string">'ISR'</span>,</span><br><span class="line">                    serverInstance: <span class="string">'39c998d7-e25b-4cc7-81d6-dfe14d970cac'</span>,</span><br><span class="line">                    testPlanKey: <span class="string">''</span>,</span><br><span class="line">                    testExecKey: <span class="string">'ISR-8352'</span></span><br><span class="line">				])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>After run job, the result as below:</p>
+<p><img src="/images/CI/xray/pipeline.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="url">Robotframework Automation With Jenkins and Xray</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-17T10:46:52+08:00">
+                2020-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Currently, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
+<ol>
+<li>use Robotframework design script</li>
+<li>use Jenkins trigger automaion running</li>
+<li>return running result to xray and update execution status</li>
+</ol>
+<h1 id="Pre-Condition"><a href="#Pre-Condition" class="headerlink" title="Pre-Condition"></a>Pre-Condition</h1><ol>
+<li>Create one test case, one execution, and add test case to execution, the default status as below:<br><img src="/images/CI/xray/before_run.jpg" alt=""></li>
+<li>RF demo script:<br><img src="/images/CI/xray/rf_script.jpg" alt=""></li>
+</ol>
+<h1 id="Install-and-config-xray-jenkins-plugin"><a href="#Install-and-config-xray-jenkins-plugin" class="headerlink" title="Install and config xray jenkins plugin"></a>Install and config xray jenkins plugin</h1><p>Use offline way to install, download plugin here: <a href="http://mirrors.jenkins-ci.org/plugins/xray-connector/" target="_blank" rel="external">xray-connector</a>, and install plugin as below:<br><img src="/images/CI/xray/upload_plugin.jpg" alt=""></p>
+<p>Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &gt; Configure System &gt; Xray for Jira configuration.<br><img src="/images/CI/xray/xray_config.jpg" alt=""></p>
+<h1 id="Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray"><a href="#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray" class="headerlink" title="Config jenkins job to run automaiton test and return report to xray"></a>Config jenkins job to run automaiton test and return report to xray</h1><ol>
+<li>Just use RF command to run demo script, config as below:<br><img src="/images/CI/xray/run_rf.jpg" alt=""></li>
+<li>Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.<br><img src="/images/CI/xray/import_result.jpg" alt=""></li>
+<li>Config task with below params:<br><img src="/images/CI/xray/import_result_config.jpg" alt=""><pre><code>- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
+- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
+- Project Key – key of the JIRA project. This is a required parameter
+- Test Execution Key – JIRA issue key where results will be imported. 
+- Test Plan Key – JIRA issue key of the Test Plan. 
+- Test Environments – list of Environments (separated by “,”) where tests are executed.
+</code></pre></li>
+<li>Run jenkins job</li>
+<li>Back to Jira Xray, the status update from TODO to PASS automatically<br><img src="/images/CI/xray/after_run.jpg" alt=""></li>
+<li>Go to Execution detail page to view automaion detail result<br><img src="/images/CI/xray/after_run_detail.jpg" alt=""></li>
+</ol>
+<h1 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h1><p>Other things we could do:</p>
+<ol>
+<li>Create test exceution in xray automatically after automation running</li>
+<li>Even create test case after automation running</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/18/Prometheus-Grafana-实时监控Linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1470,494 +1999,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/10/19/分布式持续压测平台/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/19/分布式持续压测平台/" itemprop="url">分布式持续压测平台</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-19T13:25:28+08:00">
-                2019-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/10/19/分布式持续压测平台/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/10/19/分布式持续压测平台/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="压测平台介绍"><a href="#压测平台介绍" class="headerlink" title="压测平台介绍"></a>压测平台介绍</h1><ul>
-<li>QA设计场景和脚本，Github管理</li>
-<li>QA创建Jenkins测试job</li>
-<li>Dev利用Jenkins持续执行测试，直到达到预期性能</li>
-<li>QA对主要接口进行验收测试，验证符合上线性能预期</li>
-</ul>
-<h1 id="压测平台设计"><a href="#压测平台设计" class="headerlink" title="压测平台设计"></a>压测平台设计</h1><ul>
-<li>脚本编写和执行 – Jmeter</li>
-<li>脚本管理 – Github</li>
-<li>驱动执行 – Taurus</li>
-<li>测试调度 – Jenkins</li>
-</ul>
-<p><img src="/images/performancetesting/platform.jpg" alt="Performace Platform"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/09/08/丁丁画画（三年级上学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/08/丁丁画画（三年级上学期）/" itemprop="url">丁丁画画（三年级上学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-08T10:03:01+08:00">
-                2019-09-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/09/08/丁丁画画（三年级上学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/09/08/丁丁画画（三年级上学期）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/3/1_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_5.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/11/网站促销活动前端自动化监控/" itemprop="url">网站促销活动前端自动化监控</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T06:54:41+08:00">
-                2019-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/11/网站促销活动前端自动化监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/06/11/网站促销活动前端自动化监控/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？</p>
-<p>对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。</p>
-<p>活动一般有</p>
-<ul>
-<li>一个主页，上面有图片，标题，价格</li>
-<li>详情页面</li>
-<li>下单</li>
-</ul>
-<p>自动化思路：</p>
-<ol>
-<li>从主页通过Selenium来获得所有的图片和产品详细页链接</li>
-<li>通过Request来检查产品链接和图片存在与否</li>
-<li>检查详细页的信息正确</li>
-<li>利用Cookie实现下单流程的实现</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2012,7 +2053,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2034,7 +2075,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

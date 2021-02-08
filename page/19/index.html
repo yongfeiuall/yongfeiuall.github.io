@@ -305,6 +305,510 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/06/08/Robot-Framework-Establish-Customize-Library-Through-Implement-Send-Email-Function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/08/Robot-Framework-Establish-Customize-Library-Through-Implement-Send-Email-Function/" itemprop="url">Robot Framework-Establish Customize Library Through Implement Send Email Function</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-08T15:32:12+08:00">
+                2016-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/08/Robot-Framework-Establish-Customize-Library-Through-Implement-Send-Email-Function/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/06/08/Robot-Framework-Establish-Customize-Library-Through-Implement-Send-Email-Function/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>When using Robot Framework, yes, it’s fast and easy to use, but for some special scenario, Robot Framework didn’t provide relevant library and keyword, such as send email.<br>We can implement this through keyword <code>Evaluate</code>, but it’s maybe not appropriate way. so it’s better for us to encapsulate system level library and keyword.</p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><p>Here we implement this by sending mail:</p>
+<ol>
+<li>In python Lib\site-packages folder(e.g.,C:\Python27\Lib\site-packages ), create folder ‘GmailLibrary’.</li>
+<li><p>Design send mail library ‘sendmail.py’</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import smtplib</span><br><span class="line">from email<span class="class">.MIMEMultipart</span> import MIMEMultipart</span><br><span class="line">from email<span class="class">.MIMEBase</span> import MIMEBase</span><br><span class="line">from email<span class="class">.MIMEText</span> import MIMEText</span><br><span class="line">from email import Encoders</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">SendEmailUtility</span><span class="params">(object)</span></span>:</span><br><span class="line"></span><br><span class="line">    ROBOT_LIBRARY_SCOPE = <span class="string">'Global'</span></span><br><span class="line">    </span><br><span class="line">    def __init__(self):</span><br><span class="line">        print <span class="string">'send email utility'</span></span><br><span class="line">        </span><br><span class="line">    def <span class="function"><span class="title">send_mail_no_attachment</span><span class="params">(self,from_user,from_password,to, subject, text)</span></span>:</span><br><span class="line">           msg = <span class="function"><span class="title">MIMEMultipart</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">           msg[<span class="string">'From'</span>] = from_user</span><br><span class="line">           msg[<span class="string">'To'</span>] = to</span><br><span class="line">           msg[<span class="string">'Subject'</span>] = subject</span><br><span class="line"></span><br><span class="line">           msg.<span class="function"><span class="title">attach</span><span class="params">(MIMEText(text)</span></span>)</span><br><span class="line"></span><br><span class="line">           mailServer = smtplib.<span class="function"><span class="title">SMTP</span><span class="params">(<span class="string">'outlook.office365.com'</span>)</span></span></span><br><span class="line">           mailServer.<span class="function"><span class="title">ehlo</span><span class="params">()</span></span></span><br><span class="line">           mailServer.<span class="function"><span class="title">starttls</span><span class="params">()</span></span></span><br><span class="line">           mailServer.<span class="function"><span class="title">ehlo</span><span class="params">()</span></span></span><br><span class="line">           mailServer.<span class="function"><span class="title">login</span><span class="params">(from_user, from_password)</span></span></span><br><span class="line">           mailServer.<span class="function"><span class="title">sendmail</span><span class="params">(from_user, to, msg.as_string()</span></span>)</span><br><span class="line">           mailServer.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Design ‘<strong>init</strong>.py’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sendemail <span class="keyword">import</span> SendEmailUtility</span><br><span class="line">__version__ = <span class="string">'1.0'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmailLibrary</span><span class="params">(SendEmailUtility)</span>:</span>  </span><br><span class="line">    ROBOT_LIBRARY_SCOPE = <span class="string">'GLOBAL'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Import the library ‘MailLibrary’ in Robot Framework</p>
+</li>
+<li>Check keyword in ‘Keyword List’<br><img src="/images/rf/mail_keyword.jpg" alt=""></li>
+<li>Create case to send mail<br><img src="/images/rf/mail_call.jpg" alt=""></li>
+<li>Mail send result<br><img src="/images/rf/mail_result.jpg" alt=""></li>
+</ol>
+<h1 id="Postscript"><a href="#Postscript" class="headerlink" title="Postscript"></a>Postscript</h1><p>We can implement everything from this way, but the important thing is you need to know python, even a little:)</p>
+<p>Use the tool, but not subject to the tool.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/06/03/Robot-Framework-External-Variable-File/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/03/Robot-Framework-External-Variable-File/" itemprop="url">Robot Framework-External Variable File</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-03T14:22:43+08:00">
+                2016-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/03/Robot-Framework-External-Variable-File/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/06/03/Robot-Framework-External-Variable-File/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Robot Framework中，变量的设置有很多种形式，为了统一的管理，或者以便后续的来做数据驱动，还是要把数据分离出去，最终实现业务逻辑和数据的分离。</p>
+<h1 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h1><p>这里只做一个简单的描述：</p>
+<ol>
+<li>在C：盘下建数据文件，只能是.py文件<br><img src="/images/rf/variable_data.jpg" alt=""></li>
+<li>在RF中引用<br><img src="/images/rf/variable_call.jpg" alt=""></li>
+</ol>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>为了工程的统一管理，我们可以在Test Project Root下创建Test Data文件夹，把数据分类管理于此。</p>
+<ol>
+<li>数据<br>每一个Test Suite有一个数据文件，每一个用例用一行数据来实现，用例里多个数据用List方式存储。</li>
+</ol>
+<ul>
+<li>数据文件名就是Test Suite名字</li>
+<li>数据变量名就是Test Case名字</li>
+</ul>
+<ol>
+<li>调用<br>都基于Built-in变量来实现，动态管理。<br><img src="/images/rf/variable_import.jpg" alt=""></li>
+</ol>
+<h1 id="高级"><a href="#高级" class="headerlink" title="高级"></a>高级</h1><p>抛砖引玉，只是捋一下思路：</p>
+<ol>
+<li>通过Test Case的Test Template来设计</li>
+<li>一个用例一个数据文件，数据多的话从理解的角度要好一些</li>
+<li>通过csv、Excel、DB的方式来存储数据</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/06/01/六一儿童节汇演/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/01/六一儿童节汇演/" itemprop="url">六一儿童节汇演</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-01T21:00:05+08:00">
+                2016-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/01/六一儿童节汇演/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/06/01/六一儿童节汇演/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>小丁的表现还是可圈可点，加油！！</p>
+<h1 id="幼儿舞蹈-十一点半"><a href="#幼儿舞蹈-十一点半" class="headerlink" title="幼儿舞蹈 - 十一点半"></a>幼儿舞蹈 - 十一点半</h1><iframe height="498" width="510" src="http://player.youku.com/embed/XMTU5NjY0NzAzMg==" frameborder="0" allowfullscreen></iframe>
+
+<p>仅做一留念，其他的学业汇报就不列了，开心就好。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/05/26/Robot-Framework-MongoDB-Testing-ISODate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1466,517 +1970,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/" itemprop="url">快速获得文件夹下所有文件和文件夹的名字</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-11T14:28:03+08:00">
-                2016-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/11/快速获得文件夹下所有文件和文件夹的名字/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Windows下，因为之前做QTP，是用Vbs写了一段代码，用的时候，只要指定要查找的文件夹就可以。现在发现了一个更便捷的方式，Mark一下。</p>
-<p>只需要用下边这个批处理脚本即可：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir <span class="keyword">*</span>.<span class="keyword">*</span> /b &gt; list.txt</span><br></pre></td></tr></table></figure></p>
-<p><strong>使用方法：</strong></p>
-<ol>
-<li>把此脚本文件保存为.bat文件，</li>
-<li>Copy此脚本到要查找的文件夹下，</li>
-<li>运行此脚本文件，</li>
-<li>查找的名称会保存到当前文件夹的’list.txt’文件中。</li>
-</ol>
-<p><img src="/images/automation/dir.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/11/测试用例详细程度的一些思考/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/11/测试用例详细程度的一些思考/" itemprop="url">测试用例详细程度的一些思考</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-11T09:05:26+08:00">
-                2016-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试管理/" itemprop="url" rel="index">
-                    <span itemprop="name">测试管理</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/11/测试用例详细程度的一些思考/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/11/测试用例详细程度的一些思考/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>已经有三四年没有做过手工测试了，最近换了一个新工作，也要去做手工测试，去写用例，目前大多数的公司都是这个样子的哈。</p>
-<p>在写用例的过程中，Team反映了这么个问题，领导要求把用例写的很细，具体到每个Step的描述，可是这样在执行的时候往往因为时间的原因而执行不完，但是领导认为不够详细的话，执行起来可能会有问题，比如让不熟悉功能的人按用例执行，问我的标准是什么？</p>
-<p>那测试用例的标准应该是什么呢？应该详细到何种程度呢？我想这也应该是大多数测试人员所要面临的问题。</p>
-<p>我觉得我们可以从以下几个方面来权衡:</p>
-<ol>
-<li><p>项目的角度</p>
-<ul>
-<li><p><strong>目标</strong><br>不管是文档还是代码，当然也包括测试用例，都要符合项目的最终目标。</p>
-</li>
-<li><p><strong>需求和设计会不会经常变更</strong><br>如果变更频繁的话，用例可能很快就失效，用例越详细，成本会越大。</p>
-</li>
-</ul>
-</li>
-<li><p>公司流程的角度</p>
-<ul>
-<li><strong>整体测试流程和要求</strong><br>公司整个测试流程上有没有相应的标准和公司内部定义的用例模板，可能也需要遵循这些标准，当然了，如果流程不合理了，也是可以进行相应更改。</li>
-</ul>
-</li>
-<li><p>测试的角度</p>
-<ul>
-<li><p><strong>采用的测试方法</strong><br>如果是传统的开发模式，用例可以写到足够的详细，但如果要是采用的探索性测试，那就只需要测试思路就OK。</p>
-</li>
-<li><p><strong>测试用例的用途</strong><br>比如一些金融项目里有全职自动化组，他们不懂业务，只是根据手工测试用例来进行自动化，那用例就需要很详细，包括测试数据==，</p>
-</li>
-<li><p><strong>用例执行者</strong><br>对于新人，用例应该足够的详细，以确保这些人的正常工作。</p>
-</li>
-<li><p><strong>用例粒度</strong><br>传统的开发模式下，有的要求一个bug要对应到一个case,这就要求用例要定的很细，但是现在的开发中，是不必要这么做的，比如：对用户名的修改功能测试，我们写一个用例就可以了，没必要按正常和异常的场景来设计多个用例。</p>
-</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/31/Win7查看端口号被占用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/03/31/Win7查看端口号被占用/" itemprop="url">Win7查看端口号被占用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T12:54:10+08:00">
-                2016-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/03/31/Win7查看端口号被占用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/31/Win7查看端口号被占用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>开始-运行输入CMD</li>
-<li><p>在CMD窗口中输入netstat -aon|findstr 80，80表示要查看的端口号</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;netstat -aon|findstr <span class="number">80</span></span><br><span class="line">  TCP    <span class="number">10.24</span><span class="number">.32</span><span class="number">.104</span>:<span class="number">49323</span>     <span class="number">220.181</span><span class="number">.132</span><span class="number">.85</span>:<span class="number">80</span>      ESTABLISHED     <span class="number">3516</span></span><br></pre></td></tr></table></figure>
-<p>说明是有程序在占有了80端口，那么是什么程序占了80端口呢？看到最右侧有占有这个程序的进程ID：3516，我们只需要查出3516是哪个程序就可以了</p>
-</li>
-<li><p>在CMD中继续输入以下命令：tasklist|findstr “3516”，3516就是之前的进程ID。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;tasklist|findstr <span class="string">"3516"</span></span><br><span class="line"><span class="number">360</span>Tray.exe                   <span class="number">3516</span> Console                    <span class="number">1</span>     <span class="number">48</span>,<span class="number">640</span> K</span><br></pre></td></tr></table></figure>
-<p>可以看到3516对应的是360程序占用这个端口。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2031,7 +2024,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2053,7 +2046,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

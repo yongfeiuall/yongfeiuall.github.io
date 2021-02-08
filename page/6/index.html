@@ -305,6 +305,482 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/25/Java项目实战-展示商品详情页/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/25/Java项目实战-展示商品详情页/" itemprop="url">Java项目实战 - 展示商品详情页</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-25T12:54:48+08:00">
+                2018-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/25/Java项目实战-展示商品详情页/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/25/Java项目实战-展示商品详情页/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="发布服务"><a href="#发布服务" class="headerlink" title="发布服务"></a>发布服务</h1><p>zheyi-rest实现：商品基本信息和描述的显示，并添加缓存。</p>
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>无。</p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ItemServiceImpl</span> <span class="keyword">implements</span> <span class="title">ItemService</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"$&#123;REDIS_ITEM_KEY&#125;"</span>)</span><br><span class="line">	<span class="keyword">private</span> String REDIS_ITEM_KEY;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"$&#123;REDIS_ITEM_EXPIRE&#125;"</span>)</span><br><span class="line">	<span class="keyword">private</span> Integer REDIS_ITEM_EXPIRE;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> TbItemMapper itemMapper;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> TbItemDescMapper itemDescMapper;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> RedisUtils redisUtils;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function">TaotaoResult <span class="title">getItemBasicInfo</span><span class="params">(<span class="keyword">long</span> itemId)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//get cache</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			String cache = redisUtils.get(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":basic"</span>);</span><br><span class="line">			<span class="keyword">if</span> (!StringUtils.isBlank(cache)) &#123;</span><br><span class="line">				TbItem item = JsonUtils.jsonToPojo(cache, TbItem.class);</span><br><span class="line">				<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(item)</span></span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		TbItem item = itemMapper.selectByPrimaryKey(itemId);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//add cache</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			redisUtils.set(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":basic"</span>, JsonUtils.objectToJson(item));</span><br><span class="line">			redisUtils.expire(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":basic"</span>, REDIS_ITEM_EXPIRE);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(item)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function">TaotaoResult <span class="title">getItemDesc</span><span class="params">(<span class="keyword">long</span> itemId)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//get cache</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			String cache = redisUtils.get(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":desc"</span>);</span><br><span class="line">			<span class="keyword">if</span> (!StringUtils.isBlank(cache)) &#123;</span><br><span class="line">				</span><br><span class="line">				TbItemDesc itemDesc = JsonUtils.jsonToPojo(cache, TbItemDesc.class);</span><br><span class="line">				<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(itemDesc)</span></span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		TbItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(itemId);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//add cache</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			redisUtils.set(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":desc"</span>, JsonUtils.objectToJson(itemDesc));</span><br><span class="line">			redisUtils.expire(REDIS_ITEM_KEY + <span class="string">":"</span> + itemId + <span class="string">":desc"</span>, REDIS_ITEM_EXPIRE);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(itemDesc)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Portal调用"><a href="#Portal调用" class="headerlink" title="Portal调用"></a>Portal调用</h1><p>zheyi-portal实现：当用户访问商品详情页面时，需要加载商品信息。</p>
+<h1 id="Dao-1"><a href="#Dao-1" class="headerlink" title="Dao"></a>Dao</h1><p>需要添加POJO:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ItemInfo</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">TbItem</span>&#123;</span></span><br><span class="line">	</span><br><span class="line">	public <span class="type">String</span>[] getImages() &#123;</span><br><span class="line">		<span class="type">String</span> image = getImage();</span><br><span class="line">		<span class="keyword">if</span> (image != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="type">String</span>[] images = image.split(<span class="string">","</span>);</span><br><span class="line">			<span class="keyword">return</span> images;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Service-1"><a href="#Service-1" class="headerlink" title="Service"></a>Service</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ItemServiceImpl</span> implements <span class="type">ItemService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Value</span>(<span class="string">"$&#123;REST_BASE_URL&#125;"</span>)</span><br><span class="line">	private <span class="type">String</span> <span class="type">REST_BASE_URL</span>;</span><br><span class="line">	@<span class="type">Value</span>(<span class="string">"$&#123;ITEM_INFO&#125;"</span>)</span><br><span class="line">	private <span class="type">String</span> <span class="type">ITEM_INFO</span>;</span><br><span class="line">	@<span class="type">Value</span>(<span class="string">"$&#123;ITEM_DESC_URL&#125;"</span>)</span><br><span class="line">	private <span class="type">String</span> <span class="type">ITEM_DESC_URL</span>;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">ItemInfo</span> getItemById(<span class="type">Long</span> itemId) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="type">String</span> itemJson = <span class="type">HttpClientUtil</span>.doGet(<span class="type">REST_BASE_URL</span> + <span class="type">ITEM_INFO</span> + itemId);</span><br><span class="line">			<span class="keyword">if</span> (!<span class="type">StringUtils</span>.isBlank(itemJson)) &#123;</span><br><span class="line">				<span class="type">TaotaoResult</span> <span class="literal">result</span> = <span class="type">TaotaoResult</span>.formatToPojo(itemJson, <span class="type">ItemInfo</span>.class);</span><br><span class="line">				<span class="keyword">if</span> (<span class="literal">result</span>.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">					<span class="type">ItemInfo</span> itemInfo = (<span class="type">ItemInfo</span>) <span class="literal">result</span>.getData();</span><br><span class="line">					<span class="keyword">return</span> itemInfo;</span><br><span class="line">				&#125;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> null;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">String</span> getItemDescById(<span class="type">Long</span> itemId) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			//查询商品描述</span><br><span class="line">			<span class="type">String</span> json = <span class="type">HttpClientUtil</span>.doGet(<span class="type">REST_BASE_URL</span> + <span class="type">ITEM_DESC_URL</span> + itemId);</span><br><span class="line">			//转换成java对象</span><br><span class="line">			<span class="type">TaotaoResult</span> taotaoResult = <span class="type">TaotaoResult</span>.formatToPojo(json, <span class="type">TbItemDesc</span>.class);</span><br><span class="line">			<span class="keyword">if</span> (taotaoResult.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">				<span class="type">TbItemDesc</span> itemDesc = (<span class="type">TbItemDesc</span>) taotaoResult.getData();</span><br><span class="line">				//取商品描述信息</span><br><span class="line">				<span class="type">String</span> <span class="literal">result</span> = itemDesc.getItemDesc();</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ItemController &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ItemService itemService;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">@RequestMapping</span>(<span class="string">"/item/&#123;itemId&#125;"</span>)</span><br><span class="line">	<span class="keyword">public</span> String getItem(<span class="keyword">@PathVariable</span> Long itemId, Model model)&#123;</span><br><span class="line">		ItemInfo itemInfo = itemService.getItemById(itemId);</span><br><span class="line">		</span><br><span class="line">		model.addAttribute(<span class="string">"item"</span>, itemInfo);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"item"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">@RequestMapping</span>(value=<span class="string">"/item/desc/&#123;itemId&#125;"</span>, produces=MediaType.TEXT_HTML_VALUE+<span class="string">";charset=utf-8"</span>)</span><br><span class="line">	<span class="keyword">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span> String getItemDesc(<span class="keyword">@PathVariable</span> Long itemId) &#123;</span><br><span class="line">		String <span class="built_in">string</span> = itemService.getItemDescById(itemId);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">string</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/rest_item_detail_service.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr实现前端商品搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/22/Java项目实战-solr实现前端商品搜索/" itemprop="url">Java项目实战 - solr实现前端商品搜索</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T21:49:11+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/Java项目实战-solr实现前端商品搜索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/22/Java项目实战-solr实现前端商品搜索/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在zheyi-portal工程中实现。</p>
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>无。</p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">SearchServiceImpl</span> implements <span class="type">SearchService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Value</span>(<span class="string">"$&#123;SEARCH_BASE_URL&#125;"</span>)</span><br><span class="line">	private <span class="type">String</span> <span class="type">SEARCH_BASE_URL</span>;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">SearchResult</span> search(<span class="type">String</span> query, <span class="type">int</span> page) &#123;</span><br><span class="line">		<span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">String</span>&gt; param = new <span class="type">HashMap</span>&lt;&gt;();</span><br><span class="line">		param.put(<span class="string">"q"</span>, query);</span><br><span class="line">		param.put(<span class="string">"page"</span>, page + <span class="string">""</span>);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="type">String</span> getString = <span class="type">HttpClientUtil</span>.doGet(<span class="type">SEARCH_BASE_URL</span>, param);</span><br><span class="line">			<span class="type">TaotaoResult</span> <span class="literal">result</span> = <span class="type">TaotaoResult</span>.formatToPojo(getString, <span class="type">SearchResult</span>.class);</span><br><span class="line">			<span class="keyword">if</span> (<span class="literal">result</span>.getStatus() == <span class="number">200</span>) &#123;</span><br><span class="line">				<span class="type">SearchResult</span> searchResult = (<span class="type">SearchResult</span>) <span class="literal">result</span>.getData();</span><br><span class="line">				<span class="keyword">return</span> searchResult;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (<span class="type">Exception</span> e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SearchServiceController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	private SearchService searchService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/search"</span>)</span><br><span class="line">	public <span class="built_in">String</span> search(<span class="annotation">@RequestParam</span>(<span class="string">"q"</span>)<span class="built_in">String</span> query, <span class="annotation">@RequestParam</span>(defaultValue=<span class="string">"1"</span>)Integer page, </span><br><span class="line">			Model model) &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (query != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				query = <span class="keyword">new</span> <span class="built_in">String</span>(query.getBytes(<span class="string">"iso8859-1"</span>), <span class="string">"utf-8"</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		SearchResult searchResult = searchService.search(query, page);</span><br><span class="line">		</span><br><span class="line">		model.addAttribute(<span class="string">"query"</span>, query);</span><br><span class="line">		model.addAttribute(<span class="string">"totalPages"</span>, searchResult.getTotalPageCount());</span><br><span class="line">		model.addAttribute(<span class="string">"itemList"</span>, searchResult.getItemList());</span><br><span class="line">		model.addAttribute(<span class="string">"page"</span>, page);</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"search"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr发布搜索服务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/22/Java项目实战-solr发布搜索服务/" itemprop="url">Java项目实战 - solr发布搜索服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T17:34:20+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/Java项目实战-solr发布搜索服务/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/22/Java项目实战-solr发布搜索服务/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>发布搜索服务供其它工程调用。</p>
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>要定义返回的POJO：<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchResult</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">List</span>&lt;Item&gt; itemList;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> totalItemCount;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> totalPageCount;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> currentPageNumber;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> currentRowCount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>并实现Dao:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Repository</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SearchDaoImpl</span> <span class="keyword">implements</span> <span class="title">SearchDao</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	private SolrServer solrServer;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	public SearchResult search(SolrQuery query) throws Exception &#123;</span><br><span class="line">		<span class="comment">// return result</span></span><br><span class="line">		SearchResult resultList = <span class="keyword">new</span> SearchResult();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// solr search</span></span><br><span class="line">		QueryResponse response =  solrServer.query(query);</span><br><span class="line">		SolrDocumentList solrDocumentList = response.getResults();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// highlight</span></span><br><span class="line">		<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;&gt;&gt; highlighting = response.getHighlighting();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//get item list</span></span><br><span class="line">		<span class="built_in">List</span>&lt;Item&gt; itemList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (SolrDocument solrDocument : solrDocumentList) &#123;</span><br><span class="line">			Item item = <span class="keyword">new</span> Item();</span><br><span class="line">			</span><br><span class="line">			item.setId((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"id"</span>));</span><br><span class="line">			<span class="comment">//get highlight</span></span><br><span class="line">			<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; list = highlighting.<span class="literal">get</span>(solrDocument.<span class="literal">get</span>(<span class="string">"id"</span>)).<span class="literal">get</span>(<span class="string">"item_title"</span>);</span><br><span class="line">			<span class="built_in">String</span> title = <span class="string">""</span>;</span><br><span class="line">			<span class="keyword">if</span>(list != <span class="keyword">null</span> &amp;&amp; list.size()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">				title = list.<span class="literal">get</span>(<span class="number">0</span>);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				title = (<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_title"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			item.setTitle(title);</span><br><span class="line">			item.setImage((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_image"</span>));</span><br><span class="line">			item.setPrice((long) solrDocument.<span class="literal">get</span>(<span class="string">"item_price"</span>));</span><br><span class="line">			item.setSell_point((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_sell_point"</span>));</span><br><span class="line">			item.setCategory_name((<span class="built_in">String</span>) solrDocument.<span class="literal">get</span>(<span class="string">"item_category_name"</span>));</span><br><span class="line">			</span><br><span class="line">			itemList.add(item);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		resultList.setItemList(itemList);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// get total item number</span></span><br><span class="line">		resultList.setTotalItemCount(solrDocumentList.getNumFound());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> resultList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ServiceSearchImpl</span> implements <span class="type">SearchService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">SearchDao</span> searchDao;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">SearchResult</span> search(<span class="type">String</span> query, <span class="type">int</span> page, <span class="type">int</span> rows) throws <span class="type">Exception</span> &#123;</span><br><span class="line">		<span class="type">SolrQuery</span> solrQuery = new <span class="type">SolrQuery</span>();</span><br><span class="line">		</span><br><span class="line">		solrQuery.setQuery(query);</span><br><span class="line">		</span><br><span class="line">		solrQuery.setStart((page -<span class="number">1</span>) * rows);</span><br><span class="line">		solrQuery.setRows(rows);</span><br><span class="line">		</span><br><span class="line">		solrQuery.<span class="type">set</span>(<span class="string">"df"</span>, <span class="string">"item_keywords"</span>);</span><br><span class="line">		</span><br><span class="line">		solrQuery.setHighlight(<span class="literal">true</span>);</span><br><span class="line">		solrQuery.addHighlightField(<span class="string">"item_title"</span>);</span><br><span class="line">		solrQuery.setHighlightSimplePre(<span class="string">"&lt;em style=\"color:red\"&gt;"</span>);</span><br><span class="line">		solrQuery.setHighlightSimplePost(<span class="string">"&lt;/em&gt;"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="type">SearchResult</span> <span class="literal">result</span> = searchDao.search(solrQuery);</span><br><span class="line">		</span><br><span class="line">		long totalItemCount = <span class="literal">result</span>.getTotalItemCount();</span><br><span class="line">		long totalPageCount = totalItemCount / rows;</span><br><span class="line">		<span class="keyword">if</span> (totalItemCount % rows &gt; <span class="number">0</span>)&#123;</span><br><span class="line">			totalPageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="literal">result</span>.setTotalPageCount(totalPageCount);</span><br><span class="line">		<span class="literal">result</span>.setCurrentPageNumber(page);</span><br><span class="line">		<span class="literal">result</span>.setCurrentRowCount(rows);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchServiceController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> SearchService searchService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(value=<span class="string">"/query"</span>, method=RequestMethod.GET)</span><br><span class="line">	<span class="annotation">@ResponseBody</span></span><br><span class="line">	<span class="keyword">public</span> TaotaoResult search(<span class="annotation">@RequestParam</span>(<span class="string">"q"</span>)String query, </span><br><span class="line">			<span class="annotation">@RequestParam</span>(defaultValue=<span class="string">"1"</span>)Integer page,</span><br><span class="line">			<span class="annotation">@RequestParam</span>(defaultValue=<span class="string">"20"</span>)Integer rows)&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//query is null</span></span><br><span class="line">		<span class="keyword">if</span>(StringUtils.isBlank(query))</span><br><span class="line">			<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">build</span><span class="params">(<span class="number">400</span>, <span class="string">"Should contain query string"</span>)</span></span>;</span><br><span class="line">		</span><br><span class="line">		SearchResult searchResult = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			query = <span class="keyword">new</span> String(query.getBytes(<span class="string">"iso8859-1"</span>), <span class="string">"utf-8"</span>);</span><br><span class="line">			searchResult = searchService.search(query, page, rows);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">(searchResult)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javaproject/solr_search_service.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr导入索引库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1488,507 +1964,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/18/Java项目实战-CMS实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/18/Java项目实战-CMS实现/" itemprop="url">Java项目实战 - CMS实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-18T13:26:30+08:00">
-                2018-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/18/Java项目实战-CMS实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/18/Java项目实战-CMS实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最终实现效果：<br><img src="/images/javaproject/cms.jpg" alt=""></p>
-<h1 id="内容分类管理"><a href="#内容分类管理" class="headerlink" title="内容分类管理"></a>内容分类管理</h1><p>实现内容分类列表的展示和内容的添加功能。<br>Service:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContentCategoryServiceImpl</span> <span class="keyword">implements</span> <span class="title">ContentCategoryService</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> TbContentCategoryMapper contentCategoryMapper;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;EasyUiTreeNode&gt; <span class="title">getContentCategoryList</span><span class="params">(<span class="keyword">long</span> parentId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		TbContentCategoryExample example = <span class="keyword">new</span> TbContentCategoryExample();</span><br><span class="line">		Criteria criteria = example.createCriteria();</span><br><span class="line">		criteria.andParentIdEqualTo(parentId);</span><br><span class="line">		</span><br><span class="line">		List&lt;TbContentCategory&gt; list = contentCategoryMapper.selectByExample(example);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		List&lt;EasyUiTreeNode&gt; resultList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		<span class="keyword">for</span> (TbContentCategory tbContentCategory : list) &#123;</span><br><span class="line">			EasyUiTreeNode node = <span class="keyword">new</span> EasyUiTreeNode();</span><br><span class="line">			node.setId(tbContentCategory.getId());</span><br><span class="line">			node.setText(tbContentCategory.getName());</span><br><span class="line">			node.setState(tbContentCategory.getIsParent()?<span class="string">"closed"</span>:<span class="string">"open"</span>);</span><br><span class="line">			resultList.add(node);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> resultList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> TaotaoResult <span class="title">createContentCategory</span><span class="params">(<span class="keyword">long</span> parentId, String name)</span> </span>&#123;</span><br><span class="line">		TbContentCategory contentCategory = <span class="keyword">new</span> TbContentCategory();</span><br><span class="line">		</span><br><span class="line">		contentCategory.setParentId(parentId);</span><br><span class="line">		contentCategory.setIsParent(<span class="keyword">false</span>);</span><br><span class="line">		contentCategory.setName(name);</span><br><span class="line">		contentCategory.setStatus(<span class="number">1</span>);</span><br><span class="line">		contentCategory.setSortOrder(<span class="number">1</span>);</span><br><span class="line">		contentCategory.setCreated(<span class="keyword">new</span> Date());</span><br><span class="line">		contentCategory.setUpdated(<span class="keyword">new</span> Date());</span><br><span class="line">		</span><br><span class="line">		contentCategoryMapper.insert(contentCategory);</span><br><span class="line">		</span><br><span class="line">		TbContentCategory parentCategory = contentCategoryMapper.selectByPrimaryKey(parentId);</span><br><span class="line">		<span class="keyword">if</span>(!parentCategory.getIsParent())&#123;</span><br><span class="line">			parentCategory.setIsParent(<span class="keyword">true</span>);</span><br><span class="line">			contentCategoryMapper.updateByPrimaryKey(parentCategory);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> TaotaoResult.ok(contentCategory);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Controller:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/content/category"</span>)</span><br><span class="line">public class <span class="type">ContentCategoryController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">ContentCategoryService</span> contentCategoryService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/list"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">List</span>&lt;<span class="type">EasyUiTreeNode</span>&gt; getContentCategoryList(@<span class="type">RequestParam</span>(value=<span class="string">"id"</span>, defaultValue=<span class="string">"0"</span>)long parentId) &#123;</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">EasyUiTreeNode</span>&gt; <span class="literal">result</span> = contentCategoryService.getContentCategoryList(parentId);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/create"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContentCategory(long parentId, <span class="type">String</span> name)&#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = contentCategoryService.createContentCategory(parentId, name);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="内容管理"><a href="#内容管理" class="headerlink" title="内容管理"></a>内容管理</h1><p>实现内容列表的展示和内容的添加功能。<br>Service:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ContentServiceImpl</span> implements <span class="type">ContentService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">TbContentMapper</span> contentMapper;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getContentList(long categoryId, <span class="type">int</span> page, <span class="type">int</span> rows) &#123;</span><br><span class="line">		<span class="type">TbContentExample</span> example = new <span class="type">TbContentExample</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="type">PageHelper</span>.startPage(page, rows);</span><br><span class="line">		<span class="type">Criteria</span> criteria = example.createCriteria();</span><br><span class="line">		criteria.andCategoryIdEqualTo(categoryId);</span><br><span class="line">		</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">TbContent</span>&gt; list = contentMapper.selectByExample(example);</span><br><span class="line"></span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = new <span class="type">EasyUiDataGridResult</span>();</span><br><span class="line">		<span class="literal">result</span>.setRows(list);</span><br><span class="line">		</span><br><span class="line">		<span class="type">PageInfo</span>&lt;<span class="type">TbContent</span>&gt; pageInfo = new <span class="type">PageInfo</span>&lt;&gt;(list);</span><br><span class="line">		<span class="literal">result</span>.setTotal(pageInfo.getTotal());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContent(<span class="type">TbContent</span> tbContent) &#123;</span><br><span class="line">		tbContent.setCreated(new <span class="type">Date</span>());</span><br><span class="line">		tbContent.setUpdated(new <span class="type">Date</span>());</span><br><span class="line">		</span><br><span class="line">		contentMapper.insert(tbContent);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="type">TaotaoResult</span>.ok();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Controller:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/content"</span>)</span><br><span class="line">public class <span class="type">ContentController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">ContentService</span> contentService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/query/list"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getContentList(long categoryId, <span class="type">int</span> page, <span class="type">int</span> rows)&#123;</span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = contentService.getContentList(categoryId, page, rows);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContent(<span class="type">TbContent</span> tbContent)&#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = contentService.createContent(tbContent);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>逆向工程自动生成的insert方法不会自动帮我们给主键的值赋值，需要添加主键返回，在TbContentCategoryMapper.xml文件中做如下修改：</p>
-<pre><code>&lt;insert id=&quot;insert&quot; parameterType=&quot;com.izheyi.pojo.TbContentCategory&quot; &gt;
-      &lt;selectKey keyProperty=&quot;id&quot; resultType=&quot;long&quot; order=&quot;AFTER&quot;&gt;
-          SELECT LAST_INSERT_ID()
-      &lt;/selectKey&gt;
-    insert into tb_content_category (id, parent_id, name, 
-      status, sort_order, is_parent, 
-      created, updated)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
-  &lt;/insert&gt;
-  &lt;insert id=&quot;insertSelective&quot; parameterType=&quot;com.izheyi.pojo.TbContentCategory&quot; &gt;
-      &lt;selectKey keyProperty=&quot;id&quot; resultType=&quot;long&quot; order=&quot;AFTER&quot;&gt;
-          SELECT LAST_INSERT_ID()
-      &lt;/selectKey&gt;
-    insert into tb_content_category
-    &lt;trim prefix=&quot;(&quot; suffix=&quot;)&quot; suffixOverrides=&quot;,&quot; &gt;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/17/Java项目实战-实现商品添加/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/17/Java项目实战-实现商品添加/" itemprop="url">Java项目实战 - 实现商品添加</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T17:42:51+08:00">
-                2018-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/17/Java项目实战-实现商品添加/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/17/Java项目实战-实现商品添加/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>商品的添加不只添加基本的商品信息，还要添加商品描述信息。</p>
-<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>逆向工程已经实现了Mapper，不需要再做修改</p>
-<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>在ItemService中实现。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function">TaotaoResult <span class="title">createItem</span><span class="params">(TbItem item, String desc)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 补全字段</span></span><br><span class="line">		<span class="keyword">long</span> itemId = IDUtils.genItemId();</span><br><span class="line">		item.setId(itemId); <span class="comment">//id</span></span><br><span class="line">		item.setStatus((<span class="keyword">byte</span>) <span class="number">1</span>); <span class="comment">//商品状态，1-正常，2-下架，3-删除</span></span><br><span class="line">		item.setCreated(<span class="keyword">new</span> Date());</span><br><span class="line">		item.setUpdated(<span class="keyword">new</span> Date());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Add Item</span></span><br><span class="line">		itemMapper.insert(item);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Insert Desc</span></span><br><span class="line">		TaotaoResult result = insertItemDesc(itemId, desc);</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">()</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="function">TaotaoResult <span class="title">insertItemDesc</span><span class="params">(Long itemId, String desc)</span></span>&#123;</span><br><span class="line">		TbItemDesc itemDesc = <span class="keyword">new</span> TbItemDesc();</span><br><span class="line">		itemDesc.setItemId(itemId);</span><br><span class="line">		itemDesc.setItemDesc(desc);</span><br><span class="line">		itemDesc.setCreated(<span class="keyword">new</span> Date());</span><br><span class="line">		itemDesc.setUpdated(<span class="keyword">new</span> Date());</span><br><span class="line">		itemDescMapper.insert(itemDesc);</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">return</span> TaotaoResult.<span class="title">ok</span><span class="params">()</span></span>;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><p>在ItemServiceController中实现。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">RequestMapping</span>(value = <span class="string">"/save"</span>, <span class="keyword">method</span> = <span class="type">RequestMethod</span>.<span class="type">POST</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createItem(<span class="type">TbItem</span> item, <span class="type">String</span> desc)&#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = itemService.createItem(item, desc);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="DB结果验证"><a href="#DB结果验证" class="headerlink" title="DB结果验证"></a>DB结果验证</h1><p>商品：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT <span class="keyword">*</span> FROM `tb_item` where title='商务投资';</span><br><span class="line"></span><br><span class="line">+-----------------+----------+------------+-------+------+---------+-----------------------------------------------------------------------------------+-----+--------+---------------------+---------------------+</span><br><span class="line">|<span class="string"> id              </span>|<span class="string"> title    </span>|<span class="string"> sell_point </span>|<span class="string"> price </span>|<span class="string"> num  </span>|<span class="string"> barcode </span>|<span class="string"> image                                                                             </span>|<span class="string"> cid </span>|<span class="string"> status </span>|<span class="string"> created             </span>|<span class="string"> updated             </span>|</span><br><span class="line">+-----------------+----------+------------+-------+------+---------+-----------------------------------------------------------------------------------+-----+--------+---------------------+---------------------+</span><br><span class="line">|<span class="string"> 153156317952887 </span>|<span class="string"> 商务投资 </span>|<span class="string"> 商务投资   </span>|<span class="string"> 33300 </span>|<span class="string"> 4444 </span>|<span class="string"> 1241324 </span>|<span class="string"> http://192.168.220.133/images/2018/07/14/f93d15e9-2153-4d81-af0b-32fe26d63f01.png </span>|<span class="string">  13 </span>|<span class="string">      1 </span>|<span class="string"> 2018-07-14 18:13:00 </span>|<span class="string"> 2018-07-14 18:13:00 </span>|</span><br><span class="line">+-----------------+----------+------------+-------+------+---------+-----------------------------------------------------------------------------------+-----+--------+---------------------+---------------------+</span><br></pre></td></tr></table></figure></p>
-<p>描述：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM <span class="code">`tb_item_desc`</span> where item<span class="emphasis">_id=153156317952887;</span><br><span class="line"></span><br><span class="line"></span><span class="header">+-----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="header">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">--------------------------------+---------------------+---------------------+</span></span><br><span class="line">| item<span class="emphasis">_id         | item_</span>desc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="header">                                | created             | updated             |</span><br><span class="line">+-----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="header">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">--------------------------------<span class="code">+---------------------+</span>---------------------+</span><br><span class="line">| 153156317952887 | &lt;p&gt;</span><br><span class="line"><span class="code">        &lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;商务投资&lt;/span&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;商务投资&lt;/span&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;商务投资&lt;/span&gt;&lt;span style="font-fami</span></span><br><span class="line">y:&amp;quot;background-color:#FFFFFF;"&gt;商务投资&lt;/span&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;商务投资&lt;/span&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;&lt;/span&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;&lt;/s</span><br><span class="line">an&gt;&lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;&lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line"><span class="code">        &lt;span style="font-family:&amp;quot;background-color:#FFFFFF;"&gt;&lt;img src="http://192.168.220.133/images/2018/07/14/c23109f3-c223-4ffc-b58f-b5d286114a4a.png" alt="" /&gt;&lt;br /&gt;</span></span><br><span class="line">&lt;/span&gt;</span><br><span class="line"><span class="header">&lt;/p&gt; | 2018-07-14 18:13:00 | 2018-07-14 18:13:00 |</span><br><span class="line">+-----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="header">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/16/Java项目实战-图片Server管理和图片上传/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="url">Java项目实战 - 图片Server管理和图片上传</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T13:55:13+08:00">
-                2018-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/16/Java项目实战-图片Server管理和图片上传/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/16/Java项目实战-图片Server管理和图片上传/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要分布式的环境中，一般会配置一个专门的图片Server。</p>
-<h1 id="图片服务器"><a href="#图片服务器" class="headerlink" title="图片服务器"></a>图片服务器</h1><ul>
-<li>Nginx作为http服务</li>
-<li>ftp上传图片 - linux自带：vsftpd。</li>
-</ul>
-<p>Nginx和vsftpd都需要安装配置，不做说明。</p>
-<h1 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h1><h2 id="文件上传解析器"><a href="#文件上传解析器" class="headerlink" title="文件上传解析器"></a>文件上传解析器</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 定义文件上传解析器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"multipartResolver"</span></span><br><span class="line">    <span class="attribute">class</span>=<span class="value">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定默认编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"defaultEncoding"</span> <span class="attribute">value</span>=<span class="value">"UTF-8"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设定文件上传的最大值5MB，5*1024*1024 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"maxUploadSize"</span> <span class="attribute">value</span>=<span class="value">"5242880"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="创建公共Properties"><a href="#创建公共Properties" class="headerlink" title="创建公共Properties"></a>创建公共Properties</h2><p>在properties下创建resource.properties文件<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#FTP配置</span></span><br><span class="line"><span class="setting">FTP_IP=<span class="value"><span class="number">192.168</span>.<span class="number">220.133</span></span></span></span><br><span class="line"><span class="setting">FTP_PORT=<span class="value"><span class="number">21</span></span></span></span><br><span class="line"><span class="setting">FTP_USERNAME=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_PASSWORD=<span class="value">ftpuser</span></span></span><br><span class="line"><span class="setting">FTP_BASE_PATH=<span class="value">/home/ftpuser/www/images</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">#图片Several配置</span></span><br><span class="line"><span class="setting">IMAGE_BASE_PATH=<span class="value">http://<span class="number">192.168</span>.<span class="number">220.133</span>/images</span></span></span><br></pre></td></tr></table></figure></p>
-<p>并修改<code>&lt;context:property-placeholder location=&quot;classpath:properties/db.properties&quot; /&gt;</code> to <code>&lt;context:property-placeholder location=&quot;classpath:properties/*.properties&quot; /&gt;</code></p>
-<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>封装了一个公共的File Upload的方法。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">PictureServiceImpl</span> <span class="keyword">implements</span> <span class="title">PictureService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//利用这种方式来取resource.properties的配置</span></span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_IP&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_IP;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PORT&#125;</span>"</span>)</span><br><span class="line">	private Integer FTP_PORT;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_USERNAME&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_USERNAME;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_PASSWORD&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_PASSWORD;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;FTP_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> FTP_BASE_PATH;</span><br><span class="line">	<span class="annotation">@Value</span>(<span class="string">"<span class="subst">$&#123;IMAGE_BASE_PATH&#125;</span>"</span>)</span><br><span class="line">	private <span class="built_in">String</span> IMAGE_BASE_PATH;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	public <span class="built_in">Map</span> uploadPicture(MultipartFile uploadFile) &#123;</span><br><span class="line">		<span class="built_in">Map</span> resultMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 生成新文件名</span></span><br><span class="line">			<span class="built_in">String</span> oldname = uploadFile.getOriginalFilename();</span><br><span class="line">			<span class="built_in">String</span> newname = UUID.randomUUID().toString();</span><br><span class="line">			newname = newname + oldname.substring(oldname.lastIndexOf(<span class="string">"."</span>));</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//上传图片</span></span><br><span class="line">			<span class="built_in">String</span> filepath = <span class="keyword">new</span> <span class="built_in">DateTime</span>().toString(<span class="string">"/yyyy/MM/dd"</span>);</span><br><span class="line">			boolean result = FtpUtil.uploadFile(FTP_IP, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, </span><br><span class="line">					filepath, newname, uploadFile.getInputStream());</span><br><span class="line">			<span class="keyword">if</span>(!result)&#123;</span><br><span class="line">				resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">				resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">				<span class="keyword">return</span> resultMap;</span><br><span class="line">			&#125;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">0</span>);</span><br><span class="line">			resultMap.put(<span class="string">"url"</span>, IMAGE_BASE_PATH + filepath + <span class="string">"/"</span> + newname);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			resultMap.put(<span class="string">"error"</span>, <span class="number">1</span>);</span><br><span class="line">			resultMap.put(<span class="string">"message"</span>, <span class="string">"File upload failed"</span>);</span><br><span class="line">			<span class="keyword">return</span> resultMap;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">public class <span class="type">PictureController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">PictureService</span> pictureService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/pic/upload"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">String</span> pictureUpload(<span class="type">MultipartFile</span> uploadFile)&#123;</span><br><span class="line">		<span class="type">Map</span> <span class="literal">result</span> = pictureService.uploadPicture(uploadFile);</span><br><span class="line">		<span class="keyword">return</span> <span class="type">JsonUtils</span>.objectToJson(<span class="literal">result</span>);//处理浏览器兼容性</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/item_pic.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2043,7 +2018,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2065,7 +2040,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

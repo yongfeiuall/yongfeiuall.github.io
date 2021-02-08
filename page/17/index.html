@@ -305,6 +305,493 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/05/09/Gatling-install-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/09/Gatling-install-start/" itemprop="url">Gatling - install & start</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-09T15:19:48+08:00">
+                2017-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gatling/" itemprop="url" rel="index">
+                    <span itemprop="name">Gatling</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/09/Gatling-install-start/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/05/09/Gatling-install-start/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>基于Scala 开发的开源免费性能压测工具。主要用于测量基于HTTP的服务器，比如Web应用程序，RESTful服务等。<br>方方面面的原因，准备用Gatling做性能测试，对这个工具做一个简单的研究。</p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>去官网下载： <a href="http://gatling.io/download/" title="gatling download">http://gatling.io/download/</a><br>下载之后，解压到相应的目录中去。</p>
+<ul>
+<li>bin 目录下有2个脚本，gatling和recorder， gatling用来运行测试， recorder用来启动录制脚本的UI的。</li>
+<li>conf 目录是关于Gatling自身的一些配置。</li>
+<li>lib 目录是Gatling自身依赖的库文件。</li>
+<li>results 目录用来存放测试报告的。</li>
+<li>target</li>
+<li>user-files<ul>
+<li>bodies</li>
+<li>data 数据目录，csv参数文件存放在这里</li>
+<li>simulations 测试脚本（所有的脚本都在这里）</li>
+</ul>
+</li>
+</ul>
+<h1 id="Recorder"><a href="#Recorder" class="headerlink" title="Recorder"></a>Recorder</h1><p>运行bin目录下的’recorder.bat’，打开Recorder Window。<br><img src="/images/gatling/recorder.jpg" alt=""><br>录制之前要先设置浏览器用Gatling Recorder’s proxy，录制之后，保存脚本。录制一个搜索：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> <span class="keyword">default</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.concurrent.duration._</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.gatling.core.<span class="type">Predef</span>._</span><br><span class="line"><span class="keyword">import</span> io.gatling.http.<span class="type">Predef</span>._</span><br><span class="line"><span class="keyword">import</span> io.gatling.jdbc.<span class="type">Predef</span>._</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RecordedSimulation</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">Simulation</span> &#123;</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">val</span> <span class="title">httpProtocol</span> =</span> http</span><br><span class="line">		.baseURL(<span class="string">"https://www.baidu.com"</span>)</span><br><span class="line">		.inferHtmlResources()</span><br><span class="line">		.acceptHeader(<span class="string">"image/png,image/*;q=0.8,*/*;q=0.5"</span>)</span><br><span class="line">		.acceptEncodingHeader(<span class="string">"gzip, deflate"</span>)</span><br><span class="line">		.acceptLanguageHeader(<span class="string">"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"</span>)</span><br><span class="line">		.userAgentHeader(<span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">val</span> <span class="title">headers_0</span> =</span> <span class="type">Map</span>(<span class="string">"Accept"</span> -&gt; <span class="string">"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">uri1</span> =</span> <span class="string">"https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_65682a2.js"</span></span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">uri2</span> =</span> <span class="string">"www.baidu.com"</span></span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">uri3</span> =</span> <span class="string">"http://baidu.com"</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">val</span> <span class="title">scn</span> =</span> scenario(<span class="string">"RecordedSimulation"</span>)</span><br><span class="line">		.exec(http(<span class="string">"request_0"</span>)</span><br><span class="line">			.get(uri3 + <span class="string">"/"</span>)</span><br><span class="line">			.headers(headers_0)</span><br><span class="line">			.resources(http(<span class="string">"request_1"</span>)</span><br><span class="line">			.get(<span class="string">"/img/baidu_jgylogo3.gif"</span>),</span><br><span class="line">            http(<span class="string">"request_2"</span>)</span><br><span class="line">			.get(<span class="string">"/img/bd_logo1.png"</span>)))</span><br><span class="line">		.pause(<span class="number">4</span>)</span><br><span class="line">		.exec(http(<span class="string">"request_3"</span>)</span><br><span class="line">			.get(<span class="string">"/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;ch=&amp;tn=baidu&amp;bar=&amp;wd=gatling&amp;rn=&amp;oq=&amp;rsv_pq=e632af2400018ab7&amp;rsv_t=21efo2auHiH8VwtAPnYwISgfAskcOJ5NLsAxSJh2B%2BZEb6LFvXLa%2BPVXxwc&amp;rqlang=cn"</span>)</span><br><span class="line">			.headers(headers_0)</span><br><span class="line">			.resources(http(<span class="string">"request_4"</span>)</span><br><span class="line">			.get(<span class="string">"/aladdin/tpl/dict3/repeat_small.c6d62112.png"</span>),</span><br><span class="line">            http(<span class="string">"request_5"</span>)</span><br><span class="line">			.get(<span class="string">"/aladdin/img/dic3/iconall.gif"</span>)))</span><br><span class="line"></span><br><span class="line">	setUp(scn.inject(atOnceUsers(<span class="number">1</span>))).protocols(httpProtocol)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>录制功能应该一般都不太会用到。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/09/Gatling-install-start/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/03/17/Uploading-a-file-using-python-requests/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/17/Uploading-a-file-using-python-requests/" itemprop="url">Uploading a file using python requests</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T15:32:01+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/17/Uploading-a-file-using-python-requests/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/03/17/Uploading-a-file-using-python-requests/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>List here just for a reminder:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">"http://34.207.223.236"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">files</span> = &#123;<span class="string">"file"</span>: <span class="built_in">open</span>(<span class="string">"c:\\a.csv"</span>, <span class="string">'rb'</span>)&#125;</span><br><span class="line"></span><br><span class="line">response = requests.<span class="built_in">post</span>(url, <span class="built_in">files</span>=<span class="built_in">files</span>)</span><br><span class="line"></span><br><span class="line">print(response.<span class="keyword">text</span>)</span><br></pre></td></tr></table></figure>
+<p>requests will send a multi-part form POST body with the upload_file field set to the contents of the a.csv file.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/16/python-json-dump-load-dumps-loads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/16/python-json-dump-load-dumps-loads/" itemprop="url">python json dump/load/dumps/loads</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T08:58:57+08:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/16/python-json-dump-load-dumps-loads/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/02/16/python-json-dump-load-dumps-loads/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="load"><a href="#load" class="headerlink" title="load"></a>load</h1><p>从外部JSON文件变成dict字典(外部文件一定要是json格式)<br><code>json.load(open(&#39;a.json&#39;,&quot;r&quot;))</code></p>
+<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>把dict字典变成json格式，生成到外部文件里面<br><code>json.dump(dict,open(&#39;a.json&#39;,&quot;w&quot;))</code></p>
+<h1 id="dumps"><a href="#dumps" class="headerlink" title="dumps"></a>dumps</h1><p>Convert Python Object (Dict) to JSON<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"> </span><br><span class="line"><span class="keyword">d</span> = &#123;&#125;</span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Name"</span>] = <span class="string">"Luke"</span></span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Country"</span>] = <span class="string">"Canada"</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> json.dumps(<span class="keyword">d</span>, ensure_ascii=False)</span><br><span class="line"># result &#123;<span class="string">"Country"</span>: <span class="string">"Canada"</span>, <span class="string">"Name"</span>: <span class="string">"Luke"</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="loads"><a href="#loads" class="headerlink" title="loads"></a>loads</h1><p>To convert JSON to a Python dict use this:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">json_data = '&#123;<span class="string">"name"</span>: <span class="string">"Brian"</span>, <span class="string">"city"</span>: <span class="string">"BJ"</span>&#125;'</span><br><span class="line">python_obj = json.loads(json_data)</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"name"</span>]</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"city"</span>]</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/05/中国国家科技馆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1420,487 +1907,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/10/06/儿童绘画课/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/06/儿童绘画课/" itemprop="url">日日新儿童绘画课</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-06T15:37:45+08:00">
-                2016-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/06/儿童绘画课/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/10/06/儿童绘画课/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>一直吵着要学画画，去年等了一年也没有开国画的班，今年还是开不起来，总算报了儿童绘画的班，玩的开心就好。</p>
-<p>以下作品仅做留念。</p>
-<p><img src="/images/izheyi/2016/10/paint_01.jpg" alt=""><br><img src="/images/izheyi/2016/10/paint_02.jpg" alt=""><br><img src="/images/izheyi/2016/10/paint_03.jpg" alt=""><br><img src="/images/izheyi/2016/10/paint_04.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/10/06/儿童绘画课/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/10/02/逛植物园/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/02/逛植物园/" itemprop="url">逛植物园</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-02T08:56:00+08:00">
-                2016-10-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/02/逛植物园/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/10/02/逛植物园/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这个国庆不是严重雾霾，就是连绵阴雨，就好了一天，挣扎着去了植物园，正好赶上了这唯一的好天。</p>
-<p>小丁大概两岁的时候来过一次，来去匆匆，都没来得及好好看看。以前总觉得植物园有啥好看的，这次感受就不一样了，确实是挺漂亮的一个地方，环境好，植物种类也很多，玩的人很多，比想象的要漂亮的多。</p>
-<p><img src="/images/izheyi/2016/10/zhiwuyuan_0.JPG" alt=""><br><img src="/images/izheyi/2016/10/zhiwuyuan_01.jpg" alt=""><br><img src="/images/izheyi/2016/10/zhiwuyuan_02.jpg" alt=""><br><img src="/images/izheyi/2016/10/zhiwuyuan_03.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/10/02/逛植物园/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/09/12/做性能测试时，怎么判断网络带宽够不够/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/12/做性能测试时，怎么判断网络带宽够不够/" itemprop="url">做性能测试时，怎么判断网络带宽够不够</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-12T15:47:02+08:00">
-                2016-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/09/12/做性能测试时，怎么判断网络带宽够不够/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/09/12/做性能测试时，怎么判断网络带宽够不够/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>简单记录一下怎么判断网络带宽对性能测试的影响。</p>
-<p><em>注：100Mbps = 12.5M/s，带宽是bps</em></p>
-<ol>
-<li><p>压力机和服务器之间的真实带宽<br>这个一般自己来测试一下，可以用工具iperf， 详细请看：<a href="https://iperf.fr/" target="_blank" rel="external">iperf</a><br><img src="/images/performancetesting/iperf.jpg" alt=""><br>这样，就可以获得二者之间的带宽为393M/s</p>
-</li>
-<li><p>单个用户跑业务的吞吐量的平均值<br>假设跑完后的平均值是1000k，那需要的带宽就约是8M；若是想跑100个用户就需要800M，根据第一步测试的结果实际带宽是393M，所以是跑100个用户带宽是不够的。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1955,7 +1961,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">344</span>
+                  <span class="site-state-item-count">347</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1977,7 +1983,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
