@@ -305,6 +305,339 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/18/Docker-基础和安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/18/Docker-基础和安装/" itemprop="url">Docker - 基础和安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-18T10:06:16+08:00">
+                2017-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/18/Docker-基础和安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/18/Docker-基础和安装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Docker现在火的不得了，也一直很好奇，利用一些时间简单的学习一下，知道一下到底是个什么东西，基本的原理和应用。</p>
+<p><em>初学，只是简单的入门和学习的一个记录，如有不对，欢迎指正。</em></p>
+<h1 id="Docker介绍"><a href="#Docker介绍" class="headerlink" title="Docker介绍"></a>Docker介绍</h1><p>Docker 是一个开源的应用容器引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。容器是完全使用沙箱机制，相互之间不会有任何接口,更重要的是容器性能开销极低。<br>通俗讲docker就是集装箱原理，从图标就可以看出来^_^<br><img src="/images/docker/overview.jpg" alt=""></p>
+<ul>
+<li><strong>Docker Client:</strong> Docker Client提供给用户一个终端，用户输入Docker提供的命令来管理本地或者远程的服务器。</li>
+<li><strong>Docker Host:</strong> 一个物理或者虚拟的机器用于执行Docker守护进程和容器。</li>
+<li><strong>Docker Daemon:</strong> 每台服务器上只要安装了Docker的环境，基本上就跑了一个后台程序Docker Daemon，Docker Daemon会接收Docker Client发过来的指令,并对服务器的进行具体操作。</li>
+<li><strong>Docker Images:</strong> 用于创建Docker容器的模板。是只读的。</li>
+<li><strong>Docker Container:</strong> 是真正跑项目程序、消耗机器资源、提供服务的地方，Docker Container通过Docker Images启动，在Docker Images的基础上运行你需要的代码。</li>
+<li><strong>Docker Registry:</strong> 是管理仓库的具体服务器，每个服务器上可以有多个仓库，而每个仓库下面有多个镜像。</li>
+<li><strong>Docker Machine:</strong> 是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker并管理Host。</li>
+</ul>
+<h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><p><em>试验环境是Win7</em></p>
+<p>从Docker官网下载：<a href="https://www.docker.com/docker-windows" target="_blank" rel="external">Docker-Windows</a>，安装方式，Windows下就是双击，下一步，下一步了。。。</p>
+<h1 id="Docker运行"><a href="#Docker运行" class="headerlink" title="Docker运行"></a>Docker运行</h1><p>安装完毕后，在应用程序里点击‘Docker Quickstart Terminal’打开Docker，但是有下边这个错误提示： “Looks like something went wrong in step ‘Finalize’…”<br><strong>Solution：</strong><br>在‘docker toolbox’的安装目录下，打开‘start.sh’，做如下修改(注释掉clear行)：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">STEP</span>=<span class="string">"Finalize"</span></span><br><span class="line"><span class="preprocessor">#clear</span></span><br><span class="line">cat &lt;&lt; EOF</span><br></pre></td></tr></table></figure></p>
+<p><strong>运行结果：</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">                        ##         .</span><br><span class="line">                  ## ## ##        ==</span><br><span class="line">               ## ## ## ## ##    ===</span><br><span class="line">           /<span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span>"\___/ ===</span><br><span class="line">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line"></span><br><span class="line">docker is configured to <span class="keyword">use</span> the default machine with IP 192.168.99.100</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">help</span> getting started, check <span class="keyword">out</span> the docs at https:<span class="comment">//docs.docker.com</span></span><br><span class="line"></span><br><span class="line">Start interactive <span class="keyword">shell</span></span><br><span class="line"></span><br><span class="line">yongfei.hu@yongfei-hu MINGW64 ~</span><br><span class="line">$ docker <span class="keyword">version</span></span><br><span class="line">Client:</span><br><span class="line"> <span class="keyword">Version</span>:      17.10.0-ce</span><br><span class="line"> API <span class="keyword">version</span>:  1.33</span><br><span class="line"> Go <span class="keyword">version</span>:   go1.8.3</span><br><span class="line"> Git commit:   f4ffd25</span><br><span class="line"> Built:        Tue Oct 17 19:00:02 2017</span><br><span class="line"> OS/<span class="keyword">Arch</span>:      windows/amd64</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> <span class="keyword">Version</span>:      17.10.0-ce</span><br><span class="line"> API <span class="keyword">version</span>:  1.33 (minimum <span class="keyword">version</span> 1.12)</span><br><span class="line"> Go <span class="keyword">version</span>:   go1.8.3</span><br><span class="line"> Git commit:   f4ffd25</span><br><span class="line"> Built:        Tue Oct 17 19:05:23 2017</span><br><span class="line"> OS/<span class="keyword">Arch</span>:      linux/amd64</span><br><span class="line"> Experimental: false</span><br></pre></td></tr></table></figure></p>
+<p><strong>Docker Machine：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine ssh default</span><br><span class="line">                        <span class="comment">##         .</span></span><br><span class="line">                  <span class="comment">## ## ##        ==</span></span><br><span class="line">               <span class="comment">## ## ## ## ##    ===</span></span><br><span class="line">           /<span class="string">""""""</span><span class="string">""""""</span><span class="string">"""""\___/ ===</span><br><span class="line">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line"> _                 _   ____     _            _</span><br><span class="line">| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __</span><br><span class="line">| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|</span><br><span class="line">| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |</span><br><span class="line">|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|</span><br><span class="line">Boot2Docker version 17.10.0-ce, build HEAD : 34fe485 - Wed Oct 18 17:16:34 UTC 2017</span><br><span class="line">Docker version 17.10.0-ce, build f4ffd25</span><br><span class="line">docker@default:~$</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Docker生命周期"><a href="#Docker生命周期" class="headerlink" title="Docker生命周期"></a>Docker生命周期</h1><p>Docker三个基本概念</p>
+<ul>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）</li>
+</ul>
+<p>理解了这三个概念，就理解了整个生命周期。我们可以把镜像，容器想像成java的类和对象，即容器是由镜像实例化而来的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/14/小丁画作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/小丁画作/" itemprop="url">奇点绘画画随记（2018）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-14T12:39:39+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/小丁画作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/14/小丁画作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>天天吵着要报个课外班学习，如愿。看来姑娘是真的喜欢画画，每次都很期待上课。</p>
+<h2 id="2017"><a href="#2017" class="headerlink" title="2017"></a>2017</h2><p><img src="/images/izheyi/pic/qidianhui/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/7.JPG" alt=""></p>
+<h2 id="2018"><a href="#2018" class="headerlink" title="2018"></a>2018</h2><p><img src="/images/izheyi/pic/qidianhui/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/8.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/9.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/10.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/11.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/12.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/13.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/14.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/10/Pytest-run-failed-after-renaming-projet-folder/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1569,329 +1902,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/06/07/Spring-Boot-更换banner/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/07/Spring-Boot-更换banner/" itemprop="url">Spring Boot - 更换banner</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-07T09:31:49+08:00">
-                2017-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Boot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/07/Spring-Boot-更换banner/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/07/Spring-Boot-更换banner/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Spring boot 有自己的banner, 但是也可以设置使用自定制的， 只要在自己的项目中新加：/springboot/src/main/resources/banner.txt。</p>
-<p>利用这个网站生成字符<a href="http://patorjk.com/software/taag/" target="_blank" rel="external">Patorjk</a>，我们可以利用生成的字符串放入这个banner.txt文件。</p>
-<p>重启spring boot就可以看到了<br><img src="/images/springboot/banner.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/06/06/Spring-Boot-介绍和环境搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/06/Spring-Boot-介绍和环境搭建/" itemprop="url">Spring Boot - 介绍和环境搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-06T15:45:10+08:00">
-                2017-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Boot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/06/Spring-Boot-介绍和环境搭建/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/06/Spring-Boot-介绍和环境搭建/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Spring Boot简化了基于Spring的应用开发，你只需要”run”就能创建一个独立的，产品级别的Spring应用。话不多说，直接参见官网<a href="https://http://projects.spring.io/spring-boot/">Spring Boot</a></p>
-<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ol>
-<li><p>安装JDK<br><code>java -version</code> - 检查Java安装<br>安装后添加环境变量。</p>
-</li>
-<li><p>安装Maven<br>我的是Windows，方法如下：<br>Adding to PATH: Add the unpacked distribution’s bin directory to your user PATH environment variable by opening up the system properties (WinKey + Pause), selecting the “Advanced” tab, and the “Environment Variables” button, then adding or selecting the PATH variable in the user variables with the value C:\Program Files\apache-maven-3.5.0\bin. The same dialog can be used to set JAVA_HOME to the location of your JDK, e.g. C:\Program Files\Java\jdk1.7.0_51<br>Open a new command prompt (Winkey + R then type cmd) and run mvn -v to verify the installation.</p>
-</li>
-<li><p>新建文件夹作为Project根目录，创建POM</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span>  </span><br><span class="line">    <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>myFirstproject<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Inherit defaults from Spring Boot --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parent</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.4.0.BUILD-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">parent</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Add typical dependencies for a web application --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Package as an executable jar --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">build</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">plugins</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">plugin</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="title">plugin</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">plugins</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">build</span>&gt;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Add Spring repositories --&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- (you don't need this if you are using a .RELEASE version) --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">repositories</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">repository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-snapshots<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/snapshot<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">snapshots</span>&gt;</span><span class="tag">&lt;<span class="title">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="title">enabled</span>&gt;</span><span class="tag">&lt;/<span class="title">snapshots</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">repository</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">repository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-milestones<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/milestone<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">repository</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">repositories</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">pluginRepositories</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-snapshots<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/snapshot<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">id</span>&gt;</span>spring-milestones<span class="tag">&lt;/<span class="title">id</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://repo.spring.io/milestone<span class="tag">&lt;/<span class="title">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="title">pluginRepository</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="title">pluginRepositories</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/06/Spring-Boot-介绍和环境搭建/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1946,7 +1956,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">347</span>
+                  <span class="site-state-item-count">349</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

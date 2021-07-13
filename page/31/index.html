@@ -305,6 +305,351 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/10/Linux-vi编辑器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/08/10/Linux-vi编辑器/" itemprop="url">Linux-vi编辑器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-08-10T12:13:54+08:00">
+                2013-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/08/10/Linux-vi编辑器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/08/10/Linux-vi编辑器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>vi编辑器是所有Unix及Linux系统下标准的编辑器，他就相当于windows系统中的记事本一样。<br>vim可以当作vi的升级版本，他可以用多种颜色的方式来显示一些特殊的信息。</p>
+<h1 id="三种模式"><a href="#三种模式" class="headerlink" title="三种模式"></a>三种模式</h1><p>基本上vi可以分为三种状态，分别是一般模式、编辑模式和命令行模式，各模式的功能区分如下：</p>
+<ul>
+<li>一般模式<br>以vi打开一个文件就直接进入一般模式了(这是默认的模式)。在这个模式中， 你可以使用上下左右按键来移动光标，你可以使用删除字符或删除整行来处理文件内容， 也可以使用复制、粘贴来处理你的文件数据。</li>
+<li>编辑模式<br>在一般模式中可以进行删除、复制、粘贴等的操作，但是却无法编辑文件的内容，只有当到你按下【i, I, o, O, a, A, r, R】等任何一个字母之后才会进入编辑模式。这时候屏幕的左下方会出现【INSERT或 REPLACE】的字样，此时才可以进行编辑。而如果要回到一般模式时， 则必须要按下【Esc】即可退出编辑模式。</li>
+<li>命令行模式<br>输入【 : / ? 】三个中的任何一个，就可以将光标移动到最底下那一行。在这个模式中， 可以提供查找、读取、存盘、替换字符、离开vi、显示行号等的动作则是在此模式中完成的！<br><img src="/images/linux/vi_module.jpg" alt=""></li>
+</ul>
+<h1 id="按键说明"><a href="#按键说明" class="headerlink" title="按键说明"></a>按键说明</h1><ul>
+<li><p>基本常用命令<br><img src="/images/linux/vi_insert.jpg" alt=""><br><img src="/images/linux/vi_locate.jpg" alt=""><br><img src="/images/linux/vi_find.jpg" alt=""><br><img src="/images/linux/vi_copy.jpg" alt=""><br><img src="/images/linux/vi_replace.jpg" alt=""><br><img src="/images/linux/vi_delete.jpg" alt=""><br><img src="/images/linux/vi_quit.jpg" alt=""></p>
+</li>
+<li><p>高级命令<br>J 将当前行和下一行连接为一行<br>&lt;&lt; 将当前行左移一个单位（一个缩进宽度）<br>‘&gt;&gt; 将当前行右移一个单位（一个缩进宽度）<br>~ 改变当前字符的大小写<br>^G Ctrl+G组合键可以显示当前文件名和状态<br>U 撤销对当前行所做的修改<br>u 撤销上次操作，再次按 ‘u’ 恢复该次操作<br>:f 以百分号(%)的形式显示当前光标在文件中的位置、文件名和文件的总行数<br>:f filename 将文件重命名为 filename<br>:w filename 保存修改到 filename<br>:e filename 打开另一个文件名为 filename 的文件<br>:cd dirname 改变当前工作目录到 dirname<br>:e # 在两个打开的文件之间进行切换<br>:n 如果用 vi 打开了多个文件，可以使用 :n 切换到下一个文件<br>:p 如果用 vi 打开了多个文件，可以使用 :n 切换到上一个文件<br>:N 如果用 vi 打开了多个文件，可以使用 :n 切换到上一个文件<br>:r file 读取文件并在当前行的后边插入<br>:nr file 读取文件并在第 n 行后边插入 </p>
+</li>
+</ul>
+<p>这里罗列了常用的命令，不建议背，多练习，熟悉了基本的操作应该就没有啥问题了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/05/Linux-用户和用户组管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/08/05/Linux-用户和用户组管理/" itemprop="url">Linux-用户和用户组管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-08-05T12:13:54+08:00">
+                2013-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/08/05/Linux-用户和用户组管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/08/05/Linux-用户和用户组管理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Linux中，有三种用户： </p>
+<ul>
+<li>Root用户：也称为超级用户，对系统拥有完全的控制权限。超级用户可以不受限制的运行任何命令。Root用户可以看做是系统管理员。</li>
+<li>系统用户：系统用户是Linux运行某些程序所必须的用户，例如 mail 用户、sshd 用户等。系统用户通常为系统功能所必须的，不建议修改这些用户。</li>
+<li>普通用户：一般用户都是普通用户，这些用户对系统文件的访问受限，不能执行全部Linux命令。</li>
+</ul>
+<p>Linux支持用户组，用户组就是具有相同特征的用户的集合。一个组可以包含多个用户，每个用户也可以属于不同的组。用户组在Linux中扮演着重要的角色，方便管理员对用户进行集中管理。</p>
+<h1 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h1><p>主要涉及到用户账号的添加、修改和删除。</p>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><p>可以使用useradd命令，语法为：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -<span class="keyword">d</span> homedir -<span class="keyword">g</span> groupname -<span class="keyword">m</span> -s <span class="keyword">shell</span> -<span class="keyword">u</span> userid accountname</span><br></pre></td></tr></table></figure></p>
+<p>每个选项的含义如下：<br>-d homedir 指定用户主目录。<br>-g groupname 指定用户组。<br>-m 如果主目录不存在，就创建。<br>-s shell 为用户指定默认Shell。<br>-u userid 指定用户ID。<br>accountname 用户名。<br>如果不指定任何选项，系统将使用默认值。</p>
+<p>用户被创建后，没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。可以使用 passwd 命令来设置密码，例如：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> home]<span class="preprocessor"># passwd rzhang</span></span><br><span class="line">更改用户 rzhang 的密码 。</span><br><span class="line">新的 密码：</span><br><span class="line">重新输入新的 密码：</span><br><span class="line">passwd： 所有的身份验证令牌已经成功更新。</span><br></pre></td></tr></table></figure></p>
+<p><em>Notes: 如果你是管理员，输入 $ passwd username 可以修改你所管理的用户的密码；否则只能修改你自己的密码（不需要提供username）。 </em></p>
+<h2 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h2><p>usermod 命令可以修改现有用户的信息。usermod 命令的选项和 useradd 相同，不过可以增加 -l 选项来更改用户名。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tt</span>:<span class="attribute">x</span>:<span class="number">503</span>:<span class="number">503</span>::/home/<span class="attribute">tt</span>:/bin/bash</span><br><span class="line">[root<span class="variable">@Automation</span> file]# usermod -l ttt tt</span><br><span class="line">[root<span class="variable">@Automation</span> file]# cat /etc/passwd</span><br><span class="line"><span class="attribute">ttt</span>:<span class="attribute">x</span>:<span class="number">503</span>:<span class="number">503</span>::/home/<span class="attribute">tt</span>:/bin/bash</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h2><p>如果一个用户的账号不再使用，可以从系统中删除。删除用户账号就是要将/etc/passwd等系统文件中的该用户记录删除，必要时还删除用户的主目录。<br>userdel 命令可以用来删除现有用户。userdel 是一个危险的命令，请谨慎使用。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>userdel -r username</span><br></pre></td></tr></table></figure></p>
+<p>常用的选项是-r，它的作用是把用户的主目录一起删除。 </p>
+<h1 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h1><p>每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。</p>
+<h2 id="添加用户组"><a href="#添加用户组" class="headerlink" title="添加用户组"></a>添加用户组</h2><p>默认的用户组通常用来管理系统用户，不建议将普通用户添加到这些用户组。使用groupadd命令创建用户组的语法为：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd <span class="comment">[-g gid <span class="comment">[-o]</span>]</span> <span class="comment">[-r]</span> <span class="comment">[-f]</span> groupname</span><br></pre></td></tr></table></figure></p>
+<p>每个选项的含义如下：<br>-g GID 以数字表示的用户组ID。<br>-o 可以使用重复的组ID。<br>-r 建立系统组，用来管理系统用户。<br>-f 强制创建。<br>groupname 用户组的名称。<br>如果不指定选项，系统将使用默认值。</p>
+<h2 id="修改用户组"><a href="#修改用户组" class="headerlink" title="修改用户组"></a>修改用户组</h2><p>groupmod命令可以用来修改用户组，语法为：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>groupmod -n newgroupname oldgroupname</span><br></pre></td></tr></table></figure></p>
+<p>-n新用户组 将用户组的名字改为新名字</p>
+<h2 id="删除用户组"><a href="#删除用户组" class="headerlink" title="删除用户组"></a>删除用户组</h2><p>如果要删除一个已有的用户组，使用groupdel命令，<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>groupdel groupname</span><br></pre></td></tr></table></figure></p>
+<p>Notes: 如果一个用户同时属于多个用户组，那么用户可以在用户组之间切换，以便具有其他用户组的权限。<code>$ newgrp destinegroupname</code></p>
+<h1 id="与用户和组有关的系统文件"><a href="#与用户和组有关的系统文件" class="headerlink" title="与用户和组有关的系统文件"></a>与用户和组有关的系统文件</h1><p>与用户和用户组相关的信息都存放在一些系统文件中，这些文件包括/etc/passwd, /etc/shadow, /etc/group等。<br><img src="/images/linux/user_group_systemfile.jpg" alt=""></p>
+<h2 id="etc-passwd文件"><a href="#etc-passwd文件" class="headerlink" title="/etc/passwd文件"></a>/etc/passwd文件</h2><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@Automation</span> file]<span class="comment"># cat /etc/passwd</span></span><br><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line"><span class="symbol">bin:</span><span class="symbol">x:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:bin</span><span class="symbol">:/bin</span><span class="symbol">:/sbin/nologin</span></span><br></pre></td></tr></table></figure>
+<p>每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：<br>用户名:密码:用户ID:组ID:描述信息:主目录:用户Shell<br><img src="/images/linux/user_passwd.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/08/04/Linux-文件权限/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1596,320 +1941,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/06/21/关键字驱动测试框架之六-Action管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/06/21/关键字驱动测试框架之六-Action管理/" itemprop="url">关键字驱动测试框架之六 - Action管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-06-21T12:08:52+08:00">
-                2013-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/06/21/关键字驱动测试框架之六-Action管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/06/21/关键字驱动测试框架之六-Action管理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要是对框架用的的Action关键字进行管理，根据Category设置该Action隶属于Step还是Keyword，Type来设置该Action是Built-in还是User-defined。<br><img src="/images/QTP/keyword_frame_action.jpg" alt="Action Center"></p>
-<p>对此些事情况会有不同的处理方式：</p>
-<ol>
-<li>如果Category是Test Object，此Action关键字会在添加测试用例步骤时按Step添加时的Aciton列表里，这些关键字会在生动生成脚本的时候，动态地用“RegisterUserFunc”注册到相应的对象上。</li>
-<li>如果Category是Function，此Aciton关键字会在添加测试用例步骤时按Keyword添加时的Keyword列表里，和用户自定义的Keyword一起显示。</li>
-</ol>
-<p>BTW，我们要对用到的Built-in和User-defined Action关键字手动添加到这列表里。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/06/09/VBS-add-hyperlink-in-Excel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/06/09/VBS-add-hyperlink-in-Excel/" itemprop="url">VBS add hyperlink in Excel</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-06-09T09:00:28+08:00">
-                2013-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/06/09/VBS-add-hyperlink-in-Excel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/06/09/VBS-add-hyperlink-in-Excel/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Need to handle this situation when design framework. please refer the below:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Dim objExcel</span><br><span class="line">Set objExcel = WScript.<span class="function"><span class="title">CreateObject</span><span class="params">(<span class="string">"Excel.Application"</span>)</span></span></span><br><span class="line"></span><br><span class="line">objExcel<span class="class">.Visible</span> = TRUE</span><br><span class="line">objExcel<span class="class">.Workbooks</span><span class="class">.Open</span> <span class="string">"C:\test.xlsx"</span></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.Activate</span></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Worksheets</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Range</span><span class="params">(<span class="string">"A1"</span>)</span></span><span class="class">.Select</span></span><br><span class="line"></span><br><span class="line">Dim sLinkAddress</span><br><span class="line">sLinkAddress = <span class="string">"http://www.izheyi.com"</span></span><br><span class="line"></span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span>.<span class="function"><span class="title">Worksheets</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.Hyperlinks</span><span class="class">.Add</span> objExcel<span class="class">.Selection</span>, sLinkAddress</span><br><span class="line">objExcel.<span class="function"><span class="title">Workbooks</span><span class="params">(<span class="number">1</span>)</span></span><span class="class">.SaveAs</span> <span class="string">"C:\test.xlsx"</span></span><br><span class="line">objExcel<span class="class">.Quit</span></span><br><span class="line"></span><br><span class="line">set objExcel = nothing</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1964,7 +1995,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">347</span>
+                  <span class="site-state-item-count">349</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

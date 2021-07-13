@@ -305,6 +305,326 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/25/Consul-入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/25/Consul-入门/" itemprop="url">Consul - 安装运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T13:44:31+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consul/" itemprop="url" rel="index">
+                    <span itemprop="name">Consul</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/25/Consul-入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/25/Consul-入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工作中用到Consul，把基本的概念和使用研究一下。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># cd /usr/local/bin</span></span><br><span class="line">[root<span class="constant">@Automation</span> bin]<span class="preprocessor"># sudo wget https://releases.hashicorp.com/consul/1.0.2/consul_1.0.2_linux_386.zip</span></span><br><span class="line">[root<span class="constant">@Automation</span> bin]<span class="preprocessor"># sudo unzip consul_1.0.2_linux_386.zip</span></span><br></pre></td></tr></table></figure>
+<p>验证：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation bin]# consul</span><br><span class="line">Usage: consul [--version] [--help] &lt;command&gt; <span class="annotation">[&lt;args&gt;]</span></span><br><span class="line"></span><br><span class="line">Available commands are:</span><br><span class="line">    agent          Runs a Consul agent</span><br><span class="line">    catalog        Interact <span class="keyword">with</span> the catalog</span><br><span class="line">    event          Fire a <span class="keyword">new</span> event</span><br><span class="line">    exec           Executes a command on Consul nodes</span><br><span class="line">    force-leave    Forces a <span class="keyword">member</span> <span class="keyword">of</span> the cluster <span class="keyword">to</span> enter the <span class="string">"left"</span> state</span><br><span class="line">    info           Provides debugging information <span class="keyword">for</span> operators.</span><br><span class="line">    join           Tell Consul agent <span class="keyword">to</span> join cluster</span><br><span class="line">    keygen         Generates a <span class="keyword">new</span> encryption key</span><br><span class="line">    keyring        Manages gossip layer encryption keys</span><br><span class="line">    kv             Interact <span class="keyword">with</span> the key-value store</span><br><span class="line">    leave          Gracefully leaves the Consul cluster <span class="keyword">and</span> shuts down</span><br><span class="line">    lock           Execute a command holding a lock</span><br><span class="line">    maint          Controls node <span class="keyword">or</span> service maintenance mode</span><br><span class="line">    members        Lists the members <span class="keyword">of</span> a Consul cluster</span><br><span class="line">    monitor        Stream logs from a Consul agent</span><br><span class="line">    operator       Provides cluster-level tools <span class="keyword">for</span> Consul operators</span><br><span class="line">    reload         Triggers the agent <span class="keyword">to</span> reload configuration files</span><br><span class="line">    rtt            Estimates network round trip time between nodes</span><br><span class="line">    snapshot       Saves, restores <span class="keyword">and</span> inspects snapshots <span class="keyword">of</span> Consul server state</span><br><span class="line">    validate       Validate config files/directories</span><br><span class="line">    version        Prints the Consul version</span><br><span class="line">    watch          Watch <span class="keyword">for</span> changes <span class="keyword">in</span> Consul</span><br></pre></td></tr></table></figure></p>
+<h1 id="运行代理"><a href="#运行代理" class="headerlink" title="运行代理"></a>运行代理</h1><p>在Consul安装完成后，要先运行代理。该代理可以以服务器或者客户端模式运行。每个数据中心必须有至少一个服务器，不过一个集群推荐3或5个服务器。</p>
+<h2 id="启动代理"><a href="#启动代理" class="headerlink" title="启动代理"></a>启动代理</h2><p>通过Docke启动Consul容器<br><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">[<span class="keyword">root@Automation</span> bin]# consul agent -dev</span><br><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">==&gt; Consul agent running!</span><br><span class="line">           Version: <span class="variable">'v1.0.2</span>'</span><br><span class="line">           Node ID: <span class="variable">'a1ed3e1e-d9b2-579b-bdcc-d6fb13a2b3e3</span>'</span><br><span class="line">         Node name: <span class="variable">'Automation</span>'</span><br><span class="line">        Datacenter: <span class="variable">'dc1</span>' <span class="list">(<span class="keyword">Segment:</span> <span class="variable">'&lt;all&gt;</span>')</span></span><br><span class="line">            Server: true <span class="list">(<span class="keyword">Bootstrap:</span> false)</span></span><br><span class="line">       Client Addr: <span class="list">[<span class="keyword">127.0.0.1</span>] <span class="list">(<span class="keyword">HTTP:</span> <span class="number">8500</span>, HTTPS: <span class="number">-1</span>, DNS: <span class="number">8600</span>)</span></span><br><span class="line">      Cluster Addr: <span class="number">127.0</span>.0.1 <span class="list">(<span class="keyword">LAN:</span> <span class="number">8301</span>, WAN: <span class="number">8302</span>)</span></span><br><span class="line">           Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false</span><br><span class="line"></span><br><span class="line">==&gt; Log data will now stream in as it occurs:</span><br><span class="line"></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:25:25 <span class="list">[<span class="keyword">DEBUG</span>] Using random ID <span class="string">"a1ed3e1e-d9b2-579b-bdcc-d6fb13a2b3e3"</span> as node ID</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:25:25 <span class="list">[<span class="keyword">INFO</span>] raft: Initial configuration <span class="list">(<span class="keyword">index=1</span>)</span>: <span class="list">[&#123;Suffrage:Voter ID:a1ed3e1e-d9b2-579b-bdcc-d6fb13a2b3e3 Address:127.0.0.1:8300&#125;]</span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="集群成员"><a href="#集群成员" class="headerlink" title="集群成员"></a>集群成员</h2><p>在另一个终端中运行 consul members ,你能看到Consul集群所有的节点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/ <span class="preprocessor"># consul members</span></span><br><span class="line">Node          Address         Status  Type    Build  Protocol  DC   Segment</span><br><span class="line">fd383e11f665  <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8301</span>  alive   server  <span class="number">1.0</span><span class="number">.2</span>  <span class="number">2</span>         dc1  &lt;all&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="停止代理"><a href="#停止代理" class="headerlink" title="停止代理"></a>停止代理</h2><p>这个比较容易，Ctrl+C就搞定了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/24/工作十年感想/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/24/工作十年感想/" itemprop="url">工作十年感想</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-24T08:21:50+08:00">
+                2017-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/24/工作十年感想/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/24/工作十年感想/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/images/shenghuo/10.jpg" alt=""><br>来北京十年了，也没能混出别人眼中所谓的人模狗样，但话说回来为什么要活给别人看呢。经历了找工作时的彷徨，闺女出生生病的无助，买房和孩子上学的纠结……但这一路走来更多的是幸运，感恩刚来北京管我吃住行的好兄弟，感恩实习就进了知名外企，感恩父母和小丁妈一直的支持、付出和理解…….感恩这一路走来所有帮助我的家人和朋友，很享受现在的工作和生活，很知足。</p>
+<p>想当初大四上学期期末，就傻了吧唧的带了200块钱一个人就来了，现在给我两万估计也不定有敢来的胆量，吃住行基本都是朋友的，本天真的以为你有需求我会，工作应该好找，找了两周不太行，可能也是因为还没毕业的缘故，妈蛋国内的公司不要我，那我就找个外企的实习生好了，我清楚的记得光面试就4轮，还傻乎乎的问你们实习是给钱的吧@_@我清楚的记得给人要2000人家说我们4000起⊙﹏⊙我记得很清楚2007.12.24圣诞节前夕第一天上班，真正踏入了职场。</p>
+<p>朋友和同学都说我运气好，实习都能进外企，相比他们国内正式员工还要高的工资，更让我感到幸运的是，遇见了对的公司和人，教会了我很多东西，什么是专业的做事，什么是做人要低调但做事要适当高调，让自己对职场有了全面的认识，对从事行业有了更系统的学习和认知，感谢相遇，感恩所教！</p>
+<p>也许是第一份工作的缘故，虽然中间也换了工作，自己还出去‘瞎搞’了一年，但十年的工作基本都待在了外企，喜欢老外的简单思维，喜欢外企的工作和生活平衡，喜欢外企的更人性化一些。</p>
+<p>中间公司因为我通读了一本书而面试通过(看吧，读书的重要性^_^人生本来就是一个厚积薄发的过程)，又阴差阳错的接管了自动化，朋友也在技术和思路上给了我很大的帮助，有幸遇见价值观相同的美国boss，还吵吵着说我是典型的美国人。这段时间让我学会了总结，形成自己在测试上的知识体系，同时也试着扩大自己的影响力。</p>
+<p>现在的工作也是无心插柳(本来已有Offer)，猎头朋友找我，碍于情面，给了简历，这事就成了，更有意思的是我呆了几个月，公司上市，模式变革，在新的岗位上有很多新东西要学(这也是当初选择这儿的原因之一，能让自己在未知的领域有新的成长)，时间虽不长却也快两年，也学到了很多，希望自己能在各方面再有一个提升，成就未来更好的自己。</p>
+<p>30多岁的我回顾这十年，职场上自己的起点太过幸运，每段经历都能遇见认可自己，给自己很大帮助的领导，中间也迷茫过，也妒忌过，也动摇过，也曾天真的以为优秀的人只比我大几岁，过两年我也可以变成那样。最终还是意识到要一直坚持做自己，不从众，不跟风，去做自己喜欢且对的事，现在回首来时路，这十年来似乎每一步都走对了，但当时的选择只是追随自己内心最真实的想法。虽然不优秀，但一直不甘现状并为之努力。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/23/2017圣诞节小画展/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1622,339 +1942,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/18/Docker-基础和安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/18/Docker-基础和安装/" itemprop="url">Docker - 基础和安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-18T10:06:16+08:00">
-                2017-11-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/18/Docker-基础和安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/18/Docker-基础和安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Docker现在火的不得了，也一直很好奇，利用一些时间简单的学习一下，知道一下到底是个什么东西，基本的原理和应用。</p>
-<p><em>初学，只是简单的入门和学习的一个记录，如有不对，欢迎指正。</em></p>
-<h1 id="Docker介绍"><a href="#Docker介绍" class="headerlink" title="Docker介绍"></a>Docker介绍</h1><p>Docker 是一个开源的应用容器引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。容器是完全使用沙箱机制，相互之间不会有任何接口,更重要的是容器性能开销极低。<br>通俗讲docker就是集装箱原理，从图标就可以看出来^_^<br><img src="/images/docker/overview.jpg" alt=""></p>
-<ul>
-<li><strong>Docker Client:</strong> Docker Client提供给用户一个终端，用户输入Docker提供的命令来管理本地或者远程的服务器。</li>
-<li><strong>Docker Host:</strong> 一个物理或者虚拟的机器用于执行Docker守护进程和容器。</li>
-<li><strong>Docker Daemon:</strong> 每台服务器上只要安装了Docker的环境，基本上就跑了一个后台程序Docker Daemon，Docker Daemon会接收Docker Client发过来的指令,并对服务器的进行具体操作。</li>
-<li><strong>Docker Images:</strong> 用于创建Docker容器的模板。是只读的。</li>
-<li><strong>Docker Container:</strong> 是真正跑项目程序、消耗机器资源、提供服务的地方，Docker Container通过Docker Images启动，在Docker Images的基础上运行你需要的代码。</li>
-<li><strong>Docker Registry:</strong> 是管理仓库的具体服务器，每个服务器上可以有多个仓库，而每个仓库下面有多个镜像。</li>
-<li><strong>Docker Machine:</strong> 是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker并管理Host。</li>
-</ul>
-<h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><p><em>试验环境是Win7</em></p>
-<p>从Docker官网下载：<a href="https://www.docker.com/docker-windows" target="_blank" rel="external">Docker-Windows</a>，安装方式，Windows下就是双击，下一步，下一步了。。。</p>
-<h1 id="Docker运行"><a href="#Docker运行" class="headerlink" title="Docker运行"></a>Docker运行</h1><p>安装完毕后，在应用程序里点击‘Docker Quickstart Terminal’打开Docker，但是有下边这个错误提示： “Looks like something went wrong in step ‘Finalize’…”<br><strong>Solution：</strong><br>在‘docker toolbox’的安装目录下，打开‘start.sh’，做如下修改(注释掉clear行)：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">STEP</span>=<span class="string">"Finalize"</span></span><br><span class="line"><span class="preprocessor">#clear</span></span><br><span class="line">cat &lt;&lt; EOF</span><br></pre></td></tr></table></figure></p>
-<p><strong>运行结果：</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">                        ##         .</span><br><span class="line">                  ## ## ##        ==</span><br><span class="line">               ## ## ## ## ##    ===</span><br><span class="line">           /<span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span>"\___/ ===</span><br><span class="line">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line"></span><br><span class="line">docker is configured to <span class="keyword">use</span> the default machine with IP 192.168.99.100</span><br><span class="line"><span class="keyword">For</span> <span class="keyword">help</span> getting started, check <span class="keyword">out</span> the docs at https:<span class="comment">//docs.docker.com</span></span><br><span class="line"></span><br><span class="line">Start interactive <span class="keyword">shell</span></span><br><span class="line"></span><br><span class="line">yongfei.hu@yongfei-hu MINGW64 ~</span><br><span class="line">$ docker <span class="keyword">version</span></span><br><span class="line">Client:</span><br><span class="line"> <span class="keyword">Version</span>:      17.10.0-ce</span><br><span class="line"> API <span class="keyword">version</span>:  1.33</span><br><span class="line"> Go <span class="keyword">version</span>:   go1.8.3</span><br><span class="line"> Git commit:   f4ffd25</span><br><span class="line"> Built:        Tue Oct 17 19:00:02 2017</span><br><span class="line"> OS/<span class="keyword">Arch</span>:      windows/amd64</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> <span class="keyword">Version</span>:      17.10.0-ce</span><br><span class="line"> API <span class="keyword">version</span>:  1.33 (minimum <span class="keyword">version</span> 1.12)</span><br><span class="line"> Go <span class="keyword">version</span>:   go1.8.3</span><br><span class="line"> Git commit:   f4ffd25</span><br><span class="line"> Built:        Tue Oct 17 19:05:23 2017</span><br><span class="line"> OS/<span class="keyword">Arch</span>:      linux/amd64</span><br><span class="line"> Experimental: false</span><br></pre></td></tr></table></figure></p>
-<p><strong>Docker Machine：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine ssh default</span><br><span class="line">                        <span class="comment">##         .</span></span><br><span class="line">                  <span class="comment">## ## ##        ==</span></span><br><span class="line">               <span class="comment">## ## ## ## ##    ===</span></span><br><span class="line">           /<span class="string">""""""</span><span class="string">""""""</span><span class="string">"""""\___/ ===</span><br><span class="line">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</span><br><span class="line">           \______ o           __/</span><br><span class="line">             \    \         __/</span><br><span class="line">              \____\_______/</span><br><span class="line"> _                 _   ____     _            _</span><br><span class="line">| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __</span><br><span class="line">| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|</span><br><span class="line">| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |</span><br><span class="line">|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|</span><br><span class="line">Boot2Docker version 17.10.0-ce, build HEAD : 34fe485 - Wed Oct 18 17:16:34 UTC 2017</span><br><span class="line">Docker version 17.10.0-ce, build f4ffd25</span><br><span class="line">docker@default:~$</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Docker生命周期"><a href="#Docker生命周期" class="headerlink" title="Docker生命周期"></a>Docker生命周期</h1><p>Docker三个基本概念</p>
-<ul>
-<li>镜像（Image）</li>
-<li>容器（Container）</li>
-<li>仓库（Repository）</li>
-</ul>
-<p>理解了这三个概念，就理解了整个生命周期。我们可以把镜像，容器想像成java的类和对象，即容器是由镜像实例化而来的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/14/小丁画作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/小丁画作/" itemprop="url">奇点绘画画随记（2018）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-14T12:39:39+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/小丁画作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/14/小丁画作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>天天吵着要报个课外班学习，如愿。看来姑娘是真的喜欢画画，每次都很期待上课。</p>
-<h2 id="2017"><a href="#2017" class="headerlink" title="2017"></a>2017</h2><p><img src="/images/izheyi/pic/qidianhui/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/7.JPG" alt=""></p>
-<h2 id="2018"><a href="#2018" class="headerlink" title="2018"></a>2018</h2><p><img src="/images/izheyi/pic/qidianhui/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/8.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/9.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/10.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/11.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/12.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/13.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/14.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2009,7 +1996,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">347</span>
+                  <span class="site-state-item-count">349</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

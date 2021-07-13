@@ -305,6 +305,342 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/18/Robot-Framework-Web测试环境/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/18/Robot-Framework-Web测试环境/" itemprop="url">Robot Framework-Web测试环境</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-18T08:36:36+08:00">
+                2016-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/18/Robot-Framework-Web测试环境/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/18/Robot-Framework-Web测试环境/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我们用Selenium Webdriver来进行Web测试，以下是运行环境的搭建：</p>
+<h1 id="Selenium2Library"><a href="#Selenium2Library" class="headerlink" title="Selenium2Library"></a>Selenium2Library</h1><p>如果要做Web的自动化话，需要安装Selenium的库，用以下命令<code>pip install robotframework-selenium2library</code><br>在RIDE设计自动化的时候，先要import安装的Selenium2Library。</p>
+<h1 id="ExtendedSelenium2Library"><a href="#ExtendedSelenium2Library" class="headerlink" title="ExtendedSelenium2Library"></a>ExtendedSelenium2Library</h1><p>Extended Selenium 2 (WebDriver) web testing library for Robot Framework，点击 <a href="https://github.com/rickypc/robotframework-extendedselenium2library" target="_blank" rel="external">Here</a> 查看详细信息。</p>
+<h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><p>对于Firefox，是默认的浏览器，我们不需要做设置就可以直接运行；但是对于IE和Chrome，我们需要下载相应的Driver做设置：</p>
+<ol>
+<li>去<a href="http://docs.seleniumhq.org/download/" target="_blank" rel="external">Selenium官网</a></li>
+<li>放到环境变量path路径的目录里或把他所在的目录加到path环境变量中</li>
+</ol>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ol>
+<li>显示“[ WARN ] Keyword ‘Capture Page Screenshot’ could not be run on failure: No browser is open”，<br>遇到此问题，请打开文件浏览器至Selenium2Library的utils目录，修改其中的browsercache.py文件，将close(self)方法中的语句“browser.quit()”修改为“browser.close()”。即可解决此问题。 </li>
+<li>IE浏览器<br>IE页面的显示比例要为100%。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/" itemprop="url">Robot Framework Enviroment Setup on Windows 32 bit</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-15T15:43:53+08:00">
+                2016-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><p>Windows7 32位，Python 2.7</p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h2><ol>
+<li>去<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载最新版本，python-2.7.11.msi。</li>
+<li>双击默认安即可（<strong>在安装过程中记得选择：Add python.exe to Path</strong>），一路Next。</li>
+</ol>
+<h2 id="安装wxPython"><a href="#安装wxPython" class="headerlink" title="安装wxPython"></a>安装wxPython</h2><ol>
+<li>去<a href="https://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/" target="_blank" rel="external">Here</a>，wxPython2.8-win32-unicode-2.8.12.1-py27.exe，要下载unicode版本，2.8.12.1是RIDE稳定支持的版本，py27是Python2.7。</li>
+<li>双击默认安即可，一路Next。</li>
+</ol>
+<h2 id="安装Robot-Framework"><a href="#安装Robot-Framework" class="headerlink" title="安装Robot Framework"></a>安装Robot Framework</h2><ol>
+<li>因为刚安装的python自带pip，直接用些工具安装就行，</li>
+<li>默认pip的版本低，可以通过<code>pip install -U pip</code>升级。</li>
+<li>用<code>pip install robotframework</code>安装Robot Framework。<br><em>注：如果安装不成功，就自己下载源码包进行安装</em></li>
+</ol>
+<h2 id="安装RIDE"><a href="#安装RIDE" class="headerlink" title="安装RIDE"></a>安装RIDE</h2><ol>
+<li>用<code>pip install robotframework-ride</code>安装。</li>
+</ol>
+<p>到此，基本的环境就搭建完成了。 在命令行输入<code>ride.py</code>就可以打开可视窗体，进行自动化设计了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1633,331 +1969,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/18/java内存泄露分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/18/java内存泄露分析/" itemprop="url">java内存泄露分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-18T13:35:59+08:00">
-                2016-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/02/18/java内存泄露分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/18/java内存泄露分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>在这里，我们还是先温习一下‘对象气球’：<br>对象就像一个充满氢气的气球，我们没有办法直接去得到它，要想对它的使用都必须通过一根连着它的绳子来访问，这根绳子就是对象的引用。<br>一根绳子同时只能连着一个气球，就像一个引用同时只能指向一个对象；<br>可以用多根绳子同时连接一个气球，也就是可以有多个引用同时指向同一个对象；<br>如果某个气球没有任何绳子连着它，那它就会飞走，同样，某个对象如果没有引用连接它，它就会成为垃圾，等着被java的垃圾收集器回收；<br>如果某根绳子没有连接任何气球，那么它就是一个空引用，对它的访问没有意义。<br>同样，某个引用如果没有指向对象，那么对它的访问将会抛出NullPointerException</p>
-</blockquote>
-<h1 id="Java内存回收机制"><a href="#Java内存回收机制" class="headerlink" title="Java内存回收机制"></a>Java内存回收机制</h1><p> Java 的内存管理就是对象的分配和释放问题。分配内存的方式多种多样，取决于该种语言的语法结构。但不论是哪一种语言的内存分配方式，最后都要返回所分配的内存块的起始地址，即返回一个指针到内存块的首地址。在Java 中所有对象都是在堆（Heap）中分配的，对象的创建通常都是采用new或者是反射的方式，但对象释放却有直接的手段，所以对象的回收都是由Java虚拟机通过垃圾收集器去完成的。这种收支两条线的方法确实简化了程序员的工作，但同时也加重了JVM的工作，这也是Java 程序运行速度较慢的原因之一。因为，GC 为了能够正确释放对象，GC 必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC 都需要进行监控。监视对象状态是为了更加准确地、及时地释放对象，而释放对象的根本原则就是该对象不再被引用。</p>
-<h1 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h1><h2 id="GC类型"><a href="#GC类型" class="headerlink" title="GC类型"></a>GC类型</h2><ul>
-<li><strong>新生代的GC</strong><br>Minor GC（新生代回收）的触发条件比较简单，Eden空间不足就开始进行Minor GC回收新生代。</li>
-<li><strong>老年代GC</strong><br>而Full GC（老年代回收，一般伴随一次Minor GC）则有几种触发条件：<br>（1）老年代空间不足<br>（2）PermSpace空间不足<br>（3）统计得到的Minor GC晋升到老年代的平均大小大于老年代的剩余空间</li>
-</ul>
-<h2 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h2><ul>
-<li>Java堆内存</li>
-<li>Perm内存</li>
-<li>Java进程本地内存</li>
-</ul>
-<h1 id="瓶颈分析"><a href="#瓶颈分析" class="headerlink" title="瓶颈分析"></a>瓶颈分析</h1><p>定位分析：</p>
-<ol>
-<li>生成堆的dump文件</li>
-<li>分析dump文件<br>详细参考文章相关章节：<a href="http://wenku.baidu.com/link?url=p6SRx-GOp_awHt2oBbNoLYJ5jKa7ygsa7LbqVWXGkQFtCForji55bQGuGVzfcoBaIhzOYnCZordP1NFR7L5CeJPcUb2lW5TEWRoJ4HE2j_y" target="_blank" rel="external">分析</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/10/大虾真好吃/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/10/大虾真好吃/" itemprop="url">大虾真好吃</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-10T12:12:44+08:00">
-                2016-02-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/02/10/大虾真好吃/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/10/大虾真好吃/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/2016/02/xia_0.JPG" alt=""><br><img src="/images/izheyi/2016/02/xia_1.JPG" alt=""><br><img src="/images/izheyi/2016/02/xia_2.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2012,7 +2023,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">347</span>
+                  <span class="site-state-item-count">349</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
