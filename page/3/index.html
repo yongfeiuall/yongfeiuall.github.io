@@ -305,6 +305,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/14/mitmproxy实现接口信息抓取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/14/mitmproxy实现接口信息抓取/" itemprop="url">mitmproxy实现接口信息抓取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T14:40:41+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mitmproxy/" itemprop="url" rel="index">
+                    <span itemprop="name">mitmproxy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/14/mitmproxy实现接口信息抓取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/14/mitmproxy实现接口信息抓取/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到<a href="https://www.mitmproxy.org/" target="_blank" rel="external">mitmproxy</a>: mitmproxy is a free and open source interactive HTTPS proxy.</p>
+<p>在windows和Firefox下实验。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>pip直接安装：<br><code>pip install mitmproxy</code></p>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><ul>
+<li>命令行启动<br>  mitmdump</li>
+<li>常用参数<br>  -p  指定端口号<br>  -w     outfile 将日志输出到本地文件<br>  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)<br>  -s  加载自定义python脚本</li>
+<li>添加证书<ol>
+<li>配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。</li>
+<li>选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 </li>
+</ol>
+</li>
+</ul>
+<h1 id="抓取接口信息"><a href="#抓取接口信息" class="headerlink" title="抓取接口信息"></a>抓取接口信息</h1><ol>
+<li><p>创建脚本</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from mitmproxy import http, ctx</span><br><span class="line">import openpyxl,<span class="tag">time</span>,json</span><br><span class="line"></span><br><span class="line">class Record:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self<span class="class">.filter_url</span> = <span class="string">'https://reqres.in/api/'</span></span><br><span class="line">        self<span class="class">.cur_time</span> = <span class="tag">time</span>.<span class="function"><span class="title">strftime</span><span class="params">(<span class="string">'%Y%m%d_%H_%M_%S'</span>)</span></span></span><br><span class="line">        book = openpyxl.<span class="function"><span class="title">Workbook</span><span class="params">()</span></span></span><br><span class="line">        <span class="tag">table</span> = book<span class="class">.active</span></span><br><span class="line">        <span class="tag">table</span>.append([<span class="string">'Address'</span>, <span class="string">'Request Type'</span>, <span class="string">'Param Type'</span>,</span><br><span class="line">                      <span class="string">'Header'</span>, <span class="string">'Param'</span>])</span><br><span class="line">        book.<span class="function"><span class="title">save</span><span class="params">(<span class="string">'E:/&#123;cur_time&#125;.xlsx'</span>.format(cur_time=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span> = openpyxl.<span class="function"><span class="title">load_workbook</span><span class="params">(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.format(tmp=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.active</span><span class="class">.title</span> = <span class="string">'API'</span></span><br><span class="line">        self<span class="class">.table</span> = self<span class="class">.workbook</span><span class="class">.active</span></span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">write_to_excel</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        url = flow<span class="class">.request</span><span class="class">.url</span></span><br><span class="line">        method = flow<span class="class">.request</span><span class="class">.method</span></span><br><span class="line">        type = flow<span class="class">.request</span><span class="class">.headers</span><span class="class">.get</span>(<span class="string">'Content-Type'</span>)</span><br><span class="line">        <span class="keyword">if</span> type == <span class="string">'application/x-www-form-urlencoded'</span>:</span><br><span class="line">            type = <span class="string">'URL_ENCODE'</span></span><br><span class="line">        elif type == <span class="string">'application/json'</span>:</span><br><span class="line">            type = <span class="string">'JSON'</span></span><br><span class="line">        elif type == <span class="string">'text/xml'</span>:</span><br><span class="line">            type = <span class="string">'XML'</span></span><br><span class="line">        headers = json.<span class="function"><span class="title">dumps</span><span class="params">(dict(flow.request.headers)</span></span>)</span><br><span class="line">        <span class="tag">body</span> = flow<span class="class">.request</span><span class="class">.get_text</span>()</span><br><span class="line">        self<span class="class">.table</span><span class="class">.append</span>([url, method, type, headers, body])</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.save</span>(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.<span class="function"><span class="title">format</span><span class="params">(cur_time=self.cur_time)</span></span>)</span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">response</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        <span class="keyword">if</span> self<span class="class">.filter_url</span>:</span><br><span class="line">            <span class="keyword">if</span> flow<span class="class">.request</span><span class="class">.url</span><span class="class">.startswith</span>(self.filter_url):</span><br><span class="line">                self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addons = [</span><br><span class="line">    <span class="function"><span class="title">Record</span><span class="params">()</span></span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置firefox代理<br>设置本地Firefox代理，商品为9999</p>
+</li>
+<li><p>运行mitmdump</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmdump -<span class="tag">p</span> <span class="number">9999</span> -s <span class="tag">a</span><span class="class">.py</span> --ignore all hosts with https/ssl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开测试网站操作</p>
+</li>
+<li>查看结果<br><img src="/images/automation/mitm.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/02/小丁画作-2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1760,187 +1938,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/12/25/2018-总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/25/2018-总结/" itemprop="url">2018 - 总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T14:29:52+08:00">
-                2018-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/25/2018-总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/12/25/2018-总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2018年马上过完，年初的时候有个工作计划 <a href="/2018/01/11/2018-学习计划/">2018 - 学习计划</a>，也简单做个总结。</p>
-<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><ol>
-<li>随着公司Agile的转型成功，还是学到了很多东西，结果重要，但过程同样重要。</li>
-<li>年终最后一次上线竟然出现了几个Critical的Issues，新项目和现有的6个项目都有交集，诸多原因，确实也遗漏了一些东西。通过Retro知道了不足，以及How could be better in next stage。但也有一些体会：Agile强调整个Team对质量负责，真正出了问题，还是QA背锅，终究是没有逃脱0和-1游戏规则。有些事情虽不爽，但是要敢于承认错误，力争把工作做到挑不出毛病。某些人，劝你评价别人的时候请先看看自己。唯有自己强大，其他都是浮云。</li>
-<li>今年学了不少新技术，在测试应用到的技术这块有了一个很明显的提升。<ul>
-<li>基于AWS，Salt，Atrifactory，Terraform，Jenkins，Github实现CI/CD</li>
-<li>基于SSM的java项目开发流程和实现</li>
-<li>Zookeeper，Dubbo和Docker的基本应用</li>
-<li>基于Pact的CDC测试</li>
-<li>性能测试的一些思考</li>
-</ul>
-</li>
-<li>通过一些渠道也知道了在技术的全局观上还有待于提高，项目和质量的整体把控上也有欠缺，也要提高一下技术快速落地的能力。</li>
-<li>参加了一些课程，学到了不少新的思路和知识。</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>基本能保持每周一次的Blog更新，内容多是学习笔记。</li>
-<li>孩子教育是个很大的事情，还得继续努力。</li>
-<li>力争生活和工作的Balance。</li>
-<li>对自己也有一次奖励，去青岛玩了一趟。</li>
-</ol>
-<h2 id="遗憾-不足"><a href="#遗憾-不足" class="headerlink" title="遗憾/不足"></a>遗憾/不足</h2><ol>
-<li>2018只剩下个位数，读的书也只有个位数，来年需要一个更详细一点的计划。</li>
-<li>英语，跟着公司还花钱报了个课程，效果不是很明显，进步不大，需要反思。</li>
-<li>十一之后，一直不在状态，要做阶段性总结反思，把目标分拆的更细小，严格要求自己，并做好时间管理。</li>
-<li>情绪的掌控有待提高，团队管理和沟通要进一步加强。</li>
-<li>技术很重要，但工作不仅仅是技术。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1995,7 +1992,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

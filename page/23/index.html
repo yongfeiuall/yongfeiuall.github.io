@@ -305,6 +305,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Java线程状态及分析工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/18/Java线程状态及分析工具/" itemprop="url">Java线程状态及监控工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T07:32:08+08:00">
+                2015-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/18/Java线程状态及分析工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Java线程状态及分析工具/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h1><p>在监控的过程中，要弄明白下边这6种状态(我们主要关注分析的：Runnable, Blocked, Waiting)：</p>
+<ol>
+<li>NEW<br>　 当线程对象对创建后，即进入了新建状态</li>
+<li>RUNNABLE<br>　 当调用线程对象的start()方法，线程即进入就绪状态。正在 Java 虚拟机中执行的线程处于这种状态。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</li>
+<li>BLOCKED<br>　 处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：<ul>
+<li>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</li>
+<li>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</li>
+<li>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</li>
+</ul>
+</li>
+<li>WAITING<br>　 无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。某一线程因为调用下列方法之一而处于等待状态：<ul>
+<li>不带超时值的 Object.wait</li>
+<li>不带超时值的 Thread.join</li>
+<li>LockSupport.park</li>
+</ul>
+</li>
+<li>TIMED_WAITING<br>　 具有指定等待时间的某一等待线程的线程状态。某一线程因为调用以下带有指定正等待时间的方法之一而处于定时等待状态：<ul>
+<li>Thread.sleep</li>
+<li>带有超时值的 Object.wait</li>
+<li>带有超时值的 Thread.join</li>
+<li>LockSupport.parkNanos</li>
+<li>LockSupport.parkUntil</li>
+</ul>
+</li>
+<li>TERMINATED<br>　　已终止线程的线程状态。线程已经结束执行。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/18/Java线程状态及分析工具/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/15/Java执行机制过程和JVM入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1819,166 +2002,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/03/Selenium-Grid-自动分配/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/03/Selenium-Grid-自动分配/" itemprop="url">Selenium Grid 自动分配</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-03T10:56:19+08:00">
-                2015-12-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/03/Selenium-Grid-自动分配/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/03/Selenium-Grid-自动分配/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Selenium Grid来实现多个nodes间的自动分配，以达到分布式并发的效果。</p>
-<p>hub和node的启动和测试脚本，参见：<a href="/2015/11/30/Selenium-Grid-初探/">Selenium Grid 初探</a></p>
-<p>这次 TestNG XML 文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">thread-count</span>=<span class="value">"5"</span> <span class="attribute">parallel</span>=<span class="value">"classes"</span>  <span class="attribute">name</span>=<span class="value">"demo"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"browser"</span> <span class="attribute">value</span>=<span class="value">"ff"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"nodeUrl"</span> <span class="attribute">value</span>=<span class="value">"http://192.168.24.13:4444"</span>/&gt;</span>  </span><br><span class="line">   <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"webSite"</span> <span class="attribute">value</span>=<span class="value">"http://www.baidu.com"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">classes</span>&gt;</span>  </span><br><span class="line">         <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"testGrid2.Grid"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">classes</span>&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;/<span class="title">test</span>&gt;</span>  </span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test2"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"browser"</span> <span class="attribute">value</span>=<span class="value">"chrome"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"nodeUrl"</span> <span class="attribute">value</span>=<span class="value">"http://192.168.24.13:4444"</span>/&gt;</span>  </span><br><span class="line">   <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"webSite"</span> <span class="attribute">value</span>=<span class="value">"http://www.baidu.com"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">classes</span>&gt;</span>  </span><br><span class="line">         <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"testGrid2.Grid"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">classes</span>&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;/<span class="title">test</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>Notes: url value是Grid Server地址（e.g., WebDriver wd = new RemoteWebDriver(<code>&quot;http://localhost:4444/wd/hub&quot;</code>, ieDesiredcap)）。</p>
-<p>对想使用Selenium Grid的来说，实现起来应该不会太麻烦，把框架里的单线程运行的公共脚本<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WebDriver wd = <span class="keyword">new</span> FirefoxDriver();</span><br></pre></td></tr></table></figure></p>
-<p>改成<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">DesiredCapabilities</span> ff = DesiredCapabilities.firefox();  </span><br><span class="line"><span class="title">WebDriver</span> wd = new RemoteWebDriver(<span class="string">"http://localhost:4444/wd/hub"</span>, ff);</span><br></pre></td></tr></table></figure></p>
-<p>然后再把hub的地址设置到Global Setting里边去。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2033,7 +2056,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

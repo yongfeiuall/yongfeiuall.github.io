@@ -305,6 +305,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/20/使用Java操作MongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/20/使用Java操作MongoDB/" itemprop="url">使用Java操作MongoDB</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-20T09:21:11+08:00">
+                2014-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/20/使用Java操作MongoDB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/20/使用Java操作MongoDB/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>首先，下载mongoDB对Java支持的驱动包 <br>    <a href="https://github.com/mongodb/mongo-java-driver/downloads" target="_blank" rel="external">驱动包下载</a></p>
+</li>
+<li><p>下面建立一个JavaProject工程，导入下载下来的驱动包。即可在Java中使用mongoDB.</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> MongoDb &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> UnknownHostException &#123;</span><br><span class="line">        MongoClient mg = <span class="keyword">new</span> MongoClient();</span><br><span class="line">        DB db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"></span><br><span class="line">        DBCollection users = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line">        DBCursor cur = users.<span class="keyword">find</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (cur.hasNext()) &#123;</span><br><span class="line">            System.out.<span class="keyword">println</span>(cur.<span class="keyword">next</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.<span class="keyword">count</span>());</span><br><span class="line">        System.out.<span class="keyword">println</span>(cur.getCursorId());</span><br><span class="line">        System.out.<span class="keyword">println</span>(JSON.serialize(cur));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/09/Find-Broken-Links-using-QTP-without-directly-opening-the-links/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,161 +1902,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/08/08/Selenium如何处理Table/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/08/08/Selenium如何处理Table/" itemprop="url">Selenium如何处理Table</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-08-08T16:08:13+08:00">
-                2014-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/08/08/Selenium如何处理Table/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/08/08/Selenium如何处理Table/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>由于webdriver中没有专门的table类，所以我们需要简单的封装出一个易用易扩展的Table类来帮助简化代码。</p>
-<p>以下是我之前用Java语言来实现的一个简单的封装：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name:<span class="variable">&lt;/b&gt;</span> WebTable<span class="variable">&lt;/br&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span>This class is used to handling</span><br><span class="line"> <span class="keyword">*</span> web table<span class="variable">&lt;/br&gt;</span></span><br><span class="line"> <span class="keyword">*</span> </span><br><span class="line"> <span class="keyword">*</span> <span class="comment">@author &lt;i&gt;Yongfei Hu&lt;/i&gt;</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line"></span><br><span class="line">public class WebTable &#123;</span><br><span class="line"></span><br><span class="line">	private WebElement webTable;</span><br><span class="line">	StartingSelenium ss = new StartingSelenium();</span><br><span class="line"></span><br><span class="line">	public WebTable(WebElement webTable) &#123;</span><br><span class="line">		this.webTable = webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public WebElement getWebTable() &#123;</span><br><span class="line">		return webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableRows<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get table</span><br><span class="line">	 <span class="keyword">*</span> rows list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableRows</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableRows() &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableRows = webTable.findElements(By.tagName(<span class="string">"tr"</span>));</span><br><span class="line">		return tableRows;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableColumns<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> table columns list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param currentRow</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableColumns</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableColumns(WebElement currentRow) &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = currentRow.findElements(By</span><br><span class="line">				.tagName(<span class="string">"td"</span>));</span><br><span class="line">		return tableColumns;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table row count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowCount() &#123;</span><br><span class="line">		int rowCount = getTableRows().size();</span><br><span class="line">		Reporter.log(<span class="string">"Rows in the table: "</span> + rowCount, true);</span><br><span class="line">		return rowCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getColumnCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table column count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return columnCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getColumnCount() &#123;</span><br><span class="line">		WebElement headerRow = getTableRows().get(0);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(headerRow);</span><br><span class="line">		int columnCount = tableColumns.size();</span><br><span class="line">		Reporter.log(<span class="string">"Column in the table: "</span> + columnCount, true);</span><br><span class="line">		return columnCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> specific cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return cellText</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public String getCellText(int row, int column) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(currentRow);</span><br><span class="line">		return tableColumns.get(column).getText();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowByCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> the row number by the cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param cellText</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowNumber</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowByCellText(String cellText) &#123;</span><br><span class="line">		int rowCount = getRowCount();</span><br><span class="line">		int colCount = getColumnCount();</span><br><span class="line">		int getRow = 0;</span><br><span class="line">		boolean flag;</span><br><span class="line"></span><br><span class="line">		for (int i = 0; i <span class="variable">&lt; rowCount; i++) &#123;</span><br><span class="line">			flag = false;</span><br><span class="line"></span><br><span class="line">			for (int j = 0; j &lt; colCount; j++) &#123;</span><br><span class="line">				if (getCellText(i, j).equals(cellText)) &#123;</span><br><span class="line">					getRow = i;</span><br><span class="line">					flag = true;</span><br><span class="line">					Reporter.log("The text: " + cellText + " in row number: "</span><br><span class="line">							+ getRow, true);</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (flag) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return getRow;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * &lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index).click();</span><br><span class="line">		Reporter.log(<span class="string">"Clickin a link on the row: "</span> + row, true);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param linkName</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index, String linkName) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		WebElement we = currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index);</span><br><span class="line">		ss.clickUsingJS(we, linkName);</span><br><span class="line">		try &#123;</span><br><span class="line">			Thread.sleep(3000);</span><br><span class="line">		&#125; catch (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1951,7 +1956,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

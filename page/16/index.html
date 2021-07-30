@@ -305,6 +305,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/19/Docker-Image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/19/Docker-Image/" itemprop="url">Docker - Image</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:01:33+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/19/Docker-Image/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/19/Docker-Image/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。Docker使用Union FS，相同的层只需要保存一份即可。</p>
+<p>镜像层数量可能会很多，所有镜像层会联合在一起组成一个统一的文件系统。</p>
+<p>新镜像是从base镜像一层一层叠加生成的。每安装一个软件，就在现有镜像的基础上增加一层。</p>
+<h1 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h1><p>可以到<a href="https://hub.docker.com/explore/">Docker Hub</a>去查找镜像。</p>
+<p>从Docker Registry获取镜像的命令是<code>docker image pull</code>。其命令格式为：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image pull <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line">Usage:  docker image pull [OPTIONS] NAME[:TAG|@DIGEST]</span><br><span class="line"></span><br><span class="line">Pull <span class="operator">an</span> image <span class="operator">or</span> <span class="operator">a</span> repository <span class="built_in">from</span> <span class="operator">a</span> registry</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="operator">a</span>, <span class="comment">--all-tags                Download all tagged images in the repository</span></span><br><span class="line">      <span class="comment">--disable-content-trust   Skip image verification (default true)</span></span><br><span class="line">      <span class="comment">--help                    Print usage</span></span><br></pre></td></tr></table></figure></p>
+<p>默认地址是 Docker Hub。如果不用默认，地址的格式一般是 &lt;域名/IP&gt;[:端口号]。</p>
+<p>例子：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="annotation">@default</span>:~$ git image pull mongo</span><br><span class="line">Using <span class="keyword">default</span> <span class="string">tag:</span> latest</span><br><span class="line"><span class="string">latest:</span> Pulling from library/mongo</span><br><span class="line"><span class="string">d13d02fa248d:</span> Pull complete</span><br><span class="line"><span class="string">bc8e2652ce92:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">cc856886986:</span> Pull complete</span><br><span class="line"><span class="string">c319e9ec4517:</span> Pull complete</span><br><span class="line"><span class="string">b4cbf8808f94:</span> Pull complete</span><br><span class="line"><span class="string">cb98a53e6676:</span> Pull complete</span><br><span class="line"><span class="string">f0485050cd8a:</span> Pull complete</span><br><span class="line"><span class="string">ac36cdc414b3:</span> Pull complete</span><br><span class="line"><span class="number">61814e3</span><span class="string">c487b:</span> Pull complete</span><br><span class="line"><span class="number">523</span><span class="string">a9f1da6b9:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">b4beaef77a2:</span> Pull complete</span><br><span class="line"><span class="string">Digest:</span> <span class="string">sha256:</span>d13c897516e497e898c229e2467f4953314b63e48d4990d3215d876ef9d1fc7c</span><br><span class="line"><span class="string">Status:</span> Downloaded newer image <span class="keyword">for</span> <span class="string">mongo:</span>latest</span><br></pre></td></tr></table></figure></p>
+<h1 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h1><p>想查看已经下载的镜像， 格式：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image ls --help</span><br><span class="line"></span><br><span class="line">Usage:  docker image ls [OPTIONS] [REPOSITORY[:TAG]]</span><br><span class="line"></span><br><span class="line">List images</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="ruby">a, --all             <span class="constant">Show</span> all images (default hides intermediate images)</span><br><span class="line"></span>      -<span class="ruby">-digests         <span class="constant">Show</span> digests</span><br><span class="line"></span>  -<span class="ruby">f, --filter filter   <span class="constant">Filter</span> output based on conditions provided</span><br><span class="line"></span>      -<span class="ruby">-format string   <span class="constant">Pretty</span>-print images using a <span class="constant">Go</span> template</span><br><span class="line"></span>      -<span class="ruby">-help            <span class="constant">Print</span> usage</span><br><span class="line"></span>      -<span class="ruby">-no-trunc        <span class="constant">Don</span><span class="string">'t truncate output</span><br><span class="line"></span></span>  -<span class="ruby"><span class="string">q, --quiet           Only show numeric IDs</span></span></span><br></pre></td></tr></table></figure></p>
+<p>不只可以列出所有的镜像，还可以列出特定的某个镜像。</p>
+<p>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">mongo               latest              d22888af0ce0        <span class="number">3</span> weeks ago         <span class="number">361</span>MB</span><br><span class="line">hello-world         latest              <span class="number">725</span>dcfab7d63        <span class="number">3</span> weeks ago         <span class="number">1.84</span>kB</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/19/Docker-Image/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/18/Docker-基础和安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1735,173 +1902,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/06/21/Gatling-Simulation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/21/Gatling-Simulation/" itemprop="url">Gatling - Simulation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-21T14:47:46+08:00">
-                2017-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Gatling/" itemprop="url" rel="index">
-                    <span itemprop="name">Gatling</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/21/Gatling-Simulation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/06/21/Gatling-Simulation/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A simulation is a description of the load test. It describes how, possibly several, user populations will run: which scenario they will execute and how new virtual users will be injected.</p>
-<p>A Simulation is a real Scala class containing 4 different parts:</p>
-<ul>
-<li>The HTTP protocol configuration</li>
-<li>The headers definition</li>
-<li>The scenario definition</li>
-<li>The simulation definition</li>
-</ul>
-<p>Can see the demo there:  <a href="/2017/05/09/Gatling-install-start/" title="Recorder">Recoder Demo</a></p>
-<h3 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h3><p>Gatling provides two hooks:</p>
-<ul>
-<li>before<br>for executing some code before the simulation actually runs</li>
-<li>after<br>for executing some code after the simulation actually runs</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1956,7 +1956,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

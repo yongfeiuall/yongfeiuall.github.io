@@ -4,9 +4,20 @@
   
     
     <entry>
+      <title><![CDATA[python get Jenkins job and build number info]]></title>
+      <url>http://izheyi.com/2021/07/30/python-get-jenkins-job-and-build-number-info/</url>
+      <content type="html"><![CDATA[<p>For multiple services Jenkins job, find a way to get each job and lasted build number for release static, here the way:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jenkins</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Login</span></span><br><span class="line">s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get all jobs under certain view</span></span><br><span class="line">jobs = s.get_jobs(view_name=VIEW_NAME)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get job and last build number</span></span><br><span class="line">dic = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">    name = job[<span class="string">'name'</span>]</span><br><span class="line">    build = s.get_job_info(name)[<span class="string">'lastCompletedBuild'</span>][<span class="string">'number'</span>]</span><br><span class="line">    dic[name] = build</span><br><span class="line">print(json.dumps(dic, indent=<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"a"</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="string">"b"</span>: <span class="number">17</span>,</span><br><span class="line">    <span class="string">"c"</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="string">"d"</span>: <span class="number">37</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[丁丁画画（四年级）]]></title>
       <url>http://izheyi.com/2021/07/12/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E5%9B%9B%E5%B9%B4%E7%BA%A7%EF%BC%89/</url>
       <content type="html"><![CDATA[<p><img src="/images/izheyi/pic/4/1.JPG" alt=""></p>
+<p><img src="/images/izheyi/pic/4/2.JPG" alt=""></p>
 ]]></content>
     </entry>
     

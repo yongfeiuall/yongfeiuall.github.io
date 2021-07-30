@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2021-07-12T08:00:21.737Z</updated>
+  <updated>2021-07-30T07:36:11.486Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -16,18 +16,49 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python get Jenkins job and build number info</title>
+    <link href="http://izheyi.com/2021/07/30/python-get-jenkins-job-and-build-number-info/"/>
+    <id>http://izheyi.com/2021/07/30/python-get-jenkins-job-and-build-number-info/</id>
+    <published>2021-07-30T07:25:26.000Z</published>
+    <updated>2021-07-30T07:36:11.486Z</updated>
+    
+    <content type="html">&lt;p&gt;For multiple services Jenkins job, find a way to get each job and lasted build number for release static, here the way:&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#!/usr/bin/env python&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; jenkins&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; json&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# Login&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# Get all jobs under certain view&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;jobs = s.get_jobs(view_name=VIEW_NAME)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# Get job and last build number&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dic = &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; job &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; jobs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    name = job[&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    build = s.get_job_info(name)[&lt;span class=&quot;string&quot;&gt;&#39;lastCompletedBuild&#39;&lt;/span&gt;][&lt;span class=&quot;string&quot;&gt;&#39;number&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dic[name] = build&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(json.dumps(dic, indent=&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Result:&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;a&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;b&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;c&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;d&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;37&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;For multiple services Jenkins job, find a way to get each job and lasted build number for release static, here the way:&lt;/p&gt;
+&lt;figure class
+    
+    </summary>
+    
+      <category term="Jenkins" scheme="http://izheyi.com/categories/Jenkins/"/>
+    
+    
+      <category term="Jenkins" scheme="http://izheyi.com/tags/Jenkins/"/>
+    
+      <category term="Python" scheme="http://izheyi.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>丁丁画画（四年级）</title>
     <link href="http://izheyi.com/2021/07/12/%E4%B8%81%E4%B8%81%E7%94%BB%E7%94%BB%EF%BC%88%E5%9B%9B%E5%B9%B4%E7%BA%A7%EF%BC%89/"/>
     <id>http://izheyi.com/2021/07/12/丁丁画画（四年级）/</id>
     <published>2021-07-12T11:59:15.000Z</published>
-    <updated>2021-07-12T08:00:21.737Z</updated>
+    <updated>2021-07-19T08:19:13.077Z</updated>
     
     <content type="html">&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/4/1.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/4/2.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
       &lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/4/1.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/izheyi/pic/4/2.JPG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
     
     </summary>
@@ -834,55 +865,6 @@
       <category term="丁丁" scheme="http://izheyi.com/tags/%E4%B8%81%E4%B8%81/"/>
     
       <category term="画画" scheme="http://izheyi.com/tags/%E7%94%BB%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mitmproxy实现接口信息抓取</title>
-    <link href="http://izheyi.com/2020/02/14/mitmproxy%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/"/>
-    <id>http://izheyi.com/2020/02/14/mitmproxy实现接口信息抓取/</id>
-    <published>2020-02-14T06:40:41.000Z</published>
-    <updated>2020-12-15T05:56:56.695Z</updated>
-    
-    <content type="html">&lt;p&gt;对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到&lt;a href=&quot;https://www.mitmproxy.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mitmproxy&lt;/a&gt;: mitmproxy is a free and open source interactive HTTPS proxy.&lt;/p&gt;
-&lt;p&gt;在windows和Firefox下实验。&lt;/p&gt;
-&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;p&gt;pip直接安装：&lt;br&gt;&lt;code&gt;pip install mitmproxy&lt;/code&gt;&lt;/p&gt;
-&lt;h1 id=&quot;基本使用&quot;&gt;&lt;a href=&quot;#基本使用&quot; class=&quot;headerlink&quot; title=&quot;基本使用&quot;&gt;&lt;/a&gt;基本使用&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;命令行启动&lt;br&gt;  mitmdump&lt;/li&gt;
-&lt;li&gt;常用参数&lt;br&gt;  -p  指定端口号&lt;br&gt;  -w     outfile 将日志输出到本地文件&lt;br&gt;  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)&lt;br&gt;  -s  加载自定义python脚本&lt;/li&gt;
-&lt;li&gt;添加证书&lt;ol&gt;
-&lt;li&gt;配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。&lt;/li&gt;
-&lt;li&gt;选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 &lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;抓取接口信息&quot;&gt;&lt;a href=&quot;#抓取接口信息&quot; class=&quot;headerlink&quot; title=&quot;抓取接口信息&quot;&gt;&lt;/a&gt;抓取接口信息&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建脚本&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;from mitmproxy import http, ctx&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import openpyxl,&lt;span class=&quot;tag&quot;&gt;time&lt;/span&gt;,json&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;class Record:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def __init__(self):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.filter_url&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;&#39;https://reqres.in/api/&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.cur_time&lt;/span&gt; = &lt;span class=&quot;tag&quot;&gt;time&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;strftime&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;%Y%m%d_%H_%M_%S&#39;&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        book = openpyxl.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;Workbook&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;table&lt;/span&gt; = book&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;table&lt;/span&gt;.append([&lt;span class=&quot;string&quot;&gt;&#39;Address&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Request Type&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Param Type&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                      &lt;span class=&quot;string&quot;&gt;&#39;Header&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;Param&#39;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        book.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;E:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.format(cur_time=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt; = openpyxl.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;load_workbook&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;e:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.format(tmp=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.title&lt;/span&gt; = &lt;span class=&quot;string&quot;&gt;&#39;API&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.table&lt;/span&gt; = self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.active&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, flow)&lt;/span&gt;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        url = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.url&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        method = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.method&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        type = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.headers&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.get&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;Content-Type&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; type == &lt;span class=&quot;string&quot;&gt;&#39;application/x-www-form-urlencoded&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;URL_ENCODE&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        elif type == &lt;span class=&quot;string&quot;&gt;&#39;application/json&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;JSON&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        elif type == &lt;span class=&quot;string&quot;&gt;&#39;text/xml&#39;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            type = &lt;span class=&quot;string&quot;&gt;&#39;XML&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        headers = json.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(dict(flow.request.headers)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;tag&quot;&gt;body&lt;/span&gt; = flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.get_text&lt;/span&gt;()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.table&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.append&lt;/span&gt;([url, method, type, headers, body])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self&lt;span class=&quot;class&quot;&gt;.workbook&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.save&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;e:/&amp;#123;cur_time&amp;#125;.xlsx&#39;&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(cur_time=self.cur_time)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, flow)&lt;/span&gt;&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; self&lt;span class=&quot;class&quot;&gt;.filter_url&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; flow&lt;span class=&quot;class&quot;&gt;.request&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.url&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.startswith&lt;/span&gt;(self.filter_url):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                self.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(flow)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            self.&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;write_to_excel&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(flow)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;addons = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;Record&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;设置firefox代理&lt;br&gt;设置本地Firefox代理，商品为9999&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;运行mitmdump&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mitmdump -&lt;span class=&quot;tag&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9999&lt;/span&gt; -s &lt;span class=&quot;tag&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.py&lt;/span&gt; --ignore all hosts with https/ssl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;打开测试网站操作&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;查看结果&lt;br&gt;&lt;img src=&quot;/images/automation/mitm.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到&lt;a href=&quot;https://www.mitmproxy.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mitmproxy&lt;/a
-    
-    </summary>
-    
-      <category term="mitmproxy" scheme="http://izheyi.com/categories/mitmproxy/"/>
-    
-    
-      <category term="mitmproxy" scheme="http://izheyi.com/tags/mitmproxy/"/>
-    
-      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
     
   </entry>
   

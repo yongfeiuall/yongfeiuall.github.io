@@ -305,6 +305,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/07/11/Load-Runner-VuGen参数化高阶说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/11/Load-Runner-VuGen参数化高阶说明/" itemprop="url">Load Runner - VuGen参数化高阶说明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-11T10:56:42+08:00">
+                2016-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/11/Load-Runner-VuGen参数化高阶说明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/07/11/Load-Runner-VuGen参数化高阶说明/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面我们说了为什么要做参数化，以及参数化的具体实现，其实说到底就是要实现数据驱动，其实不管是做性能还是功能自动化，都是相通的，是个要考虑的问题，我们这里拿Load Runner做个说明。</p>
+<h1 id="1-录制-编写基本脚本"><a href="#1-录制-编写基本脚本" class="headerlink" title="1. 录制/编写基本脚本"></a>1. 录制/编写基本脚本</h1><p>通过录制/编写来实现基本的业务流程，这种情况下，数据是Hard Code在脚本中的，在并发性能的时候，这种数据是很不真实的场景。</p>
+<h1 id="2-实现参数化-数据驱动"><a href="#2-实现参数化-数据驱动" class="headerlink" title="2. 实现参数化(数据驱动)"></a>2. 实现参数化(数据驱动)</h1><p>为了模拟更真实的场景，保证业务功能的正确性，我们要做数据的参数化，具体请参考 <a href="/2015/12/22/Load-Runner-VuGen参数化基础/">LR参数化实现</a></p>
+<h1 id="3-实现动态参数化"><a href="#3-实现动态参数化" class="headerlink" title="3. 实现动态参数化"></a>3. 实现动态参数化</h1><p>参数化把数据和脚本分离开来，但是有时候会有问题。比如下面这个购物场景，我想随机进入一个商品品类中再选择一件商品，对品类进行参数化，即把所有品类都放到外部数据文件中，那万一品类有增加/减少了，都得再回去修改数据文件，这也是一个很头疼的工作。<br>理想的状态下，应该是在选择品类之前，先从页面上动态获取当前所有的品类，然后再进行品类选择，这样不管在什么情况下，业务的正确性都是能够保证的。<br>在Load Runner中，我们就要用到关联了：</p>
+<ol>
+<li><p>获取所有的商品品类</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">web_reg_save_param(<span class="string">"categorties"</span>,</span><br><span class="line">		<span class="string">"LB=cat="</span>,</span><br><span class="line">		<span class="string">"RB=\"</span>&gt;<span class="string">",</span></span><br><span class="line">		<span class="string">"Ord=All"</span>,</span><br><span class="line">		LAST);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取随机的商品品类</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lr_save_string<span class="list">(<span class="keyword">lr_paramarr_random</span><span class="list">(<span class="string">"categorties"</span>)</span>, <span class="string">"category"</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进行后续的操作</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">web_url</span>(<span class="string">"Homepage"</span>, </span><br><span class="line">		<span class="string">"URL=http://xxx.com/list.html?cat=&#123;category&#125;"</span>, </span><br><span class="line">		LAST);</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/06/29/测试的一些思考/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1810,170 +1977,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/21/Robot-Framework-基础知识学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/21/Robot-Framework-基础知识学习/" itemprop="url">Robot Framework-基础知识学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-21T17:36:41+08:00">
-                2016-04-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
-                    <span itemprop="name">Robot Framework</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/21/Robot-Framework-基础知识学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/21/Robot-Framework-基础知识学习/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我觉得不管学什么东西，最先要知道是什么，原理是什么，能做什么，基础的操作，对于细节性的东西，技术点相关知识，可以在日后的工作中再慢慢的补充，以便形成自己的知识体系。</p>
-<p>周末和晚上的时间，学习了一些基础知识，这里只罗列一些点，想更详细的说明和学习，就去Robot Framework官网查看<a href="http://robotframework.org/robotframework/#user-guide" target="_blank" rel="external">User Guide</a></p>
-<ol>
-<li>Robot Framework是个什么样的框架</li>
-<li>RIDE的基本操作：各种组件的创建和脚本运行等</li>
-<li>Test Suite、Resource、Keyword之前的关系</li>
-<li>一些主要是关键字的了解</li>
-<li>RF里的分层</li>
-</ol>
-<p>对于分层，这里还是有点困惑的，有说要做到流程和数据的分离，有的说本来就是关键字驱动，直接都写到Case里就行，封装的层太多了，也不见得是个好事；有说应该分四层，或者五层，有的说三层就够了，封的多了也是麻烦。这就跟什么是测试框架这个问题一样，一百人可能就有一百种对测试框架的理解和定义。不管怎么分，分几层，对当前的项目适合，能把控的了，应该就是没有太大问题的。</p>
-<p><em>但是现在对于分层，跟Team有一些不同见解:(</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2028,7 +2031,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

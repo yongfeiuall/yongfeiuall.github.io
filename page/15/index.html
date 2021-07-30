@@ -305,6 +305,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/25/Consul-服务注册和健康检查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/25/Consul-服务注册和健康检查/" itemprop="url">Consul - 服务注册和健康检查</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T15:52:40+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consul/" itemprop="url" rel="index">
+                    <span itemprop="name">Consul</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/25/Consul-服务注册和健康检查/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/25/Consul-服务注册和健康检查/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h1><h2 id="定义一个服务"><a href="#定义一个服务" class="headerlink" title="定义一个服务"></a>定义一个服务</h2><ol>
+<li>为Consul配置创建一个目录/etc/consul.d。Consul装载配置目录中所有的配置文件。<code>[root@Automation bin]# sudo mkdir /etc/consul.d</code></li>
+<li>我们将创建一个服务定义配置文件。<code>echo &#39;{&quot;service&quot;: {&quot;name&quot;: &quot;web&quot;, &quot;tags&quot;: [&quot;rails&quot;], &quot;port&quot;: 80}}&#39;&gt;/etc/consul.d/web.json</code></li>
+<li>用配置目录对数重启代理：<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">[<span class="keyword">root@Automation</span> bin]# curl http://10.24.33.75:8500/v1/catalog/service/web</span><br><span class="line">curl: <span class="list">(<span class="keyword">7</span>)</span> couldn<span class="variable">'t</span> connect to host</span><br><span class="line"><span class="list">[<span class="keyword">root@Automation</span> bin]# consul agent -dev -config-dir /etc/consul.d</span><br><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">==&gt; Consul agent running!</span><br><span class="line">           Version: <span class="variable">'v1.0.2</span>'</span><br><span class="line">           Node ID: <span class="variable">'8f55dc0e-5765-5941-e566-5a4f1166645f</span>'</span><br><span class="line">         Node name: <span class="variable">'Automation</span>'</span><br><span class="line">        Datacenter: <span class="variable">'dc1</span>' <span class="list">(<span class="keyword">Segment:</span> <span class="variable">'&lt;all&gt;</span>')</span></span><br><span class="line">            Server: true <span class="list">(<span class="keyword">Bootstrap:</span> false)</span></span><br><span class="line">       Client Addr: <span class="list">[<span class="keyword">127.0.0.1</span>] <span class="list">(<span class="keyword">HTTP:</span> <span class="number">8500</span>, HTTPS: <span class="number">-1</span>, DNS: <span class="number">8600</span>)</span></span><br><span class="line">      Cluster Addr: <span class="number">127.0</span>.0.1 <span class="list">(<span class="keyword">LAN:</span> <span class="number">8301</span>, WAN: <span class="number">8302</span>)</span></span><br><span class="line">           Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false</span><br><span class="line"></span><br><span class="line">==&gt; Log data will now stream in as it occurs:</span><br><span class="line"></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] Using random ID <span class="string">"8f55dc0e-5765-5941-e566-5a4f1166645f"</span> as node ID</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Initial configuration <span class="list">(<span class="keyword">index=1</span>)</span>: <span class="list">[&#123;Suffrage:Voter ID:8f55dc0e-5765-5941-e566-5a4f1166645f Address:127.0.0.1:8300&#125;]</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Follower</span>] entering Follower state <span class="list">(<span class="keyword">Leader:</span> <span class="string">""</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] serf: EventMemberJoin: Automation.dc1 <span class="number">127.0</span>.0.1</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] serf: EventMemberJoin: Automation <span class="number">127.0</span>.0.1</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: Adding LAN server Automation <span class="list">(<span class="keyword">Addr:</span> tcp/127.0.0.1:8300)</span> <span class="list">(<span class="keyword">DC:</span> dc1)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started DNS server <span class="number">127.0</span>.0.1:8600 <span class="list">(<span class="keyword">tcp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: Handled member-join event for server <span class="string">"Automation.dc1"</span> in area <span class="string">"wan"</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started DNS server <span class="number">127.0</span>.0.1:8600 <span class="list">(<span class="keyword">udp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Started HTTP server on <span class="number">127.0</span>.0.1:8500 <span class="list">(<span class="keyword">tcp</span>)</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: started state syncer</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">WARN</span>] raft: Heartbeat timeout from <span class="string">""</span> reached, starting election</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Candidate</span>] entering Candidate state in term <span class="number">2</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] raft: Votes needed: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] raft: Vote granted from <span class="number">8</span>f55dc0e-5765-5941-e566-5a4f1166645f in term <span class="number">2</span>. Tally: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Election won. Tally: <span class="number">1</span></span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] raft: Node at <span class="number">127.0</span>.0.1:8300 <span class="list">[<span class="keyword">Leader</span>] entering Leader state</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: cluster leadership acquired</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] consul: Skipping self join check for <span class="string">"Automation"</span> since the cluster is too small</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: member <span class="variable">'Automation</span>' joined, marking health alive</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] consul: New leader elected: Automation</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">DEBUG</span>] Skipping remote check <span class="string">"serfHealth"</span> since it is managed automatically</span><br><span class="line">    <span class="number">2017/12</span>/25 <span class="number">15</span>:46:02 <span class="list">[<span class="keyword">INFO</span>] agent: Synced service <span class="string">"web"</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>你会注意到在输出中”synced service ‘web’”。这意味着代理已经从配置文件中装载了该服务定义，并且已经成功注册该服务到服务目录中。</p>
+<p>如果你想注册多个服务，你可以在Consul配置目录中创建多个服务定义文件。</p>
+<h2 id="查询服务"><a href="#查询服务" class="headerlink" title="查询服务"></a>查询服务</h2><p>这里只试了HTTP API：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># curl http:<span class="comment">//localhost:8500/v1/catalog/service/web</span></span></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"ID"</span>: <span class="string">"8f55dc0e-5765-5941-e566-5a4f1166645f"</span>,</span><br><span class="line">        <span class="string">"Node"</span>: <span class="string">"Automation"</span>,</span><br><span class="line">        <span class="string">"Address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="string">"Datacenter"</span>: <span class="string">"dc1"</span>,</span><br><span class="line">        <span class="string">"TaggedAddresses"</span>: &#123;</span><br><span class="line">            <span class="string">"lan"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">            <span class="string">"wan"</span>: <span class="string">"127.0.0.1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"NodeMeta"</span>: &#123;</span><br><span class="line">            <span class="string">"consul-network-segment"</span>: <span class="string">""</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"ServiceID"</span>: <span class="string">"web"</span>,</span><br><span class="line">        <span class="string">"ServiceName"</span>: <span class="string">"web"</span>,</span><br><span class="line">        <span class="string">"ServiceTags"</span>: [</span><br><span class="line">            <span class="string">"rails"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"ServiceAddress"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="string">"ServicePort"</span>: <span class="number">80</span>,</span><br><span class="line">        <span class="string">"ServiceEnableTagOverride"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">"CreateIndex"</span>: <span class="number">6</span>,</span><br><span class="line">        <span class="string">"ModifyIndex"</span>: <span class="number">6</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/25/Consul-服务注册和健康检查/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/25/Consul-入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1775,173 +1941,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/19/Docker-Image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/19/Docker-Image/" itemprop="url">Docker - Image</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:01:33+08:00">
-                2017-11-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/19/Docker-Image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/19/Docker-Image/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。Docker使用Union FS，相同的层只需要保存一份即可。</p>
-<p>镜像层数量可能会很多，所有镜像层会联合在一起组成一个统一的文件系统。</p>
-<p>新镜像是从base镜像一层一层叠加生成的。每安装一个软件，就在现有镜像的基础上增加一层。</p>
-<h1 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h1><p>可以到<a href="https://hub.docker.com/explore/">Docker Hub</a>去查找镜像。</p>
-<p>从Docker Registry获取镜像的命令是<code>docker image pull</code>。其命令格式为：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image pull <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line">Usage:  docker image pull [OPTIONS] NAME[:TAG|@DIGEST]</span><br><span class="line"></span><br><span class="line">Pull <span class="operator">an</span> image <span class="operator">or</span> <span class="operator">a</span> repository <span class="built_in">from</span> <span class="operator">a</span> registry</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="operator">a</span>, <span class="comment">--all-tags                Download all tagged images in the repository</span></span><br><span class="line">      <span class="comment">--disable-content-trust   Skip image verification (default true)</span></span><br><span class="line">      <span class="comment">--help                    Print usage</span></span><br></pre></td></tr></table></figure></p>
-<p>默认地址是 Docker Hub。如果不用默认，地址的格式一般是 &lt;域名/IP&gt;[:端口号]。</p>
-<p>例子：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="annotation">@default</span>:~$ git image pull mongo</span><br><span class="line">Using <span class="keyword">default</span> <span class="string">tag:</span> latest</span><br><span class="line"><span class="string">latest:</span> Pulling from library/mongo</span><br><span class="line"><span class="string">d13d02fa248d:</span> Pull complete</span><br><span class="line"><span class="string">bc8e2652ce92:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">cc856886986:</span> Pull complete</span><br><span class="line"><span class="string">c319e9ec4517:</span> Pull complete</span><br><span class="line"><span class="string">b4cbf8808f94:</span> Pull complete</span><br><span class="line"><span class="string">cb98a53e6676:</span> Pull complete</span><br><span class="line"><span class="string">f0485050cd8a:</span> Pull complete</span><br><span class="line"><span class="string">ac36cdc414b3:</span> Pull complete</span><br><span class="line"><span class="number">61814e3</span><span class="string">c487b:</span> Pull complete</span><br><span class="line"><span class="number">523</span><span class="string">a9f1da6b9:</span> Pull complete</span><br><span class="line"><span class="number">3</span><span class="string">b4beaef77a2:</span> Pull complete</span><br><span class="line"><span class="string">Digest:</span> <span class="string">sha256:</span>d13c897516e497e898c229e2467f4953314b63e48d4990d3215d876ef9d1fc7c</span><br><span class="line"><span class="string">Status:</span> Downloaded newer image <span class="keyword">for</span> <span class="string">mongo:</span>latest</span><br></pre></td></tr></table></figure></p>
-<h1 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h1><p>想查看已经下载的镜像， 格式：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker image ls --help</span><br><span class="line"></span><br><span class="line">Usage:  docker image ls [OPTIONS] [REPOSITORY[:TAG]]</span><br><span class="line"></span><br><span class="line">List images</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -<span class="ruby">a, --all             <span class="constant">Show</span> all images (default hides intermediate images)</span><br><span class="line"></span>      -<span class="ruby">-digests         <span class="constant">Show</span> digests</span><br><span class="line"></span>  -<span class="ruby">f, --filter filter   <span class="constant">Filter</span> output based on conditions provided</span><br><span class="line"></span>      -<span class="ruby">-format string   <span class="constant">Pretty</span>-print images using a <span class="constant">Go</span> template</span><br><span class="line"></span>      -<span class="ruby">-help            <span class="constant">Print</span> usage</span><br><span class="line"></span>      -<span class="ruby">-no-trunc        <span class="constant">Don</span><span class="string">'t truncate output</span><br><span class="line"></span></span>  -<span class="ruby"><span class="string">q, --quiet           Only show numeric IDs</span></span></span><br></pre></td></tr></table></figure></p>
-<p>不只可以列出所有的镜像，还可以列出特定的某个镜像。</p>
-<p>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~$ docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">mongo               latest              d22888af0ce0        <span class="number">3</span> weeks ago         <span class="number">361</span>MB</span><br><span class="line">hello-world         latest              <span class="number">725</span>dcfab7d63        <span class="number">3</span> weeks ago         <span class="number">1.84</span>kB</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/19/Docker-Image/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1996,7 +1995,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">349</span>
+                  <span class="site-state-item-count">350</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
