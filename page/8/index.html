@@ -305,6 +305,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-打开后台管理页面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/15/Java项目实战-打开后台管理页面/" itemprop="url">Java项目实战 - 打开后台管理页面</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T12:29:52+08:00">
+                2018-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/15/Java项目实战-打开后台管理页面/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/15/Java项目实战-打开后台管理页面/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>需要把静态资源Copy到WEB-INF下。</p>
+<p>在web.xml文件中定义的url拦截形式为“/”表示拦截所有的url请求，包括静态资源例如css、js等，需要在springmvc.xml中添加资源映射标签：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">mvc:resources</span> <span class="attribute">location</span>=<span class="value">"/WEB-INF/js/"</span> <span class="attribute">mapping</span>=<span class="value">"/js/**"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">mvc:resources</span> <span class="attribute">location</span>=<span class="value">"/WEB-INF/css/"</span> <span class="attribute">mapping</span>=<span class="value">"/css/**"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>在izheyi-manager-web工程下src/main/main下添加Controller。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">package</span> <span class="tag">com</span><span class="class">.izheyi</span><span class="class">.controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="tag">import</span> <span class="tag">org</span><span class="class">.springframework</span><span class="class">.stereotype</span><span class="class">.Controller</span>;</span><br><span class="line"><span class="tag">import</span> <span class="tag">org</span><span class="class">.springframework</span><span class="class">.web</span><span class="class">.bind</span><span class="class">.annotation</span><span class="class">.PathVariable</span>;</span><br><span class="line"><span class="tag">import</span> <span class="tag">org</span><span class="class">.springframework</span><span class="class">.web</span><span class="class">.bind</span><span class="class">.annotation</span><span class="class">.RequestMapping</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * This is for page controller</span><br><span class="line"> * @author yongfei.hu</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="at_rule">@<span class="keyword">Controller</span></span><br><span class="line">public class PageController </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*</span><br><span class="line">	 * Open homepage</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="at_rule">@<span class="keyword">RequestMapping("/")</span></span><br><span class="line">	public String <span class="function">homePage</span>()</span>&#123;</span><br><span class="line">		<span class="tag">return</span> "<span class="tag">index</span>";</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/*</span><br><span class="line">	 * Navigator to page</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="at_rule">@<span class="keyword">RequestMapping("/&#123;page&#125;")</span></span><br><span class="line">	public String <span class="function">goToPage</span>(@PathVariable String page) </span>&#123;</span><br><span class="line">		<span class="tag">return</span> <span class="tag">page</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行打开页面：<br><img src="/images/javaproject/manager_verify.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/14/Java项目实战-SSM整合：表现层/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1795,176 +1952,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/17/jvisualvm监控Tomcat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/17/jvisualvm监控Tomcat/" itemprop="url">jvisualvm通过jmx监控Tomcat</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-17T15:41:13+08:00">
-                2018-06-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/17/jvisualvm监控Tomcat/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/17/jvisualvm监控Tomcat/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>用JVisualVM连接远程JVM，监控系统运行性能参数。</p>
-<p>要在监控的Server上，在tomcat的catalina.sh 中添加如下参数：<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># OS specific support.  $var _must_ be set to either <span class="literal">true</span> <span class="literal">or</span> <span class="literal">false</span>.</span><br><span class="line">JAV<span class="built_in">A_OPTS</span>='-Dcom.sun.management.jmxremote.port=<span class="number">8999</span> -Dcom.sun.management.jmxremote.ssl=<span class="literal">false</span> -Dcom.sun.management.jmxremote.authenticate=<span class="literal">false</span>'</span><br></pre></td></tr></table></figure></p>
-<p>配置后重启Tomcat，发现在连接不上。 做以下配置</p>
-<ul>
-<li><p>Host Name</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[root@Automation bin]</span><span class="comment"># vi /etc/sysconfig/network</span></span><br><span class="line"></span><br><span class="line"><span class="setting">NETWORKING=<span class="value"><span class="keyword">yes</span></span></span></span><br><span class="line"><span class="setting">HOSTNAME=<span class="value">Automation</span></span></span><br><span class="line"><span class="setting">NTPSERVERARGS=<span class="value">iburst</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Hosts</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation bin]<span class="preprocessor"># vi /etc/hosts</span></span><br><span class="line"></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>  localhost.localdomain localhost localhost4 localhost4.localdomain4</span><br><span class="line">::<span class="number">1</span>         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="number">10.22</span><span class="number">.1</span><span class="number">.13</span>  gitserver Automation</span></span><br><span class="line"></span><br><span class="line"><span class="number">10.24</span><span class="number">.33</span><span class="number">.82</span> Automation</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>最终结果如下，可以查看查看远程CPU、堆、类、线程的使用情况了。<br><img src="/images/performancetesting/jvisualvm.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2014,7 +2006,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">350</span>
+                  <span class="site-state-item-count">351</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

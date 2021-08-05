@@ -305,6 +305,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/26/Consul-Key-Value和Web-UI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/26/Consul-Key-Value和Web-UI/" itemprop="url">Consul - Key/Value和Web UI</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-26T10:28:03+08:00">
+                2017-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consul/" itemprop="url" rel="index">
+                    <span itemprop="name">Consul</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/26/Consul-Key-Value和Web-UI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/26/Consul-Key-Value和Web-UI/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Key-Value"><a href="#Key-Value" class="headerlink" title="Key/Value"></a>Key/Value</h1><p>为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# <span class="keyword">mkdir</span> <span class="keyword">test</span></span><br><span class="line">[root@Automation ~]# consul kv get <span class="keyword">test</span>/</span><br><span class="line"><span class="keyword">Error</span>! <span class="keyword">No</span> key exists at: <span class="keyword">test</span>/</span><br></pre></td></tr></table></figure></p>
+<p>consul支持http api和consul client进行K/V操作<br>1.添加: consul kv put [-flags=xx] key value<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv 1</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv1 11</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv1</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put -flags=21 test/kv2 admin</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv2</span><br></pre></td></tr></table></figure></p>
+<p>consul支持64位整数的flags表示kv的metadata<br>2.查询: consul kv get [-deatiled] key<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get test/kv</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get -detailed test/kv</span></span><br><span class="line">CreateIndex      <span class="number">215</span></span><br><span class="line">Flags            <span class="number">0</span></span><br><span class="line">Key              test/kv</span><br><span class="line">LockIndex        <span class="number">0</span></span><br><span class="line">ModifyIndex      <span class="number">695</span></span><br><span class="line">Session          -</span><br><span class="line">Value            <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>3.查询所有的key: consul kv get -recurse<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># consul kv get -recurse</span></span><br><span class="line"><span class="built_in">test</span>:<span class="number">15</span></span><br><span class="line"><span class="built_in">test</span>/kv:<span class="number">1</span></span><br><span class="line"><span class="built_in">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="built_in">test</span>/kv2:admin</span><br></pre></td></tr></table></figure></p>
+<p>4.删除key: consul kv delete key<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# consul kv <span class="operator"><span class="keyword">delete</span> <span class="keyword">test</span>/kv</span><br><span class="line"><span class="keyword">Success</span>! Deleted <span class="keyword">key</span>: <span class="keyword">test</span>/kv</span><br><span class="line">[root@Automation ~]# consul kv <span class="keyword">get</span> -recurse</span><br><span class="line"><span class="keyword">test</span>:<span class="number">15</span></span><br><span class="line"><span class="keyword">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="keyword">test</span>/kv2:<span class="keyword">admin</span></span></span><br></pre></td></tr></table></figure></p>
+<p>5.前缀匹配删除: consul kv delete -recurse key-prefix<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv delete -recurse test</span></span><br><span class="line">Success! Deleted keys <span class="keyword">with</span> prefix: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get -recurse</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure></p>
+<p>6.修改kv<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test new</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">new</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test update</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">update</span><br></pre></td></tr></table></figure></p>
+<h1 id="Web-UI"><a href="#Web-UI" class="headerlink" title="Web UI"></a>Web UI</h1><p>启动Consul代理并设置 -ui 参数来启动自有主机的界面：<br><code>[root@Automation ~]# consul agent -dev -enable-script-checks -ui -config-dir /etc/consul.d</code><br><img src="/images/consul/ui.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/25/Consul-服务注册和健康检查/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1768,184 +1929,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/11/28/Docker-Container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/28/Docker-Container/" itemprop="url">Docker-Container</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-28T16:28:47+08:00">
-                2017-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/28/Docker-Container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/28/Docker-Container/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Docker运行容器前需要本地存在对应的镜像，如果镜像不存在本地，Docker会从镜像仓库下载（默认是Docker Hub）。<br>当利用<code>docker run</code>来创建容器时，Docker在后台运行的标准操作包括：</p>
-<ul>
-<li>检查本地是否存在指定的镜像，不存在就从公有仓库下载</li>
-<li>利用镜像创建并启动一个容器</li>
-<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
-<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
-<li>从地址池配置一个 ip 地址给容器</li>
-<li>执行用户指定的应用程序</li>
-<li>执行完毕后容器被终止</li>
-</ul>
-<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><p>启动容器有两种方式，一种是基于镜像新建一个容器并启动，另外一个是将在终止状态（stopped）的容器重新启动。</p>
-<h2 id="新建启动"><a href="#新建启动" class="headerlink" title="新建启动"></a>新建启动</h2><p>所用的命令 <code>docker run</code>。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker container run centos /bin/echo <span class="string">'hello world'</span></span><br><span class="line">hello world</span><br></pre></td></tr></table></figure></p>
-<p>经常用的Options：-it –rm<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker<span class="variable">@default</span><span class="symbol">:~</span><span class="variable">$ </span>docker run -it centos /bin/bash</span><br><span class="line">[root<span class="variable">@6d1e9498e298</span> /]<span class="comment"># pwd</span></span><br><span class="line">/</span><br></pre></td></tr></table></figure></p>
-<p>需要让Docker在后台运行而不是直接把执行命令的结果输出在当前宿主机下，可以通过添加<code>-d</code>参数来实现。</p>
-<h2 id="终止的容器启动"><a href="#终止的容器启动" class="headerlink" title="终止的容器启动"></a>终止的容器启动</h2><p>直接将一个已经终止的容器启动运行, 命令<code>docker container start</code>。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">docker@default:~$ docker container ls -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS               NAMES</span><br><span class="line">6d1e9498e298        centos              "/bin/bash"              2 minutes ago       Exited (130) 5 seconds ago                       hardcore_mclean</span><br><span class="line">docker@default:~$ docker container <span class="operator"><span class="keyword">start</span> <span class="comment">--help</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Usage</span>:  docker <span class="keyword">container</span> <span class="keyword">start</span> [OPTIONS] <span class="keyword">CONTAINER</span> [<span class="keyword">CONTAINER</span>...]</span><br><span class="line"></span><br><span class="line"><span class="keyword">Start</span> one <span class="keyword">or</span> more stopped containers</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -a, <span class="comment">--attach               Attach STDOUT/STDERR and forward signals</span></span><br><span class="line">      <span class="comment">--detach-keys string   Override the key sequence for detaching a container</span></span><br><span class="line">      <span class="comment">--help                 Print usage</span></span><br><span class="line">  -<span class="keyword">i</span>, <span class="comment">--interactive          Attach container's STDIN</span></span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker <span class="keyword">start</span> <span class="number">6</span>d1e9498e298</span><br><span class="line"><span class="number">6</span>d1e9498e298</span><br><span class="line">docker@<span class="keyword">default</span>:~$ docker <span class="keyword">container</span> ls -a</span><br><span class="line"><span class="keyword">CONTAINER</span> <span class="keyword">ID</span>        IMAGE               COMMAND                  CREATED             <span class="keyword">STATUS</span>                     PORTS               <span class="keyword">NAMES</span></span><br><span class="line"><span class="number">6</span>d1e9498e298        centos              <span class="string">"/bin/bash"</span>              <span class="number">5</span> minutes ago       Up <span class="number">11</span> seconds                                  hardcore_mclean</span></span><br></pre></td></tr></table></figure></p>
-<p>此外，<code>docker restart</code>命令会将一个运行态的容器终止，然后再重新启动它。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/28/Docker-Container/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1995,7 +1983,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">350</span>
+                  <span class="site-state-item-count">351</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

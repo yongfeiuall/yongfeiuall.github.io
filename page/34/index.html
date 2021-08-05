@@ -305,6 +305,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Excel-Format-格式-的设置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/Excel-Format-格式-的设置/" itemprop="url">Excel Format(格式)的设置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:29:19+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Excel/" itemprop="url" rel="index">
+                    <span itemprop="name">Excel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/Excel-Format-格式-的设置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Excel-Format-格式-的设置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>)<span class="class">.BORDERS</span><span class="class">.LineStyle</span>=<span class="number">1</span></span><br><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>).HorizontalAlignment=<span class="number">3</span> &amp;&amp;水平(<span class="number">1</span>-默认、<span class="number">2</span>-靠左、<span class="number">3</span>-居中、<span class="number">4</span>-靠右、<span class="number">5</span>-填充、<span class="number">6</span>=两端对齐、<span class="number">7</span>=跨列居中、<span class="number">8</span>=分散对齐)</span><br><span class="line">oExcel.<span class="function"><span class="title">RANGE</span><span class="params">(oExcel.Cells(<span class="number">1</span>,<span class="number">1</span>)</span></span>,oExcel.<span class="function"><span class="title">Cells</span><span class="params">(nRows,nColumns)</span></span>).VerticalAlignment=<span class="number">2</span> &amp;&amp;垂直(<span class="number">1</span>=靠上、<span class="number">2</span>=居中、<span class="number">3</span>=靠下、<span class="number">4</span>=两端对齐、<span class="number">5</span>=分散对齐)</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.RightFooter</span>=<span class="string">"第&amp;P页 / 共&amp;N页"</span></span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.TopMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置顶边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.BottomMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置左边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.HeaderMargin</span>=<span class="number">1</span>/<span class="number">0.035</span> &amp;&amp;设置页眉到顶端边距为<span class="number">1</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.FooterMargin</span>=<span class="number">1</span>/<span class="number">0.035</span> &amp;&amp;设置页脚到底边距为<span class="number">1</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.LeftMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置左边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.RightMargin</span>=<span class="number">2</span>/<span class="number">0.035</span> &amp;&amp;设置右边距为<span class="number">2</span>厘米</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.CenterHorizontally</span>=<span class="class">.t</span>. &amp;&amp;设置页面水平居中</span><br><span class="line">oExcel<span class="class">.ActiveSheet</span><span class="class">.PageSetup</span><span class="class">.CenterVertically</span>=<span class="class">.t</span>. &amp;&amp;设置页面垂直居中</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Find-a-File-Recursively-递归查找文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1711,179 +1865,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/17/QTP识别web页面时候结果为winobject/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/17/QTP识别web页面时候结果为winobject/" itemprop="url">QTP识别web页面时候结果为winobject</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-17T14:29:37+08:00">
-                2012-10-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/17/QTP识别web页面时候结果为winobject/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/17/QTP识别web页面时候结果为winobject/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>QTP SPY无法识别此对象，会把所有web对象都识别为winobject。</p>
-<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><ol>
-<li><p>把IE和QTP都关掉，然后先打开QTP，再打开IE，这样就能识别了。</p>
-</li>
-<li><p>如果这样不行的话：</p>
-<ul>
-<li><p>XP下：  查看IE加载项，查看BHOManager Class是否已经被加载，而且状态为Enable.没有做修改，保持现状。（若没有BHOManager Class 加载项，则在QTP安装文件下找到BHOManager.dll（目录为*\QuickTest\MSI\System32,自己搜索下）并复制到C:\WINDOWS\system32下）重新注册此dll，打开命令提示符，运行命令：regsvr32 c:\windows\SysWOW64\BHOManager.dll</p>
-</li>
-<li><p>Win7下：查看IE加载项，查看BHOManager Class是否已经被加载，而且状态为Enable.没有做修改，保持现状。（若没有BHOManager Class 加载项，则在QTP安装文件下找到BHOManager.dll并复制到c:\windows\SysWOW64下）重新注册此dll. 以管理员权限打开命令提示符，运行命令：regsvr32 c:\windows\SysWOW64\BHOManager.dll</p>
-</li>
-</ul>
-</li>
-<li><p>若还不行则在用户账户控制设置里把权限设置到最低。（建议：如果方法1不行，先使用该方法。）</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1933,7 +1919,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">350</span>
+                  <span class="site-state-item-count">351</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

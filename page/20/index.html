@@ -305,6 +305,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/26/Robot-Framework-Table-Handling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/26/Robot-Framework-Table-Handling/" itemprop="url">Robot Framework-Table Handling</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-26T15:53:14+08:00">
+                2016-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/26/Robot-Framework-Table-Handling/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/26/Robot-Framework-Table-Handling/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Robot Framework provide some table handling keyword, one for get cell text, rest are for check point keyword,actually, it’s not enouth for us to handle table actions in script designing.</p>
+<p>When we use Java or other languages to design script under Selenium Webdriver, we also need to customize class to implement relevant methods, such as, getTableRowCount, clickLinkInTableCell…..</p>
+<p>But for Robot Framework, search from Google, seems there not a good solution，think about many ways，finally, find the below method to handle table actions, maybe it’s not the best way, anyway, it’s worked.</p>
+<h1 id="Get-Table-Row-Count"><a href="#Get-Table-Row-Count" class="headerlink" title="Get Table Row Count"></a>Get Table Row Count</h1><p>We can use ‘Get Matching Xpath Count’ method to get table row count.<br><img src="/images/rf/table_get_row_count.jpg" alt=""><br>Here, the locator is the row(tr) locator rather than table locator,  and need to use xpath.</p>
+<h1 id="Get-Row-By-Cell-Text"><a href="#Get-Row-By-Cell-Text" class="headerlink" title="Get Row By Cell Text"></a>Get Row By Cell Text</h1><p>Based on ‘Get Table Row Count’ keyword, use for loop to judge text in which row, to Get Row By Cell Textget current row index/number.<br><img src="/images/rf/table_get_row_by_text.jpg" alt=""></p>
+<h1 id="Click-Link-In-Table-Cell"><a href="#Click-Link-In-Table-Cell" class="headerlink" title="Click Link In Table Cell"></a>Click Link In Table Cell</h1><p>From ‘Get Row By Cell Text’, get the current row index, then we can the link in table cell.<br><img src="/images/rf/table_click_link_in_cell.jpg" alt=""></p>
+<h1 id="Example-And-More"><a href="#Example-And-More" class="headerlink" title="Example And More"></a>Example And More</h1><ul>
+<li>We can use the customized method like the below way<br><img src="/images/rf/table_call.jpg" alt=""><br><strong>Notes:</strong> we will get the below error if we define locator with prefix ‘xpath=’, i am not sure why, or maybe only happened on my laptop, so please don’t use the prefix when define tr locator.<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InvalidSelectorException</span>: <span class="type">Message</span>: <span class="type">The</span> given selector xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr <span class="keyword">is</span> either invalid <span class="keyword">or</span> does <span class="keyword">not</span> <span class="literal">result</span> <span class="keyword">in</span> a <span class="type">WebElement</span>. <span class="type">The</span> following error occurred:</span><br><span class="line"><span class="type">InvalidSelectorError</span>: <span class="type">Unable</span> to locate an element <span class="keyword">with</span> the xpath expression xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr because <span class="keyword">of</span> the following error:</span><br><span class="line"><span class="type">TypeError</span>: <span class="type">The</span> expression cannot be converted to <span class="keyword">return</span> the specified <span class="keyword">type</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Do-more-jobs"><a href="#Do-more-jobs" class="headerlink" title="Do more jobs"></a>Do more jobs</h1><p>We can implement more actions based on the above major implementation, such as ‘Get Table Column Count’, ‘Select Checkbox In Table Cell’, ‘Select From List In Table Cell’………</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/21/Robot-Framework-基础知识学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1809,175 +1973,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/28/正则表达式入门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/28/正则表达式入门/" itemprop="url">正则表达式入门</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-28T11:15:48+08:00">
-                2016-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/02/28/正则表达式入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/28/正则表达式入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。之前知道的很少，也就知道?,*了，工作中用到了，网上教程学习一下，对正则表达式有个基本的了解和使用。</p>
-<h1 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h1><p><img src="/images/regex/yuanzifu.jpg" alt="元字符"><br>^匹配你要用来查找的字符串的开头，$匹配结尾。这两个代码在验证输入的内容时非常有用，比如一个网站如果要求你填写的用户名必须为8位到10位数字时，可以使用：^\d{8,10}$。</p>
-<p><em>如果你想查找元字符本身的话，你就得使用\来取消这些字符的特殊意义</em></p>
-<h1 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h1><p><img src="/images/regex/xiandingfu.jpg" alt="限定符"><br>下面是一些使用重复的例子：<br>Windows\d+匹配Windows后面跟1个或更多数字</p>
-<h1 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h1><p>要想查找数字，字母或数字，空白是很简单的，因为已经有了对应这些字符集合的元字符，但是如果你想匹配没有预定义元字符的字符集合(比如元音字母a,e,i,o,u),应该怎么办？</p>
-<p>很简单，你只需要在方括号里列出它们就行了，像[aeiou]就匹配任何一个英文元音字母，[.?!]匹配标点符号(.或?或!)。</p>
-<h1 id="分枝条件"><a href="#分枝条件" class="headerlink" title="分枝条件"></a>分枝条件</h1><p>正则表达式里的分枝条件指的是有几种规则，如果满足其中任意一种规则都应该当成匹配，具体方法是用|把不同的规则分隔开。<br>看例子：<br>(?0\d{2})?[- ]?\d{8}|0\d{2}[- ]?\d{8}这个表达式匹配3位区号的电话号码，其中区号可以用小括号括起来，也可以不用，区号与本地号间可以用连字号或空格间隔，也可以没有间隔。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/02/28/正则表达式入门/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2027,7 +2027,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">350</span>
+                  <span class="site-state-item-count">351</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
