@@ -305,6 +305,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/20/Load-Runner-VuGen-Get-Post/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="url">Load Runner - VuGen Get & Post</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-20T07:31:56+08:00">
+                2015-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/20/Load-Runner-VuGen-Get-Post/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>性能测试中大部的都是基于HTTP协议的，脚本里的90%都是Get和Post，多数是Get请求。我们用以下两个方法来实现HTTP请求：</p>
+<h1 id="Get-web-url"><a href="#Get-web-url" class="headerlink" title="Get - web_url()"></a>Get - web_url()</h1><p>此函数用来模拟用户请求，它也是在脚本中最常使用的函数之一。<br>语法：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Int Web_url(<span class="keyword">const</span> <span class="built_in">char</span> *StepName, <span class="keyword">const</span> <span class="built_in">char</span> * url, &lt;Lists <span class="keyword">of</span> Attributes&gt;, [EXTRARES,&lt;Lists <span class="keyword">of</span> Resource Attributes&gt;,LAST)</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">web_url<span class="list">(<span class="string">"Open Login Page"</span>,</span><br><span class="line">        <span class="string">"URL=http://10.11.2.22/"</span>,</span><br><span class="line">        <span class="string">"Resource=0"</span>,</span><br><span class="line">        <span class="string">"RecContentType=text/html"</span>,</span><br><span class="line">        <span class="string">"Referer="</span>,</span><br><span class="line">        <span class="string">"Snapshot=t1.inf"</span>,</span><br><span class="line">        <span class="string">"Mode=HTML"</span>,</span><br><span class="line">        EXTRARES,</span><br><span class="line">        <span class="string">"URL=/common/login/button.gif"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/main.jpg"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/head_bg.gif"</span>, ENDITEM,</span><br><span class="line">        LAST)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
+<p>参数的几点说明:</p>
+<ol>
+<li>最基本的三个参数是StepName，url, LAST，在不能录制的情况下，可以自己用这三个参数写代码。</li>
+<li>Resource - 指定一个值说明这个URL是否是一个资源，0 表示非资源，1 表示资源。</li>
+<li>RecContentType - 指定接受服务器什么格式文件。</li>
+<li>EXTRARES 是由script、active、java applet、flash、CSS产生的请求，在页面上都找不到。<ul>
+<li>每一个都是一个请求。</li>
+<li>加不加额外资源，会影响下载量。</li>
+<li>能不能删除此处脚本，取决于是不是全部都是图片或样式的请求，有没有特殊的请求存在。(原则上只要是录制时录下来的，不是无关的内容，就保留下来。)</li>
+<li>如果在脚本回放时不想下载图片、样式表等，设置：<br>  Run-time Setting -&gt; Browser Emulation -&gt; Download non-html resources。只关心业务处理能力，带宽受限时取消此选项。默认是选中的。</li>
+</ul>
+</li>
+</ol>
+<p><em>Notes: 排错，只关注url部分即可，数据要是有变化的话，要进行参数化。</em></p>
+<h1 id="Post-web-submit-data"><a href="#Post-web-submit-data" class="headerlink" title="Post - web_submit_data()"></a>Post - web_submit_data()</h1><p>与Get请求的web_url函数相比，多了ITEMDATA。<br><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int web_submit_data( <span class="keyword">const</span> char *StepName, <span class="keyword">const</span> char *Action, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Attributes&gt;, ITEMDATA, &lt;<span class="built_in">List</span> <span class="keyword">of</span> data&gt;, [ EXTRARES, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Resource Attributes&gt;,] LAST );</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">web_submit_data("<span class="operator"><span class="keyword">start</span><span class="string">", </span><br><span class="line">"</span><span class="keyword">Action</span>=login.asp<span class="string">", </span><br><span class="line">"</span>Method=POST<span class="string">",</span><br><span class="line">ITEMDATA, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">user</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">password</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=sessionID<span class="string">", "</span><span class="keyword">value</span>=<span class="number">20151220</span><span class="string">", ENDITEM, </span><br><span class="line">LAST);</span></span></span><br></pre></td></tr></table></figure></p>
+<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
+<p>参数的几点说明：</p>
+<ol>
+<li>Action：Form中的ACTION属性，指定了完成Form中的操作用到的URL。 </li>
+<li>Method：表单提交方法：POST或GET（默认是POST）。 </li>
+<li>ITEMDATA：数据域和属性的分隔符。 <ul>
+<li>List of Data：<br>数据域列表定义了表单提交的内容。由于此请求是上下文无关的，因此数据域包含了所有的隐含域。使用Form的编码规则组织数据域。<br>数据域列表可以使用下面任意一种格式：<br>“name=n1”, “value=v1”, ENDITEM,<br>“name=n2”, “EncryptedValue=qwerty”, ENDITEM, </li>
+<li>如果要自己写脚本的话，用HTTPWATCH工具，在POST_DATA中可以看到提交对应的参数名和参数值,与脚本一致。</li>
+</ul>
+</li>
+</ol>
+<p><em>Notes：排错，两个地方：1. Action 2. ITEMDATA提交的数据不合法。</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Linux运行级别和chkconfig/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1841,176 +2026,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/06/Linux下软件安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/06/Linux下软件安装/" itemprop="url">Linux下软件安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-06T10:44:52+08:00">
-                2015-12-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/06/Linux下软件安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/06/Linux下软件安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Linux下安装软件的几种方法，做一个简单的介绍：</p>
-<ol>
-<li>直接运行可执行程序，类似于Windows下的安装。</li>
-<li>绿色版，也就是免安装，例如：Tomcat。</li>
-<li>rpm安装<ul>
-<li>查询是否已经安装<br><code>rpm -aq mysql</code></li>
-<li>删除已安装软件<br><code>rpm -e [上一步查询到的内容]</code><br>删除的时候，会有一些依赖关系的报错，可用下面方法强制删除，强制解除依赖关系<br><code>rpm -e --nodeps [上一步查询到的内容]</code></li>
-<li>安装软件<br><code>rpm -ivh [rpm软件包]</code></li>
-</ul>
-</li>
-<li>源码安装<ul>
-<li>生成配置文件<br><code>./configure</code></li>
-<li>编译<br><code>make</code></li>
-<li>安装软件<br><code>make install</code></li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2065,7 +2080,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">351</span>
+                  <span class="site-state-item-count">352</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

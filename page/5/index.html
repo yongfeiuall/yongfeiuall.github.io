@@ -305,6 +305,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/10/07/Code-Analysis-with-SonarQube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Code-Analysis-with-SonarQube/" itemprop="url">Code Analysis with SonarQube</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T13:20:21+08:00">
+                2018-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SonarQube/" itemprop="url" rel="index">
+                    <span itemprop="name">SonarQube</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/07/Code-Analysis-with-SonarQube/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/10/07/Code-Analysis-with-SonarQube/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>Login the sonarqube, create a token. Also need to select the primary language (Java) and the build technology of the project (Maven).<br><img src="/images/sonarqube/config.jpg" alt=""></p>
+</li>
+<li><p>Add sonarqube maven plugin in project pom file</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.sonarsource.scanner.maven<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>sonar-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.0.1254<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Execute below command from the root of our project directory to scan</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn sonar:sonar -Dsonar<span class="class">.host</span><span class="class">.url</span>=http:<span class="comment">//192.168.220.132:9000 -Dsonar.login=ac75fe70e38aa0a956cd8c2ccdfa282783cf9a0a</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Verify<br><img src="/images/sonarqube/scan_result.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/09/30/Centos下配置-Sonarqube-MySQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1791,174 +1956,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/08/11/Zookeeper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/11/Zookeeper/" itemprop="url">ZooKeeper</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T14:29:52+08:00">
-                2018-08-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Distribution/" itemprop="url" rel="index">
-                    <span itemprop="name">Distribution</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/11/Zookeeper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/08/11/Zookeeper/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://zookeeper.apache.org/" target="_blank" rel="external">ZooKeeper</a>是一个开源的分布式协调服务，他为分布式应用提供了高效且可靠的分布式协调服务，提供了诸如统一命名空间服务，配置服务和分布式锁等分布式基础服务。</p>
-<p>就是一个服务注册中心。一个典型的ZooKeeper集群如下：<br><img src="/images/distributed/zk_service.jpg" alt=""></p>
-<p>ZooKeeper拥有一个层次的命名空间，这个和标准的文件系统非常相似，如下图所示：<br><img src="/images/distributed/zk_namespace.jpg" alt=""></p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
-<li>下载并解压；</li>
-<li>创建data和log目录；</li>
-<li><p>修改config - zoo.cfg；</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/data</span><br><span class="line">dataLogDir=/opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation bin]# ./zkServer.sh <span class="operator"><span class="keyword">start</span></span><br><span class="line">ZooKeeper JMX enabled <span class="keyword">by</span> <span class="keyword">default</span></span><br><span class="line"><span class="keyword">Using</span> config: /opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/<span class="keyword">bin</span>/../conf/zoo.cfg</span><br><span class="line"><span class="keyword">Starting</span> zookeeper ... STARTED</span><br><span class="line">[root@Automation <span class="keyword">bin</span>]# ./zkServer.sh <span class="keyword">status</span></span><br><span class="line">ZooKeeper JMX enabled <span class="keyword">by</span> <span class="keyword">default</span></span><br><span class="line"><span class="keyword">Using</span> config: /opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/<span class="keyword">bin</span>/../conf/zoo.cfg</span><br><span class="line"><span class="keyword">Mode</span>: <span class="keyword">standalone</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="命令操作"><a href="#命令操作" class="headerlink" title="命令操作"></a>命令操作</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation bin]<span class="preprocessor"># ./zkCli.sh -server localhost:<span class="number">2181</span></span></span><br><span class="line">Connecting to localhost:<span class="number">2181</span></span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">387</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:zookeeper.version=<span class="number">3.4</span><span class="number">.13</span>-<span class="number">2</span>d71af4dbe22557fda74f9a9b4309b15a7487f03, built on <span class="number">06</span>/<span class="number">29</span>/<span class="number">2018</span> <span class="number">04</span>:<span class="number">05</span> GMT</span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">395</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:host.name=&lt;NA&gt;</span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">395</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:java.version=<span class="number">1.8</span><span class="number">.0</span>_11</span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">405</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:java.vendor=Oracle Corporation</span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">405</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:java.home=/usr/java/jdk1<span class="number">.8</span><span class="number">.0</span>_11/jre</span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">02</span> <span class="number">09</span>:<span class="number">26</span>:<span class="number">12</span>,<span class="number">405</span> [myid:] - INFO  [main:Environment@<span class="number">100</span>] - Client environment:java.<span class="keyword">class</span>.path=/opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/bin/../build/classes:/opt/zookeeper-<span class="number">3.4</span><span class="number">.13</span>/bin/../build/lib<span class="comment">/*.jar:/opt/zookeeper-3.4.13/bin/../lib/slf4j-log4j12-1.7.25.jar:/opt/zookeeper-3.4.13/bin/../lib/slf4j-api-1.7.25.jar:/opt/zookeeper-3.4.13/bin/../lib/netty-3.10.6.Final.jar:/opt/zookeeper-3.4.13/bin/../lib/log4j-1.2.17.jar:/opt/zookeeper-3.4.13/bin/../lib/jline-0.9.94.jar:/opt/zookeeper-3.4.13/bin/../lib/audience-annotations-0.5.0.jar:/opt/zookeeper-3.4.13/bin/../zookeeper-3.4.13.jar:/opt/zookeeper-3.4.13/bin/../src/java/lib<span class="comment">/*.jar:/opt/zookeeper-3.4.13/bin/../conf:.:/usr/java/jdk1.8.0_11/lib/dt.jar:/usr/java/jdk1.8.0_11/lib/tools.jar:/usr/java/jdk1.8.0_11/jre/lib</span><br><span class="line">2018-06-02 09:26:12,405 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/i386:/lib:/usr/lib</span><br><span class="line">2018-06-02 09:26:12,405 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp</span><br><span class="line">2018-06-02 09:26:12,405 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;</span><br><span class="line">2018-06-02 09:26:12,405 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux</span><br><span class="line">2018-06-02 09:26:12,406 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=i386</span><br><span class="line">2018-06-02 09:26:12,406 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=2.6.32-573.el6.x86_64</span><br><span class="line">2018-06-02 09:26:12,406 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=root</span><br><span class="line">2018-06-02 09:26:12,406 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/root</span><br><span class="line">2018-06-02 09:26:12,407 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/opt/zookeeper-3.4.13/bin</span><br><span class="line">2018-06-02 09:26:12,410 [myid:] - INFO  [main:ZooKeeper@442] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@1e0aca6</span><br><span class="line">Welcome to ZooKeeper!</span><br><span class="line">2018-06-02 09:26:12,484 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1029] - Opening socket connection to server localhost/0:0:0:0:0:0:0:1:2181. Will not attempt to authenticate using SASL (unknown error)</span><br><span class="line">JLine support is enabled</span><br><span class="line">2018-06-02 09:26:12,510 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@879] - Socket connection established to localhost/0:0:0:0:0:0:0:1:2181, initiating session</span><br><span class="line">2018-06-02 09:26:12,572 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1303] - Session establishment complete on server localhost/0:0:0:0:0:0:0:1:2181, sessionid = 0x1003ae6d0d60000, negotiated timeout = 30000</span><br><span class="line"></span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:None path:null</span><br><span class="line">[zk: localhost:2181(CONNECTED) 0]</span></span></span><br></pre></td></tr></table></figure>
-<p>这里不做过多深入学习说明，集群环境搭建，工作原理，Leader选举等，请参见官方文档。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2013,7 +2010,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">351</span>
+                  <span class="site-state-item-count">352</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

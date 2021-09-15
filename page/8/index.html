@@ -305,6 +305,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/" itemprop="url">Java项目实战 - 商品列表展示：with PageHelper</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T12:53:59+08:00">
+                2018-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/15/Java项目实战-商品列表展示：with-PageHelper/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/15/Java项目实战-商品列表展示：with-PageHelper/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Mybatis-PageHelper"><a href="#Mybatis-PageHelper" class="headerlink" title="Mybatis - PageHelper"></a>Mybatis - PageHelper</h1><p>Mybatis的一个插件，PageHelper，非常方便mybatis分页查询。详细请参见：<a href="https://pagehelper.github.io/" target="_blank" rel="external">PageHelper</a></p>
+<p>使用方法：</p>
+<ol>
+<li>引入分页插件</li>
+<li>配置拦截器插件<br>在SqlMapConfig.xml中配置插件。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置分页插件 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">plugins</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">plugin</span> <span class="attribute">interceptor</span>=<span class="value">"com.github.pagehelper.PageHelper"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库--&gt;</span>        </span><br><span class="line">        	<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"dialect"</span> <span class="attribute">value</span>=<span class="value">"mysql"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">plugins</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h1><p>逆向工程已经实现了Mapper，不需要再做修改。</p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>接收分页参数，一个是page一个是rows。<br>调用dao查询商品列表，返回一个EasyUIDataGrid支持的数据格式的商品列表。<br>pojo:<br>把它放到izheyi-manager-common里，代码如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EasyUiDataGridResult</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> total;</span><br><span class="line">	<span class="keyword">private</span> List&lt;?&gt; rows;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTotal</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> total;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotal</span>(<span class="params"><span class="keyword">long</span> total</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.total = total;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> List&lt;?&gt; getRows() &#123;</span><br><span class="line">		<span class="keyword">return</span> rows;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRows</span>(<span class="params">List&lt;?&gt; rows</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.rows = rows;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>接口类：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ItemService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="function">EasyUiDataGridResult <span class="title">getItemList</span>(<span class="params"><span class="keyword">int</span> page, <span class="keyword">int</span> rows</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实现类：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ItemServiceImpl</span> implements <span class="type">ItemService</span> &#123;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">TbItemMapper</span> itemMapper;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getItemList(<span class="type">int</span> page, <span class="type">int</span> rows) &#123;</span><br><span class="line">		//<span class="type">Search</span></span><br><span class="line">		<span class="type">TbItemExample</span> example = new <span class="type">TbItemExample</span>();</span><br><span class="line">		<span class="type">PageHelper</span>.startPage(page, rows);//分页</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">TbItem</span>&gt; list = itemMapper.selectByExample(example);</span><br><span class="line">		</span><br><span class="line">		//创建返回对象</span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = new <span class="type">EasyUiDataGridResult</span>();</span><br><span class="line">		<span class="literal">result</span>.setRows(list);</span><br><span class="line">		</span><br><span class="line">		//总条数</span><br><span class="line">		<span class="type">PageInfo</span>&lt;<span class="type">TbItem</span>&gt; pageInfo = new <span class="type">PageInfo</span>&lt;&gt;(list);</span><br><span class="line">		<span class="literal">result</span>.setTotal(pageInfo.getTotal());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><p>接收页面传递过来的参数page、rows。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ItemController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ItemService itemService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/item/list"</span>)</span><br><span class="line">	<span class="annotation">@ResponseBody</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> EasyUiDataGridResult <span class="title">getItemList</span><span class="params">(<span class="keyword">int</span> page, <span class="keyword">int</span> rows)</span></span>&#123;</span><br><span class="line">		EasyUiDataGridResult tbItem = itemService.getItemList(page, rows);</span><br><span class="line">		<span class="keyword">return</span> tbItem;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/item_list.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-打开后台管理页面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1779,179 +1945,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/20/利用线程Dump来查找高消耗CPU代码/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/20/利用线程Dump来查找高消耗CPU代码/" itemprop="url">利用线程Dump来查找高消耗CPU代码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-20T15:13:53+08:00">
-                2018-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/20/利用线程Dump来查找高消耗CPU代码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/20/利用线程Dump来查找高消耗CPU代码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对于CPU消耗高的代码，可以用下面的方法来进行定位分析。</p>
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>运行一段Java代码，让它消耗CPU。</p>
-<h1 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h1><ol>
-<li><p>用<code>top</code>查找出高消耗CPU PID</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation logs]# top</span><br><span class="line">top - 10:14:33 up 19:47,  4 users,  <span class="operator"><span class="keyword">load</span> average: <span class="number">0.48</span>, <span class="number">0.41</span>, <span class="number">0.32</span></span><br><span class="line">Tasks: <span class="number">189</span> total,   <span class="number">1</span> running, <span class="number">188</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">Cpu(s): <span class="number">11.8</span>%us, <span class="number">15.0</span>%sy,  <span class="number">0.0</span>%ni, <span class="number">70.4</span>%<span class="keyword">id</span>,  <span class="number">0.0</span>%wa,  <span class="number">1.4</span>%hi,  <span class="number">1.4</span>%si,  <span class="number">0.0</span>%st</span><br><span class="line">Mem:   <span class="number">3389932</span><span class="keyword">k</span> total,  <span class="number">3284936</span><span class="keyword">k</span> used,   <span class="number">104996</span><span class="keyword">k</span> free,   <span class="number">182736</span><span class="keyword">k</span> buffers</span><br><span class="line">Swap:  <span class="number">3522556</span><span class="keyword">k</span> total,    <span class="number">11740</span><span class="keyword">k</span> used,  <span class="number">3510816</span><span class="keyword">k</span> free,  <span class="number">1144964</span><span class="keyword">k</span> cached</span><br><span class="line"></span><br><span class="line">  PID <span class="keyword">USER</span>      PR  NI  VIRT  RES  SHR S %CPU %MEM    <span class="keyword">TIME</span>+  COMMAND                                                                                                                                                                                                         </span><br><span class="line"><span class="number">14538</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">1916</span><span class="keyword">m</span>  <span class="number">52</span><span class="keyword">m</span>  <span class="number">10</span><span class="keyword">m</span> S <span class="number">30.8</span>  <span class="number">1.6</span>   <span class="number">8</span>:<span class="number">33.55</span> <span class="keyword">java</span>                                                                                                                                                                                                             </span><br><span class="line"><span class="number">14087</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">100</span><span class="keyword">m</span> <span class="number">4688</span> <span class="number">3504</span> S <span class="number">16.3</span>  <span class="number">0.1</span>  <span class="number">14</span>:<span class="number">21.79</span> sshd                                                                                                                                                                                                             </span><br><span class="line"><span class="number">10032</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">1125</span><span class="keyword">m</span> <span class="number">277</span><span class="keyword">m</span>  <span class="number">49</span><span class="keyword">m</span> S  <span class="number">4.0</span>  <span class="number">8.4</span>  <span class="number">99</span>:<span class="number">02.94</span> firefox</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用<code>top -p &lt;PID&gt;</code>查找出线程ID - (输入H查看所有线程的统计信息)</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation logs]# top -p 14538</span><br><span class="line">top - 10:21:53 up 19:54,  4 users,  <span class="operator"><span class="keyword">load</span> average: <span class="number">0.48</span>, <span class="number">0.44</span>, <span class="number">0.35</span></span><br><span class="line">Tasks:   <span class="number">3</span> total,   <span class="number">0</span> running,   <span class="number">3</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">Cpu(s): <span class="number">11.9</span>%us, <span class="number">15.8</span>%sy,  <span class="number">0.0</span>%ni, <span class="number">69.9</span>%<span class="keyword">id</span>,  <span class="number">0.0</span>%wa,  <span class="number">0.9</span>%hi,  <span class="number">1.6</span>%si,  <span class="number">0.0</span>%st</span><br><span class="line">Mem:   <span class="number">3389932</span><span class="keyword">k</span> total,  <span class="number">3243372</span><span class="keyword">k</span> used,   <span class="number">146560</span><span class="keyword">k</span> free,   <span class="number">182704</span><span class="keyword">k</span> buffers</span><br><span class="line">Swap:  <span class="number">3522556</span><span class="keyword">k</span> total,    <span class="number">12700</span><span class="keyword">k</span> used,  <span class="number">3509856</span><span class="keyword">k</span> free,  <span class="number">1105400</span><span class="keyword">k</span> cached</span><br><span class="line"></span><br><span class="line">  PID <span class="keyword">USER</span>      PR  NI  VIRT  RES  SHR S %CPU %MEM    <span class="keyword">TIME</span>+  COMMAND                                                                                                                                                                                                         </span><br><span class="line"><span class="number">14539</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">1916</span><span class="keyword">m</span>  <span class="number">52</span><span class="keyword">m</span>  <span class="number">10</span><span class="keyword">m</span> S <span class="number">33.0</span>  <span class="number">1.6</span>  <span class="number">10</span>:<span class="number">53.38</span> <span class="keyword">java</span>                                                                                                                                                                                                             </span><br><span class="line"><span class="number">14540</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">1916</span><span class="keyword">m</span>  <span class="number">52</span><span class="keyword">m</span>  <span class="number">10</span><span class="keyword">m</span> S <span class="number">25.6</span>  <span class="number">1.6</span>   <span class="number">0</span>:<span class="number">00.77</span> <span class="keyword">java</span>                                                                                                                                                                                                             </span><br><span class="line"><span class="number">14538</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">1916</span><span class="keyword">m</span>  <span class="number">52</span><span class="keyword">m</span>  <span class="number">10</span><span class="keyword">m</span> S  <span class="number">0.0</span>  <span class="number">1.6</span>   <span class="number">0</span>:<span class="number">00.00</span> <span class="keyword">java</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用<code>jstack &lt;PID&gt;</code>做线程Dump</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="type">Automation</span> logs]<span class="comment"># jstack 14538</span></span><br><span class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">20</span> <span class="number">10</span>:<span class="number">18</span>:<span class="number">12</span></span><br><span class="line"><span class="type">Full</span> thread dump <span class="type">Java</span> <span class="type">HotSpot</span>(<span class="type">TM</span>) <span class="number">64</span>-<span class="type">Bit</span> <span class="type">Server</span> <span class="type">VM</span> (<span class="number">24</span>.<span class="number">80</span>-b11 mixed mode):</span><br><span class="line"></span><br><span class="line"><span class="string">"Attach Listener"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6cbc001000</span> nid=<span class="number">0x38fe</span> waiting on condition [<span class="number">0x0000000000000000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line"></span><br><span class="line"><span class="string">"Service Thread"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8093000</span> nid=<span class="number">0x38d4</span> runnable [<span class="number">0x0000000000000000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line"></span><br><span class="line"><span class="string">"C2 CompilerThread1"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8090800</span> nid=<span class="number">0x38d3</span> waiting on condition [<span class="number">0x0000000000000000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line"></span><br><span class="line"><span class="string">"C2 CompilerThread0"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce808d800</span> nid=<span class="number">0x38d2</span> waiting on condition [<span class="number">0x0000000000000000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line"></span><br><span class="line"><span class="string">"Signal Dispatcher"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce808b000</span> nid=<span class="number">0x38d1</span> runnable [<span class="number">0x0000000000000000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line"></span><br><span class="line"><span class="string">"Finalizer"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce806a800</span> nid=<span class="number">0x38d0</span> <span class="keyword">in</span> <span class="type">Object</span>.wait() [<span class="number">0x00007f6cd7efd000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">WAITING</span> (on <span class="keyword">object</span> monitor)</span><br><span class="line">	at java.lang.<span class="type">Object</span>.wait(<span class="type">Native</span> <span class="type">Method</span>)</span><br><span class="line">	- waiting on &lt;<span class="number">0x00000000cc4028c0</span>&gt; (a java.lang.<span class="keyword">ref</span>.<span class="type">ReferenceQueue</span>$<span class="type">Lock</span>)</span><br><span class="line">	at java.lang.<span class="keyword">ref</span>.<span class="type">ReferenceQueue</span>.remove(<span class="type">ReferenceQueue</span>.java:<span class="number">135</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc4028c0</span>&gt; (a java.lang.<span class="keyword">ref</span>.<span class="type">ReferenceQueue</span>$<span class="type">Lock</span>)</span><br><span class="line">	at java.lang.<span class="keyword">ref</span>.<span class="type">ReferenceQueue</span>.remove(<span class="type">ReferenceQueue</span>.java:<span class="number">151</span>)</span><br><span class="line">	at java.lang.<span class="keyword">ref</span>.<span class="type">Finalizer</span>$<span class="type">FinalizerThread</span>.run(<span class="type">Finalizer</span>.java:<span class="number">209</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"Reference Handler"</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8068800</span> nid=<span class="number">0x38cf</span> <span class="keyword">in</span> <span class="type">Object</span>.wait() [<span class="number">0x00007f6cd7ffe000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">WAITING</span> (on <span class="keyword">object</span> monitor)</span><br><span class="line">	at java.lang.<span class="type">Object</span>.wait(<span class="type">Native</span> <span class="type">Method</span>)</span><br><span class="line">	- waiting on &lt;<span class="number">0x00000000cc4025c0</span>&gt; (a java.lang.<span class="keyword">ref</span>.<span class="type">Reference</span>$<span class="type">Lock</span>)</span><br><span class="line">	at java.lang.<span class="type">Object</span>.wait(<span class="type">Object</span>.java:<span class="number">503</span>)</span><br><span class="line">	at java.lang.<span class="keyword">ref</span>.<span class="type">Reference</span>$<span class="type">ReferenceHandler</span>.run(<span class="type">Reference</span>.java:<span class="number">133</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc4025c0</span>&gt; (a java.lang.<span class="keyword">ref</span>.<span class="type">Reference</span>$<span class="type">Lock</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"main"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8008800</span> nid=<span class="number">0x38cb</span> runnable [<span class="number">0x00007f6ceec18000</span>]</span><br><span class="line">   java.lang.<span class="type">Thread</span>.<span class="type">State</span>: <span class="type">RUNNABLE</span></span><br><span class="line">	at java.io.<span class="type">FileOutputStream</span>.writeBytes(<span class="type">Native</span> <span class="type">Method</span>)</span><br><span class="line">	at java.io.<span class="type">FileOutputStream</span>.write(<span class="type">FileOutputStream</span>.java:<span class="number">345</span>)</span><br><span class="line">	at java.io.<span class="type">BufferedOutputStream</span>.flushBuffer(<span class="type">BufferedOutputStream</span>.java:<span class="number">82</span>)</span><br><span class="line">	at java.io.<span class="type">BufferedOutputStream</span>.flush(<span class="type">BufferedOutputStream</span>.java:<span class="number">140</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc405728</span>&gt; (a java.io.<span class="type">BufferedOutputStream</span>)</span><br><span class="line">	at java.io.<span class="type">PrintStream</span>.write(<span class="type">PrintStream</span>.java:<span class="number">482</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc405708</span>&gt; (a java.io.<span class="type">PrintStream</span>)</span><br><span class="line">	at sun.nio.cs.<span class="type">StreamEncoder</span>.writeBytes(<span class="type">StreamEncoder</span>.java:<span class="number">221</span>)</span><br><span class="line">	at sun.nio.cs.<span class="type">StreamEncoder</span>.implFlushBuffer(<span class="type">StreamEncoder</span>.java:<span class="number">291</span>)</span><br><span class="line">	at sun.nio.cs.<span class="type">StreamEncoder</span>.flushBuffer(<span class="type">StreamEncoder</span>.java:<span class="number">104</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc405800</span>&gt; (a java.io.<span class="type">OutputStreamWriter</span>)</span><br><span class="line">	at java.io.<span class="type">OutputStreamWriter</span>.flushBuffer(<span class="type">OutputStreamWriter</span>.java:<span class="number">185</span>)</span><br><span class="line">	at java.io.<span class="type">PrintStream</span>.write(<span class="type">PrintStream</span>.java:<span class="number">527</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc405708</span>&gt; (a java.io.<span class="type">PrintStream</span>)</span><br><span class="line">	at java.io.<span class="type">PrintStream</span>.print(<span class="type">PrintStream</span>.java:<span class="number">597</span>)</span><br><span class="line">	at java.io.<span class="type">PrintStream</span>.println(<span class="type">PrintStream</span>.java:<span class="number">736</span>)</span><br><span class="line">	- locked &lt;<span class="number">0x00000000cc405708</span>&gt; (a java.io.<span class="type">PrintStream</span>)</span><br><span class="line">	at <span class="type">TestA</span>.testA(<span class="type">TestA</span>.java:<span class="number">10</span>)</span><br><span class="line">	at <span class="type">TestA</span>.main(<span class="type">TestA</span>.java:<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"VM Thread"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8064000</span> nid=<span class="number">0x38ce</span> runnable </span><br><span class="line"></span><br><span class="line"><span class="string">"GC task thread#0 (ParallelGC)"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce801e000</span> nid=<span class="number">0x38cc</span> runnable </span><br><span class="line"></span><br><span class="line"><span class="string">"GC task thread#1 (ParallelGC)"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce8020000</span> nid=<span class="number">0x38cd</span> runnable </span><br><span class="line"></span><br><span class="line"><span class="string">"VM Periodic Task Thread"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007f6ce809e000</span> nid=<span class="number">0x38d5</span> waiting on condition </span><br><span class="line"></span><br><span class="line"><span class="type">JNI</span> global references: <span class="number">138</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>转换（十进制 - 十六进制）nid</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">14539</span> --&gt; <span class="number">38</span>cb</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在Dump中查找相应nid</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"main"</span> prio=<span class="number">10</span> tid=<span class="number">0</span>x00007f6ce8008800 nid=<span class="number">0</span>x38cb runnable [<span class="number">0</span>x00007f6ceec18000]</span><br><span class="line">   java<span class="class">.lang</span><span class="class">.Thread</span><span class="class">.State</span>: RUNNABLE</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.writeBytes</span>(Native Method)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.write</span>(FileOutputStream<span class="class">.java</span>:<span class="number">345</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flushBuffer</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">82</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flush</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">140</span>)</span><br><span class="line">	- locked &lt;<span class="number">0</span>x00000000cc405728&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.BufferedOutputStream</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.write</span>(PrintStream<span class="class">.java</span>:<span class="number">482</span>)</span><br><span class="line">	- locked &lt;<span class="number">0</span>x00000000cc405708&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">	at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.writeBytes</span>(StreamEncoder<span class="class">.java</span>:<span class="number">221</span>)</span><br><span class="line">	at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.implFlushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">291</span>)</span><br><span class="line">	at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.flushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">104</span>)</span><br><span class="line">	- locked &lt;<span class="number">0</span>x00000000cc405800&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.OutputStreamWriter</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.OutputStreamWriter</span><span class="class">.flushBuffer</span>(OutputStreamWriter<span class="class">.java</span>:<span class="number">185</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.write</span>(PrintStream<span class="class">.java</span>:<span class="number">527</span>)</span><br><span class="line">	- locked &lt;<span class="number">0</span>x00000000cc405708&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.print</span>(PrintStream<span class="class">.java</span>:<span class="number">597</span>)</span><br><span class="line">	at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.println</span>(PrintStream<span class="class">.java</span>:<span class="number">736</span>)</span><br><span class="line">	- locked &lt;<span class="number">0</span>x00000000cc405708&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">	at TestA.<span class="function"><span class="title">testA</span><span class="params">(TestA.java:<span class="number">10</span>)</span></span></span><br><span class="line">	at TestA.<span class="function"><span class="title">main</span><span class="params">(TestA.java:<span class="number">3</span>)</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>基本上一定位一个准。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2006,7 +1999,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">351</span>
+                  <span class="site-state-item-count">352</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
