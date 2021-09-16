@@ -305,6 +305,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="url">Prometheus + Grafana 实时监控Windows</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-05T09:14:47+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/05/Prometheus-Grafana-监控Windows/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a> 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。<br><a href="https://grafana.com/grafana/" target="_blank" rel="external">Grafana</a> 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。</p>
+<h2 id="Windows采集器（wmi-exporter）"><a href="#Windows采集器（wmi-exporter）" class="headerlink" title="Windows采集器（wmi_exporter）"></a>Windows采集器（wmi_exporter）</h2><p>要获取服务器运行时的参数，比如当前的CPU负载、内存消耗、硬盘使用、网络IO等等，就可以在服务器上运行一个node_exporter，它能把这些参数收集好，并且暴露出一个HTTP接口以便你访问查询。</p>
+<ol>
+<li>下载采集器<br>从<a href="https://github.com/martinlindhe/wmi_exporter" target="_blank" rel="external">wmi_exporter</a>下载</li>
+<li>安装<br>直接双击安装即可。<br>Windows默认9182端口。</li>
+<li>验证<br>访问<a href="http://127.0.0.1:9182/metrics" target="_blank" rel="external">http://127.0.0.1:9182/metrics</a><br>显示以下数据，数据采集器安装成功。<br><img src="/images/performancetesting/vim_exporter.jpg" alt=""></li>
+</ol>
+<h2 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h2><ol>
+<li>下载<br>从<a href="https://prometheus.io/download/" target="_blank" rel="external">Prometheus</a>下载</li>
+<li><p>配置<br>打开prometheus.yml</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># my global config</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     5s # <span class="operator"><span class="keyword">Set</span> the scrape <span class="built_in">interval</span> <span class="keyword">to</span> every <span class="number">15</span> seconds. <span class="keyword">Default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  evaluation_interval: <span class="number">5</span>s # <span class="keyword">Evaluate</span> <span class="keyword">rules</span> every <span class="number">15</span> seconds. The <span class="keyword">default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  # scrape_timeout <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> the <span class="keyword">global</span> <span class="keyword">default</span> (<span class="number">10</span>s).</span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      # - alertmanager:<span class="number">9093</span></span><br><span class="line"></span><br><span class="line"># <span class="keyword">Load</span> <span class="keyword">rules</span> once <span class="keyword">and</span> periodically <span class="keyword">evaluate</span> them according <span class="keyword">to</span> the <span class="keyword">global</span> <span class="string">'evaluation_interval'</span>.</span><br><span class="line">rule_files:</span><br><span class="line">  # - <span class="string">"first_rules.yml"</span></span><br><span class="line">  # - <span class="string">"second_rules.yml"</span></span><br><span class="line"></span><br><span class="line"># A scrape configuration containing exactly one endpoint <span class="keyword">to</span> scrape:</span><br><span class="line"># Here it<span class="string">'s Prometheus itself.</span><br><span class="line">scrape_configs:</span><br><span class="line">  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span><br><span class="line">  - job_name: '</span>prometheus<span class="string">'</span><br><span class="line"></span><br><span class="line">    # metrics_path defaults to '</span>/metrics<span class="string">'</span><br><span class="line">    # scheme defaults to '</span><span class="keyword">http</span><span class="string">'.</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: ['</span>localhost:<span class="number">9182</span><span class="string">']</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行(将默认端口9090改为8091)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prometheus<span class="class">.exe</span> --config.file=prometheus<span class="class">.yml</span> --web.listen-address=:<span class="number">8091</span> &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证<br>访问<a href="http://127.0.0.1:8091/" target="_blank" rel="external">http://127.0.0.1:8091/</a><br>目标列表中有你本地的机器，说明Prometheus已经成功监控到本地。<br><img src="/images/performancetesting/prometheus.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h2><ol>
+<li>下载<br>从<a href="https://grafana.com/grafana/download" target="_blank" rel="external">Grafana</a>下载</li>
+<li><p>启动<br>双击安装即可。 进行到安装bin目录下：双击<code>grafana-server.exe</code>启动<br>访问<a href="http://127.0.0.1:3000" target="_blank" rel="external">http://127.0.0.1:3000</a><br>默认账号/密码：admin/admin<br><img src="/images/performancetesting/grafana_home.jpg" alt=""></p>
+</li>
+<li><p>配置Prometheus数据源<br>从刚才配置好的prometheus那里获取本地性能数据并展示。<br><img src="/images/performancetesting/grafana_prometheus.jpg" alt=""></p>
+</li>
+<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 10467<br><img src="/images/performancetesting/grafana_import.jpg" alt=""></p>
+</li>
+</ol>
+<p>最终显示如下：<br><img src="/images/performancetesting/grafana_dashboard.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/22/Python生成二维码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1740,160 +1921,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/15/小丁画作-2019/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/15/小丁画作-2019/" itemprop="url">奇点绘画画随记（2019）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-15T16:08:57+08:00">
-                2019-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/15/小丁画作-2019/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/15/小丁画作-2019/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/qidianhui/15.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/16.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/17.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/18.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/19.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/20.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/21.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/22.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/23.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/24.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/25.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/26.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/27.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/28.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/29.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/30.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/31.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/32.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/33.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/34.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/35.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/36.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/37.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1948,7 +1975,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">352</span>
+                  <span class="site-state-item-count">353</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1959,7 +1986,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1970,7 +1997,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

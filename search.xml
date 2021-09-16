@@ -4,6 +4,24 @@
   
     
     <entry>
+      <title><![CDATA[remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.]]></title>
+      <url>http://izheyi.com/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/</url>
+      <content type="html"><![CDATA[<p>I got this error on my console when i tried to push blog to github</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: Support <span class="keyword">for</span> password authentication was removed on August <span class="number">13</span>, <span class="number">2021.</span> Please use a personal access token instead.</span><br></pre></td></tr></table></figure>
+<p>Account passwords will no longer be accepted for authenticating Git operations.</p>
+<p>You need to add a <strong>Personal Access Token</strong> instead, and you can follow the below method to add.</p>
+<ol>
+<li>Log in Github</li>
+<li>Go to <code>User -&gt; Settings -&gt; Developer settings</code></li>
+<li>Click on <strong>Personal access tokens</strong> </li>
+<li>Config settings and  <strong>Generate token</strong></li>
+<li>Copy the token to replace username:password in hexo config.yml</li>
+<li>Push again</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[批量验证RackShift上物理机Web Console正确打开]]></title>
       <url>http://izheyi.com/2021/09/15/%E6%89%B9%E9%87%8F%E9%AA%8C%E8%AF%81RackShift%E4%B8%8A%E7%89%A9%E7%90%86%E6%9C%BAWeb-Console%E6%AD%A3%E7%A1%AE%E6%89%93%E5%BC%80/</url>
       <content type="html"><![CDATA[<p>最近云平台集成RackShift来批量管理近100台物理机，需要验证一下每台机器从界面能正确打开Console。手工就有点扯了，简单写了下边Selenium脚本来实现</p>

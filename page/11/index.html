@@ -305,6 +305,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/29/Terraform-Modules/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/29/Terraform-Modules/" itemprop="url">Terraform - Modules</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-29T12:53:14+08:00">
+                2018-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Terraform/" itemprop="url" rel="index">
+                    <span itemprop="name">Terraform</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/29/Terraform-Modules/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/29/Terraform-Modules/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Modules in Terraform are self-contained packages of Terraform configurations that are managed as a group. Modules are used to create reusable components in Terraform as well as for basic code organization.</p>
+<p>Can find Terraform Module here: <a href="https://registry.terraform.io/" target="_blank" rel="external">Terraform Module Registry</a></p>
+<h1 id="Module-basics"><a href="#Module-basics" class="headerlink" title="Module basics"></a>Module basics</h1><p>Any set of Terraform configuration files in a folder is a module. E.g.,</p>
+<ol>
+<li><p>Create folder layout</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">├─module</span><br><span class="line">│  └─s3</span><br><span class="line">│          main<span class="class">.tf</span></span><br><span class="line">│          outputs<span class="class">.tf</span></span><br><span class="line">│          variables<span class="class">.tf</span></span><br><span class="line">│          user-data<span class="class">.sh</span></span><br><span class="line">│</span><br><span class="line">└─qa</span><br><span class="line">    └─service</span><br><span class="line">          main<span class="class">.tf</span></span><br><span class="line">          outputs<span class="class">.tf</span></span><br><span class="line">          variables.tf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create a module to set S3</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># S3</span></span><br><span class="line"><span class="title">resource</span> <span class="string">"aws_s3_bucket"</span> <span class="string">"terraform_module"</span> &#123;</span><br><span class="line">	<span class="title">bucket</span> = <span class="string">"yongfeiuall-terraform-module"</span></span><br><span class="line">	versioning &#123;</span><br><span class="line">		<span class="title">enabled</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Using a module</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module <span class="string">"module-test"</span> &#123;</span><br><span class="line">	<span class="title">source</span> = <span class="string">"../../module/s3"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>terraform init</code>, <code>terraform plan</code> and <code>terraform apply</code> commands  </p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D:\terraform\ModuleStudy\qa\service&gt;terraform init</span><br><span class="line">Initializing modules...</span><br><span class="line">-<span class="ruby"> <span class="class"><span class="keyword">module</span>.<span class="title">module</span>-<span class="title">test</span></span></span><br><span class="line"></span>  Getting source "../../module/s3"</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Module-inputs"><a href="#Module-inputs" class="headerlink" title="Module inputs"></a>Module inputs</h1><p>Modules can have input parameters, too. To define them, you use a<br>mechanism you’re already familiar with: input variables.</p>
+<ol>
+<li><p>Open ‘\module\s3\variables.tf’, and add</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"yongfeiuall_module_bucket"</span> &#123;</span><br><span class="line"><span class="title">description</span> = <span class="string">"The name of the S3 bucket"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Open ‘\module\s3\main.tf’, and update</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># S3</span></span><br><span class="line"><span class="title">resource</span> <span class="string">"aws_s3_bucket"</span> <span class="string">"terraform_module"</span> &#123;</span><br><span class="line">	<span class="title">bucket</span> = <span class="string">"&#123;var.yongfeiuall_module_bucket&#125;"</span></span><br><span class="line">	versioning &#123;</span><br><span class="line">		<span class="title">enabled</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Open ‘\qa\servicemodule\s3\main.tf’, and update</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module <span class="string">"module-test"</span> &#123;</span><br><span class="line">	<span class="title">source</span> = <span class="string">"../../module/s3"</span></span><br><span class="line">	</span><br><span class="line">	yongfeiuall_module_bucket = <span class="string">"yongfeiuall_variable"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>terraform init</code>, <code>terraform plan</code> and <code>terraform apply</code> commands </p>
+</li>
+</ol>
+<h1 id="Module-outputs"><a href="#Module-outputs" class="headerlink" title="Module outputs"></a>Module outputs</h1><p>Outputs are a way to tell Terraform what data is important. </p>
+<ol>
+<li><p>Open ‘\module\s3\output.tf’, and add</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"s3_bucket_name"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_s3_bucket.terraform_module.bucket&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Open ‘\qa\servicemodule\s3\main.tf’, and update: add a security group, which name is use s3 bucket name.</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module <span class="string">"module-test"</span> &#123;</span><br><span class="line">	<span class="title">source</span> = <span class="string">"../../module/s3"</span></span><br><span class="line">	</span><br><span class="line">	yongfeiuall_module_bucket = <span class="string">"yongfeiuall_variable"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"<span class="variable">$&#123;module.module-test.s3_bucket_name&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	lifecycle &#123;</span><br><span class="line">		<span class="title">create_before_destroy</span> = <span class="built_in">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>terraform init</code>, <code>terraform plan</code> and <code>terraform apply</code> commands<br><img src="/images/terraform/module_output.jpg" alt=""></p>
+</li>
+</ol>
+<h1 id="Module-versioning"><a href="#Module-versioning" class="headerlink" title="Module versioning"></a>Module versioning</h1><p>We recommend explicitly constraining the acceptable version numbers for each external module to avoid unexpected or unwanted changes.</p>
+<h2 id="Module-Repo"><a href="#Module-Repo" class="headerlink" title="Module Repo"></a>Module Repo</h2><p>instead of using a folder you can use a git repository to version your module.</p>
+<ul>
+<li><strong>Parameters</strong><br>The URLs for Git repositories support the following query parameters:<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ref - The ref to checkout. This can be a branch, tag, commit, etc.</span></span><br><span class="line"></span><br><span class="line"><span class="title">module</span> <span class="string">"consul"</span> &#123;</span><br><span class="line">  <span class="title">source</span> = <span class="string">"git::https://hashicorp.com/consul.git?ref=0.0.2"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Terraform-Registry"><a href="#Terraform-Registry" class="headerlink" title="Terraform Registry"></a>Terraform Registry</h2><p>You can use a specific version for a module if you are using a module registry like the Terraform Registry。<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> <span class="string">"consul"</span> &#123;</span><br><span class="line">  source = <span class="string">"git::https://hashicorp.com/consul.git"</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">version</span> = <span class="string">"0.0.2</span></span><br></pre></td></tr></table></figure></p>
+<p>The Terraform Registry is a public registry. For private use you must use the Private Registry available ine the Enterprise version.</p>
+<h2 id="Terrafile"><a href="#Terrafile" class="headerlink" title="Terrafile"></a>Terrafile</h2><p>Manages external Terraform modules, controlled by a Terrafile.<br>Refer here <a href="https://github.com/claranet/python-terrafile" target="_blank" rel="external">Terrafile</a> for detail infomation.</p>
+<h1 id="Module-gotchas"><a href="#Module-gotchas" class="headerlink" title="Module gotchas"></a>Module gotchas</h1><h2 id="File-paths"><a href="#File-paths" class="headerlink" title="File paths"></a>File paths</h2><p>By default, Terraform interprets the path relative to the current working directory. That works if you’re using the file function in a Terraform configuration file that’s in the same directory as where you’re running <code>terraform apply</code>.</p>
+<p>You can use <code>path.module</code> to convert to a path that is relative to the module folder.<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data <span class="string">"template_file"</span> <span class="string">"user_data"</span> &#123;</span><br><span class="line">	template = <span class="string">"$&#123;file("</span>$&#123;path.module&#125;/user-data.sh<span class="string">")&#125;"</span></span><br><span class="line">	</span><br><span class="line">	vars &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/26/Terraform-State/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1839,167 +2045,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/19/AWS-EC2-Bootstrap-Script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/AWS-EC2-Bootstrap-Script/" itemprop="url">AWS - EC2 - Bootstrap Script</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T16:15:10+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/19/AWS-EC2-Bootstrap-Script/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/19/AWS-EC2-Bootstrap-Script/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当您在 Amazon EC2 中启动实例时，您可以选择将用户数据传递到可用于执行常见自动配置任务甚至在实例启动后运行脚本的实例。您可以将两类用户数据传递到 Amazon EC2：Shell 脚本和 cloud-init 指令。</p>
-<p>我们就就前面的例子试验一下，安装Apache，并创建简单Web验证。</p>
-<ol>
-<li>在IAM新建一个Role，对该EC2授予AmazonS3FullAccess权限。</li>
-<li>把’index.html’upload到S3上。</li>
-<li>Launch Instance with IAM role and script。<br><img src="/images/aws/ec2_strapscript.jpg" alt=""></li>
-<li>验证.<br><img src="/images/aws/ec2_strapscript_verify.jpg" alt=""></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2054,7 +2099,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">352</span>
+                  <span class="site-state-item-count">353</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2065,7 +2110,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2076,7 +2121,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

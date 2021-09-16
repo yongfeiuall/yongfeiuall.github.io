@@ -305,6 +305,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr安装与配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/22/Java项目实战-solr安装与配置/" itemprop="url">Java项目实战 - solr安装与配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T09:12:51+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/Java项目实战-solr安装与配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/22/Java项目实战-solr安装与配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Solr是一个全文检索服务器，只需要进行配置就可以实现全文检索服务。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li>前提，有JDK和Tomcat。</li>
+<li>下载solr的安装包，解压，并把dist下的war包部署到Tomcat下。</li>
+<li>解压war包。启动tomcat自动解压。</li>
+<li>把solr/example/lib/ext目录下所有的jar包复制Tomcat下/webapps/solr/WEB-INF/lib/。</li>
+<li>创建solrhome，把example/sor复制到/opt/solrhome。</li>
+<li>配置solrhome，在/apache-tomcat-8.0.28/webapps/solr/WEB-INF/web.xml。</li>
+<li>启动Tomcat。<br><img src="/images/javaproject/solr.jpg" alt=""></li>
+</ol>
+<h1 id="中文分析器IK-Analyzer"><a href="#中文分析器IK-Analyzer" class="headerlink" title="中文分析器IK-Analyzer"></a>中文分析器IK-Analyzer</h1><p>Solr中默认是没有中文分析器的，需要手工配置，配置一个FieldType，在FieldType中指定使用的中文分析器。</p>
+<ol>
+<li>下载包。</li>
+<li>把中文分析器的jar复制到Tomcat下/webapps/solr/WEB-INF/lib/。</li>
+<li>把IK Analyzer需要的扩展词典及停用词词典、配置文件复制到Tomcat下/webapps/solr/WEB-INF/classes。</li>
+<li>在solrhome/collection1/conf/schema.xml中配置FileType。</li>
+</ol>
+<h1 id="配置业务域"><a href="#配置业务域" class="headerlink" title="配置业务域"></a>配置业务域</h1><p>就是配置要搜索的字段，和后续用到的字段。<br>业务系统Fileds：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;field name=<span class="string">"item_title"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_sell_point"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_price"</span>  <span class="class"><span class="keyword">type</span></span>=<span class="string">"long"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_image"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"string"</span> indexed=<span class="string">"false"</span> stored=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_category_name"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"string"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_desc"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"false"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;field name=<span class="string">"item_keywords"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"false"</span> multiValued=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_title"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_sell_point"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_category_name"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_desc"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/javaproject/solr_config.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/21/Java项目实战-Redis缓存同步/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1812,168 +1984,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/15/Java项目实战-JS跨域：jsonp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/15/Java项目实战-JS跨域：jsonp/" itemprop="url">Java项目实战 - JS跨域：jsonp</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T14:28:42+08:00">
-                2018-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/15/Java项目实战-JS跨域：jsonp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/15/Java项目实战-JS跨域：jsonp/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Jsonp"><a href="#Jsonp" class="headerlink" title="Jsonp"></a>Jsonp</h1><p>ajax请求受同源策略影响，不允许进行跨域请求，而script标签src属性中的链接却可以访问跨域的js脚本，利用这个特性，服务端不再返回JSON格式的数据，而是返回一段调用某个函数的js代码，在src中进行了调用，这样实现了跨域。</p>
-<h1 id="商品分类显示"><a href="#商品分类显示" class="headerlink" title="商品分类显示"></a>商品分类显示</h1><p>通过这个例子来验证跨域请求。</p>
-<h2 id="Dao"><a href="#Dao" class="headerlink" title="Dao"></a>Dao</h2><p>逆向工程已经实现了Mapper，不需要再做修改。</p>
-<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>查询所有商品分类生成前台页面要求的json数据格式。返回一个pojo。<br>pojo:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CategoryNode</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String name;</span><br><span class="line">	<span class="keyword">public</span> String url;</span><br><span class="line">	<span class="keyword">public</span> List&lt;?&gt; item;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span>(<span class="params">String name</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUrl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> url;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUrl</span>(<span class="params">String url</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.url = url;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> List&lt;?&gt; getItem() &#123;</span><br><span class="line">		<span class="keyword">return</span> item;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setItem</span>(<span class="params">List&lt;?&gt; item</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.item = item;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>and<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CategoryResult</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">List</span><span class="preprocessor">&lt;?</span>&gt; data;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">List</span><span class="preprocessor">&lt;?</span>&gt; getData() &#123;</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> void setData(<span class="keyword">List</span><span class="preprocessor">&lt;?</span>&gt; data) &#123;</span><br><span class="line">		this.data = data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>接口类：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ItemCategoryService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="function">CategoryResult <span class="title">getItemCategoryList</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实现类：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ItemCategoryServiceImpl</span> implements <span class="type">ItemCategoryService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">TbItemCatMapper</span> itemCatMapper;</span><br><span class="line">	</span><br><span class="line">	public <span class="type">CategoryResult</span> getItemCategoryList()&#123;</span><br><span class="line">		<span class="type">CategoryResult</span> <span class="literal">result</span> = new <span class="type">CategoryResult</span>();</span><br><span class="line">		<span class="literal">result</span>.setData(getCatetoryList(<span class="number">0</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private <span class="type">List</span>&lt;?&gt; getCatetoryList(long parentId)&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">TbItemCatExample</span> example = new <span class="type">TbItemCatExample</span>();</span><br><span class="line">		<span class="type">Criteria</span> criteria = example.createCriteria();</span><br><span class="line">		criteria.andParentIdEqualTo(parentId);</span><br><span class="line">		</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">TbItemCat</span>&gt;  list= itemCatMapper.selectByExample(example);</span><br><span class="line">		</span><br><span class="line">		<span class="type">List</span> resultList = new <span class="type">ArrayList</span>&lt;&gt;();</span><br><span class="line">		//向list中添加节点</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">TbItemCat</span> tbItemCat : list) &#123;</span><br><span class="line">			//判断是否为父节点</span><br><span class="line">			<span class="keyword">if</span> (tbItemCat.getIsParent()) &#123;</span><br><span class="line">				<span class="type">CategoryNode</span> catNode = new <span class="type">CategoryNode</span>();</span><br><span class="line">				<span class="keyword">if</span> (parentId == <span class="number">0</span>) &#123;</span><br><span class="line">					catNode.setName(<span class="string">"&lt;a href='/products/"</span>+tbItemCat.getId()+<span class="string">".html'&gt;"</span>+tbItemCat.getName()+<span class="string">"&lt;/a&gt;"</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					catNode.setName(tbItemCat.getName());</span><br><span class="line">				&#125;</span><br><span class="line">				catNode.setUrl(<span class="string">"/products/"</span>+tbItemCat.getId()+<span class="string">".html"</span>);</span><br><span class="line">				catNode.setItem(getCatetoryList(tbItemCat.getId()));</span><br><span class="line">				</span><br><span class="line">				resultList.add(catNode);</span><br><span class="line">			//如果是叶子节点</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				resultList.add(<span class="string">"/products/"</span>+tbItemCat.getId()+<span class="string">".html|"</span> + tbItemCat.getName());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> resultList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><p>接收页面传递过来的参数id。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">public class <span class="type">ItemCategoryController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">ItemCategoryService</span> itemCategoryService;</span><br><span class="line"></span><br><span class="line">	@<span class="type">RequestMapping</span>(value=<span class="string">"/itemcat/list"</span>, </span><br><span class="line">			produces=<span class="type">MediaType</span>.<span class="type">APPLICATION_JSON_VALUE</span> + <span class="string">";charset=utf-8"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">String</span> getItemCatList(<span class="type">String</span> callback) &#123;</span><br><span class="line">		<span class="type">CategoryResult</span> catResult = itemCategoryService.getItemCategoryList();</span><br><span class="line">				</span><br><span class="line">		//把pojo转换成字符串</span><br><span class="line">		<span class="type">String</span> json = <span class="type">JsonUtils</span>.objectToJson(catResult);</span><br><span class="line">		//拼装返回值</span><br><span class="line">		<span class="type">String</span> <span class="literal">result</span> = callback + <span class="string">"("</span> + json + <span class="string">");"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="/images/javaproject/jsonp.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2028,7 +2038,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">352</span>
+                  <span class="site-state-item-count">353</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2039,7 +2049,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2050,7 +2060,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
