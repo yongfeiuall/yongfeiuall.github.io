@@ -305,6 +305,327 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/10/26/Win7-安装curl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/26/Win7-安装curl/" itemprop="url">Win7 安装curl</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-26T13:24:29+08:00">
+                2017-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Curl/" itemprop="url" rel="index">
+                    <span itemprop="name">Curl</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/26/Win7-安装curl/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/10/26/Win7-安装curl/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Curl命令可以通过命令行的方式，执行Http请求。</p>
+<p>介绍一下在Window 64位下的安装。</p>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>从<a href="https://curl.haxx.se/download.html" target="_blank" rel="external">Curl</a>,下载工具包，找到相应的版本。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li><p>在解压目录下使用<br>解压后目录’C:\curl-7.57.0\I386’</p>
+</li>
+<li><p>把exe放到System32<br>拷贝I386/curl.exe文件到C:\Windows\System32， 就可以在DOS窗口中任意位置，使用curl命令了。</p>
+</li>
+<li><p>增加环境变量<br>给path加环境变量，效果和第2种一次。</p>
+</li>
+</ol>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;curl</span><br><span class="line">curl: try 'curl --help' or 'curl --manual' for more information</span><br><span class="line"></span><br><span class="line">C:\Users\youfei.hu&gt;curl www.google.com</span><br><span class="line"><span class="tag">&lt;<span class="title">HTML</span>&gt;</span><span class="tag">&lt;<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"content-type"</span> <span class="attribute">content</span>=<span class="value">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">TITLE</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">TITLE</span>&gt;</span><span class="tag">&lt;/<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">BODY</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">H1</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">H1</span>&gt;</span></span><br><span class="line">The document has moved</span><br><span class="line"><span class="tag">&lt;<span class="title">A</span> <span class="attribute">HREF</span>=<span class="value">"http://www.google.com.hk/?gfe_rd=cr&amp;amp;dcr=0&amp;amp;ei=xoAnWqngJ6P48AeVl5SIAw"</span>&gt;</span>here<span class="tag">&lt;/<span class="title">A</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="title">BODY</span>&gt;</span><span class="tag">&lt;/<span class="title">HTML</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/10/17/Python-run-command-on-romote-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/17/Python-run-command-on-romote-linux/" itemprop="url">Python run command on romote linux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-17T14:32:02+08:00">
+                2017-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/17/Python-run-command-on-romote-linux/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/10/17/Python-run-command-on-romote-linux/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>自动化需要，要远程执行Linux命令，使用了<a href="http://www.paramiko.org/" target="_blank" rel="external">Paramiko</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>非常简单<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> paramiko</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ssh_exec</span><span class="params">(hostname, port, username, password, execmd)</span>:</span></span><br><span class="line"></span><br><span class="line">    s = paramiko.SSHClient()</span><br><span class="line">    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"></span><br><span class="line">    s.connect(hostname=hostname, port=port, username=username, password=password)</span><br><span class="line">    stdin, stdout, stderr = s.exec_command(execmd)</span><br><span class="line">    stdin.write(<span class="string">"Y"</span>)  <span class="comment"># Generally speaking, the first connection, need a simple interaction.</span></span><br><span class="line"></span><br><span class="line">    s.close()</span><br></pre></td></tr></table></figure>
+<p>调用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    hostname = <span class="string">'xxx.com'</span></span><br><span class="line">    port = <span class="number">22</span></span><br><span class="line">    username = <span class="string">'xxx'</span></span><br><span class="line">    password = <span class="string">'xxx'</span></span><br><span class="line">    execmd = <span class="string">"cd /home/qa/"</span> <span class="comment"># 执行多条命令用分号分隔</span></span><br><span class="line"></span><br><span class="line">    ssh_<span class="built_in">exec</span>(hostname, port, username, password, execmd)</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/09/20/Business-Trip-to-Boston/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1582,323 +1903,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/16/python-json-dump-load-dumps-loads/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/python-json-dump-load-dumps-loads/" itemprop="url">python json dump/load/dumps/loads</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T08:58:57+08:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/16/python-json-dump-load-dumps-loads/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/02/16/python-json-dump-load-dumps-loads/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="load"><a href="#load" class="headerlink" title="load"></a>load</h1><p>从外部JSON文件变成dict字典(外部文件一定要是json格式)<br><code>json.load(open(&#39;a.json&#39;,&quot;r&quot;))</code></p>
-<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>把dict字典变成json格式，生成到外部文件里面<br><code>json.dump(dict,open(&#39;a.json&#39;,&quot;w&quot;))</code></p>
-<h1 id="dumps"><a href="#dumps" class="headerlink" title="dumps"></a>dumps</h1><p>Convert Python Object (Dict) to JSON<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line"> </span><br><span class="line"><span class="keyword">d</span> = &#123;&#125;</span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Name"</span>] = <span class="string">"Luke"</span></span><br><span class="line"><span class="keyword">d</span>[<span class="string">"Country"</span>] = <span class="string">"Canada"</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> json.dumps(<span class="keyword">d</span>, ensure_ascii=False)</span><br><span class="line"># result &#123;<span class="string">"Country"</span>: <span class="string">"Canada"</span>, <span class="string">"Name"</span>: <span class="string">"Luke"</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="loads"><a href="#loads" class="headerlink" title="loads"></a>loads</h1><p>To convert JSON to a Python dict use this:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">json_data = '&#123;<span class="string">"name"</span>: <span class="string">"Brian"</span>, <span class="string">"city"</span>: <span class="string">"BJ"</span>&#125;'</span><br><span class="line">python_obj = json.loads(json_data)</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"name"</span>]</span><br><span class="line"><span class="built_in">print</span> python_obj[<span class="string">"city"</span>]</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/02/05/中国国家科技馆/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/05/中国国家科技馆/" itemprop="url">中国国家科技馆</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T16:57:26+08:00">
-                2017-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/05/中国国家科技馆/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/02/05/中国国家科技馆/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>大过年去的，本以为人会少一些，绝逼是低估了中国人的数量，哈哈。</p>
-<p>整体还是不错的，外观大气，里边也很大，花了近5个小时才看完。<br><img src="/images/izheyi/2017/02/kejiguan_01.JPG" alt=""><br><img src="/images/izheyi/2017/02/kejiguan_13.JPG" alt=""></p>
-<p>儿童科技乐园，都说有各种科学知识展示，适合带小孩游玩，我觉得也就是一个游乐场而已，还有就是很多的熊孩子。<br><img src="/images/izheyi/2017/02/kejiguan_02.JPG" alt=""><br><img src="/images/izheyi/2017/02/kejiguan_03.JPG" alt=""><br><img src="/images/izheyi/2017/02/kejiguan_04.JPG" alt=""><br><img src="/images/izheyi/2017/02/kejiguan_05.JPG" alt=""><br><img src="/images/izheyi/2017/02/kejiguan_06.JPG" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/05/中国国家科技馆/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1953,7 +1957,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">353</span>
+                  <span class="site-state-item-count">355</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1975,7 +1979,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2021-09-16T01:29:50.875Z</updated>
+  <updated>2021-09-23T02:32:02.952Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -16,11 +16,68 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Packaging python packages with Poetry</title>
+    <link href="http://izheyi.com/2021/09/23/Packaging-python-packages-with-Poetry/"/>
+    <id>http://izheyi.com/2021/09/23/Packaging-python-packages-with-Poetry/</id>
+    <published>2021-09-23T01:09:06.000Z</published>
+    <updated>2021-09-23T02:32:02.952Z</updated>
+    
+    <content type="html">&lt;p&gt;Poetry is a tool for &lt;strong&gt;dependency management&lt;/strong&gt; and &lt;strong&gt;packaging&lt;/strong&gt; in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.&lt;/p&gt;
+&lt;h2 id=&quot;Install&quot;&gt;&lt;a href=&quot;#Install&quot; class=&quot;headerlink&quot; title=&quot;Install&quot;&gt;&lt;/a&gt;Install&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Install with windows &lt;strong&gt;powershell&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS C:\Users&amp;#62; (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -&amp;#10;Retrieving Poetry metadata&amp;#10;&amp;#10;This installer is deprecated. Poetry versions installed using this script will not be able to use &amp;#39;self update&amp;#39; command to upgrade to 1.2.0a1 or later.&amp;#10;# Welcome to Poetry!&amp;#10;&amp;#10;This will download and install the latest version of Poetry,&amp;#10;a dependency and package manager for Python.&amp;#10;&amp;#10;It will add the `poetry` command to Poetry&amp;#39;s bin directory, located at:&amp;#10;&amp;#10;%USERPROFILE%\.poetry\bin&amp;#10;&amp;#10;This path will then be added to your `PATH` environment variable by&amp;#10;modifying the `HKEY_CURRENT_USER/Environment/PATH` registry key.&amp;#10;&amp;#10;You can uninstall at any time by executing this script with the --uninstall option,&amp;#10;and these changes will be reverted.&amp;#10;&amp;#10;Installing version: 1.1.10&amp;#10;  - Downloading poetry-1.1.10-win32.tar.gz (41.47MB)&amp;#10;  &amp;#10;  &amp;#10;Poetry (1.1.10) is installed now. Great!&amp;#10;&amp;#10;To get started you need Poetry&amp;#39;s bin directory (%USERPROFILE%\.poetry\bin) in your `PATH`&amp;#10;environment variable. Future applications will automatically have the&amp;#10;correct environment, but you may need to restart your current shell.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Verify&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS C:\Users&amp;#62; poetry --version&amp;#10;Poetry version 1.1.10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Basic-Usage&quot;&gt;&lt;a href=&quot;#Basic-Usage&quot; class=&quot;headerlink&quot; title=&quot;Basic Usage&quot;&gt;&lt;/a&gt;Basic Usage&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Create a new project&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS E:\&amp;#62; poetry new jenkins-tool&amp;#10;Created package jenkins_tool in jenkins-tool&amp;#10;PS E:\&amp;#62; tree .\jenkins-tool\ /F&amp;#10;&amp;#25991;&amp;#20214;&amp;#22841; PATH &amp;#21015;&amp;#34920;&amp;#10;&amp;#21367;&amp;#24207;&amp;#21015;&amp;#21495;&amp;#20026; 4428-676B&amp;#10;E:\JENKINS-TOOL&amp;#10;&amp;#9474;  pyproject.toml&amp;#10;&amp;#9474;  README.rst&amp;#10;&amp;#9474;&amp;#10;&amp;#9500;&amp;#9472;jenkins_tool&amp;#10;&amp;#9474;      __init__.py&amp;#10;&amp;#9474;&amp;#10;&amp;#9492;&amp;#9472;tests&amp;#10;        test_jenkins_tool.py&amp;#10;        __init__.py&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Copy script to &lt;code&gt;jenkins_tool/jenkins_tool&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Update &lt;code&gt;pyproject.toml&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[tool.poetry]&amp;#10;name = &amp;#34;jenkins-tool&amp;#34;&amp;#10;version = &amp;#34;0.1.0&amp;#34;&amp;#10;description = &amp;#34;Manage Jenkins Job&amp;#34;&amp;#10;authors = [&amp;#34;yongfeiuall &amp;#60;yongfeiuall@163.com&amp;#62;&amp;#34;]&amp;#10;&amp;#10;[tool.poetry.dependencies]&amp;#10;python = &amp;#34;^3.6&amp;#34;&amp;#10;python-jenkins=&amp;#34;^1.7.0&amp;#34;&amp;#10;&amp;#10;[tool.poetry.dev-dependencies]&amp;#10;&amp;#10;[build-system]&amp;#10;requires = [&amp;#34;poetry-core&amp;#62;=1.0.0&amp;#34;]&amp;#10;build-backend = &amp;#34;poetry.core.masonry.api&amp;#34;&amp;#10;&amp;#10;[tool.poetry.scripts]&amp;#10;jt = &amp;#34;jenkins_tool.client:main&amp;#34;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Build&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS E:\jenkins-tool&amp;#62; poetry build&amp;#10;Creating virtualenv jenkins-tool-vo3-Lls6-py3.6 in C:\Users\AppData\Local\pypoetry\Cache\virtualenvs&amp;#10;Building jenkins-tool (0.1.0)&amp;#10;  - Building sdist&amp;#10;  - Built jenkins-tool-0.1.0.tar.gz&amp;#10;  - Building wheel&amp;#10;  - Built jenkins_tool-0.1.0-py3-none-any.whl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Verification&quot;&gt;&lt;a href=&quot;#Verification&quot; class=&quot;headerlink&quot; title=&quot;Verification&quot;&gt;&lt;/a&gt;Verification&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Unzip &lt;code&gt;jenkins-tool-0.1.0.tar.gz&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Install &lt;code&gt;PS E:\jenkins-tool\dist\jenkins-tool-0.1.0&amp;gt; python .\setup.py install&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Verify &lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS E:\jenkins-tool\dist\jenkins-tool-0.1.0&amp;#62; jt -h&amp;#10;usage: jt [-h] [-v] [-V VIEW_NAME]&amp;#10;&amp;#10;Manage Jenkins Job&amp;#10;&amp;#10;optional arguments:&amp;#10;  -h, --help            show this help message and exit&amp;#10;  -v, --version         Show version&amp;#10;  -V VIEW_NAME, --view VIEW_NAME&amp;#10;                        Get Jenkins job last build number by view&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Poetry is a tool for &lt;strong&gt;dependency management&lt;/strong&gt; and &lt;strong&gt;packaging&lt;/strong&gt; in Python. It allows you to declare the librar
+    
+    </summary>
+    
+      <category term="Python" scheme="http://izheyi.com/categories/Python/"/>
+    
+    
+      <category term="Poetry" scheme="http://izheyi.com/tags/Poetry/"/>
+    
+      <category term="Python" scheme="http://izheyi.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.</title>
     <link href="http://izheyi.com/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/"/>
     <id>http://izheyi.com/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/</id>
     <published>2021-09-15T06:46:05.000Z</published>
-    <updated>2021-09-16T01:29:50.875Z</updated>
+    <updated>2021-09-16T01:29:51.668Z</updated>
     
     <content type="html">&lt;p&gt;I got this error on my console when i tried to push blog to github&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;remote: Support &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; password authentication was removed on August &lt;span class=&quot;number&quot;&gt;13&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2021.&lt;/span&gt; Please use a personal access token instead.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -81,6 +138,38 @@
     
     
       <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Command line to execute python script</title>
+    <link href="http://izheyi.com/2021/08/22/Command-line-to-execute-python-script/"/>
+    <id>http://izheyi.com/2021/08/22/Command-line-to-execute-python-script/</id>
+    <published>2021-08-22T06:04:25.000Z</published>
+    <updated>2021-09-22T06:38:55.613Z</updated>
+    
+    <content type="html">&lt;p&gt;We get jenkins job number here &lt;a href=&quot;/2021/07/30/python-get-jenkins-job-and-build-number-info/&quot;&gt;Jenkins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;argparse&lt;/code&gt; to implement call python script.&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;parser = argparse.ArgumentParser(description=&lt;span class=&quot;string&quot;&gt;&#39;Manage Jenkins Job&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;parser.add_argument(&lt;span class=&quot;string&quot;&gt;&#39;-v&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;--version&#39;&lt;/span&gt;, action=&lt;span class=&quot;string&quot;&gt;&#39;store_true&#39;&lt;/span&gt;, help=&lt;span class=&quot;string&quot;&gt;&#39;Show version&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;parser.add_argument(&lt;span class=&quot;string&quot;&gt;&#39;-V&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;--view&#39;&lt;/span&gt;, dest=&lt;span class=&quot;string&quot;&gt;&#39;view_name&#39;&lt;/span&gt;, help=&lt;span class=&quot;string&quot;&gt;&#39;Get Jenkins job last build number by view&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;args = parser.parse_args()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; len(sys.argv) == &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    parser.print_help()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; len(sys.argv) == &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; sys.argv[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&#39;-h&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;--help&#39;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        parser.print_help()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; sys.argv[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&#39;-v&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;--version&#39;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        print(f&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;__version__&amp;#125;&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;elif&lt;/span&gt; len(sys.argv) == &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; sys.argv[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&#39;-V&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;--view&#39;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        print(args.view_name)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        subprocess.call(f&lt;span class=&quot;string&quot;&gt;&#39;python ./job_version.py &amp;#123;args.view_name&amp;#125;&#39;&lt;/span&gt;, shell=&lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Command run:&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;E:\ python .\cli.py&amp;#10;usage: cli.py [-h] [-v] [-V VIEW_NAME]&amp;#10;&amp;#10;Manage Jenkins Job&amp;#10;&amp;#10;optional arguments:&amp;#10;  -h, --help            show this help message and exit&amp;#10;  -v, --version         Show version&amp;#10;  -V VIEW_NAME, --view VIEW_NAME&amp;#10;                        Get Jenkins job last build number by view&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Get job number:&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;PS E:\neolink_tools&amp;#62; python .\cli.py -V jenkins view name&amp;#10;&amp;#123;&amp;#10;    &amp;#34;a&amp;#34;: 12,&amp;#10;    &amp;#34;b&amp;#34;: 17,&amp;#10;    &amp;#34;c&amp;#34;: 20,&amp;#10;    &amp;#34;d&amp;#34;: 37&amp;#10;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;We get jenkins job number here &lt;a href=&quot;/2021/07/30/python-get-jenkins-job-and-build-number-info/&quot;&gt;Jenkins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;argparse&lt;
+    
+    </summary>
+    
+      <category term="Python" scheme="http://izheyi.com/categories/Python/"/>
+    
+    
+      <category term="Jenkins" scheme="http://izheyi.com/tags/Jenkins/"/>
+    
+      <category term="Python" scheme="http://izheyi.com/tags/Python/"/>
     
   </entry>
   
@@ -731,127 +820,6 @@
       <category term="Jenkins" scheme="http://izheyi.com/tags/Jenkins/"/>
     
       <category term="Robot Framework" scheme="http://izheyi.com/tags/Robot-Framework/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Robotframework Automation With Jenkins and Xray</title>
-    <link href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/"/>
-    <id>http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/</id>
-    <published>2020-05-17T02:46:52.000Z</published>
-    <updated>2020-12-15T05:56:56.693Z</updated>
-    
-    <content type="html">&lt;p&gt;Currently, we use Xray in Jira for test management, now we want to implement our automation as below:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;use Robotframework design script&lt;/li&gt;
-&lt;li&gt;use Jenkins trigger automaion running&lt;/li&gt;
-&lt;li&gt;return running result to xray and update execution status&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;Pre-Condition&quot;&gt;&lt;a href=&quot;#Pre-Condition&quot; class=&quot;headerlink&quot; title=&quot;Pre-Condition&quot;&gt;&lt;/a&gt;Pre-Condition&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;Create one test case, one execution, and add test case to execution, the default status as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/before_run.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;li&gt;RF demo script:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/rf_script.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;Install-and-config-xray-jenkins-plugin&quot;&gt;&lt;a href=&quot;#Install-and-config-xray-jenkins-plugin&quot; class=&quot;headerlink&quot; title=&quot;Install and config xray jenkins plugin&quot;&gt;&lt;/a&gt;Install and config xray jenkins plugin&lt;/h1&gt;&lt;p&gt;Use offline way to install, download plugin here: &lt;a href=&quot;http://mirrors.jenkins-ci.org/plugins/xray-connector/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;xray-connector&lt;/a&gt;, and install plugin as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/upload_plugin.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &amp;gt; Configure System &amp;gt; Xray for Jira configuration.&lt;br&gt;&lt;img src=&quot;/images/CI/xray/xray_config.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray&quot;&gt;&lt;a href=&quot;#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray&quot; class=&quot;headerlink&quot; title=&quot;Config jenkins job to run automaiton test and return report to xray&quot;&gt;&lt;/a&gt;Config jenkins job to run automaiton test and return report to xray&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;Just use RF command to run demo script, config as below:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/run_rf.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;li&gt;Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.&lt;br&gt;&lt;img src=&quot;/images/CI/xray/import_result.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;li&gt;Config task with below params:&lt;br&gt;&lt;img src=&quot;/images/CI/xray/import_result_config.jpg&quot; alt=&quot;&quot;&gt;&lt;pre&gt;&lt;code&gt;- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
-- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
-- Project Key – key of the JIRA project. This is a required parameter
-- Test Execution Key – JIRA issue key where results will be imported. 
-- Test Plan Key – JIRA issue key of the Test Plan. 
-- Test Environments – list of Environments (separated by “,”) where tests are executed.
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;Run jenkins job&lt;/li&gt;
-&lt;li&gt;Back to Jira Xray, the status update from TODO to PASS automatically&lt;br&gt;&lt;img src=&quot;/images/CI/xray/after_run.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;li&gt;Go to Execution detail page to view automaion detail result&lt;br&gt;&lt;img src=&quot;/images/CI/xray/after_run_detail.jpg&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;Finally&quot;&gt;&lt;a href=&quot;#Finally&quot; class=&quot;headerlink&quot; title=&quot;Finally&quot;&gt;&lt;/a&gt;Finally&lt;/h1&gt;&lt;p&gt;Other things we could do:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Create test exceution in xray automatically after automation running&lt;/li&gt;
-&lt;li&gt;Even create test case after automation running&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Currently, we use Xray in Jira for test management, now we want to implement our automation as below:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;use Robotframework des
-    
-    </summary>
-    
-      <category term="Product Delivery" scheme="http://izheyi.com/categories/Product-Delivery/"/>
-    
-    
-      <category term="CI/CD" scheme="http://izheyi.com/tags/CI-CD/"/>
-    
-      <category term="Jenkins" scheme="http://izheyi.com/tags/Jenkins/"/>
-    
-      <category term="Robot Framework" scheme="http://izheyi.com/tags/Robot-Framework/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Prometheus + Grafana 实时监控Linux</title>
-    <link href="http://izheyi.com/2020/04/18/Prometheus-Grafana-%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7Linux/"/>
-    <id>http://izheyi.com/2020/04/18/Prometheus-Grafana-实时监控Linux/</id>
-    <published>2020-04-18T05:34:27.000Z</published>
-    <updated>2020-12-15T05:56:56.684Z</updated>
-    
-    <content type="html">&lt;p&gt;上篇中介绍了Prometheus， Grafana，并实现了实时监控Windows，回顾：&lt;a href=&quot;/2020/04/05/Prometheus-Grafana-监控Windows/&quot;&gt;Prometheus + Grafana 实时监控Windows&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;本篇来介绍一下Linux。&lt;/p&gt;
-&lt;h1 id=&quot;node-exporter安装配置&quot;&gt;&lt;a href=&quot;#node-exporter安装配置&quot; class=&quot;headerlink&quot; title=&quot;node exporter安装配置&quot;&gt;&lt;/a&gt;node exporter安装配置&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;下载 node exporter &lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;wget https://github.com/prometheus/node_exporter/releases/download/v0.&lt;span class=&quot;number&quot;&gt;18.1&lt;/span&gt;/node_exporter-&lt;span class=&quot;number&quot;&gt;0.18&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;.linux-amd64.tar.gz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;解压&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;tar -zxvf node_exporter-&lt;span class=&quot;number&quot;&gt;0.18&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;.linux-amd64.tar.gz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;添加系统服务 (vi /usr/lib/systemd/system/node_exporter.service)&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[Unit]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Description=https://prometheus.io&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[Service]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Restart=on-failure&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ExecStart=/opt/node_exporter-&lt;span class=&quot;number&quot;&gt;0.18&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;.linux-amd64/node_exporter&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[Install]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;WantedBy=multi-user.target&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;启动服务&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemctl start node_exporter&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl status node_exporter&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;验证&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@izheyi node_exporter-&lt;span class=&quot;number&quot;&gt;0.18&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;.linux-amd64]&lt;span class=&quot;comment&quot;&gt;# curl http://localhost:9100/metrics&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# HELP go_gc_duration_seconds A summary of the GC invocation durations.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TYPE go_gc_duration_seconds summary&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds&amp;#123;quantile=&lt;span class=&quot;string&quot;&gt;&quot;0&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds&amp;#123;quantile=&lt;span class=&quot;string&quot;&gt;&quot;0.25&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds&amp;#123;quantile=&lt;span class=&quot;string&quot;&gt;&quot;0.5&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds&amp;#123;quantile=&lt;span class=&quot;string&quot;&gt;&quot;0.75&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds&amp;#123;quantile=&lt;span class=&quot;string&quot;&gt;&quot;1&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds_sum &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_gc_duration_seconds_count &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# HELP go_goroutines Number of goroutines that currently exist.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TYPE go_goroutines gauge&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_goroutines &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# HELP go_info Information about the Go environment.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TYPE go_info gauge&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;go_info&amp;#123;version=&lt;span class=&quot;string&quot;&gt;&quot;go1.12.5&quot;&lt;/span&gt;&amp;#125; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;Prometheus配置&quot;&gt;&lt;a href=&quot;#Prometheus配置&quot; class=&quot;headerlink&quot; title=&quot;Prometheus配置&quot;&gt;&lt;/a&gt;Prometheus配置&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;添加prometheus相关配置， prometheus.yml&lt;/p&gt;
-&lt;figure class=&quot;highlight haml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;-&lt;span class=&quot;ruby&quot;&gt; &lt;span class=&quot;symbol&quot;&gt;job_name:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;linux&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;  static_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  -&lt;span class=&quot;ruby&quot;&gt; &lt;span class=&quot;symbol&quot;&gt;targets:&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&#39;192.168.174.128:9100&#39;&lt;/span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;重启prometheus&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;验证&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/performancetesting/prometheus_target.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&quot;Grafana配置&quot;&gt;&lt;a href=&quot;#Grafana配置&quot; class=&quot;headerlink&quot; title=&quot;Grafana配置&quot;&gt;&lt;/a&gt;Grafana配置&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;配置Prometheus数据源&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;搭建Prometheus仪表盘&lt;br&gt;Import Dashboard: 8919&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;验证&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/performancetesting/grafana_linux.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上篇中介绍了Prometheus， Grafana，并实现了实时监控Windows，回顾：&lt;a href=&quot;/2020/04/05/Prometheus-Grafana-监控Windows/&quot;&gt;Prometheus + Grafana 实时监控Windows&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Performance Testing" scheme="http://izheyi.com/categories/Performance-Testing/"/>
-    
-    
-      <category term="Grafana" scheme="http://izheyi.com/tags/Grafana/"/>
-    
-      <category term="Prometheus" scheme="http://izheyi.com/tags/Prometheus/"/>
     
   </entry>
   

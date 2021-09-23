@@ -305,6 +305,365 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/07/Salt-Grains和Pillar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/07/Salt-Grains和Pillar/" itemprop="url">Salt - Grains和Pillar</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-07T16:05:23+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/07/Salt-Grains和Pillar/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/07/Salt-Grains和Pillar/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Grains-VS-Pillar"><a href="#Grains-VS-Pillar" class="headerlink" title="Grains VS Pillar"></a>Grains VS Pillar</h1><p><img src="/images/salt/grain.jpg" alt=""></p>
+<h1 id="Grains"><a href="#Grains" class="headerlink" title="Grains"></a>Grains</h1><p>静态数据，当Minion启动的时候收集的MInion本地的相关信息。不重启minion，这些信息数据是不会改变的。</p>
+<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><ul>
+<li><p>列出主机的详细信息:</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# salt 192.168.* grains.items</span><br><span class="line">192.168.244.130:</span><br><span class="line">    -<span class="ruby">---------</span><br><span class="line"></span>    SSDs:</span><br><span class="line">    biosreleasedate:</span><br><span class="line">        07/02/2015</span><br><span class="line">    biosversion:</span><br><span class="line">        6.00</span><br><span class="line">    cpu_flags:</span><br><span class="line">        -<span class="ruby"> fpu</span><br><span class="line"></span>        -<span class="ruby"> vme</span><br><span class="line"></span>        -<span class="ruby"> de</span><br><span class="line"></span>        -<span class="ruby"> pse</span><br><span class="line"></span>        -<span class="ruby"> tsc</span><br><span class="line"></span>        -<span class="ruby"> msr</span><br><span class="line"></span>        -<span class="ruby"> pae</span><br><span class="line"></span>        -<span class="ruby"> mce</span><br><span class="line"></span>......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出所有主机的系统版本:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item os</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    os:</span><br><span class="line">        CentOS</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接获得内容</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.get os</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    CentOS</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="目标选择"><a href="#目标选择" class="headerlink" title="目标选择"></a>目标选择</h2><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># salt -G <span class="string">'os:Centos'</span> test.ping </span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><ol>
+<li><p>修改minion - /etc/salt/minion</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Custom <span class="literal">static</span> grains <span class="keyword">for</span> <span class="keyword">this</span> minion can be specified here and used <span class="keyword">in</span> SLS</span><br><span class="line"># files just like all other grains. This example sets <span class="number">4</span> custom grains, <span class="keyword">with</span></span><br><span class="line"># the <span class="string">'roles'</span> grain having two values that can be matched against.</span><br><span class="line">grains:</span><br><span class="line">  roles:</span><br><span class="line">    - webserver</span><br><span class="line">    - memcache</span><br><span class="line">  deployment: datacenter4</span><br><span class="line">  cabinet: <span class="number">13</span></span><br><span class="line">  cab_u: <span class="number">14</span>-<span class="number">15</span></span><br></pre></td></tr></table></figure>
+<p>重启服务验证：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item deployment</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    deployment:</span><br><span class="line">        datacenter4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于文件 - /etc/salt/grains</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># cat grains </span></span><br><span class="line">centos: minion</span><br></pre></td></tr></table></figure>
+<p>重启服务验证：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item centos</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    centos:</span><br><span class="line">        minion</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>_grains目录自定义grain<br>grains脚本目录，必须是base下创建_grains目录（如：/srv/salt/_grains）<br>创建一个python脚本在/srv/salt/_grains目录下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation _grains]<span class="comment"># cat my_grains </span></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_grains</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 初始化grains字典</span></span><br><span class="line">    grains = &#123;&#125;</span><br><span class="line">    <span class="comment"># 设置字典中的key-value</span></span><br><span class="line">    grains[<span class="string">'eb'</span>] = <span class="string">'eb'</span></span><br><span class="line">    grains[<span class="string">'add'</span>] = <span class="string">'beijing'</span></span><br><span class="line">    <span class="comment"># 返回字典</span></span><br><span class="line">    <span class="keyword">return</span> grains</span><br></pre></td></tr></table></figure>
+<p>通过master同步脚本文件至每台minion</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">salt</span> <span class="string">'*'</span> saltutil.sync_grains</span><br></pre></td></tr></table></figure>
+<p>文件放在minion主机的/var/cache/salt/minion/extmods/grains目录下</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="type">Automation</span> salt]<span class="comment"># tree minion</span></span><br><span class="line">minion</span><br><span class="line">├── extmods</span><br><span class="line">│   └── grains</span><br><span class="line">│       ├── my_grains.py</span><br><span class="line">│       └── my_grains.pyc</span><br><span class="line">├── files</span><br><span class="line">│   └── base</span><br><span class="line">│       └── _grains</span><br><span class="line">│           └── my_grains.py</span><br><span class="line">├── module_refresh</span><br><span class="line">└── <span class="keyword">proc</span></span><br><span class="line"></span><br><span class="line"><span class="number">6</span> directories, <span class="number">4</span> files</span><br></pre></td></tr></table></figure>
+<p>在Master上验证：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item add</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    add:</span><br><span class="line">        beijing</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>grains优先级（item名称相同的情况下）： 系统自带 &gt; grains文件写到 &gt; minion配置文件写的 &gt; 自己写的脚本</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/07/Salt-Grains和Pillar/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Execute-Commands‘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/04/Salt-Execute-Commands‘/" itemprop="url">Salt - Execute Commands</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-04T16:55:30+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
+                    <span itemprop="name">SaltStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/04/Salt-Execute-Commands‘/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/04/Salt-Execute-Commands‘/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SaltStak用下面的方式来远程执行命令（run shell commands, update packages, and distribute files to all managed systems simultaneously. ）：<br><img src="/images/salt/command.jpg" alt=""></p>
+<ul>
+<li><p>cmd 模块是常用的执行远程命令模块，具有强大的功能</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@Automation ~]</span># salt <span class="number">192.168.244.130</span> cmd.run 'ls  /etc/salt'</span><br><span class="line"><span class="number">192.168.244.130</span>:</span><br><span class="line">    minion</span><br><span class="line">    minion.d</span><br><span class="line">    pki</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sys.doc: 类似linux的man命令，可以显示minion支持的模块的详细操作说明</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># salt 192.168.244.130 sys.doc pkg.version</span></span><br><span class="line">'pkg.<span class="property">version</span>:'</span><br><span class="line"></span><br><span class="line">    Returns a <span class="type">string</span> representing <span class="keyword">the</span> package <span class="property">version</span> <span class="keyword">or</span> an empty <span class="type">string</span> <span class="keyword">if</span> <span class="keyword">not</span></span><br><span class="line">    installed. If more than one package <span class="property">name</span> <span class="keyword">is</span> specified, a dict <span class="keyword">of</span></span><br><span class="line">    <span class="property">name</span>/<span class="property">version</span> pairs <span class="keyword">is</span> returned.</span><br><span class="line"></span><br><span class="line">    CLI Example:</span><br><span class="line"></span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package <span class="property">name</span>&gt;</span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package1&gt; &lt;package2&gt; &lt;package3&gt; ...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装package</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># salt <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span> pkg.install cowsay</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    cowsay:</span><br><span class="line">        ----------</span><br><span class="line">        <span class="keyword">new</span>:</span><br><span class="line">            <span class="number">3.03</span>-<span class="number">8.</span>el6</span><br><span class="line">        old:</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>只是简单介绍一下命令执行，saltstack有非常多的模块来进行服务器管理，有需要再深入。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Targeting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1629,345 +1988,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/20/新任经理人管理必修课/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/20/新任经理人管理必修课/" itemprop="url">新任经理人管理必修课</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-20T08:33:31+08:00">
-                2018-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/20/新任经理人管理必修课/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/20/新任经理人管理必修课/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>回顾这近两年从业务到主管的晋升，有不少困难和迷茫，尽管级别高了，但是如何管好人，带好团队，怎么顺利的完成角色的转变，依然有很大的挑战，还有很多东西需要学习，很长的路要走。</p>
-<h1 id="做领导后有何不同"><a href="#做领导后有何不同" class="headerlink" title="做领导后有何不同"></a>做领导后有何不同</h1><p>不知道该怎么给团队安排任务<br>往下对团队负责，往上对领导，要双面负责</p>
-<ol>
-<li>做经理后，是不是做我之前最擅长的事情<br>以前只管理自己，个人目标<br>现在管理他人，团队目标<br>跟之前完全不一样，需要培养领导力，建立流程，解决问题，决策能力</li>
-<li>权力<br>我是领导我有权，为什么不听我的？<br>增加的是你的职权，同时也带给你责任<br>权利的来源：职权、专家权利、影响力<br>影响力来自于创造双赢的结果<br>观察在行使职权的过程中是不是获得了信任，是不是建立了双赢的关系</li>
-<li>自由<br>更多事情占用很多时间，开会，沟通<br>经理人花大量时间在‘人’身上， 由事到人</li>
-<li>一切都在掌控之中<br>你会面对各方面带来的限制，你需要能够来处理<br>管理者都会有纠结和痛苦</li>
-<li>有人教我<br>而现实是你要：<br>自我反思<br>总结觉察</li>
-</ol>
-<h2 id="领导力两难"><a href="#领导力两难" class="headerlink" title="领导力两难"></a>领导力两难</h2><ol>
-<li>领导责任<br>为了下属而做， 指导和管理下属</li>
-<li>业务责任<br>为了老板而做， 上级交办自己要完成的</li>
-</ol>
-<p>对下属，抢下属的工作，或表示不信任，或表示不懂管理<br>对自己，停滞不前，也会让自己丧失进一步提升的机会</p>
-<p>领导力缺口</p>
-<h1 id="是下属没追求，还是领导没要求"><a href="#是下属没追求，还是领导没要求" class="headerlink" title="是下属没追求，还是领导没要求"></a>是下属没追求，还是领导没要求</h1><p>目标设定法</p>
-<ol>
-<li>了解自己的现在的位置</li>
-<li>明确目的地</li>
-<li>我如何到达</li>
-</ol>
-<p>目标设定原则</p>
-<ol>
-<li>SMART原则</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/20/新任经理人管理必修课/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/15/小强升职记-时间管理故事书/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/15/小强升职记-时间管理故事书/" itemprop="url">小强升职记 - 时间管理故事书</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T12:22:53+08:00">
-                2018-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/15/小强升职记-时间管理故事书/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/15/小强升职记-时间管理故事书/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>双十一打包买的书，以为是职场的书，没啥可看的，结果发现是写时间管理的书，非常值的读。</p>
-<p>一直都会有思考，职业价值观是什么？通俗的讲可能应当是活着是为了啥？每天忙来忙去的工作到底是为了什么？为什么每天弄的都这么忙？从这本书里感受到了共鸣，找到了一些答案，很有启发。</p>
-<p><em>新窗口打开查看大图</em><br><img src="/images/reading/time.jpg" alt=""></p>
-<p>衣柜整理法流程图：<br><img src="/images/reading/yigui.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2022,7 +2042,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">353</span>
+                  <span class="site-state-item-count">355</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2044,7 +2064,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,6 +305,404 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/12/Git分支-团队协作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/12/Git分支-团队协作/" itemprop="url">Git分支-团队协作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T08:53:31+08:00">
+                2015-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/12/Git分支-团队协作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/12/Git分支-团队协作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在上节中，已经了解了基本的分支管理，在实际的项目中，肯定是存在远程仓库和团队协作的。下面就来重点讲解，在团队多人协作中的分支推送与抓取。 </p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li>在GitHub上创建新仓库”worktogether”，并添加文件”README.md”。</li>
+<li>Clone远程库到本地。 实际上Git自动把本地的master分支和远程的master分支对应起来了，且远程仓库的默认名称是origin。</li>
+</ol>
+<h1 id="查看远程"><a href="#查看远程" class="headerlink" title="查看远程"></a>查看远程</h1><ul>
+<li><p>查看</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote</span><br><span class="line">origin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看详细</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote -v</span><br><span class="line">origin  <span class="symbol">https:</span>/<span class="regexp">/github.com/yongfeiuall</span><span class="regexp">/worktogether.git (fetch)</span><br><span class="line">origin  https:/</span><span class="regexp">/github.com/yongfeiuall</span><span class="regexp">/worktogether.git (push)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="分支推送"><a href="#分支推送" class="headerlink" title="分支推送"></a>分支推送</h1><p>我们在远程仓库那章节已经学习了怎么使用。 详细请参考：<a href="/2015/11/10/Git仓库-远程仓库/">远程仓库</a><br>修改”README.md”，并提交，推送。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">3</span>, done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">286</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">952</span>b8b0.<span class="number">.242264</span>d  master -&gt; master</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/git/remote_push.jpg" alt="Push Result"></p>
+<h1 id="分支抓取"><a href="#分支抓取" class="headerlink" title="分支抓取"></a>分支抓取</h1><p>团队协作时，在PUSH时难免会有冲突的出现，我们主要是看一下这个处理流程。</p>
+<blockquote>
+<p>另一人推送提交</p>
+</blockquote>
+<ol>
+<li>在另一台电脑clone仓库”worktogether。</li>
+<li>修改文件，并提交。</li>
+<li>Push到远程<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">3</span>, done.</span><br><span class="line">Delta compression <span class="keyword">using</span> up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">307</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">242264</span>d.<span class="number">.5</span>b7966c  master -&gt; master</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>你操作同一个文件</p>
+</blockquote>
+<ol>
+<li>修改文件，并提交</li>
+<li><p>Push到远程</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">To <span class="keyword">https</span>://github.com/yongfeiuall/worktogether.git</span><br><span class="line"> ! [rejected]        master -&gt; master (fetch <span class="keyword">first</span>)</span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'https://github.com/yongfeiuall/worktogether.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> remote <span class="operator">contains</span> work that you <span class="built_in">do</span></span><br><span class="line">hint: <span class="operator">not</span> have locally. This is usually caused <span class="keyword">by</span> another repository pushing</span><br><span class="line">hint: <span class="built_in">to</span> <span class="operator">the</span> same ref. You may want <span class="built_in">to</span> <span class="keyword">first</span> integrate <span class="operator">the</span> remote changes</span><br><span class="line">hint: (e.g., <span class="string">'git pull ...'</span>) <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
+<p>推送失败，因为另一个人的最新提交和你试图推送的提交有冲突。</p>
+</li>
+<li><p>get最新的提交</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br><span class="line">remote: <span class="type">Counting</span> objects: <span class="number">3</span>, done.</span><br><span class="line">remote: <span class="type">Compressing</span> objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</span><br><span class="line">remote: <span class="type">Total</span> <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">3</span> (delta <span class="number">0</span>), pack-reused <span class="number">0</span></span><br><span class="line"><span class="type">Unpacking</span> objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), done.</span><br><span class="line"><span class="type">From</span> https://github.com/yongfeiuall/worktogether</span><br><span class="line">   <span class="number">242264</span>d..<span class="number">5</span>b7966c  master     -&gt; origin/master</span><br><span class="line"><span class="type">Auto</span>-merging <span class="type">README</span>.md</span><br><span class="line"><span class="type">CONFLICT</span> (content): <span class="type">Merge</span> conflict <span class="keyword">in</span> <span class="type">README</span>.md</span><br><span class="line"><span class="type">Automatic</span> merge failed; fix conflicts <span class="keyword">and</span> then commit the <span class="literal">result</span>.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动解决冲突，并提交</p>
+</li>
+<li>再次Push<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">6</span>, done.</span><br><span class="line">Delta compression <span class="keyword">using</span> up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">4</span>/<span class="number">4</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">6</span>/<span class="number">6</span>), <span class="number">564</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">6</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">5</span>b7966c.<span class="number">.1</span>d2aaa5  master -&gt; master</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>引用LIAOXUEFENG BLOG</p>
+</blockquote>
+<p>多人协作的工作模式通常是这样：</p>
+<ol>
+<li>首先，可以试图用<code>git push origin branch-name</code>推送自己的修改；</li>
+<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
+<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
+<li>没有冲突或者解决掉冲突后，再用<code>git push origin branch-name</code>推送就能成功！<br>如果<code>git pull</code>提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream branch-name origin/branch-name</code>。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/12/Git分支-分支管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/12/Git分支-分支管理/" itemprop="url">Git分支-分支管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T08:51:53+08:00">
+                2015-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/12/Git分支-分支管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/12/Git分支-分支管理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在实际开发中，一般企业中开发一个项目的分支策略:</p>
+<h1 id="主分支-master"><a href="#主分支-master" class="headerlink" title="主分支(master)"></a>主分支(master)</h1><p>Git主分支的名字，默认叫做Master。它是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。<br>代码库应该有一个、且仅有一个主分支。<br>master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活。</p>
+<h1 id="开发分支-develop"><a href="#开发分支-develop" class="headerlink" title="开发分支(develop)"></a>开发分支(develop)</h1><p>主分支只用来分布重大版本，日常开发都是在这个分支上完成。<br>到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本。</p>
+<h1 id="功能分支-feature"><a href="#功能分支-feature" class="headerlink" title="功能分支(feature)"></a>功能分支(feature)</h1><p>它是为了开发某种特定功能，从Develop分支上面分出来的。开发完成后，要再并入Develop。<br>每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。</p>
+<h1 id="预发布分支-release"><a href="#预发布分支-release" class="headerlink" title="预发布分支(release)"></a>预发布分支(release)</h1><p>预发布分支，它是指发布正式版本之前（即合并到Master分支之前），我们可能需要有一个预发布的版本进行测试。预发布分支是从Develop分支上面 分出来的，预发布结束以后，必须合并进Develop和Master分支。</p>
+<h1 id="bug分支-fix-bug"><a href="#bug分支-fix-bug" class="headerlink" title="bug分支(fix bug)"></a>bug分支(fix bug)</h1><p>软件正式发布以后，难免会出现bug。有了bug就需要修复，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。</p>
+<p>如果当前分支的工作还未完成，bug又急于修改，那该怎么办呢？</p>
+<ol>
+<li>创建文件‘bug.txt’，并提交</li>
+<li><p>创建新分支</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -<span class="tag">b</span> develop</span><br><span class="line">Switched to <span class="tag">a</span> new branch <span class="string">'develop'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改文件，并查看状态</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch develop</span><br><span class="line">Changes not staged for <span class="operator"><span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">        modified:   bug.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)</span></span><br></pre></td></tr></table></figure>
+<p><em>此时需要修改一个紧急的bug。我们可以利用stash功能，把当前工作现场“储藏”起来，修改完bug后再恢复现场后继续工作。</em></p>
+</li>
+<li><p>保存现场</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">Saved working <span class="built_in">directory</span> <span class="operator">and</span> index state WIP <span class="command"><span class="keyword">on</span> <span class="title">develop</span>: <span class="title">3978a2e</span> <span class="title">add</span> <span class="title">bug</span>.<span class="title">txt</span></span></span><br><span class="line">HEAD is now <span class="keyword">at</span> <span class="number">3978</span>a2e <span class="built_in">add</span> bug.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再查看工作区状态</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch develop</span><br><span class="line"><span class="literal">nothing</span> <span class="keyword">to</span> commit, working directory clean</span><br></pre></td></tr></table></figure>
+<p>工作区是干净的，就可以创建bug分支进行修改bug。</p>
+</li>
+<li>修改bug完成后，切换到之前的‘develop’分支</li>
+<li><p>查看保存现场</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash <span class="type">list</span></span><br><span class="line">stash@&#123;<span class="number">0</span>&#125;: WIP <span class="function_start"><span class="keyword">on</span></span> develop: <span class="number">3978</span>a2e add bug.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>恢复现场</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git stash pop</span><br><span class="line">On branch develop</span><br><span class="line">Changes not staged for <span class="operator"><span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">        modified:   bug.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)</span><br><span class="line">Dropped refs/stash@&#123;<span class="number">0</span>&#125; (ea54fb954976da63842dcdd7faab12092ae71130)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><p>你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;<span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用git stash apply恢复后，stash内容并不删除，你需要用git stash drop来删除；</p>
+</li>
+</ul>
+<h1 id="其它分支"><a href="#其它分支" class="headerlink" title="其它分支"></a>其它分支</h1><p>在Git中，由于分支是如此的强大，所以大家可以根据需要创建即可。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/11/Git分支-基础与基本操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1601,339 +1999,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/09/Git基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/09/Git基础/" itemprop="url">Git基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-09T13:13:25+08:00">
-                2015-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/09/Git基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/09/Git基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本网站是用hexo+github搭建的，为了解决多电脑操作的问题，联想到用Git在github上来实现；再者Git是目前世界上最先进的分布式版本控制系统，很多公司现在都是用这高端大气上档次的东东。<br>此次会对Git和Github有个简单的入门学习，主要是学习一下思想和流程。说不定以后在自动化的过程中也会用Git来管理自动化工程。</p>
-<h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p>概念性的东西，不做介绍，实在不明白，请Google吧。</p>
-<ul>
-<li>集中式版本控制系统<br>这类系统，诸如 CVS、Subversion等，都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。</li>
-<li>分布式版本控制系统<br>在这类系统中，像Git、Mercurial，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。 这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。 因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。</li>
-</ul>
-<h1 id="Git思想和基本工作原理"><a href="#Git思想和基本工作原理" class="headerlink" title="Git思想和基本工作原理"></a>Git思想和基本工作原理</h1><h2 id="Git-有三种状态"><a href="#Git-有三种状态" class="headerlink" title="Git 有三种状态"></a>Git 有三种状态</h2><ul>
-<li>已提交（committed）<br>表示数据已经安全的保存在本地数据库中。</li>
-<li>已修改（modified）<br>表示修改了文件，但还没保存到数据库中。</li>
-<li>已暂存（staged）<br>表示对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。</li>
-</ul>
-<h2 id="Git三个工作区域"><a href="#Git三个工作区域" class="headerlink" title="Git三个工作区域"></a>Git三个工作区域</h2><ul>
-<li>工作区<br>本地电脑上能看到的目录，存有从Git仓库的压缩数据库中提取出来的文件。</li>
-<li>Git仓库<br>Git用来保存项目的元数据和对象数据库的地方。工作区中隐藏目录.git。</li>
-<li>暂存区域<br>暂存区域是一个文件，保存了下次将提交的文件列表信息，一般在Git仓库目录中。</li>
-</ul>
-<h2 id="Git工作流程"><a href="#Git工作流程" class="headerlink" title="Git工作流程"></a>Git工作流程</h2><ol>
-<li>在工作目录中修改文件。</li>
-<li>暂存文件，将文件的快照放入暂存区域。</li>
-<li>提交更新，找到暂存区域的文件，将快照存储到Git仓库目录。</li>
-</ol>
-<p>说明：此系列是学习笔记，为了减少打字，可能会有Copy过来的理论上的知识说明，如有问题，请告之。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/06/这是什么派的画？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/06/这是什么派的画？/" itemprop="url">这是什么派的画？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-06T08:09:59+08:00">
-                2015-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/06/这是什么派的画？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/06/这是什么派的画？/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>小丁画了画送给妈妈。<br>这幅是两个房子，这个大房子好个性，是外星人住的吗？现实中要是真存在，应该是很拉风的。<br><img src="/images/izheyi/2015/painting/0.jpg" alt="两个房子"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/06/这是什么派的画？/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1988,7 +2053,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">353</span>
+                  <span class="site-state-item-count">355</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2010,7 +2075,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

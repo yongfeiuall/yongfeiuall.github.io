@@ -305,6 +305,381 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="url">Robotframework Automation With Jenkins and Xray</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-17T10:46:52+08:00">
+                2020-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Currently, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
+<ol>
+<li>use Robotframework design script</li>
+<li>use Jenkins trigger automaion running</li>
+<li>return running result to xray and update execution status</li>
+</ol>
+<h1 id="Pre-Condition"><a href="#Pre-Condition" class="headerlink" title="Pre-Condition"></a>Pre-Condition</h1><ol>
+<li>Create one test case, one execution, and add test case to execution, the default status as below:<br><img src="/images/CI/xray/before_run.jpg" alt=""></li>
+<li>RF demo script:<br><img src="/images/CI/xray/rf_script.jpg" alt=""></li>
+</ol>
+<h1 id="Install-and-config-xray-jenkins-plugin"><a href="#Install-and-config-xray-jenkins-plugin" class="headerlink" title="Install and config xray jenkins plugin"></a>Install and config xray jenkins plugin</h1><p>Use offline way to install, download plugin here: <a href="http://mirrors.jenkins-ci.org/plugins/xray-connector/" target="_blank" rel="external">xray-connector</a>, and install plugin as below:<br><img src="/images/CI/xray/upload_plugin.jpg" alt=""></p>
+<p>Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &gt; Configure System &gt; Xray for Jira configuration.<br><img src="/images/CI/xray/xray_config.jpg" alt=""></p>
+<h1 id="Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray"><a href="#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray" class="headerlink" title="Config jenkins job to run automaiton test and return report to xray"></a>Config jenkins job to run automaiton test and return report to xray</h1><ol>
+<li>Just use RF command to run demo script, config as below:<br><img src="/images/CI/xray/run_rf.jpg" alt=""></li>
+<li>Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.<br><img src="/images/CI/xray/import_result.jpg" alt=""></li>
+<li>Config task with below params:<br><img src="/images/CI/xray/import_result_config.jpg" alt=""><pre><code>- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
+- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
+- Project Key – key of the JIRA project. This is a required parameter
+- Test Execution Key – JIRA issue key where results will be imported. 
+- Test Plan Key – JIRA issue key of the Test Plan. 
+- Test Environments – list of Environments (separated by “,”) where tests are executed.
+</code></pre></li>
+<li>Run jenkins job</li>
+<li>Back to Jira Xray, the status update from TODO to PASS automatically<br><img src="/images/CI/xray/after_run.jpg" alt=""></li>
+<li>Go to Execution detail page to view automaion detail result<br><img src="/images/CI/xray/after_run_detail.jpg" alt=""></li>
+</ol>
+<h1 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h1><p>Other things we could do:</p>
+<ol>
+<li>Create test exceution in xray automatically after automation running</li>
+<li>Even create test case after automation running</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/18/Prometheus-Grafana-实时监控Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/18/Prometheus-Grafana-实时监控Linux/" itemprop="url">Prometheus + Grafana 实时监控Linux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-18T13:34:27+08:00">
+                2020-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/18/Prometheus-Grafana-实时监控Linux/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/04/18/Prometheus-Grafana-实时监控Linux/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上篇中介绍了Prometheus， Grafana，并实现了实时监控Windows，回顾：<a href="/2020/04/05/Prometheus-Grafana-监控Windows/">Prometheus + Grafana 实时监控Windows</a></p>
+<p>本篇来介绍一下Linux。</p>
+<h1 id="node-exporter安装配置"><a href="#node-exporter安装配置" class="headerlink" title="node exporter安装配置"></a>node exporter安装配置</h1><ol>
+<li><p>下载 node exporter </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/prometheus/node_exporter/releases/download/v0.<span class="number">18.1</span>/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加系统服务 (vi /usr/lib/systemd/system/node_exporter.service)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=https://prometheus.io</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Restart=on-failure</span><br><span class="line">ExecStart=/opt/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64/node_exporter</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start node_exporter</span><br><span class="line">systemctl status node_exporter</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@izheyi node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64]<span class="comment"># curl http://localhost:9100/metrics</span></span><br><span class="line"><span class="comment"># HELP go_gc_duration_seconds A summary of the GC invocation durations.</span></span><br><span class="line"><span class="comment"># TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.25"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.5"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.75"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"1"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_sum <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_count <span class="number">0</span></span><br><span class="line"><span class="comment"># HELP go_goroutines Number of goroutines that currently exist.</span></span><br><span class="line"><span class="comment"># TYPE go_goroutines gauge</span></span><br><span class="line">go_goroutines <span class="number">6</span></span><br><span class="line"><span class="comment"># HELP go_info Information about the Go environment.</span></span><br><span class="line"><span class="comment"># TYPE go_info gauge</span></span><br><span class="line">go_info&#123;version=<span class="string">"go1.12.5"</span>&#125; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Prometheus配置"><a href="#Prometheus配置" class="headerlink" title="Prometheus配置"></a>Prometheus配置</h1><ol>
+<li><p>添加prometheus相关配置， prometheus.yml</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> <span class="symbol">job_name:</span> <span class="string">'linux'</span></span><br><span class="line"></span>  static_configs:</span><br><span class="line">  -<span class="ruby"> <span class="symbol">targets:</span> [<span class="string">'192.168.174.128:9100'</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启prometheus</p>
+</li>
+<li><p>验证</p>
+<p><img src="/images/performancetesting/prometheus_target.png" alt=""></p>
+</li>
+</ol>
+<h1 id="Grafana配置"><a href="#Grafana配置" class="headerlink" title="Grafana配置"></a>Grafana配置</h1><ol>
+<li><p>配置Prometheus数据源</p>
+</li>
+<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 8919</p>
+</li>
+<li><p>验证</p>
+<p><img src="/images/performancetesting/grafana_linux.png" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1599,328 +1974,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/11/网站促销活动前端自动化监控/" itemprop="url">网站促销活动前端自动化监控</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T06:54:41+08:00">
-                2019-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/11/网站促销活动前端自动化监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/06/11/网站促销活动前端自动化监控/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？</p>
-<p>对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。</p>
-<p>活动一般有</p>
-<ul>
-<li>一个主页，上面有图片，标题，价格</li>
-<li>详情页面</li>
-<li>下单</li>
-</ul>
-<p>自动化思路：</p>
-<ol>
-<li>从主页通过Selenium来获得所有的图片和产品详细页链接</li>
-<li>通过Request来检查产品链接和图片存在与否</li>
-<li>检查详细页的信息正确</li>
-<li>利用Cookie实现下单流程的实现</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/04/08/丁丁画画（二年级下学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/08/丁丁画画（二年级下学期）/" itemprop="url">丁丁画画（二年级下学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-08T12:37:58+08:00">
-                2019-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/08/丁丁画画（二年级下学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/04/08/丁丁画画（二年级下学期）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/2019/2_2_1.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_2.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_3.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_4.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_5.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_6.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1975,7 +2028,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">353</span>
+                  <span class="site-state-item-count">355</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1997,7 +2050,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
