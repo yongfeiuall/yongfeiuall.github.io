@@ -305,6 +305,827 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/14/Java项目实战-SSM整合：表现层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/14/Java项目实战-SSM整合：表现层/" itemprop="url">Java项目实战 - SSM整合：表现层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T10:55:39+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/14/Java项目实战-SSM整合：表现层/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/14/Java项目实战-SSM整合：表现层/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="springmvc-xml"><a href="#springmvc-xml" class="headerlink" title="springmvc.xml"></a>springmvc.xml</h1><p>在izheyi-manager-web工程下src/main/resources，该spring文件夹下创建配置文件——springmvc.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">beans</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">	<span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attribute">xmlns:p</span>=<span class="value">"http://www.springframework.org/schema/p"</span></span><br><span class="line">	<span class="attribute">xmlns:context</span>=<span class="value">"http://www.springframework.org/schema/context"</span></span><br><span class="line">	<span class="attribute">xmlns:mvc</span>=<span class="value">"http://www.springframework.org/schema/mvc"</span></span><br><span class="line">	<span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd</span><br><span class="line">        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 掃描Controller --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context:component-scan</span> <span class="attribute">base-package</span>=<span class="value">"com.izheyi.controller"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 配置注解驱动 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">mvc:annotation-driven</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 配置视图解析器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">bean</span></span><br><span class="line">		<span class="attribute">class</span>=<span class="value">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"prefix"</span> <span class="attribute">value</span>=<span class="value">"/WEB-INF/jsp/"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"suffix"</span> <span class="attribute">value</span>=<span class="value">".jsp"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 资源映射 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">mvc:resources</span> <span class="attribute">location</span>=<span class="value">"/WEB-INF/css/"</span> <span class="attribute">mapping</span>=<span class="value">"/css/**"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">mvc:resources</span> <span class="attribute">location</span>=<span class="value">"/WEB-INF/js/"</span> <span class="attribute">mapping</span>=<span class="value">"/js/**"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h1><p>在izheyi-manager-web工程下src/main/webapp，该WEB-INF文件夹下创建配置文件——web.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">	<span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span> <span class="attribute">xmlns:web</span>=<span class="value">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></span><br><span class="line">	<span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></span><br><span class="line">	<span class="attribute">id</span>=<span class="value">"taotao"</span> <span class="attribute">version</span>=<span class="value">"2.5"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">display-name</span>&gt;</span>taotao-manager<span class="tag">&lt;/<span class="title">display-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">welcome-file-list</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">welcome-file-list</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 加载spring容器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>classpath:spring/applicationContext-*.xml<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">listener</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="title">listener-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 解决post乱码 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">filter</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="title">filter-class</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">filter-mapping</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">filter-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- springmvc的前端控制器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>zheyi-manager<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>classpath:spring/springmvc.xml<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="title">load-on-startup</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>zheyi-manager<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>实现在服务层初始化spring容器</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/14/Java项目实战-SSM整合：Servicd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/14/Java项目实战-SSM整合：Servicd/" itemprop="url">Java项目实战 - SSM整合：Service层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T10:55:25+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/14/Java项目实战-SSM整合：Servicd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/14/Java项目实战-SSM整合：Servicd/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="applicationContext-service-xml"><a href="#applicationContext-service-xml" class="headerlink" title="applicationContext-service.xml"></a>applicationContext-service.xml</h1><p>在izheyi-manager-web工程下src/main/resources，该spring文件夹下创建配置文件——applicationContext-service.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">beans</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">	<span class="attribute">xmlns:context</span>=<span class="value">"http://www.springframework.org/schema/context"</span> <span class="attribute">xmlns:p</span>=<span class="value">"http://www.springframework.org/schema/p"</span></span><br><span class="line">	<span class="attribute">xmlns:aop</span>=<span class="value">"http://www.springframework.org/schema/aop"</span> <span class="attribute">xmlns:tx</span>=<span class="value">"http://www.springframework.org/schema/tx"</span></span><br><span class="line">	<span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">	<span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 扫描包加载Service实现类 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context:component-scan</span> <span class="attribute">base-package</span>=<span class="value">"com.izheyi.service"</span>&gt;</span><span class="tag">&lt;/<span class="title">context:component-scan</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>service一般是由接口和实现类组成</strong></p>
+<h1 id="applicationContext-trans-xml"><a href="#applicationContext-trans-xml" class="headerlink" title="applicationContext-trans.xml"></a>applicationContext-trans.xml</h1><p>在izheyi-manager-web工程下src/main/resources，该spring文件夹下创建配置文件——applicationContext-trans.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">beans</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">	<span class="attribute">xmlns:context</span>=<span class="value">"http://www.springframework.org/schema/context"</span> <span class="attribute">xmlns:p</span>=<span class="value">"http://www.springframework.org/schema/p"</span></span><br><span class="line">	<span class="attribute">xmlns:aop</span>=<span class="value">"http://www.springframework.org/schema/aop"</span> <span class="attribute">xmlns:tx</span>=<span class="value">"http://www.springframework.org/schema/tx"</span></span><br><span class="line">	<span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">	<span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 事务管理器 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"transactionManager"</span></span><br><span class="line">		<span class="attribute">class</span>=<span class="value">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 数据源 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"dataSource"</span> <span class="attribute">ref</span>=<span class="value">"dataSource"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 通知 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">tx:advice</span> <span class="attribute">id</span>=<span class="value">"txAdvice"</span> <span class="attribute">transaction-manager</span>=<span class="value">"transactionManager"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">tx:attributes</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 传播行为 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"save*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"insert*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"add*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"create*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"delete*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"update*"</span> <span class="attribute">propagation</span>=<span class="value">"REQUIRED"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"find*"</span> <span class="attribute">propagation</span>=<span class="value">"SUPPORTS"</span> <span class="attribute">read-only</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"select*"</span> <span class="attribute">propagation</span>=<span class="value">"SUPPORTS"</span> <span class="attribute">read-only</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">tx:method</span> <span class="attribute">name</span>=<span class="value">"get*"</span> <span class="attribute">propagation</span>=<span class="value">"SUPPORTS"</span> <span class="attribute">read-only</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">tx:attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">tx:advice</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 切面 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">aop:config</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">aop:advisor</span> <span class="attribute">advice-ref</span>=<span class="value">"txAdvice"</span></span><br><span class="line">			<span class="attribute">pointcut</span>=<span class="value">"execution(* com.izheyi.service.*.*(..))"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>切面，也就是事务的作用范围</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/14/Java项目实战-SSM整合：Dao/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/14/Java项目实战-SSM整合：Dao/" itemprop="url">Java项目实战 - SSM整合：Dao层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T10:55:03+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/14/Java项目实战-SSM整合：Dao/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/14/Java项目实战-SSM整合：Dao/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="SqlMapConfig-xml"><a href="#SqlMapConfig-xml" class="headerlink" title="SqlMapConfig.xml"></a>SqlMapConfig.xml</h1><p>在izheyi-manager-web工程下src/main/resources，创建文件夹mybatis；在该文件夹下创建Mybatis的配置文件——SqlMapConfig.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE configuration</span><br><span class="line">		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span><br><span class="line">		"http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="applicationContext-dao-xml"><a href="#applicationContext-dao-xml" class="headerlink" title="applicationContext-dao.xml"></a>applicationContext-dao.xml</h1><p>在izheyi-manager-web工程下src/main/resources，创建文件夹spring；在该文件夹下创建Dao的配置文件——applicationContext-dao.xml，内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">beans</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">	<span class="attribute">xmlns:context</span>=<span class="value">"http://www.springframework.org/schema/context"</span> <span class="attribute">xmlns:p</span>=<span class="value">"http://www.springframework.org/schema/p"</span></span><br><span class="line">	<span class="attribute">xmlns:aop</span>=<span class="value">"http://www.springframework.org/schema/aop"</span> <span class="attribute">xmlns:tx</span>=<span class="value">"http://www.springframework.org/schema/tx"</span></span><br><span class="line">	<span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">	<span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd</span><br><span class="line">    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd</span><br><span class="line">    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd</span><br><span class="line">    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 加载配置文件 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context:property-placeholder</span> <span class="attribute">location</span>=<span class="value">"classpath:properties/db.properties"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 数据库连接池 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"dataSource"</span> <span class="attribute">class</span>=<span class="value">"com.alibaba.druid.pool.DruidDataSource"</span></span><br><span class="line">		<span class="attribute">destroy-method</span>=<span class="value">"close"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"url"</span> <span class="attribute">value</span>=<span class="value">"$&#123;jdbc.url&#125;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"username"</span> <span class="attribute">value</span>=<span class="value">"$&#123;jdbc.username&#125;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"password"</span> <span class="attribute">value</span>=<span class="value">"$&#123;jdbc.password&#125;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"driverClassName"</span> <span class="attribute">value</span>=<span class="value">"$&#123;jdbc.driver&#125;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"maxActive"</span> <span class="attribute">value</span>=<span class="value">"10"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"minIdle"</span> <span class="attribute">value</span>=<span class="value">"5"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"sqlSessionFactory"</span> <span class="attribute">class</span>=<span class="value">"org.mybatis.spring.SqlSessionFactoryBean"</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 数据库连接池 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"dataSource"</span> <span class="attribute">ref</span>=<span class="value">"dataSource"</span> /&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 加载mybatis的全局配置文件 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"configLocation"</span> <span class="attribute">value</span>=<span class="value">"classpath:mybatis/SqlMapConfig.xml"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 扫描Mapper文件 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.mybatis.spring.mapper.MapperScannerConfigurer"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"basePackage"</span> <span class="attribute">value</span>=<span class="value">"com.izheyi.mapper"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>数据库的配置放到配置文件，要在src/main/resource下创建文件夹properties，在该文件夹下创建db.properties文件，内容如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driver=com<span class="class">.mysql</span><span class="class">.jdbc</span><span class="class">.Driver</span></span><br><span class="line">jdbc.url=jdbc:mysql:<span class="comment">//localhost:3306/zheyi?characterEncoding=utf-8</span></span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/javaproject/ssm_dao.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/12/Java项目实战-SSM整合：思路/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/12/Java项目实战-SSM整合：思路/" itemprop="url">Java项目实战 - SSM整合：思路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T17:15:32+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/12/Java项目实战-SSM整合：思路/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/12/Java项目实战-SSM整合：思路/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SSM框架是spring MVC ，spring和mybatis框架的整合，是标准的MVC模式，将整个系统划分为表现层，controller层，service层，DAO层四层</p>
+<ul>
+<li>spring MVC负责请求的转发和视图管理</li>
+<li>spring实现业务对象管理</li>
+<li>mybatis作为数据对象的持久化引擎, mapper代理开发方式开发Dao</li>
+</ul>
+<p><img src="/images/javaproject/ssm.jpg" alt=""></p>
+<p><strong>DataBase ===&gt; Entity ===&gt; Mapper.xml ===&gt; Mapper.Java ===&gt; Service.java ===&gt; Controller.java ===&gt; Jsp.  </strong></p>
+<h3 id="Dao层"><a href="#Dao层" class="headerlink" title="Dao层"></a>Dao层</h3><p>mybatis整合spring，通过spring管理SqlSessionFactory、mapper代理对象。</p>
+<ul>
+<li>SqlMapConfig.xml - Mybatis核心配置文件</li>
+<li>applicationContext-dao.xml <ul>
+<li>数据库连接池。</li>
+<li>SqlSessionFactory对象。</li>
+<li>配置mapper文件扫描器。<h3 id="Service层"><a href="#Service层" class="headerlink" title="Service层"></a>Service层</h3>所有的service实现类都要放到spring容器中管理。</li>
+</ul>
+</li>
+<li>applicationContext-service.xml文件中配置包扫描器，扫描带@service注解的类。</li>
+<li>applicationContext-trans.xml文件中配置事务。</li>
+</ul>
+<h3 id="表现层"><a href="#表现层" class="headerlink" title="表现层"></a>表现层</h3><p>表现层就一个springmvc框架，由springmvc来管理controller。</p>
+<ul>
+<li>包扫描器，扫描带@Controller注解的类。</li>
+<li>配置注解驱动。</li>
+<li>配置视图解析器。</li>
+</ul>
+<h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><ul>
+<li>配置Spring容器</li>
+<li>配置前端控制器</li>
+<li>配置Post乱码过滤器</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/08/Java项目实战-MyBatis及逆向工程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/08/Java项目实战-MyBatis及逆向工程/" itemprop="url">Java项目实战 - MyBatis及逆向工程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T14:48:51+08:00">
+                2018-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/08/Java项目实战-MyBatis及逆向工程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/08/Java项目实战-MyBatis及逆向工程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>先创建Mysql DB，并准备数据。<br><img src="/images/javaproject/mysql.jpg" alt=""></p>
+<h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><p><img src="/images/javaproject/mybatis.jpg" alt=""></p>
+<ul>
+<li>SqlMapConfig.xml，此文件作为mybatis的全局配置文件，配置了mybatis的运行环境等信息。mapper.xml文件即sql映射文件，文件中配置了操作数据库的sql语句，此文件需要在SqlMapConfig.xml中加载。</li>
+<li>通过mybatis环境等配置信息构造SqlSessionFactory(即会话工厂)。</li>
+<li>由会话工厂创建sqlSession即会话，操作数据库需要通过sqlSession进行。</li>
+<li>mybatis底层自定义了Executor执行器接口操作数据库，Executor接口有两个实现，一个是基本执行器、一个是缓存执行器。</li>
+<li>MappedStatement也是mybatis一个底层封装对象，它包装了mybatis配置信息及sql映射信息等。mapper.xml文件中一个sql对应一个MappedStatement对象，sql的id即是MappedStatement的id。</li>
+<li>MappedStatement对sql执行输入参数进行定义，包括HashMap、基本类型、pojo，Executor通过MappedStatement在执行sql前将输入的java对象映射至sql中，输入参数映射就是JDBC编程中对preparedStatement设置参数。</li>
+<li>MappedStatement对sql执行输出结果进行定义，包括HashMap、基本类型、pojo，Executor通过MappedStatement在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于JDBC编程中对结果的解析处理过程。</li>
+</ul>
+<h1 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h1><p><img src="/images/javaproject/nixiang.jpg" alt=""></p>
+<p><strong>generatorConfig.xml</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE generatorConfiguration</span><br><span class="line">  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span><br><span class="line">  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">generatorConfiguration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">context</span> <span class="attribute">id</span>=<span class="value">"testTables"</span> <span class="attribute">targetRuntime</span>=<span class="value">"MyBatis3"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">commentGenerator</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 是否去除自动生成的注释 true：是 ： false:否 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"suppressAllComments"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">commentGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--数据库连接的信息：驱动类、连接地址、用户名、密码 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">jdbcConnection</span> <span class="attribute">driverClass</span>=<span class="value">"com.mysql.jdbc.Driver"</span></span><br><span class="line">			<span class="attribute">connectionURL</span>=<span class="value">"jdbc:mysql://localhost:3306/zheyi"</span> <span class="attribute">userId</span>=<span class="value">"root"</span></span><br><span class="line">			<span class="attribute">password</span>=<span class="value">""</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">jdbcConnection</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 </span><br><span class="line">			NUMERIC 类型解析为java.math.BigDecimal --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaTypeResolver</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"forceBigDecimals"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaTypeResolver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- targetProject:生成PO类的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaModelGenerator</span> <span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.pojo"</span></span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 从数据库返回的值被清理前后的空格 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"trimStrings"</span> <span class="attribute">value</span>=<span class="value">"true"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaModelGenerator</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetProject:mapper映射文件生成的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">sqlMapGenerator</span> <span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.mapper"</span> </span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">sqlMapGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- targetPackage：mapper接口生成的位置 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">javaClientGenerator</span> <span class="attribute">type</span>=<span class="value">"XMLMAPPER"</span></span><br><span class="line">			<span class="attribute">targetPackage</span>=<span class="value">"com.izheyi.mapper"</span> </span><br><span class="line">			<span class="attribute">targetProject</span>=<span class="value">".\src"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- enableSubPackages:是否让schema作为包的后缀 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"enableSubPackages"</span> <span class="attribute">value</span>=<span class="value">"false"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">javaClientGenerator</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 指定数据库表 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_content"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_content_category"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_cat"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_desc"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_param"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_item_param_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order_item"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_order_shipping"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">table</span> <span class="attribute">schema</span>=<span class="value">""</span> <span class="attribute">tableName</span>=<span class="value">"tb_user"</span>&gt;</span><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="title">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意：逆向工程多次执行后，它不会把原来的文件覆盖，而是会在原来文件的内容里面再追加。 要再生成，要把已经生成的删除。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/08/Java项目实战-环境搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1136,820 +1957,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/" itemprop="url">Python + Selenium: Page Object and Page Factory</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-10T14:13:23+08:00">
-                2018-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>基于种种原因，简单地对Python + Selenium的UI自动化做了一个简单的搭建。一些简单的分层：</p>
-<ul>
-<li>conf: 一些配置文件，如网址，Browser Type</li>
-<li>data： 数据驱动的数据</li>
-<li>pages： Page对象</li>
-<li>report： HTML报告，Screenshot</li>
-<li>tests： 脚本</li>
-<li>utils： 公共的方法，封闭Selenium，处理csv</li>
-</ul>
-<p><a href="https://github.com/yongfeiuall/python_selenium_page_object_example" target="_blank" rel="external">python_selenium_page_object_example</a></p>
-<h1 id="Page-Object"><a href="#Page-Object" class="headerlink" title="Page Object"></a>Page Object</h1><ol>
-<li><p>做了一个BasicPage类，对Selenium做了简单封装</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicPage</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, driver)</span>:</span></span><br><span class="line">        self.driver = driver</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_page</span><span class="params">(self, url)</span>:</span></span><br><span class="line">        <span class="string">"""**Description**::</span><br><span class="line">                        open the page</span><br><span class="line">        """</span></span><br><span class="line">        self.driver.get(url)</span><br><span class="line">        self.driver.maximize_window()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">input_text</span><span class="params">(self, locator, value)</span>:</span></span><br><span class="line">        <span class="string">"""**Description**::</span><br><span class="line">                Fill value to the element located by locator</span><br><span class="line"></span><br><span class="line">        :param locator:The locator to locate the element.</span><br><span class="line">        :param value:value to set to the element</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        element = self._find_web_element(locator)</span><br><span class="line">        element.send_keys(value)</span><br><span class="line">        <span class="keyword">return</span> self</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Page Object实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.page <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaiduPage</span><span class="params">(BasicPage)</span>:</span></span><br><span class="line"></span><br><span class="line">    search_box = (<span class="string">'id'</span>, <span class="string">'kw'</span>)</span><br><span class="line">    search_button = (<span class="string">'id'</span>, <span class="string">'su'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, keywords)</span>:</span></span><br><span class="line">        self.input_text(self.search_box, keywords)</span><br><span class="line">        self.click_element(self.search_button)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对Browser进行封装，利用Pytest Fixture实现每个脚本运行前运行</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"><span class="keyword">from</span> conf.const <span class="keyword">import</span> Const</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.fixture(scope='function', params=[Const.browser])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_browser</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="string">"""**Description**::</span><br><span class="line">                    start browser</span><br><span class="line">    """</span></span><br><span class="line">    name = request.param</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">"firefox"</span> <span class="keyword">or</span> name == <span class="string">"Firefox"</span> <span class="keyword">or</span> name == <span class="string">"ff"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Firefox"</span>)</span><br><span class="line">            driver = webdriver.Firefox()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"chrome"</span> <span class="keyword">or</span> name == <span class="string">"Chrome"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Chrome"</span>)</span><br><span class="line">            driver = webdriver.Chrome()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"ie"</span> <span class="keyword">or</span> name == <span class="string">"Ie"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Ie"</span>)</span><br><span class="line">            driver = webdriver.Ie()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"phantomjs"</span> <span class="keyword">or</span> name == <span class="string">"Phantomjs"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :phantomjs"</span>)</span><br><span class="line">            driver = webdriver.PhantomJS()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"Not found this browser,You can use 'firefox', 'chrome', 'ie' or 'phantomjs'"</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> msg:</span><br><span class="line">        print(<span class="string">"Couldn't start browser：%s"</span> % str(msg))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>脚本层实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pages.page_object <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> conf.const <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestPO</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_baidu</span><span class="params">(self, start_browser)</span>:</span></span><br><span class="line">        baidu = BaiduPage(start_browser)</span><br><span class="line">        baidu.open_page(URL.baidu)</span><br><span class="line">        baidu.search(<span class="string">"selenium"</span>)</span><br><span class="line">        start_browser.close()</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Page-Factory"><a href="#Page-Factory" class="headerlink" title="Page Factory"></a>Page Factory</h1><p>Python跟Java不一样，没有专门的方法来实现，在网上看到有人做了个实现，只是在这里做了个简单的实验：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">__all__ = [<span class="string">'cacheable'</span>, <span class="string">'callable_find_by'</span>, <span class="string">'property_find_by'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cacheable_decorator</span><span class="params">(lookup)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(self, <span class="string">'_elements_cache'</span>):</span><br><span class="line">            self._elements_cache = &#123;&#125;  <span class="comment"># &#123;callable_id: element(s)&#125;</span></span><br><span class="line">        cache = self._elements_cache</span><br><span class="line"></span><br><span class="line">        key = id(lookup)</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> cache:</span><br><span class="line">            cache[key] = lookup(self)</span><br><span class="line">        <span class="keyword">return</span> cache[key]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> func</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cacheable = cacheable_decorator</span><br><span class="line"></span><br><span class="line">_strategy_kwargs = [<span class="string">'id_'</span>, <span class="string">'xpath'</span>, <span class="string">'link_text'</span>, <span class="string">'partial_link_text'</span>,</span><br><span class="line">                    <span class="string">'name'</span>, <span class="string">'tag_name'</span>, <span class="string">'class_name'</span>, <span class="string">'css_selector'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_callable_find_by</span><span class="params">(how, using, multiple, cacheable, context, driver_attr, **kwargs)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># context - driver or a certain element</span></span><br><span class="line">        <span class="keyword">if</span> context:</span><br><span class="line">            ctx = context() <span class="keyword">if</span> callable(context) <span class="keyword">else</span> context.__get__(self)  <span class="comment"># or property</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ctx = getattr(self, driver_attr)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 'how' AND 'using' take precedence over keyword arguments</span></span><br><span class="line">        <span class="keyword">if</span> how <span class="keyword">and</span> using:</span><br><span class="line">            lookup = ctx.find_elements <span class="keyword">if</span> multiple <span class="keyword">else</span> ctx.find_element</span><br><span class="line">            <span class="keyword">return</span> lookup(how, using)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> len(kwargs) != <span class="number">1</span> <span class="keyword">or</span> list(kwargs.keys())[<span class="number">0</span>] <span class="keyword">not</span> <span class="keyword">in</span> _strategy_kwargs:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">"If 'how' AND 'using' are not specified, one and only one of the following "</span></span><br><span class="line">                <span class="string">"valid keyword arguments should be provided: %s."</span> % _strategy_kwargs)</span><br><span class="line"></span><br><span class="line">        key = list(kwargs.keys())[<span class="number">0</span>];</span><br><span class="line">        value = kwargs[key]</span><br><span class="line">        suffix = key[:-<span class="number">1</span>] <span class="keyword">if</span> key.endswith(<span class="string">'_'</span>) <span class="keyword">else</span> key  <span class="comment"># find_element(s)_by_xxx</span></span><br><span class="line">        prefix = <span class="string">'find_elements_by'</span> <span class="keyword">if</span> multiple <span class="keyword">else</span> <span class="string">'find_element_by'</span></span><br><span class="line">        lookup = getattr(ctx, <span class="string">'%s_%s'</span> % (prefix, suffix))</span><br><span class="line">        <span class="keyword">return</span> lookup(value)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cacheable_decorator(func) <span class="keyword">if</span> cacheable <span class="keyword">else</span> func</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callable_find_by</span><span class="params">(how=None, using=None, multiple=False, cacheable=False, context=None, driver_attr=<span class="string">'driver'</span>,</span><br><span class="line">                     **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> _callable_find_by(how, using, multiple, cacheable, context, driver_attr, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">property_find_by</span><span class="params">(how=None, using=None, multiple=False, cacheable=False, context=None, driver_attr=<span class="string">'driver'</span>,</span><br><span class="line">                     **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> property(_callable_find_by(how, using, multiple, cacheable, context, driver_attr, **kwargs))</span><br></pre></td></tr></table></figure></p>
-<p>Page:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.page <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> utils.pageobject_support <span class="keyword">import</span> callable_find_by <span class="keyword">as</span> by</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaiduPage</span><span class="params">(BasicPage)</span>:</span></span><br><span class="line"></span><br><span class="line">    search_box = by(id_=<span class="string">"kw"</span>)</span><br><span class="line">    search_button = by(id_=<span class="string">'su'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, keywords)</span>:</span></span><br><span class="line">        self.search_box().send_keys(keywords)</span><br><span class="line">        self.search_button().click()</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/" itemprop="url">除了爱孩子，没有任何一个理由生二胎</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-06T13:33:24+08:00">
-                2018-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/06/除了爱孩子，没有任何一个理由生二胎。/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二胎，在中国是个永远逃不掉的话题，有的人甚至三胎都提上了日程。</p>
-<p>二孩政策都放开了，你不生就是自私；重男轻女的思想，没有男孩就是无后；一个孩子太单了，给她有个伴；当你老了，多个孩子好养老；你看周围的朋友都生了，你也应该生……太多的所谓正确的理由和建议充斥在耳旁，但生与不生，只有你知道自己内心最真实的想法。</p>
-<p>想生二胎，首先想到的就是经济基础，网上有太多计算，生二胎要花多少多少钱，特别是在大城市，感觉一般工薪族是生不起的。时代不同了，养孩子远不止吃饱穿好，就说一点，教育，记得奇葩说里说过不要假装现代社会金钱不重要，不要误导年轻人，没有钱也能很好养育孩子。</p>
-<p>孩子好生不好养，最主要的还是时间和精力。你有没有内心强大到再来一轮？有没有人给你带孩子？你能不能给她足够多的陪伴？你能不能平衡好大宝和二宝的关系？</p>
-<p>最近跟闺女聊了很多，发现她并不是大人眼中想的那么独立，在新环境中她也有委屈，有愤怒，有失落，在面对她的种种问题的时候，我却束手无策，心理难免还是会有一些不好受。浮躁的社会，跟风攀比的家长，眼花缭乱的培训班，让孩子无所适从。在教育孩子上面还有很长的路要走，实在是没有准备好再有一个孩子，应该怎样让她们都能在这个浮躁的社会里成为幸福的人。</p>
-<p>生与不生都是自己的问题，每个家庭的情况不同，选择自然也不同。生育是一种能力，不是一种义务，除了爱孩子，没有任何一个理由生二胎。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/03/参观北京天文馆/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/03/参观北京天文馆/" itemprop="url">参观北京天文馆</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-03T11:00:09+08:00">
-                2018-06-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/03/参观北京天文馆/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/03/参观北京天文馆/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>上次来过一次，来的晚了票都卖完了，这次没开馆之前就到了。</p>
-<p>a馆是老馆，就一个小展厅，球幕电影也一般；b馆是新馆，还可以吧。总体感觉，要是没有或者有少量天文知识的，不听讲解的话，其实啥也看不太明白了。孩子来了也是跟着看个热闹。<br><img src="/images/izheyi/2018/06/tianwenguan_00.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_01.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_02.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_03.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_04.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_05.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_06.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_07.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_08.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_09.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_10.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_11.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_12.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_13.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/01/少先队员入队-Mini世界实践/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/01/少先队员入队-Mini世界实践/" itemprop="url">少先队员入队 - Mini世界实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T20:59:30+08:00">
-                2018-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/01/少先队员入队-Mini世界实践/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/01/少先队员入队-Mini世界实践/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>期盼了很长时间，也练习了很长时间，系红领巾，站队，唱歌。。。终于入队了。<br><img src="/images/izheyi/2018/06/rudui_01.JPG" alt=""><br><img src="/images/izheyi/2018/06/rudui_02.JPG" alt=""></p>
-<p>正好赶上六一儿童节，学校有心的带领着大家去迷你世界体验馆感受了一把。<br><img src="/images/izheyi/2018/06/mini_01.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_02.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_03.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_04.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_05.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_06.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_07.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/31/CI-CD-环境搭建-7-集成Terraform/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="url">CI/CD - 环境搭建(7) - 集成Terraform</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-31T16:09:49+08:00">
-                2018-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>实现Jenkins + Terraform在AWS上创建基本环境。</p>
-<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
-<li>Terraform，please refer: <a href="/categories/Terraform/">Terraform知识</a></li>
-</ul>
-<h1 id="Terraform-Config"><a href="#Terraform-Config" class="headerlink" title="Terraform Config"></a>Terraform Config</h1><p>创建<code>main.tf</code>，并push到Github上。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"integration with jenkins"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="Jenkins-Config"><a href="#Jenkins-Config" class="headerlink" title="Jenkins Config"></a>Jenkins Config</h1><p>创建Pipeline Job：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'Preparation'</span>) &#123; // for display purposes</span><br><span class="line">      // Get some code from a GitHub repository</span><br><span class="line">      git credentialsId: <span class="string">'ee7a726b-e672-424d-9b78-e8015668d55a'</span>, url: <span class="string">'git@github.com:yongfeiuall/pipeline-terraform-example.git'</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'variable file'</span>) &#123;</span><br><span class="line">      sh <span class="string">'sudo cp ~/variables.tf ~/.jenkins/workspace/ci-terraform'</span></span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'init'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform --version"</span></span><br><span class="line">        sh <span class="string">"terraform init"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'plan'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform plan"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'apply'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform apply -auto-approve"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>说明：</p>
-<ul>
-<li>Terraform预先安装在了Server上，没有用Jenkins安装</li>
-<li>AWS access key和secret key不能公开，所以加了<code>stage(&#39;variable file)</code>，提前放到Server上去</li>
-<li><code>terraform apply</code>加上<code>-auto-approve</code></li>
-</ul>
-<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p><img src="/images/CI/jenkins_terraform.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2004,7 +2011,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2026,7 +2033,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

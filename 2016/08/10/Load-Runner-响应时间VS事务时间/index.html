@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Load Runner,Performance Testing,自动化测试," />
+  <meta name="keywords" content="Load Runner,自动化测试," />
 
 
 
@@ -104,7 +104,7 @@ DB服务器时间： DT在现实中，Web Server，App Server，Database Server�
 
 事务时间事务的官方定义：事务是指用户在客户端">
 <meta property="og:image" content="http://izheyi.com/images/performancetesting/rt.jpg">
-<meta property="og:updated_time" content="2016-12-23T06:36:31.942Z">
+<meta property="og:updated_time" content="2021-09-26T01:34:49.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Load Runner - 响应时间VS事务时间">
 <meta name="twitter:description" content="响应时间响应时间是通过记录用户请求的开始时间和服务器返回内容到用户的时间差值来计算用户操作响应时间的。
@@ -456,12 +456,12 @@ DB服务器时间： DT在现实中，Web Server，App Server，Database Server�
 <p>事务中哪怕没有操作，也是需要时间的，不过这个时间一般都非常少，所以可以忽略。</p>
 </li>
 <li><p>Wasted Time<br>在默认情况下，LoadRunner会将自身脚本运行浪费的时间自动记录Wasted Time，例如执行关联，检查点等函数的时间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">    lr_start_transaction(<span class="string">"waste time"</span>);</span><br><span class="line">	web_url(<span class="string">"baidu"</span>, <span class="string">"URL=http://baidu.com/"</span>, LAST);</span><br><span class="line">    lr_end_transaction(<span class="string">"waste time"</span>, LR_AUTO);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> Action()</span><br><span class="line"> &#123;</span><br><span class="line">   lr_start_transaction(<span class="string">"waste time"</span>);</span><br><span class="line">web_url(<span class="string">"baidu"</span>, <span class="string">"URL=http://baidu.com/"</span>, LAST);</span><br><span class="line">   lr_end_transaction(<span class="string">"waste time"</span>, LR_AUTO);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>Replay Log:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">3</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> started.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Detected non-resource <span class="string">"http://www.baidu.com/"</span> <span class="keyword">in</span> <span class="string">"http://baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26574</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/bd_logo1.png"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/baidu_jgylogo3.gif"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194.js"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: <span class="function"><span class="title">web_url</span><span class="params">(<span class="string">"baidu"</span>)</span></span> was successful, <span class="number">69095</span> <span class="tag">body</span> bytes, <span class="number">2403</span> <span class="tag">header</span> bytes, <span class="number">13</span> chunking overhead bytes  	[MsgId: MMSG-<span class="number">26385</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">5</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> ended with <span class="string">"Pass"</span> status (Duration: <span class="number">9.6275</span> Wasted Time: <span class="number">0.3107</span>).</span><br></pre></td></tr></table></figure>
 <p>某些时候外部接口进行处理所消耗的时间也会影响事务的时间，这个时间LoadRunner无法处理。比如对用户的加密/解密。就需要计算这些时间开销，并且将这个开销的时间记入Wasted Time中：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//<span class="operator"><span class="keyword">use</span> timers <span class="keyword">to</span> <span class="keyword">collect</span> wasted <span class="keyword">time</span>, <span class="keyword">and</span> the <span class="keyword">use</span> lr_wasted_time <span class="keyword">to</span> remove that wasted <span class="keyword">time</span> <span class="keyword">from</span> the transactions. </span><br><span class="line">timer = lr_start_timer();</span></span><br><span class="line">wasteTime = lr_end_timer(timer);</span><br><span class="line">lr_wasted_time(wasteTime);</span><br></pre></td></tr></table></figure>
-<p>注：在做删除的时候要看好了，别忘了加上LoadRunner自身的时间。</p>
+<p> 注：在做删除的时候要看好了，别忘了加上LoadRunner自身的时间。</p>
 </li>
 </ul>
 
@@ -537,8 +537,6 @@ DB服务器时间： DT在现实中，Web Server，App Server，Database Server�
         <div class="post-tags">
           
             <a href="/tags/Load-Runner/" rel="tag"># Load Runner</a>
-          
-            <a href="/tags/Performance-Testing/" rel="tag"># Performance Testing</a>
           
             <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
           
@@ -666,7 +664,7 @@ DB服务器时间： DT在现实中，Web Server，App Server，Database Server�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -688,7 +686,7 @@ DB服务器时间： DT在现实中，Web Server，App Server，Database Server�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

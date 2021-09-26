@@ -114,6 +114,244 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Jmeter: JSR223使用]]></title>
+      <url>http://izheyi.com/2021/04/14/Jmeter-JSR223%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<p>Jmeter经常用BeanShell来实现一些其本身不能处理的任务，但是BeanShell的效率不高，现在可以用JSR223来代替，支持groovy脚本，效率更高。</p>
+<h4 id="常用内置变量"><a href="#常用内置变量" class="headerlink" title="常用内置变量"></a>常用内置变量</h4><ul>
+<li><p><strong>Vars</strong> </p>
+<p>定义变量与调用变量</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vars.<span class="built_in">get</span>(<span class="keyword">String</span> <span class="variable">key</span>)：从jmeter中获得变量值</span><br><span class="line"></span><br><span class="line">vars.put(<span class="keyword">String</span> <span class="variable">key</span>，<span class="keyword">String</span> value)：数据存到jmeter变量中</span><br><span class="line"></span><br><span class="line">vars.putObject(<span class="string">"OBJ1"</span>,<span class="keyword">new</span> <span class="keyword">Object</span>());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Props</strong> </p>
+<p>设置属性与调用属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;__setProperty(test1,property1,)&#125;</span>;</span><br><span class="line">props.put(“<span class="built_in">test</span>2”,“property2”);</span><br><span class="line">String <span class="built_in">test</span>1 =props.get(“<span class="built_in">test</span>1”);</span><br><span class="line">String <span class="built_in">test</span>2 = props.get(“<span class="built_in">test</span>2”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Ctx</strong></p>
+<p>通过它来访问当前线程的上下文</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getVariables</span><span class="params">()</span></span>：获取当前线程的所有变量</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getPreviousResult</span><span class="params">()</span></span> ：获取前一个取样器的结果</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>prev</strong></p>
+<p>获取前面的sample采样的结果</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getResponseDataAsString</span><span class="params">()</span></span>：获取响应信息</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getResponseCode</span><span class="params">()</span></span> ：获取响应code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>log</strong></p>
+<p>打印日志 ，日志会保存在jmeter.log中</p>
+</li>
+</ul>
+<h4 id="运行外部文件"><a href="#运行外部文件" class="headerlink" title="运行外部文件"></a>运行外部文件</h4><ul>
+<li><p>Java</p>
+<p>在JSR223中引入源文件并执行，执行与JAVA本身的方法一致</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source(“<span class="string">F:</span><span class="regexp">/Test/</span>demo1.java”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Jar</p>
+<p>有下边两种方法可以引入jar包，执行与JAVA本身的方法一致<br>1、将jar包放到Jmeter安装目录的\lib\ext目录下<br>2、在测试计划中导入</p>
+</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Jmeter: 常用设置in properties]]></title>
+      <url>http://izheyi.com/2021/04/02/Jmeter-%E5%B8%B8%E7%94%A8%E8%AE%BE%E7%BD%AEin-properties/</url>
+      <content type="html"><![CDATA[<p>在Jmeter里常用的设置：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>建议在user.properties里设置。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Jmeter: 命令行运行和基本参数使用]]></title>
+      <url>http://izheyi.com/2021/03/20/Jmeter-%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%90%E8%A1%8C/</url>
+      <content type="html"><![CDATA[<p>GUI模式仅用于创建测试计划和调试脚本，真正跑性能测试时候，不要用 GUI 模式，用命令行模式</p>
+<h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>-t，–testfile &lt;参数&gt;<br> 要运行的jmeter test（.jmx）文件</p>
+<p>-l，–logfile &lt;参数&gt;<br> 将样本记录到的文件</p>
+<p>-j，–jmeterlogfile &lt;参数&gt;<br> jmeter运行日志文件（jmeter.log）</p>
+<p>-n，–nongui<br> 在命令行模式下运行JMeter</p>
+<p>-g，–reportonly &lt;参数&gt;<br> 仅从测试结果文件生成报告仪表板</p>
+<p>-e，–reportatendofloadtests<br> 负载测试后生成报告仪表板</p>
+<p>-o，–reportoutputfolder &lt;参数&gt;<br> 报告仪表板的输出文件夹</p>
+<p>==========================================</p>
+<p>-s，–server<br> 运行JMeter服务器</p>
+<p>-H，–proxyHost &lt;参数&gt;<br> 设置供JMeter使用的代理服务器</p>
+<p>-P，–proxyPort &lt;参数&gt;<br> 设置代理服务器端口以供JMeter使用</p>
+<p>-r，-runremote<br> 启动远程服务器（在remote_hosts中定义）</p>
+<p>-R，–remotestart &lt;参数&gt;<br> 启动这些远程服务器（覆盖remote_hosts）</p>
+<p>-X，–remoteexit<br> 测试结束时退出远程服务器（CLI模式）</p>
+<p>==========================================</p>
+<p>-J，–jmeterproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他JMeter属性</p>
+<p>-G，–globalproperty &lt;参数&gt; = &lt;值&gt;<br> 定义全局属性或属性文件（发送到服务器）<br> 例如-Gport = 123<br> 或-Gglobal.properties</p>
+<p>-D，–systemproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他系统属性</p>
+<p>-S，–systemPropertyFile &lt;参数&gt;<br> 其他系统属性文件</p>
+<p>-f，-forceDeleteResultFile<br> 在开始测试之前，强制删除现有结果文件和Web报告文件夹（如果存在）</p>
+<p>-L，–loglevel &lt;参数&gt; = &lt;值&gt;<br> [类别=]级别，例如jorphan = INFO，jmeter.util = DEBUG或com.example.foo = WARN</p>
+<p>-d，–homedir &lt;参数&gt;<br> 要使用的jmeter主目录</p>
+<h4 id="设置命令行参数"><a href="#设置命令行参数" class="headerlink" title="设置命令行参数"></a>设置命令行参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Sep 25, 2021 11:01:36 AM java.util.prefs.WindowsPreferences &#60;init&#62;&#10;WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neok.jmx&#10;Starting standalone test @ Sat Sep 25 11:01:37 CST 2021 (1632538897030)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary =      3 in 00:00:00 =    7.0/s Avg:   101 Min:     1 Max:   277 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:01:37 CST 2021 (1632538897689)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<h4 id="设置属性参数"><a href="#设置属性参数" class="headerlink" title="设置属性参数"></a>设置属性参数</h4><p>为了更好的用命令行跟Jenkins集成， 可以设置以下Jmeter属性：线程数、duration、ramp up-time。</p>
+<ol>
+<li><p>设置用户变量</p>
+<p><img src="/images/jmeter/user_var.jpg" alt=""></p>
+</li>
+<li><p>更改线程组使用变量</p>
+<p><img src="/images/jmeter/use_var.jpg" alt=""></p>
+</li>
+<li><p>命令行验证</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -Jthread_number=5 -Jramp_up=2 -Jduration=60 -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neo.jmx&#10;Starting standalone test @ Sat Sep 25 11:30:03 CST 2021 (1632540603981)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary +      1 in 00:00:00 =    2.9/s Avg:   242 Min:   242 Max:   242 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0&#10;summary +   1706 in 00:00:25 =   67.1/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   1707 in 00:00:26 =   66.2/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%)&#10;summary +   2013 in 00:00:32 =   63.7/s Avg:    74 Min:     0 Max:  2139 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   3720 in 00:00:57 =   64.8/s Avg:    72 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;summary +     88 in 00:00:03 =   30.7/s Avg:   243 Min:     0 Max:  2136 Err:     0 (0.00%) Active: 0 Started: 5 Finished: 5&#10;summary =   3808 in 00:01:00 =   63.2/s Avg:    76 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:31:04 CST 2021 (1632540664505)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<p><strong>-J是设置本地jmeter属性；-G是设置server的jmeter属性（只有设置了远程机，开启了远程服务，才需要用到-G）</strong></p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Jmeter: 常用函数]]></title>
+      <url>http://izheyi.com/2021/03/12/Jmeter-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+      <content type="html"><![CDATA[<p>Jmeter提供了很多，列举一些比较常用函数，详细的自行查看（工具 -&gt; 函数帮助）：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__Random</td>
+<td>生成随机数</td>
+</tr>
+<tr>
+<td>__RandomDate</td>
+<td>生成随机日期</td>
+</tr>
+<tr>
+<td>__RandomString</td>
+<td>生成随机字符串</td>
+</tr>
+<tr>
+<td>__setProperty</td>
+<td>设置属性</td>
+</tr>
+<tr>
+<td>__property</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__P</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__V</td>
+<td>拼接字符串</td>
+</tr>
+<tr>
+<td>__time</td>
+<td>返回指定格式的当前时间</td>
+</tr>
+<tr>
+<td>__MD5</td>
+<td>将字符串MD5加密</td>
+</tr>
+<tr>
+<td>__UUID</td>
+<td>生成随机UUID字符串</td>
+</tr>
+<tr>
+<td>__TestPlanName</td>
+<td>测试计划名称</td>
+</tr>
+<tr>
+<td>__StringFromFile</td>
+<td>从文件中读取一行</td>
+</tr>
+<tr>
+<td>__strLen</td>
+<td>字符串长度</td>
+</tr>
+<tr>
+<td>__split</td>
+<td>将字符串拆分为变量</td>
+</tr>
+<tr>
+<td>__substring</td>
+<td>提取字符串的子串</td>
+</tr>
+<tr>
+<td>__machineName</td>
+<td>机器名</td>
+</tr>
+<tr>
+<td>__machineIP</td>
+<td>机器IP</td>
+</tr>
+<tr>
+<td>__isDefined</td>
+<td>判断变量是否已存在</td>
+</tr>
+<tr>
+<td>__BeanShell</td>
+<td>可执行beanshell脚本</td>
+</tr>
+<tr>
+<td>__char</td>
+<td>根据unicode生成字符</td>
+</tr>
+<tr>
+<td>__chooseRandom</td>
+<td>从指定的范围里面取值</td>
+</tr>
+<tr>
+<td>__counter</td>
+<td>计数器</td>
+</tr>
+<tr>
+<td>__env</td>
+<td>获取环境变量的值</td>
+</tr>
+<tr>
+<td>__eval</td>
+<td>读取变量表达式</td>
+</tr>
+<tr>
+<td>__FileToString</td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td>__intSum</td>
+<td>两个或多个整数的总和</td>
+</tr>
+<tr>
+<td>__longSum</td>
+<td>两个或多个长值的总和</td>
+</tr>
+<tr>
+<td>__digest</td>
+<td>将字符串加密</td>
+</tr>
+<tr>
+<td>__if</td>
+<td>if 判断</td>
+</tr>
+<tr>
+<td>__iterationNum</td>
+<td>线程循环次数</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Jmeter: 获取 Jmeter 的属性]]></title>
+      <url>http://izheyi.com/2021/03/05/Jmeter-P-%E5%87%BD%E6%95%B0/</url>
+      <content type="html"><![CDATA[<p>在跨平台运行，或者配置路径的时候，需要用到Jmeter的属性。</p>
+<p>可能用下边这个函数：</p>
+<p><strong>__P() 函数</strong></p>
+<p>比如Linux的<code>file.separator</code> 的是 <code>/</code>，Windows的<code>\</code>，${__P(file.separator,)}可以根据不同的系统，获取不同系统下的文件路径分隔符。</p>
+<h5 id="如何查看Jmeter属性"><a href="#如何查看Jmeter属性" class="headerlink" title="如何查看Jmeter属性"></a>如何查看Jmeter属性</h5><p> 测试计划右键添加：非测试元件 -&gt; 属性显示。如下图所示：</p>
+<p><img src="/images/jmeter/property.jpg" alt=""></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[熊猫来了探险]]></title>
       <url>http://izheyi.com/2021/02/15/%E7%86%8A%E7%8C%AB%E6%9D%A5%E4%BA%86%E6%8E%A2%E9%99%A9/</url>
       <content type="html"><![CDATA[<p><img src="/images/izheyi/2021/02/01.jpg" alt=""></p>
@@ -1365,7 +1603,7 @@
 <li><p>直接启动</p>
  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-4.0.10]# src/redis-server </span><br><span class="line">9833:C 13 Jun 23:58:18.056 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">9833:C 13 Jun 23:58:18.056 # Redis version=4.0.10, bits=64, <span class="operator"><span class="keyword">commit</span>=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">9833</span>, just started</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">C</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.056</span> # <span class="keyword">Warning</span>: <span class="keyword">no</span> config <span class="keyword">file</span> specified, <span class="keyword">using</span> the <span class="keyword">default</span> config. <span class="keyword">In</span> <span class="keyword">order</span> <span class="keyword">to</span> specify a config <span class="keyword">file</span> <span class="keyword">use</span> src/redis-<span class="keyword">server</span> /<span class="keyword">path</span>/<span class="keyword">to</span>/redis.conf</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">M</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.058</span> * Increased maximum <span class="built_in">number</span> <span class="keyword">of</span> <span class="keyword">open</span> files <span class="keyword">to</span> <span class="number">10032</span> (it was originally <span class="keyword">set</span> <span class="keyword">to</span> <span class="number">1024</span>).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-<span class="string">``</span>__ <span class="string">''</span>-._                                             </span><br><span class="line">      _.-<span class="string">``</span>    <span class="string">`.  `</span>_.  <span class="string">''</span>-._           Redis <span class="number">4.0</span><span class="number">.10</span> (<span class="number">00000000</span>/<span class="number">0</span>) <span class="number">64</span> <span class="built_in">bit</span></span><br><span class="line">  .-<span class="string">``</span> .-<span class="string">``</span><span class="string">`.  `</span><span class="string">``</span>\/    _.,_ <span class="string">''</span>-._                                   </span><br><span class="line"> (    <span class="string">'      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|'</span><span class="string">` _.-'|     Port: 6379</span><br><span class="line"> |    `</span>-._   <span class="string">`._    /     _.-'    |     PID: 9833</span><br><span class="line">  `</span>-._    <span class="string">`-._  `</span>-./  _.-<span class="string">'    _.-'</span>                                   </span><br><span class="line"> |<span class="string">`-._`</span>-._    <span class="string">`-.__.-'    _.-'_.-'|                                  </span><br><span class="line"> |    `</span>-._<span class="string">`-._        _.-'_.-'    |           http://redis.io        </span><br><span class="line">  `</span>-._    <span class="string">`-._`</span>-.__.-<span class="string">'_.-'</span>    _.-<span class="string">'                                   </span><br><span class="line"> |`-._`-._    `-.__.-'</span>    _.-<span class="string">'_.-'</span>|                                  </span><br><span class="line"> |    <span class="string">`-._`</span>-._        _.-<span class="string">'_.-'</span>    |                                  </span><br><span class="line">  <span class="string">`-._    `</span>-._<span class="string">`-.__.-'_.-'    _.-'                                   </span><br><span class="line">      `</span>-._    <span class="string">`-.__.-'    _.-'                                       </span><br><span class="line">          `</span>-._        _.-<span class="string">'                                           </span><br><span class="line">              `-.__.-'</span></span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>指定配置文件启动<br>把redis的解压缩目录的redis.conf文件复制一份到/usr/local/redis/bin目录下</p>
+<li><p>指定配置文件启动<br> 把redis的解压缩目录的redis.conf文件复制一份到/usr/local/redis/bin目录下</p>
  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-<span class="number">4.0</span><span class="number">.10</span>]<span class="preprocessor"># src/redis-server redis.conf </span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.382</span> <span class="preprocessor"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Redis version=<span class="number">4.0</span><span class="number">.10</span>, bits=<span class="number">64</span>, commit=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">12033</span>, just started</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Configuration loaded</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>验证</p>
@@ -1454,25 +1692,8 @@
 <p>Controller:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/content/category"</span>)</span><br><span class="line">public class <span class="type">ContentCategoryController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">ContentCategoryService</span> contentCategoryService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/list"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">List</span>&lt;<span class="type">EasyUiTreeNode</span>&gt; getContentCategoryList(@<span class="type">RequestParam</span>(value=<span class="string">"id"</span>, defaultValue=<span class="string">"0"</span>)long parentId) &#123;</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">EasyUiTreeNode</span>&gt; <span class="literal">result</span> = contentCategoryService.getContentCategoryList(parentId);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/create"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContentCategory(long parentId, <span class="type">String</span> name)&#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = contentCategoryService.createContentCategory(parentId, name);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="内容管理"><a href="#内容管理" class="headerlink" title="内容管理"></a>内容管理</h1><p>实现内容列表的展示和内容的添加功能。<br>Service:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Service</span></span><br><span class="line">public class <span class="type">ContentServiceImpl</span> implements <span class="type">ContentService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">TbContentMapper</span> contentMapper;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getContentList(long categoryId, <span class="type">int</span> page, <span class="type">int</span> rows) &#123;</span><br><span class="line">		<span class="type">TbContentExample</span> example = new <span class="type">TbContentExample</span>();</span><br><span class="line">		</span><br><span class="line">		<span class="type">PageHelper</span>.startPage(page, rows);</span><br><span class="line">		<span class="type">Criteria</span> criteria = example.createCriteria();</span><br><span class="line">		criteria.andCategoryIdEqualTo(categoryId);</span><br><span class="line">		</span><br><span class="line">		<span class="type">List</span>&lt;<span class="type">TbContent</span>&gt; list = contentMapper.selectByExample(example);</span><br><span class="line"></span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = new <span class="type">EasyUiDataGridResult</span>();</span><br><span class="line">		<span class="literal">result</span>.setRows(list);</span><br><span class="line">		</span><br><span class="line">		<span class="type">PageInfo</span>&lt;<span class="type">TbContent</span>&gt; pageInfo = new <span class="type">PageInfo</span>&lt;&gt;(list);</span><br><span class="line">		<span class="literal">result</span>.setTotal(pageInfo.getTotal());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@<span class="type">Override</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContent(<span class="type">TbContent</span> tbContent) &#123;</span><br><span class="line">		tbContent.setCreated(new <span class="type">Date</span>());</span><br><span class="line">		tbContent.setUpdated(new <span class="type">Date</span>());</span><br><span class="line">		</span><br><span class="line">		contentMapper.insert(tbContent);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="type">TaotaoResult</span>.ok();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Controller:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@<span class="type">Controller</span></span><br><span class="line">@<span class="type">RequestMapping</span>(<span class="string">"/content"</span>)</span><br><span class="line">public class <span class="type">ContentController</span> &#123;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">Autowired</span></span><br><span class="line">	private <span class="type">ContentService</span> contentService;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/query/list"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">EasyUiDataGridResult</span> getContentList(long categoryId, <span class="type">int</span> page, <span class="type">int</span> rows)&#123;</span><br><span class="line">		<span class="type">EasyUiDataGridResult</span> <span class="literal">result</span> = contentService.getContentList(categoryId, page, rows);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@<span class="type">RequestMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">	@<span class="type">ResponseBody</span></span><br><span class="line">	public <span class="type">TaotaoResult</span> createContent(<span class="type">TbContent</span> tbContent)&#123;</span><br><span class="line">		<span class="type">TaotaoResult</span> <span class="literal">result</span> = contentService.createContent(tbContent);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>逆向工程自动生成的insert方法不会自动帮我们给主键的值赋值，需要添加主键返回，在TbContentCategoryMapper.xml文件中做如下修改：</p>
-<pre><code>&lt;insert id=&quot;insert&quot; parameterType=&quot;com.izheyi.pojo.TbContentCategory&quot; &gt;
-      &lt;selectKey keyProperty=&quot;id&quot; resultType=&quot;long&quot; order=&quot;AFTER&quot;&gt;
-          SELECT LAST_INSERT_ID()
-      &lt;/selectKey&gt;
-    insert into tb_content_category (id, parent_id, name, 
-      status, sort_order, is_parent, 
-      created, updated)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
-  &lt;/insert&gt;
-  &lt;insert id=&quot;insertSelective&quot; parameterType=&quot;com.izheyi.pojo.TbContentCategory&quot; &gt;
-      &lt;selectKey keyProperty=&quot;id&quot; resultType=&quot;long&quot; order=&quot;AFTER&quot;&gt;
-          SELECT LAST_INSERT_ID()
-      &lt;/selectKey&gt;
-    insert into tb_content_category
-    &lt;trim prefix=&quot;(&quot; suffix=&quot;)&quot; suffixOverrides=&quot;,&quot; &gt;
-</code></pre>]]></content>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>逆向工程自动生成的insert方法不会自动帮我们给主键的值赋值，需要添加主键返回，在TbContentCategoryMapper.xml文件中做如下修改：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert <span class="property">id</span>=<span class="string">"insert"</span> parameterType=<span class="string">"com.izheyi.pojo.TbContentCategory"</span> &gt;</span><br><span class="line">  	&lt;selectKey keyProperty=<span class="string">"id"</span> resultType=<span class="string">"long"</span> order=<span class="string">"AFTER"</span>&gt;</span><br><span class="line">  		SELECT LAST_INSERT_ID()</span><br><span class="line">  	&lt;/selectKey&gt;</span><br><span class="line">    insert <span class="keyword">into</span> tb_content_category (<span class="property">id</span>, parent_id, <span class="property">name</span>, </span><br><span class="line">      status, sort_order, is_parent, </span><br><span class="line">      created, updated)</span><br><span class="line">    values (<span class="comment">#&#123;id,jdbcType=BIGINT&#125;, #&#123;parentId,jdbcType=BIGINT&#125;, #&#123;name,jdbcType=VARCHAR&#125;, </span></span><br><span class="line">      <span class="comment">#&#123;status,jdbcType=INTEGER&#125;, #&#123;sortOrder,jdbcType=INTEGER&#125;, #&#123;isParent,jdbcType=BIT&#125;, </span></span><br><span class="line">      <span class="comment">#&#123;created,jdbcType=TIMESTAMP&#125;, #&#123;updated,jdbcType=TIMESTAMP&#125;)</span></span><br><span class="line">  &lt;/insert&gt;</span><br><span class="line">  &lt;insert <span class="property">id</span>=<span class="string">"insertSelective"</span> parameterType=<span class="string">"com.izheyi.pojo.TbContentCategory"</span> &gt;</span><br><span class="line">  	&lt;selectKey keyProperty=<span class="string">"id"</span> resultType=<span class="string">"long"</span> order=<span class="string">"AFTER"</span>&gt;</span><br><span class="line">  		SELECT LAST_INSERT_ID()</span><br><span class="line">  	&lt;/selectKey&gt;</span><br><span class="line">    insert <span class="keyword">into</span> tb_content_category</span><br><span class="line">    &lt;trim prefix=<span class="string">"("</span> suffix=<span class="string">")"</span> suffixOverrides=<span class="string">","</span> &gt;</span><br></pre></td></tr></table></figure></p>
+]]></content>
     </entry>
     
     <entry>
@@ -1608,12 +1829,9 @@
 <li>applicationContext-dao.xml <ul>
 <li>数据库连接池。</li>
 <li>SqlSessionFactory对象。</li>
-<li>配置mapper文件扫描器。</li>
+<li>配置mapper文件扫描器。<h3 id="Service层"><a href="#Service层" class="headerlink" title="Service层"></a>Service层</h3>所有的service实现类都要放到spring容器中管理。</li>
 </ul>
 </li>
-</ul>
-<h3 id="Service层"><a href="#Service层" class="headerlink" title="Service层"></a>Service层</h3><p>所有的service实现类都要放到spring容器中管理。</p>
-<ul>
 <li>applicationContext-service.xml文件中配置包扫描器，扫描带@service注解的类。</li>
 <li>applicationContext-trans.xml文件中配置事务。</li>
 </ul>
@@ -3818,12 +4036,12 @@
 <p>事务中哪怕没有操作，也是需要时间的，不过这个时间一般都非常少，所以可以忽略。</p>
 </li>
 <li><p>Wasted Time<br>在默认情况下，LoadRunner会将自身脚本运行浪费的时间自动记录Wasted Time，例如执行关联，检查点等函数的时间。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">    lr_start_transaction(<span class="string">"waste time"</span>);</span><br><span class="line">	web_url(<span class="string">"baidu"</span>, <span class="string">"URL=http://baidu.com/"</span>, LAST);</span><br><span class="line">    lr_end_transaction(<span class="string">"waste time"</span>, LR_AUTO);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> Action()</span><br><span class="line"> &#123;</span><br><span class="line">   lr_start_transaction(<span class="string">"waste time"</span>);</span><br><span class="line">web_url(<span class="string">"baidu"</span>, <span class="string">"URL=http://baidu.com/"</span>, LAST);</span><br><span class="line">   lr_end_transaction(<span class="string">"waste time"</span>, LR_AUTO);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>Replay Log:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">3</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> started.</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Detected non-resource <span class="string">"http://www.baidu.com/"</span> <span class="keyword">in</span> <span class="string">"http://baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26574</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/bd_logo1.png"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://www.baidu.com/img/baidu_jgylogo3.gif"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: Found resource <span class="string">"http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194.js"</span> <span class="keyword">in</span> HTML <span class="string">"http://www.baidu.com/"</span>  	[MsgId: MMSG-<span class="number">26659</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">4</span>)</span></span>: <span class="function"><span class="title">web_url</span><span class="params">(<span class="string">"baidu"</span>)</span></span> was successful, <span class="number">69095</span> <span class="tag">body</span> bytes, <span class="number">2403</span> <span class="tag">header</span> bytes, <span class="number">13</span> chunking overhead bytes  	[MsgId: MMSG-<span class="number">26385</span>]</span><br><span class="line">Action.<span class="function"><span class="title">c</span><span class="params">(<span class="number">5</span>)</span></span>: Notify: Transaction <span class="string">"waste time"</span> ended with <span class="string">"Pass"</span> status (Duration: <span class="number">9.6275</span> Wasted Time: <span class="number">0.3107</span>).</span><br></pre></td></tr></table></figure>
 <p>某些时候外部接口进行处理所消耗的时间也会影响事务的时间，这个时间LoadRunner无法处理。比如对用户的加密/解密。就需要计算这些时间开销，并且将这个开销的时间记入Wasted Time中：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//<span class="operator"><span class="keyword">use</span> timers <span class="keyword">to</span> <span class="keyword">collect</span> wasted <span class="keyword">time</span>, <span class="keyword">and</span> the <span class="keyword">use</span> lr_wasted_time <span class="keyword">to</span> remove that wasted <span class="keyword">time</span> <span class="keyword">from</span> the transactions. </span><br><span class="line">timer = lr_start_timer();</span></span><br><span class="line">wasteTime = lr_end_timer(timer);</span><br><span class="line">lr_wasted_time(wasteTime);</span><br></pre></td></tr></table></figure>
-<p>注：在做删除的时候要看好了，别忘了加上LoadRunner自身的时间。</p>
+<p> 注：在做删除的时候要看好了，别忘了加上LoadRunner自身的时间。</p>
 </li>
 </ul>
 ]]></content>
@@ -4459,9 +4677,9 @@
 </li>
 <li><p>使修改生效</p>
  <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation java]# <span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span><br><span class="line">[root@Automation java]# echo $PATH</span><br><span class="line"><span class="regexp">/usr/</span>lib64<span class="regexp">/qt-3.3/</span>bin:<span class="regexp">/usr/</span>local<span class="regexp">/sbin:/u</span>sr<span class="regexp">/local/</span>bin:<span class="regexp">/sbin:/</span>bin:<span class="regexp">/usr/</span>sbin:<span class="regexp">/usr/</span>bin:<span class="regexp">/root/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>jre<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
+<p> <em>Notes：在64位下安装32位JDK，会有错误，要安装对应位数的版本。</em></p>
 </li>
 </ol>
-<p><em>Notes：在64位下安装32位JDK，会有错误，要安装对应位数的版本。</em></p>
 ]]></content>
     </entry>
     
@@ -4871,7 +5089,7 @@ mysql&gt; flush privileges;
 <h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
 <h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
 <ol>
-<li>主界面Replay Log<br><em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
+<li>主界面Replay Log<br> <em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
 <li>业务是否成功View –&gt;TestResults下 Submit Data</li>
 <li>关联 General Log</li>
 </ol>

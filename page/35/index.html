@@ -305,6 +305,784 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Find-a-File-Recursively-递归查找文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/Find-a-File-Recursively-递归查找文件/" itemprop="url">Find a File Recursively(递归查找文件)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:27:21+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/Find-a-File-Recursively-递归查找文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Find-a-File-Recursively-递归查找文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'-----------------------------------------------------------------------</span></span><br><span class="line">  <span class="comment">'Function: FindFileRecursively</span></span><br><span class="line">  <span class="comment">'Finds the first instance of a file within the root folder or one of its subfolders</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Remarks:</span></span><br><span class="line">  <span class="comment">'   Uses recursion</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Arguments</span></span><br><span class="line">  <span class="comment">'   ByVal strRootFolder - As String (absolute folder)</span></span><br><span class="line">  <span class="comment">'   ByVal strFilename - As String</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Returns:</span></span><br><span class="line">  <span class="comment">'   String with full file pathname based on root folder and file name</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Owner:</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'Date:</span></span><br><span class="line">  <span class="comment">'</span></span><br><span class="line">  <span class="comment">'-----------------------------------------------------------------------    </span></span><br><span class="line">   <span class="keyword">Public</span> <span class="keyword">Function</span> FindFileRecursively(<span class="keyword">ByVal</span> strRootFolder, <span class="keyword">ByVal</span> strFilename)</span><br><span class="line">      <span class="keyword">Dim</span> FSO    </span><br><span class="line">      <span class="keyword">Dim</span> strFullPathToSearch    </span><br><span class="line">      <span class="keyword">Dim</span> objSubFolders, subfolder    </span><br><span class="line">   </span><br><span class="line">      <span class="keyword">Set</span> FSO = CreateObject(<span class="string">"Scripting.FileSystemObject"</span>)    </span><br><span class="line">      <span class="comment">'Initialize function    </span></span><br><span class="line">      FindFileRecursively = <span class="string">""</span>    </span><br><span class="line">      <span class="comment">'Check that filename is not empty    </span></span><br><span class="line">      <span class="keyword">If</span> strFileName = <span class="string">""</span> <span class="keyword">Then</span> <span class="keyword">Exit</span> <span class="keyword">Function</span>    </span><br><span class="line">      <span class="comment">'Get full file pathname    </span></span><br><span class="line">      strFullPathToSearch = strRootFolder &amp; <span class="string">"\"</span> &amp; strFilename    </span><br><span class="line">      <span class="comment">'Check if root folder exists    </span></span><br><span class="line">      <span class="keyword">If</span> FSO.FolderExists(strRootFolder) <span class="keyword">Then</span>        </span><br><span class="line">          <span class="comment">'Check if file exists under root folder        </span></span><br><span class="line">          <span class="keyword">If</span> FSO.FileExists(strFullPathToSearch) <span class="keyword">Then</span>            </span><br><span class="line">              FindFileRecursively = strFullPathToSearch        </span><br><span class="line">          <span class="keyword">Else</span>            </span><br><span class="line">              <span class="comment">'Get subfolders            </span></span><br><span class="line">              <span class="keyword">Set</span> objSubFolders = FSO.GetFolder(strRootFolder).SubFolders            </span><br><span class="line">              <span class="keyword">For</span> <span class="keyword">Each</span> subfolder <span class="keyword">in</span> objSubFolders                </span><br><span class="line">                  strFullPathToSearch = strRootFolder &amp; <span class="string">"\"</span> &amp; subfolder.name                </span><br><span class="line">                  FindFileRecursively = FindFileRecursively(strFullPathToSearch, strFilename)                </span><br><span class="line">                  <span class="keyword">If</span> FindFileRecursively &lt;&gt; <span class="string">""</span> <span class="keyword">Then</span>                    </span><br><span class="line">                      <span class="keyword">Exit</span> <span class="keyword">For</span>                </span><br><span class="line">                  <span class="keyword">End</span> <span class="keyword">If</span>            </span><br><span class="line">              <span class="keyword">Next</span>        </span><br><span class="line">          <span class="keyword">End</span> <span class="keyword">If</span>    </span><br><span class="line">      <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">  <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/" itemprop="url">Random WebList & Write to Report(随机选择Weblist并写入测试报告)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-10T08:24:09+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/10/Random-WebList-Write-to-Report-随机选择Weblist并写入测试报告/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">' 用 封装"items count" 属性来获取WebList下有几个选项</span></span><br><span class="line">itemCount =  Browser(<span class="string">"XXX"</span>).Page(<span class="string">"XXX|"</span>).WebList(<span class="string">"XXX"</span>).GetROProperty(<span class="string">"items count"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' 用RandomNumber随机选取范围内的index</span></span><br><span class="line">tValue = RandomNumber(<span class="number">0</span>, itemCount - <span class="number">1</span>)</span><br><span class="line">Browser(<span class="string">"XXX"</span>).Page(<span class="string">"XXX"</span>).WebList(<span class="string">"XXX"</span>).<span class="keyword">Select</span> tValue</span><br><span class="line"></span><br><span class="line"><span class="comment">' 将随机选择的结果写入测试报告</span></span><br><span class="line">Reporter.ReportEvent micDone, <span class="string">"本次运行随机选择了INDEX: &lt;"</span> &amp; tValue &amp; <span class="string">"&gt;"</span>, <span class="string">" "</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/09/使用Excel-2007完成多人协同录入工作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/09/使用Excel-2007完成多人协同录入工作/" itemprop="url">使用Excel 2007完成多人协同录入工作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-09T08:13:29+08:00">
+                2013-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Excel/" itemprop="url" rel="index">
+                    <span itemprop="name">Excel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/09/使用Excel-2007完成多人协同录入工作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/09/使用Excel-2007完成多人协同录入工作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>下面我们来介绍下Excel 2007的共享功能。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/01/09/使用Excel-2007完成多人协同录入工作/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/09/QTP使用小提示/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/09/QTP使用小提示/" itemprop="url">QTP使用小提示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-09T08:06:43+08:00">
+                2013-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/09/QTP使用小提示/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/09/QTP使用小提示/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="不要使用Reuable-Action"><a href="#不要使用Reuable-Action" class="headerlink" title="不要使用Reuable Action"></a>不要使用Reuable Action</h1><p>　　用Function，不要用Reusable Action。没有一种通用的语言里有Reusable Action这个概念。而且通过Function等一些标准的程序设计语言的元素，你能够实现任何Reusable Action可以实现的功能，而且更好，更快，更易于维护。</p>
+<h1 id="不要用Smart-Identification"><a href="#不要用Smart-Identification" class="headerlink" title="不要用Smart Identification"></a>不要用Smart Identification</h1><p>　 　有一天，我发现一个奇怪的现象，一个testcase里某一个点击logout button的步骤运行非常慢，大概要20秒，但是最终它还能成功点击。不巧的是每一个testcase几乎都会点击这个button，所有我还必须把这个问题找出来。最后发现这是因为button的name有了变化，但是因为Smart Identification是被enable，所以QTP会试图去适应这个变化，但是这个“适应”的效果非常不理想。</p>
+<p>　　我认为测试开发者应该完全控制对象的识别。把选择权交给对被测程序业务一无所知的工具是毫无道理的。我想不到任何使用SmartIdentification的原因。所以，从那之后，任何Testcase的Smart Identification我都禁止了。</p>
+<h1 id="不要在base目录里添加两个或以上目录"><a href="#不要在base目录里添加两个或以上目录" class="headerlink" title="不要在base目录里添加两个或以上目录"></a>不要在base目录里添加两个或以上目录</h1><p>　　Base目录是用来只能识别相对路径的目录。其配置在Menu: Tools-&gt;Options-&gt;Folders。我的建议是这里只放项目根目录。其他目录都不要放进去。</p>
+<h1 id="不要用keyword-view，而是提供业务逻辑封装层"><a href="#不要用keyword-view，而是提供业务逻辑封装层" class="headerlink" title="不要用keyword view，而是提供业务逻辑封装层"></a>不要用keyword view，而是提供业务逻辑封装层</h1><p>　　如果你要让你的testcase简单，直接，那么你应该通过合理的抽象提供完善的业务逻辑封装层，它会使得你的testcase script读起来像testcase descript一样。这个时候，你根本不需要keyword view。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/" itemprop="url">VBS Adding Quotes(为字符串加双引号)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-01-05T14:42:39+08:00">
+                2013-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBS/" itemprop="url" rel="index">
+                    <span itemprop="name">VBS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/05/VBS-Adding-Quotes-为字符串加双引号/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2013/01/05/VBS-Adding-Quotes-为字符串加双引号/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newSAtr = <span class="function"><span class="title">Chr</span><span class="params">( <span class="number">34</span> )</span></span> &amp; <span class="function"><span class="title">Environment</span><span class="params">( <span class="string">"ProductDir"</span> )</span></span> &amp; <span class="function"><span class="title">Chr</span><span class="params">( <span class="number">34</span> )</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/VBS/Add_Quotes.jpg" alt="Execute Result"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/12/31/QTP添加Resource或Action时，不弹出相关路径窗/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1101,782 +1879,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/09/VBS用FSO改变文件属性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/09/VBS用FSO改变文件属性/" itemprop="url">VBS用FSO改变文件属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-09T12:00:28+08:00">
-                2012-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/09/VBS用FSO改变文件属性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/09/VBS用FSO改变文件属性/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在框架的执行中，我们会碰见这样的情况，从代码库里下来的文件属性都是只读的，在运行的时候就没办法对其操作，我们可以通过以下方式来改变文件的属性：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set fso = <span class="function"><span class="title">CreateObject</span><span class="params">( <span class="string">"Scripting.FileSystemObject"</span> )</span></span></span><br><span class="line">fso.<span class="function"><span class="title">GetFile</span><span class="params">(LogFilePath)</span></span><span class="class">.Attributes</span> = <span class="number">0</span></span><br><span class="line">Set fso = Nothing</span><br></pre></td></tr></table></figure></p>
-<p><strong>Attributes </strong><br>Normal 0 普通文件。没有设置任何属性。<br>ReadOnly 1 只读文件。可读写。<br>Hidden 2 隐藏文件。可读写。<br>System 4 系统文件。可读写。<br>Directory 16 文件夹或目录。只读。<br>Archive 32 上次备份后已更改的文件。可读写。<br>Alias 1024 链接或快捷方式。只读。<br>Compressed 2048 压缩文件。只读。搜索 </p>
-<p><em>如果相应用多种属性，只须把它们的值加起来。</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/10/09/VBS-send-mail/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/09/VBS-send-mail/" itemprop="url">VBS send mail</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-10-09T09:00:28+08:00">
-                2012-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/09/VBS-send-mail/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/10/09/VBS-send-mail/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2 methods:</p>
-<h1 id="Sending-Mail-with-OutLook"><a href="#Sending-Mail-with-OutLook" class="headerlink" title="Sending Mail with OutLook"></a>Sending Mail with OutLook</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Function</span> SendMail()</span><br><span class="line"> <span class="keyword">Dim</span> objOutlook, Mail, PopupLocate</span><br><span class="line"></span><br><span class="line"><span class="comment">'  Create Email object</span></span><br><span class="line">    <span class="keyword">Set</span> objOutlook=CreateObject(<span class="string">"Outlook.Application"</span>)</span><br><span class="line">    <span class="keyword">Set</span> objMail=objOutlook.CreateItem(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' Setting receiver</span></span><br><span class="line">    objMail.<span class="keyword">to</span>= <span class="string">"yongfeiuall@163.com"</span></span><br><span class="line">	objMail.cc=  <span class="string">"yongfeiuall@163.com"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'  Setting title &amp; content  &amp; attached</span></span><br><span class="line">    objMail.Subject=<span class="string">"自动化测试结果"</span></span><br><span class="line">    objMail.Body=<span class="string">"自动化测试结果"</span></span><br><span class="line">    objMail.Attachments.Add(<span class="string">"e:\test.htm"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">' Mail  send</span></span><br><span class="line">   	SystemUtil.Run  <span class="string">"..\QTP\OutlookSecurityPopup.vbs"</span></span><br><span class="line">    objMail.Send</span><br><span class="line"></span><br><span class="line"><span class="comment">' 注销Email对象</span></span><br><span class="line">    objOutlook.Quit</span><br><span class="line">    <span class="keyword">Set</span> objMail = <span class="literal">Nothing</span></span><br><span class="line">    <span class="keyword">Set</span> objOutlook = <span class="literal">Nothing</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
-<p><strong>OutlookSecurityPopup</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">Set</span> fso = CreateObject(<span class="string">"WScript.Shell"</span>)</span><br><span class="line"><span class="keyword">if</span> fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>) = <span class="literal">FALSE</span> <span class="keyword">then</span></span><br><span class="line">	wscript.<span class="keyword">Sleep</span> <span class="number">10000</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>  fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>) = <span class="literal">true</span> <span class="keyword">then</span></span><br><span class="line">	wscript.<span class="keyword">Sleep</span> <span class="number">1000</span></span><br><span class="line">	fso.AppActivate(<span class="string">"Microsoft Office Outlook"</span>)</span><br><span class="line">	fso.SendKeys <span class="string">"&#123;tab&#125;"</span></span><br><span class="line">	fso.SendKeys <span class="string">"&#123;tab&#125;"</span></span><br><span class="line">	wscript.<span class="keyword">sleep</span> <span class="number">1000</span></span><br><span class="line">	fso.SendKeys <span class="string">"&#123;ENTER&#125;"</span>	</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span></span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Sending-mail-without-a-security-popup"><a href="#Sending-mail-without-a-security-popup" class="headerlink" title="Sending mail without a security popup"></a>Sending mail without a security popup</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Const</span> SMTPSERVER = <span class="string">"xxxxxx"</span></span><br><span class="line"><span class="keyword">Const</span> MailFrom = <span class="string">"xxxxxx"</span> <span class="comment">'发件人邮箱 </span></span><br><span class="line"><span class="keyword">Const</span> MailPWD = <span class="string">"xxxxxx"</span> <span class="comment">'发件人邮箱密码 </span></span><br><span class="line"><span class="keyword">Const</span> SendTo = <span class="string">"yongfeiuall@163.com"</span> <span class="comment">'收件人邮箱 </span></span><br><span class="line"><span class="keyword">Const</span> Body = <span class="string">"&lt;a href=""http://www.izheyi.com"" &gt;Click Here&lt;/a&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Dim</span> objMail, UseHTML</span><br><span class="line"></span><br><span class="line"><span class="comment">'Create Email object</span></span><br><span class="line"><span class="keyword">Set</span> objMail = CreateObject(<span class="string">"CDO.Message"</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">'Setting sender &amp; receiver</span></span><br><span class="line">objMail.<span class="keyword">From</span> = MailFrom</span><br><span class="line">objMail.<span class="keyword">To</span> = SendTo</span><br><span class="line"><span class="comment">'objMail.CC = CC</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'Setting title &amp; content  &amp; attached</span></span><br><span class="line">objMail.Subject = <span class="string">"Subject"</span></span><br><span class="line">objMail.AddAttachment(ExcelReport)</span><br><span class="line">objMail.HTMLBody =  <span class="string">"&lt;H5&gt;Below is the example of email with Hyperlink&lt;/H5&gt;&lt;br&gt;"</span>  + Body</span><br><span class="line"></span><br><span class="line"><span class="comment">'Define mail configuration</span></span><br><span class="line"><span class="keyword">Const</span> schema = <span class="string">"http://schemas.microsoft.com/cdo/configuration/"</span> </span><br><span class="line"><span class="keyword">With</span> objMail.Configuration.Fields </span><br><span class="line">.Item(schema &amp; <span class="string">"sendusing"</span>) = <span class="number">2</span> </span><br><span class="line">.Item(schema &amp; <span class="string">"smtpserver"</span>) = SMTPSERVER</span><br><span class="line">.Item(schema &amp; <span class="string">"smtpauthenticate"</span>) = <span class="number">1</span> </span><br><span class="line">.Item(schema &amp; <span class="string">"sendusername"</span>) = MailFrom </span><br><span class="line">.Item(schema &amp; <span class="string">"sendpassword"</span>) = MailPWD  </span><br><span class="line">.Item(schema &amp; <span class="string">"smtpconnectiontimeout"</span>) = <span class="number">60</span> </span><br><span class="line">.Update </span><br><span class="line"><span class="keyword">End</span> <span class="keyword">With</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">'Send mail</span></span><br><span class="line">objMail.Send</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/08/08/Pad-Number-String-with-Zeroes-在字符串左侧补0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/08/08/Pad-Number-String-with-Zeroes-在字符串左侧补0/" itemprop="url">Pad Number String with Zeroes(在字符串左侧补0)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-08-08T09:03:16+08:00">
-                2012-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/08/08/Pad-Number-String-with-Zeroes-在字符串左侧补0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/08/08/Pad-Number-String-with-Zeroes-在字符串左侧补0/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>例如，在设计框架或写脚本的时候，总会碰见日期格式的问题，需要在不够十位的月份上补0，等等。。</p>
-<p>实现方法：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"> '<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> </span><br><span class="line">'Description : Pads a number with zeroes on the left, according to the expected maximum length of the numbers in the list. ' </span><br><span class="line"></span><br><span class="line">'Purpose : To keep a number list sorted properly, as with a file list (001, 002,..., 010, and not 1, 10, 11,..., 2, 20). ' </span><br><span class="line"></span><br><span class="line">'Arguments : intCurrentNum (the current number to be padded) </span><br><span class="line">            'intMaxNumInList (the top number in the list) </span><br><span class="line"></span><br><span class="line">'Note: The arguments are always taken in absolute values </span><br><span class="line"></span><br><span class="line">'Returns : The padded intCurrentNum (for example, If 1 and 9999 are sent to the function, the result will be 0001) ' </span><br><span class="line"></span><br><span class="line">'<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>  </span><br><span class="line">Public Function PadNumber(ByVal intCurrentNum, ByVal intMaxNumInList) </span><br><span class="line">   </span><br><span class="line">'Validates the arguments - if invalid then it returns the value as is     </span><br><span class="line">    If (Not IsNumeric(intCurrentNum) Or Not IsNumeric(intMaxNumInList)) <span class="keyword">Then</span>         </span><br><span class="line">        PadNumber = intCurrentNum         </span><br><span class="line">        Exit Function     </span><br><span class="line">    End If    </span><br><span class="line">     </span><br><span class="line">    If (Abs(intCurrentNum) &gt;= Abs(intMaxNumInList)) <span class="keyword">Then</span>         </span><br><span class="line">        PadNumber = intCurrentNum         </span><br><span class="line">        Exit Function     </span><br><span class="line">    End If     </span><br><span class="line">    </span><br><span class="line">    PadNumber = String(len(CStr(Abs(intMaxNumInList)))-len(CStr(Abs(intCurrentNum))), <span class="string">"0"</span>) _  </span><br><span class="line">                 &amp; CStr(Abs(intCurrentNum)) </span><br><span class="line">                   </span><br><span class="line">End Function </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">'<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>  </span><br><span class="line">'Msgbox PadNumber(4, 34567)    'Returns 00004 </span><br><span class="line">'Msgbox PadNumber(-4, 34567)   'Returns 00004  </span><br><span class="line">'Msgbox PadNumber(4, -34567)   'Returns 00004 </span><br><span class="line">'Msgbox PadNumber(34567, 4)    'Returns 34567 </span><br><span class="line">'Msgbox PadNumber(4, 9)        'Returns 4 </span><br><span class="line">'Msgbox PadNumber(<span class="string">"Hello"</span>, 9999) 'Returns Hello</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/07/20/Generate-Random-String-产生随机数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/20/Generate-Random-String-产生随机数/" itemprop="url">Generate Random String(产生随机数)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-07-20T09:08:40+08:00">
-                2012-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/20/Generate-Random-String-产生随机数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/07/20/Generate-Random-String-产生随机数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Function</span> RandomString( <span class="keyword">ByVal</span> strLen )     </span><br><span class="line">    <span class="keyword">Dim</span> str     </span><br><span class="line">    <span class="keyword">Const</span> LETTERS = <span class="string">"abcdefghijklmnopqrstuvwxyz0123456789"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">For</span> i = <span class="number">1</span> <span class="keyword">to</span> strLen      </span><br><span class="line">        str = str &amp; <span class="built_in">Mid</span>( LETTERS, RandomNumber( <span class="number">1</span>, <span class="built_in">Len</span>( LETTERS ) ), <span class="number">1</span> )     </span><br><span class="line">    <span class="keyword">Next</span>     </span><br><span class="line"></span><br><span class="line">    RandomString = str </span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2012/06/09/vbs引用-include-外部函数库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/06/09/vbs引用-include-外部函数库/" itemprop="url">vbs引用(include)外部函数库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2012-06-09T09:00:28+08:00">
-                2012-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VBS/" itemprop="url" rel="index">
-                    <span itemprop="name">VBS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/06/09/vbs引用-include-外部函数库/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2012/06/09/vbs引用-include-外部函数库/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我们经常会碰见这样的情况，脚本A中想引用脚本B中的方法，VBS中可能通过以下方法来实现：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">﻿     <span class="keyword">Function</span> Include(strFileName)</span><br><span class="line">        <span class="keyword">Dim</span> objFileContent</span><br><span class="line">        <span class="keyword">Set</span> objFileContent = <span class="built_in">CreateObject</span>(<span class="string">"Scripting.FileSystemObject"</span>).OpenTextFile(strFileName,<span class="number">1</span>,<span class="literal">False</span>) </span><br><span class="line">        <span class="keyword">ExecuteGlobal</span> objFileContent.ReadAll</span><br><span class="line">        <span class="keyword">Set</span> objFileContent = <span class="literal">Nothing</span>   </span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure></p>
-<p>在脚本A中加入这个Function，调用此Function：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call <span class="function"><span class="title">Include</span><span class="params">(ProjectPath + <span class="string">"脚本B.vbs"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>这样即可实现外部函数的调用。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1931,7 +1933,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1953,7 +1955,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

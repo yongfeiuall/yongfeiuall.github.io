@@ -305,6 +305,880 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Java线程状态及分析工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/18/Java线程状态及分析工具/" itemprop="url">Java线程状态及监控工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T07:32:08+08:00">
+                2015-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/18/Java线程状态及分析工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Java线程状态及分析工具/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h1><p>在监控的过程中，要弄明白下边这6种状态(我们主要关注分析的：Runnable, Blocked, Waiting)：</p>
+<ol>
+<li>NEW<br>　 当线程对象对创建后，即进入了新建状态</li>
+<li>RUNNABLE<br>　 当调用线程对象的start()方法，线程即进入就绪状态。正在 Java 虚拟机中执行的线程处于这种状态。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</li>
+<li>BLOCKED<br>　 处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：<ul>
+<li>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</li>
+<li>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</li>
+<li>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</li>
+</ul>
+</li>
+<li>WAITING<br>　 无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。某一线程因为调用下列方法之一而处于等待状态：<ul>
+<li>不带超时值的 Object.wait</li>
+<li>不带超时值的 Thread.join</li>
+<li>LockSupport.park</li>
+</ul>
+</li>
+<li>TIMED_WAITING<br>　 具有指定等待时间的某一等待线程的线程状态。某一线程因为调用以下带有指定正等待时间的方法之一而处于定时等待状态：<ul>
+<li>Thread.sleep</li>
+<li>带有超时值的 Object.wait</li>
+<li>带有超时值的 Thread.join</li>
+<li>LockSupport.parkNanos</li>
+<li>LockSupport.parkUntil</li>
+</ul>
+</li>
+<li>TERMINATED<br>　　已终止线程的线程状态。线程已经结束执行。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/18/Java线程状态及分析工具/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/15/Java执行机制过程和JVM入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/15/Java执行机制过程和JVM入门/" itemprop="url">Java运行环境、执行过程和JVM入门</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-15T08:55:58+08:00">
+                2015-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/15/Java执行机制过程和JVM入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/15/Java执行机制过程和JVM入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Java运行过程"><a href="#Java运行过程" class="headerlink" title="Java运行过程"></a>Java运行过程</h1><p><img src="/images/java/java_run.jpg" alt=""></p>
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p>概念性的东西也不多说了，JVM的体系结构如下：<br><img src="/images/java/jvm.jpg" alt=""><br>在系统监控和分析中，我们主要关心的是堆和栈</p>
+<ul>
+<li>栈是运行时单位，堆是存储单位</li>
+<li>栈解决程序运行问题，堆解决数据存储问题</li>
+<li>堆中存的是对象，栈中存的基本数据类型和堆中对象的引用</li>
+<li>栈代表了处理逻辑，而堆代表了数据</li>
+<li>栈异常：java.lang.StackOverflowError</li>
+<li>堆异常：java.lang.OutOfMemoryError</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/15/Java执行机制过程和JVM入门/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/14/HTTP协议基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/14/HTTP协议基础/" itemprop="url">HTTP协议基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T09:27:49+08:00">
+                2015-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/14/HTTP协议基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/14/HTTP协议基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>目前接触到的基本上都是Web端的性能测试，都是基于HTTP协议的，这里对HTTP协议做个简单的认识：</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>官方概念不多说，简单来说，就是一个基于应用层的通信规范：双方要进行通信，大家都要遵守一个规范，这个规范就是HTTP协议。<br>HTTP三点注意事项：</p>
+<ul>
+<li>HTTP是无连接<br>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>HTTP是媒体独立的<br>这意味着，只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。客户端以及服务器指定使用适合的MIME-type内容类型。 </li>
+<li>HTTP是无状态<br>HTTP协议是无状态协议。同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.</li>
+</ul>
+<p><img src="/images/performancetesting/http_woshou.jpg" alt="HTTP 三次握手"><br>第一次握手：建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。<br>第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；<br>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<h1 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h1><p>一次HTTP操作称为一个事务，其工作过程可分为四步：</p>
+<ol>
+<li>首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。</li>
+<li>建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。</li>
+<li>服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。</li>
+<li>客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。</li>
+</ol>
+<p>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/14/HTTP协议基础/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/Load-Runner-VuGen脚本开发基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="url">Load Runner - VuGen脚本开发基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T13:32:08+08:00">
+                2015-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/10/Load-Runner-VuGen脚本开发基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Load-Runner"><a href="#Load-Runner" class="headerlink" title="Load Runner"></a>Load Runner</h1><p>主要由以下工具构成</p>
+<ul>
+<li>VuGen（Virtual User Generator） - 开发脚本（录制+编写）</li>
+<li>Controller - 体现多线程，VuGen中也有体现</li>
+<li>Analysis - 结果分析</li>
+<li>Load generator - 压力机（客户端），可以跨平台。</li>
+</ul>
+<h1 id="VuGen工具使用"><a href="#VuGen工具使用" class="headerlink" title="VuGen工具使用"></a>VuGen工具使用</h1><h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><p>录制目的是帮助快速生成脚本。<br><strong>录制原理</strong>：录制的是在B和S之间基本协议的数据包。Lr在B和S之间，相当于一个截取的功能。<br><strong>录制设置</strong>：主要有以下两个方面</p>
+<ol>
+<li>设置字符集编码：Advanced –&gt; Support charset (选中Checkbox和UTF-8)</li>
+<li>设置HTTP/HTML Level： Recording –&gt; HTML-based script –&gt; HTML Advanced –&gt; Script type (选择第2个选项)</li>
+</ol>
+<p><em>Notes：在‘开始录制’窗口，不选择‘Record the application startup’，打开页面后就不会自动录制，到希望录制的地方点击‘Record’再开始录制。</em></p>
+<h2 id="回放"><a href="#回放" class="headerlink" title="回放"></a>回放</h2><p><strong>回放原理</strong>：回放时不需要启动被测试程序（浏览器）不打开浏览器，LR可以模拟多线程。<br><strong>回放设置</strong>：脚本运行顺序、迭代，思考时间，网速模拟等等。</p>
+<h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
+<h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
+<ol>
+<li>主界面Replay Log<br> <em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
+<li>业务是否成功View –&gt;TestResults下 Submit Data</li>
+<li>关联 General Log</li>
+</ol>
+<p>脚本老是失败原因：参数化、关联、思考时间。</p>
+<p><em>Notes: 脚本开发最好是用以下组合（LR11 + Win7 + IE9）</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/TestNG-命令行运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/10/TestNG-命令行运行/" itemprop="url">TestNG 命令行运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T08:59:54+08:00">
+                2015-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/10/TestNG-命令行运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/TestNG-命令行运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直是在Eclipse里运行测试的，本次简单介绍一下怎么样来实现命令行来执行TestNG。<br>Assuming that you have TestNG in your class path, the simplest way to invoke TestNG is as follows:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java org<span class="class">.testng</span><span class="class">.TestNG</span> testng1<span class="class">.xml</span> [testng2<span class="class">.xml</span> testng3<span class="class">.xml</span> ...]</span><br></pre></td></tr></table></figure></p>
+<p>主要是在Windows下做的配置（<em>有步骤已经做过，请忽略</em>）：</p>
+<ol>
+<li>下载JDK安装，配置环境变量。</li>
+<li>下载testng-6.8.8.jar包，放在C:\TestNG, 并配置了环境变量<ul>
+<li>TESTNG_HOME 为 C:\TESTNG</li>
+<li>CLASSPATH 为 %CLASSPATH%;%TESTNG_HOME%\testng-6.8.jar;  </li>
+</ul>
+</li>
+<li><p>在F:\testng下创建一个java文件command.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> org.testng.annotations.Test;</span><br><span class="line"> <span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String str = <span class="string">"TestNG is working fine"</span>;</span><br><span class="line">	assertEquals(<span class="string">"TestNG is working fine"</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译java文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">javac</span> <span class="tag">Command</span><span class="class">.java</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在同目录下，创建testng.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">name</span>=<span class="value">"Suite1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">classes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Command"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">classes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">test</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用java调用testng.xml</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\testng&gt;java org.testng.TestNG testng.xml</span><br><span class="line">[TestNG] Running:</span><br><span class="line">F:\testng\testng.xml</span><br><span class="line"></span><br><span class="line">===============================================</span><br><span class="line">Suite1</span><br><span class="line">Total tests run: 1, Failures: 0, Skips: 0</span><br><span class="line">===============================================</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1128,821 +2002,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/03/Selenium-Grid-自动分配/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/03/Selenium-Grid-自动分配/" itemprop="url">Selenium Grid 自动分配</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-03T10:56:19+08:00">
-                2015-12-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/03/Selenium-Grid-自动分配/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/03/Selenium-Grid-自动分配/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Selenium Grid来实现多个nodes间的自动分配，以达到分布式并发的效果。</p>
-<p>hub和node的启动和测试脚本，参见：<a href="/2015/11/30/Selenium-Grid-初探/">Selenium Grid 初探</a></p>
-<p>这次 TestNG XML 文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">thread-count</span>=<span class="value">"5"</span> <span class="attribute">parallel</span>=<span class="value">"classes"</span>  <span class="attribute">name</span>=<span class="value">"demo"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"browser"</span> <span class="attribute">value</span>=<span class="value">"ff"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"nodeUrl"</span> <span class="attribute">value</span>=<span class="value">"http://192.168.24.13:4444"</span>/&gt;</span>  </span><br><span class="line">   <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"webSite"</span> <span class="attribute">value</span>=<span class="value">"http://www.baidu.com"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">classes</span>&gt;</span>  </span><br><span class="line">         <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"testGrid2.Grid"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">classes</span>&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;/<span class="title">test</span>&gt;</span>  </span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test2"</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"browser"</span> <span class="attribute">value</span>=<span class="value">"chrome"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"nodeUrl"</span> <span class="attribute">value</span>=<span class="value">"http://192.168.24.13:4444"</span>/&gt;</span>  </span><br><span class="line">   <span class="tag">&lt;<span class="title">parameter</span> <span class="attribute">name</span>=<span class="value">"webSite"</span> <span class="attribute">value</span>=<span class="value">"http://www.baidu.com"</span>/&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="title">classes</span>&gt;</span>  </span><br><span class="line">         <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"testGrid2.Grid"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">classes</span>&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;/<span class="title">test</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>Notes: url value是Grid Server地址（e.g., WebDriver wd = new RemoteWebDriver(<code>&quot;http://localhost:4444/wd/hub&quot;</code>, ieDesiredcap)）。</p>
-<p>对想使用Selenium Grid的来说，实现起来应该不会太麻烦，把框架里的单线程运行的公共脚本<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WebDriver wd = <span class="keyword">new</span> FirefoxDriver();</span><br></pre></td></tr></table></figure></p>
-<p>改成<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">DesiredCapabilities</span> ff = DesiredCapabilities.firefox();  </span><br><span class="line"><span class="title">WebDriver</span> wd = new RemoteWebDriver(<span class="string">"http://localhost:4444/wd/hub"</span>, ff);</span><br></pre></td></tr></table></figure></p>
-<p>然后再把hub的地址设置到Global Setting里边去。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/30/Selenium-Grid-初探/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/30/Selenium-Grid-初探/" itemprop="url">Selenium Grid 初探</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-30T14:00:51+08:00">
-                2015-11-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/30/Selenium-Grid-初探/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/30/Selenium-Grid-初探/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>之前研究过Jenkins的应用，知道基本的流程和原理，能进行一些基本的应用。<br>Grid的好处不多说。Selenium-Grid包括两个部分：<br>Hub：总控节点，连接调用Node，负责分配用例到对应的Node节点所在的执行器上Node<br>Node：负责执行TestCase，启动浏览器</p>
-<p>举例说一下整个流程：</p>
-<ol>
-<li><p>Start the hub<br>通过windows的DOS窗口进入selenium-server-standalone-2.48.2.jar所在目录，执行以下命令</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">java</span> <span class="tag">-jar</span> <span class="tag">selenium-server-standalone-2</span><span class="class">.48</span><span class="class">.2</span><span class="class">.jar</span> <span class="tag">-role</span> <span class="tag">hub</span></span><br></pre></td></tr></table></figure>
-<p>Default port is 4444. To change the default port, you can add the optional parameter -port when you run the command. You can view the status of the hub by opening a browser window and navigating to: <a href="http://localhost:4444/grid/console">http://localhost:4444/grid/console</a></p>
-</li>
-<li><p>Start the nodes<br>进入到node，通过windows的DOS窗口进入selenium-server-standalone-2.48.2.jar所在目录，执行以下命令</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">java</span> <span class="tag">-jar</span> <span class="tag">selenium-server-standalone-2</span><span class="class">.48</span><span class="class">.2</span><span class="class">.jar</span> <span class="tag">-role</span> <span class="tag">node</span> <span class="tag">-hub</span> <span class="rule"><span class="attribute">http</span>:<span class="value">//localhost:<span class="number">4444</span>/grid/register</span></span></span><br></pre></td></tr></table></figure>
-<p>至此，Selenium-Grid就弄成功了，下面我用一个简单的例子来跑一下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/30/Selenium-Grid-初探/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Performance-Testing-核心原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Performance-Testing-核心原理/" itemprop="url">Performance Testing-核心原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T20:48:38+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Performance-Testing-核心原理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Performance-Testing-核心原理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>之前有说过，性能测试是基于协议的，要有大的并发，尽量在真实的环境中来做测试。这就是核心：多线程，协议，模拟真实场景。</p>
-<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><ul>
-<li>线程和进程<br>理解二者的概念和区别，进程是管理单元，线程是执行单元</li>
-<li>单线程和多线程<br>单线程好比有三条并行的公路，每条上只有一个车道。优点是安全性好。Linux就是单线程的操作系统。<br>多线程好比只有一条马路，上面有三个车道。优点是资源共享，节省资源。Windows就是多线程的操作系统。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/27/Performance-Testing-核心原理/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Excel-Unprotect-Macro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Excel-Unprotect-Macro/" itemprop="url">Excel-Unprotect-Macro</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T15:32:19+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Excel/" itemprop="url" rel="index">
-                    <span itemprop="name">Excel</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Excel-Unprotect-Macro/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Excel-Unprotect-Macro/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Today i use a previous excel with Macro, but forget the protected password, we can use the following way to unprotect macro password.</p>
-<ol>
-<li>Download the “unprotect_macro.xlsm” file.<br><a href="/images/excel/unprotect_macro.xlsm">Unprotect Macro</a></li>
-<li>Open these 2 documents.</li>
-<li>Run “unprotected()” in “unprotect_macro.xlsm” file.</li>
-<li>Should be upprotect now.</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/27/Performance-Testing-基本介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/27/Performance-Testing-基本介绍/" itemprop="url">Performance Testing-基本介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T12:11:21+08:00">
-                2015-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/27/Performance-Testing-基本介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/27/Performance-Testing-基本介绍/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="自动化测试的基本认识"><a href="#自动化测试的基本认识" class="headerlink" title="自动化测试的基本认识"></a>自动化测试的基本认识</h1><p>也做了很多年的手动测试和功能自动化测试，其实说到底，测试从本质上来看其实就是“数据+执行+验证”的过程。<br>自动化测试从分层的角度来看：</p>
-<ul>
-<li>单元 &amp; API测试 - 基于代码层面</li>
-<li>功能自动化 - 基于UI层面</li>
-<li>性能测试 - 基于协议层面</li>
-</ul>
-<h1 id="什么是性能测试"><a href="#什么是性能测试" class="headerlink" title="什么是性能测试"></a>什么是性能测试</h1><p>理论上的知识自己Google。性能测试与功能测试不同，不再是验证功能是否正确，而是重点关注实现得好不好，重心是关注瓶颈所在。有时也会关注功能问题中的死锁、内存泄漏等问题。</p>
-<ul>
-<li>性能类型的一些说明：<br>压力测试 - 什么时候压死<br>负载测试 - 不同压力下的表现<br>基准测试 - 正常情况下的压力</li>
-<li>测试工具<br>Load Runner<br>Jmeter<br>…
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/27/Performance-Testing-基本介绍/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1997,7 +2056,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2019,7 +2078,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

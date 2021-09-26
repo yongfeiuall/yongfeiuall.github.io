@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Java,Java项目实战,Redis," />
+  <meta name="keywords" content="Java项目实战," />
 
 
 
@@ -107,7 +107,7 @@
 
 详细内容，参考：Redis
 安装安装还是很简单的，如下：1234$ wget http://download.redis.io/releases/redi">
-<meta property="og:updated_time" content="2018-07-28T06:12:27.631Z">
+<meta property="og:updated_time" content="2021-09-26T01:24:46.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java项目实战 - Redis安装和集群搭建">
 <meta name="twitter:description" content="RedisRedis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
@@ -452,7 +452,7 @@
 <li><p>直接启动</p>
  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-4.0.10]# src/redis-server </span><br><span class="line">9833:C 13 Jun 23:58:18.056 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">9833:C 13 Jun 23:58:18.056 # Redis version=4.0.10, bits=64, <span class="operator"><span class="keyword">commit</span>=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">9833</span>, just started</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">C</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.056</span> # <span class="keyword">Warning</span>: <span class="keyword">no</span> config <span class="keyword">file</span> specified, <span class="keyword">using</span> the <span class="keyword">default</span> config. <span class="keyword">In</span> <span class="keyword">order</span> <span class="keyword">to</span> specify a config <span class="keyword">file</span> <span class="keyword">use</span> src/redis-<span class="keyword">server</span> /<span class="keyword">path</span>/<span class="keyword">to</span>/redis.conf</span><br><span class="line"><span class="number">9833</span>:<span class="keyword">M</span> <span class="number">13</span> Jun <span class="number">23</span>:<span class="number">58</span>:<span class="number">18.058</span> * Increased maximum <span class="built_in">number</span> <span class="keyword">of</span> <span class="keyword">open</span> files <span class="keyword">to</span> <span class="number">10032</span> (it was originally <span class="keyword">set</span> <span class="keyword">to</span> <span class="number">1024</span>).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-<span class="string">``</span>__ <span class="string">''</span>-._                                             </span><br><span class="line">      _.-<span class="string">``</span>    <span class="string">`.  `</span>_.  <span class="string">''</span>-._           Redis <span class="number">4.0</span><span class="number">.10</span> (<span class="number">00000000</span>/<span class="number">0</span>) <span class="number">64</span> <span class="built_in">bit</span></span><br><span class="line">  .-<span class="string">``</span> .-<span class="string">``</span><span class="string">`.  `</span><span class="string">``</span>\/    _.,_ <span class="string">''</span>-._                                   </span><br><span class="line"> (    <span class="string">'      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|'</span><span class="string">` _.-'|     Port: 6379</span><br><span class="line"> |    `</span>-._   <span class="string">`._    /     _.-'    |     PID: 9833</span><br><span class="line">  `</span>-._    <span class="string">`-._  `</span>-./  _.-<span class="string">'    _.-'</span>                                   </span><br><span class="line"> |<span class="string">`-._`</span>-._    <span class="string">`-.__.-'    _.-'_.-'|                                  </span><br><span class="line"> |    `</span>-._<span class="string">`-._        _.-'_.-'    |           http://redis.io        </span><br><span class="line">  `</span>-._    <span class="string">`-._`</span>-.__.-<span class="string">'_.-'</span>    _.-<span class="string">'                                   </span><br><span class="line"> |`-._`-._    `-.__.-'</span>    _.-<span class="string">'_.-'</span>|                                  </span><br><span class="line"> |    <span class="string">`-._`</span>-._        _.-<span class="string">'_.-'</span>    |                                  </span><br><span class="line">  <span class="string">`-._    `</span>-._<span class="string">`-.__.-'_.-'    _.-'                                   </span><br><span class="line">      `</span>-._    <span class="string">`-.__.-'    _.-'                                       </span><br><span class="line">          `</span>-._        _.-<span class="string">'                                           </span><br><span class="line">              `-.__.-'</span></span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>指定配置文件启动<br>把redis的解压缩目录的redis.conf文件复制一份到/usr/local/redis/bin目录下</p>
+<li><p>指定配置文件启动<br> 把redis的解压缩目录的redis.conf文件复制一份到/usr/local/redis/bin目录下</p>
  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation redis-<span class="number">4.0</span><span class="number">.10</span>]<span class="preprocessor"># src/redis-server redis.conf </span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.382</span> <span class="preprocessor"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Redis version=<span class="number">4.0</span><span class="number">.10</span>, bits=<span class="number">64</span>, commit=<span class="number">00000000</span>, modified=<span class="number">0</span>, pid=<span class="number">12033</span>, just started</span></span><br><span class="line"><span class="number">12033</span>:C <span class="number">14</span> Jun <span class="number">00</span>:<span class="number">15</span>:<span class="number">48.383</span> <span class="preprocessor"># Configuration loaded</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>验证</p>
@@ -566,11 +566,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
             <a href="/tags/Java项目实战/" rel="tag"># Java项目实战</a>
-          
-            <a href="/tags/Redis/" rel="tag"># Redis</a>
           
         </div>
       
@@ -696,7 +692,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -718,7 +714,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

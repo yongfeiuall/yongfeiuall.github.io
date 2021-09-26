@@ -305,6 +305,818 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/14/mitmproxy实现接口信息抓取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/14/mitmproxy实现接口信息抓取/" itemprop="url">mitmproxy实现接口信息抓取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T14:40:41+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mitmproxy/" itemprop="url" rel="index">
+                    <span itemprop="name">mitmproxy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/14/mitmproxy实现接口信息抓取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/14/mitmproxy实现接口信息抓取/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到<a href="https://www.mitmproxy.org/" target="_blank" rel="external">mitmproxy</a>: mitmproxy is a free and open source interactive HTTPS proxy.</p>
+<p>在windows和Firefox下实验。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>pip直接安装：<br><code>pip install mitmproxy</code></p>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><ul>
+<li>命令行启动<br>  mitmdump</li>
+<li>常用参数<br>  -p  指定端口号<br>  -w     outfile 将日志输出到本地文件<br>  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)<br>  -s  加载自定义python脚本</li>
+<li>添加证书<ol>
+<li>配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。</li>
+<li>选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 </li>
+</ol>
+</li>
+</ul>
+<h1 id="抓取接口信息"><a href="#抓取接口信息" class="headerlink" title="抓取接口信息"></a>抓取接口信息</h1><ol>
+<li><p>创建脚本</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from mitmproxy import http, ctx</span><br><span class="line">import openpyxl,<span class="tag">time</span>,json</span><br><span class="line"></span><br><span class="line">class Record:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self<span class="class">.filter_url</span> = <span class="string">'https://reqres.in/api/'</span></span><br><span class="line">        self<span class="class">.cur_time</span> = <span class="tag">time</span>.<span class="function"><span class="title">strftime</span><span class="params">(<span class="string">'%Y%m%d_%H_%M_%S'</span>)</span></span></span><br><span class="line">        book = openpyxl.<span class="function"><span class="title">Workbook</span><span class="params">()</span></span></span><br><span class="line">        <span class="tag">table</span> = book<span class="class">.active</span></span><br><span class="line">        <span class="tag">table</span>.append([<span class="string">'Address'</span>, <span class="string">'Request Type'</span>, <span class="string">'Param Type'</span>,</span><br><span class="line">                      <span class="string">'Header'</span>, <span class="string">'Param'</span>])</span><br><span class="line">        book.<span class="function"><span class="title">save</span><span class="params">(<span class="string">'E:/&#123;cur_time&#125;.xlsx'</span>.format(cur_time=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span> = openpyxl.<span class="function"><span class="title">load_workbook</span><span class="params">(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.format(tmp=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.active</span><span class="class">.title</span> = <span class="string">'API'</span></span><br><span class="line">        self<span class="class">.table</span> = self<span class="class">.workbook</span><span class="class">.active</span></span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">write_to_excel</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        url = flow<span class="class">.request</span><span class="class">.url</span></span><br><span class="line">        method = flow<span class="class">.request</span><span class="class">.method</span></span><br><span class="line">        type = flow<span class="class">.request</span><span class="class">.headers</span><span class="class">.get</span>(<span class="string">'Content-Type'</span>)</span><br><span class="line">        <span class="keyword">if</span> type == <span class="string">'application/x-www-form-urlencoded'</span>:</span><br><span class="line">            type = <span class="string">'URL_ENCODE'</span></span><br><span class="line">        elif type == <span class="string">'application/json'</span>:</span><br><span class="line">            type = <span class="string">'JSON'</span></span><br><span class="line">        elif type == <span class="string">'text/xml'</span>:</span><br><span class="line">            type = <span class="string">'XML'</span></span><br><span class="line">        headers = json.<span class="function"><span class="title">dumps</span><span class="params">(dict(flow.request.headers)</span></span>)</span><br><span class="line">        <span class="tag">body</span> = flow<span class="class">.request</span><span class="class">.get_text</span>()</span><br><span class="line">        self<span class="class">.table</span><span class="class">.append</span>([url, method, type, headers, body])</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.save</span>(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.<span class="function"><span class="title">format</span><span class="params">(cur_time=self.cur_time)</span></span>)</span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">response</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        <span class="keyword">if</span> self<span class="class">.filter_url</span>:</span><br><span class="line">            <span class="keyword">if</span> flow<span class="class">.request</span><span class="class">.url</span><span class="class">.startswith</span>(self.filter_url):</span><br><span class="line">                self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addons = [</span><br><span class="line">    <span class="function"><span class="title">Record</span><span class="params">()</span></span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置firefox代理<br>设置本地Firefox代理，商品为9999</p>
+</li>
+<li><p>运行mitmdump</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmdump -<span class="tag">p</span> <span class="number">9999</span> -s <span class="tag">a</span><span class="class">.py</span> --ignore all hosts with https/ssl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开测试网站操作</p>
+</li>
+<li>查看结果<br><img src="/images/automation/mitm.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/02/小丁画作-2020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/02/小丁画作-2020/" itemprop="url">奇点绘画画随记（2020）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-02T10:31:04+08:00">
+                2020-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/02/小丁画作-2020/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/02/小丁画作-2020/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/7.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/8.JPG" alt=""></p>
+<p><img src="/images/izheyi/pic/qidianhui/2020/9.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/01/19/python离线安装外部依赖包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/19/python离线安装外部依赖包/" itemprop="url">python离线安装外部依赖包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-19T11:55:37+08:00">
+                2020-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/19/python离线安装外部依赖包/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/01/19/python离线安装外部依赖包/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>公司Jenkins运行在内部环境，不能访问外部网络，所以要安装的外部依赖需要用离线的方式来安装。</p>
+<ol>
+<li>制作requirement.txt<br><code>pip freeze &gt; requirement.txt</code></li>
+<li>下载安装包<br> <code>pip download -d d:\package &lt;package_name&gt; # 单个下载</code><br> <code>pip download -d d:\package -r requirements.txt # 批量下载</code></li>
+<li>离线安装<br> <code>pip install --no-index --find-links=d:\package package_name # 单个安装</code><br> <code>pip install --no-index --find-links=d:\package -r requirements.txt # 批量安装</code></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/10/19/分布式持续压测平台/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/19/分布式持续压测平台/" itemprop="url">分布式持续压测平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-19T13:25:28+08:00">
+                2019-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/19/分布式持续压测平台/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2019/10/19/分布式持续压测平台/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="压测平台介绍"><a href="#压测平台介绍" class="headerlink" title="压测平台介绍"></a>压测平台介绍</h1><ul>
+<li>QA设计场景和脚本，Github管理</li>
+<li>QA创建Jenkins测试job</li>
+<li>Dev利用Jenkins持续执行测试，直到达到预期性能</li>
+<li>QA对主要接口进行验收测试，验证符合上线性能预期</li>
+</ul>
+<h1 id="压测平台设计"><a href="#压测平台设计" class="headerlink" title="压测平台设计"></a>压测平台设计</h1><ul>
+<li>脚本编写和执行 – Jmeter</li>
+<li>脚本管理 – Github</li>
+<li>驱动执行 – Taurus</li>
+<li>测试调度 – Jenkins</li>
+</ul>
+<p><img src="/images/performancetesting/platform.jpg" alt="Performace Platform"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/09/08/丁丁画画（三年级上学期）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/08/丁丁画画（三年级上学期）/" itemprop="url">丁丁画画（三年级上学期）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-08T10:03:01+08:00">
+                2019-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/08/丁丁画画（三年级上学期）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2019/09/08/丁丁画画（三年级上学期）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/images/izheyi/pic/3/1_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_5.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1126,900 +1938,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/12/25/2018-总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/25/2018-总结/" itemprop="url">2018 - 总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T14:29:52+08:00">
-                2018-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/12/25/2018-总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/12/25/2018-总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2018年马上过完，年初的时候有个工作计划 <a href="/2018/01/11/2018-学习计划/">2018 - 学习计划</a>，也简单做个总结。</p>
-<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><ol>
-<li>随着公司Agile的转型成功，还是学到了很多东西，结果重要，但过程同样重要。</li>
-<li>年终最后一次上线竟然出现了几个Critical的Issues，新项目和现有的6个项目都有交集，诸多原因，确实也遗漏了一些东西。通过Retro知道了不足，以及How could be better in next stage。但也有一些体会：Agile强调整个Team对质量负责，真正出了问题，还是QA背锅，终究是没有逃脱0和-1游戏规则。有些事情虽不爽，但是要敢于承认错误，力争把工作做到挑不出毛病。某些人，劝你评价别人的时候请先看看自己。唯有自己强大，其他都是浮云。</li>
-<li>今年学了不少新技术，在测试应用到的技术这块有了一个很明显的提升。<ul>
-<li>基于AWS，Salt，Atrifactory，Terraform，Jenkins，Github实现CI/CD</li>
-<li>基于SSM的java项目开发流程和实现</li>
-<li>Zookeeper，Dubbo和Docker的基本应用</li>
-<li>基于Pact的CDC测试</li>
-<li>性能测试的一些思考</li>
-</ul>
-</li>
-<li>通过一些渠道也知道了在技术的全局观上还有待于提高，项目和质量的整体把控上也有欠缺，也要提高一下技术快速落地的能力。</li>
-<li>参加了一些课程，学到了不少新的思路和知识。</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>基本能保持每周一次的Blog更新，内容多是学习笔记。</li>
-<li>孩子教育是个很大的事情，还得继续努力。</li>
-<li>力争生活和工作的Balance。</li>
-<li>对自己也有一次奖励，去青岛玩了一趟。</li>
-</ol>
-<h2 id="遗憾-不足"><a href="#遗憾-不足" class="headerlink" title="遗憾/不足"></a>遗憾/不足</h2><ol>
-<li>2018只剩下个位数，读的书也只有个位数，来年需要一个更详细一点的计划。</li>
-<li>英语，跟着公司还花钱报了个课程，效果不是很明显，进步不大，需要反思。</li>
-<li>十一之后，一直不在状态，要做阶段性总结反思，把目标分拆的更细小，严格要求自己，并做好时间管理。</li>
-<li>情绪的掌控有待提高，团队管理和沟通要进一步加强。</li>
-<li>技术很重要，但工作不仅仅是技术。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/11/25/CDC-Pact-Verify-Provider-Ways/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/25/CDC-Pact-Verify-Provider-Ways/" itemprop="url">CDC - Pact:Verify Provider Ways</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-25T13:11:25+08:00">
-                2018-11-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CDC/" itemprop="url" rel="index">
-                    <span itemprop="name">CDC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/25/CDC-Pact-Verify-Provider-Ways/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/11/25/CDC-Pact-Verify-Provider-Ways/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>There are many ways can be used to verify Provider, maven, junit, spring…..</p>
-<p>Only list 2 ways below to check the verify process.</p>
-<h1 id="Build-Plug-in"><a href="#Build-Plug-in" class="headerlink" title="Build Plug-in"></a>Build Plug-in</h1><p>We use maven plug-in to verify Provider, you can refer the details in previous article <a href="/2018/11/13/CDC-Pact-入门使用/">Pact: Simple Usage</a>.</p>
-<p>The biggest disadvantage using this way is that we need to have provider running and pre-condition set up, e.g., prepare testing data.</p>
-<h1 id="Testing-Framework"><a href="#Testing-Framework" class="headerlink" title="Testing Framework"></a>Testing Framework</h1><p>For JVM based provider, we can use pact junit provider runner to verify it. we can use junit framework, and don’t need to run provider, verify the exact provider code instead of all, use the JUnit setup and tear-down as well as a state annotation, and can also using mocking framework.</p>
-<ul>
-<li><p>Add mockito &amp; pact-jvm-provider-spring to maven pom </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.mockito/mockito-all --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.mockito<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>mockito-all<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.10.19<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/au.com.dius/pact-jvm-provider-spring --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>au.com.dius<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-jvm-provider-spring_2.12<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.24<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Consumer test</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ConsumerTest</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Rule</span></span><br><span class="line">    public PactProviderRuleMk2 mockProvider = <span class="keyword">new</span> PactProviderRuleMk2(<span class="string">"test_provider"</span>, <span class="string">"localhost"</span>, <span class="number">8080</span>, <span class="keyword">this</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Pact</span>(provider=<span class="string">"test_provider"</span>, consumer=<span class="string">"test_consumer"</span>)</span><br><span class="line">	public RequestResponsePact getPersonAge(PactDslWithProvider builder) &#123;</span><br><span class="line">		<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; headers = <span class="keyword">new</span> HashMap&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt;();</span><br><span class="line">		headers.put(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>);</span><br><span class="line">		</span><br><span class="line">		DslPart resbody = <span class="keyword">new</span> PactDslJsonBody()</span><br><span class="line">				.stringType(<span class="string">"name"</span>, <span class="string">"zhangsan"</span>)</span><br><span class="line">				.integerType(<span class="string">"age"</span>, <span class="number">4</span>)</span><br><span class="line">				.asBody();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> builder</span><br><span class="line">				.uponReceiving(<span class="string">"A request for age for person zhangsan"</span>)</span><br><span class="line">				.path(<span class="string">"/person/zhangsan"</span>)</span><br><span class="line">				.method(<span class="string">"GET"</span>)</span><br><span class="line">				.willRespondWith()</span><br><span class="line">				.status(<span class="number">200</span>)</span><br><span class="line">				.headers(headers)</span><br><span class="line">				.body(resbody)</span><br><span class="line">				.toPact();		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Pact</span>(provider=<span class="string">"test_provider"</span>, consumer=<span class="string">"test_consumer"</span>)</span><br><span class="line">	public RequestResponsePact getUser(PactDslWithProvider builder) &#123;</span><br><span class="line">		<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; headers = <span class="keyword">new</span> HashMap&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt;();</span><br><span class="line">		headers.put(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>);</span><br><span class="line">		</span><br><span class="line">		DslPart resbody = <span class="keyword">new</span> PactDslJsonBody()</span><br><span class="line">				.stringType(<span class="string">"id"</span>, <span class="string">"1"</span>)</span><br><span class="line">				.stringType(<span class="string">"name"</span>, <span class="string">"tanghulu"</span>)</span><br><span class="line">				.integerType(<span class="string">"age"</span>, <span class="number">4</span>)</span><br><span class="line">				.asBody();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> builder</span><br><span class="line">				.given(<span class="string">"user 1 exist"</span>)</span><br><span class="line">				.uponReceiving(<span class="string">"A request go get user 1"</span>)</span><br><span class="line">				.path(<span class="string">"/user"</span>)</span><br><span class="line">				.method(<span class="string">"GET"</span>)</span><br><span class="line">				.willRespondWith()</span><br><span class="line">				.status(<span class="number">200</span>)</span><br><span class="line">				.headers(headers)</span><br><span class="line">				.body(resbody)</span><br><span class="line">				.toPact();		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Test</span></span><br><span class="line">	<span class="annotation">@PactVerification</span>(value=<span class="string">"test_provider"</span>, fragment=<span class="string">"getPersonAge"</span>)</span><br><span class="line">	public <span class="keyword">void</span> doTest()&#123;</span><br><span class="line">		Integer age = <span class="keyword">new</span> GetPersonAge(mockProvider.getUrl()).checkAge(<span class="string">"zhangsan"</span>);</span><br><span class="line">		System.out.println(<span class="string">"Test result, age = "</span> + age);</span><br><span class="line">		assertTrue(age &lt;= <span class="number">6</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Test</span></span><br><span class="line">	<span class="annotation">@PactVerification</span>(fragment=<span class="string">"getUser"</span>)</span><br><span class="line">	public <span class="keyword">void</span> getUser()&#123;</span><br><span class="line">		<span class="built_in">String</span> user = <span class="keyword">new</span> GetUser(mockProvider.getUrl()).getUser();</span><br><span class="line">		System.out.println(<span class="string">"Test result, user: "</span> + user);</span><br><span class="line">		assertTrue(user.contains(<span class="string">"tanghulu"</span> ));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Verify provider - state and mock</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@RunWith</span>(RestPactRunner.class) <span class="comment">// Say JUnit to run tests with custom Runner</span></span><br><span class="line"><span class="annotation">@Provider</span>(<span class="string">"test_provider"</span>) <span class="comment">// Set up name of tested provider</span></span><br><span class="line"><span class="annotation">@PactFolder</span>(<span class="string">"../pact-consumer/target/pacts"</span>) <span class="comment">// Point where to find pacts (See also section Pacts source in documentation)</span></span><br><span class="line"><span class="annotation">@VerificationReports</span>(&#123;<span class="string">"console"</span>, <span class="string">"markdown"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VerifyState</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Mock</span></span><br><span class="line">	<span class="keyword">private</span> ProviderService providerService;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@InjectMocks</span></span><br><span class="line">	<span class="keyword">private</span> ProviderController providerController = <span class="keyword">new</span> ProviderController();</span><br><span class="line">	</span><br><span class="line">	 <span class="annotation">@Before</span> <span class="comment">//Method will be run before each test of interaction</span></span><br><span class="line">	 <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	     <span class="comment">//initialize your mocks using your mocking framework</span></span><br><span class="line">		 MockitoAnnotations.initMocks(<span class="keyword">this</span>);</span><br><span class="line">	</span><br><span class="line">		 <span class="comment">//configure the MockMvcTarget with your controller and controller advice</span></span><br><span class="line">	     <span class="keyword">target</span>.setControllers(providerController);</span><br><span class="line">	 &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@State</span>(<span class="string">"user 1 exist"</span>)</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span></span>&#123;</span><br><span class="line">		when(providerService.getUser())</span><br><span class="line">		.thenReturn(<span class="keyword">new</span> ProviderModel(<span class="string">"1"</span>, <span class="string">"tanghulu"</span>, <span class="number">5</span>));</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@TestTarget</span> <span class="comment">// Annotation denotes Target that will be used for tests</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> MockMvcTarget  <span class="keyword">target</span> = <span class="keyword">new</span> MockMvcTarget(); <span class="comment">// Out-of-the-box implementation of Target (for more information take a look at Test Target section)</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/11/18/CDC-Pact-Broker-Basic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/18/CDC-Pact-Broker-Basic/" itemprop="url">CDC - Pact:Broker Basic</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T08:55:39+08:00">
-                2018-11-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CDC/" itemprop="url" rel="index">
-                    <span itemprop="name">CDC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/18/CDC-Pact-Broker-Basic/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/11/18/CDC-Pact-Broker-Basic/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>The <a href="https://github.com/pact-foundation/pact_broker" target="_blank" rel="external">Pact Broker</a> is an application for sharing for consumer driven contracts and verification results. </p>
-<ul>
-<li>The consumer CI build generates the pacts during execution of its isolated tests, and then publishes the generated pacts.</li>
-<li>The provider CI retrieves the pacts, performs the verification locally, and then publishes the verification results back to the broker.</li>
-<li>Consumer and provider CI deployment builds check with the broker before deploying to ensure the application version they are about deploy will be compatible with the versions of the other applications that are already in that environment.</li>
-</ul>
-<p>We can use many approaches to deposite pact files and verification results, i use docker as an example,</p>
-<h1 id="Docker-Setup"><a href="#Docker-Setup" class="headerlink" title="Docker Setup"></a>Docker Setup</h1><p>Get info from <a href="https://github.com/DiUS/pact_broker-docker" target="_blank" rel="external">pact_broker-docker</a>.</p>
-<ol>
-<li>Install docker.</li>
-<li><p>Download <code>docker-compose.yml</code> and modify.</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">version</span>: <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="less"><span class="attribute">services</span>:</span><br><span class="line">  <span class="attribute">postgres</span>:</span><br><span class="line">    <span class="attribute">image</span>: postgres</span><br><span class="line">    <span class="attribute">healthcheck</span>:</span><br><span class="line">      <span class="attribute">test</span>: psql postgres --command <span class="string">"select 1"</span> -U postgres</span><br><span class="line">    <span class="attribute">ports</span>:</span><br><span class="line">      - <span class="string">"5432:5432"</span></span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">POSTGRES_USER</span>: postgres</span><br><span class="line">      <span class="attribute">POSTGRES_PASSWORD</span>: password</span><br><span class="line">      <span class="attribute">POSTGRES_DB</span>: postgres</span><br><span class="line"></span><br><span class="line">  <span class="attribute">broker_app</span>:</span><br><span class="line">    <span class="attribute">image</span>: dius/pact-broker</span><br><span class="line">    <span class="attribute">links</span>:</span><br><span class="line">      - postgres</span><br><span class="line">    # If you remove nginx, enable the following</span><br><span class="line">    <span class="attribute">ports</span>:</span><br><span class="line">      - <span class="string">"80:80"</span></span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">PACT_BROKER_DATABASE_USERNAME</span>: postgres</span><br><span class="line">      <span class="attribute">PACT_BROKER_DATABASE_PASSWORD</span>: password</span><br><span class="line">      <span class="attribute">PACT_BROKER_DATABASE_HOST</span>: postgres</span><br><span class="line">      <span class="attribute">PACT_BROKER_DATABASE_NAME</span>: postgres</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Run <code>docker-compose up</code> command to get a running Pact Broker and a clean Postgres database.</p>
-</li>
-<li>Verify.<br><img src="/images/cdc/pact_broker_docker.jpg" alt=""></li>
-</ol>
-<h1 id="Pact-Broker-Usage"><a href="#Pact-Broker-Usage" class="headerlink" title="Pact Broker Usage"></a>Pact Broker Usage</h1><h2 id="consumer"><a href="#consumer" class="headerlink" title="consumer"></a>consumer</h2><ol>
-<li><p>Add the below configs in consumer pom.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- mvn pact:publish  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>au.com.dius<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-jvm-provider-maven_2.11<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.24<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;pactDirectory&gt;../pacts&lt;/pactDirectory&gt; Defaults to $&#123;project.build.directory&#125;/pacts --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">pactBrokerUrl</span>&gt;</span>http://192.168.220.139:80<span class="tag">&lt;/<span class="title">pactBrokerUrl</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">projectVersion</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="title">projectVersion</span>&gt;</span> <span class="comment">&lt;!-- Defaults to $&#123;project.version&#125; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">trimSnapshot</span>&gt;</span>true<span class="tag">&lt;/<span class="title">trimSnapshot</span>&gt;</span> <span class="comment">&lt;!-- Defaults to false --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">tag</span>&gt;</span>cdc/pact_broker<span class="tag">&lt;/<span class="title">tag</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">tags</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>execute <code>mvn pact:publish</code> to publish the pact files.<br><img src="/images/cdc/pact_broker_publish.jpg" alt=""></p>
-</li>
-</ol>
-<h2 id="provider"><a href="#provider" class="headerlink" title="provider"></a>provider</h2><ol>
-<li><p>Add the below configs in provider pom.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>au.com.dius<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-jvm-provider-maven_2.12<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.24<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">serviceProviders</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- You can define as many as you need, but each must have a unique name --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">serviceProvider</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">name</span>&gt;</span>test_provider<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- All the provider properties are optional, and have sensible defaults (shown below) --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="title">protocol</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">host</span>&gt;</span>localhost<span class="tag">&lt;/<span class="title">host</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="title">port</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">path</span>&gt;</span>/<span class="tag">&lt;/<span class="title">path</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">pactBrokerUrl</span>&gt;</span>http://192.168.220.139:80/<span class="tag">&lt;/<span class="title">pactBrokerUrl</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">serviceProvider</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">serviceProviders</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Execute <code>mvn pact:verify</code></p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">D:\Java\pact\pact-jvm\pact-provider&gt;<span class="keyword">mvn </span>pact:verify</span><br><span class="line">[<span class="preprocessor">INFO</span>] Scanning for projects...</span><br><span class="line">[<span class="preprocessor">INFO</span>]</span><br><span class="line">[<span class="preprocessor">INFO</span>] ----------------------&lt; com.izheyi:pact-provider &gt;----------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] <span class="keyword">Building </span>pact-provider <span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>-SNAPSHOT</span><br><span class="line">[<span class="preprocessor">INFO</span>] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>]</span><br><span class="line">[<span class="preprocessor">INFO</span>] --- pact-jvm-provider-maven_2.<span class="number">12</span>:<span class="number">3</span>.<span class="number">5</span>.<span class="number">24</span>:verify (default-cli) <span class="comment">@ pact-provider ---</span></span><br><span class="line"></span><br><span class="line"><span class="label">Verifying</span> a pact <span class="keyword">between </span>test_consumer <span class="keyword">and </span>test_provider</span><br><span class="line">  [from Pact <span class="keyword">Broker </span>http://<span class="number">192</span>.<span class="number">168</span>.<span class="number">220</span>.<span class="number">139</span>/pacts/provider/test_provider/consumer/test_consumer/version/<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>]</span><br><span class="line">  A request for age for person zhangsan</span><br><span class="line">    returns a response which</span><br><span class="line">      has status <span class="preprocessor">code</span> <span class="number">200</span> (OK)</span><br><span class="line">      includes headers</span><br><span class="line">        <span class="string">"Content-Type"</span> with value <span class="string">"application/json"</span> (OK)</span><br><span class="line">      has a matching <span class="keyword">body </span>(OK)</span><br><span class="line">[WARNING] Skipping publishing of verification results as <span class="keyword">it </span>has <span class="keyword">been </span>disabled (pact.verifier.publishResults is not <span class="string">'true'</span>)</span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] <span class="keyword">BUILD </span>SUCCESS</span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] Total time:  <span class="number">6</span>.<span class="number">702</span> s</span><br><span class="line">[<span class="preprocessor">INFO</span>] Finished at: <span class="number">2018</span>-<span class="number">11</span>-<span class="number">18</span>T13:<span class="number">12</span>:<span class="number">24</span>+<span class="number">08</span>:<span class="number">00</span></span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>We can see there has one <code>WARNING</code>, Publishing of verification results will be skipped unless this property is set to ‘true’, so we need to add the below config.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;pact<span class="class">.verifier</span><span class="class">.publishResults</span>&gt;true&lt;/pact<span class="class">.verifier</span><span class="class">.publishResults</span>&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Execute <code>mvn pact:verify</code> again.<br><img src="/images/cdc/pact_broker_verify.jpg" alt=""></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/11/13/CDC-Pact-入门使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/13/CDC-Pact-入门使用/" itemprop="url">CDC - Pact: Simple Usage</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-13T08:44:48+08:00">
-                2018-11-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CDC/" itemprop="url" rel="index">
-                    <span itemprop="name">CDC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/13/CDC-Pact-入门使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/11/13/CDC-Pact-入门使用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Usage： Java + Sprint Boot + Maven + Junit，please refer for detail：<a href="https://github.com/yongfeiuall/cdc-pact" target="_blank" rel="external">Github - cdc-pact</a></p>
-<h1 id="pact-provider"><a href="#pact-provider" class="headerlink" title="pact-provider"></a>pact-provider</h1><p><strong>Implemetion: return name and age(&lt;6) by passing parameter <code>name</code></strong></p>
-<ul>
-<li><p>Provider Model</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ProviderModel</span> &#123;</span><br><span class="line">	String name;</span><br><span class="line">	Integer age;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ProviderModel</span>(<span class="params">String name, <span class="keyword">int</span> age</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span>(<span class="params">String name</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span>(<span class="params">Integer age</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Provider Control</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProviderController</span> &#123;</span></span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@RequestMapping</span>(<span class="string">"/person/&#123;name&#125;"</span>)</span><br><span class="line">	<span class="keyword">public</span> ProviderModel person(<span class="annotation">@PathVariable</span> String name)&#123;</span><br><span class="line">		<span class="typename">int</span> age = <span class="keyword">new</span> Random().nextInt(<span class="number">6</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ProviderModel(name, age);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="pact-consumer"><a href="#pact-consumer" class="headerlink" title="pact-consumer"></a>pact-consumer</h1><ul>
-<li><p>pom.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">  <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.izheyi<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-consummer<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="title">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">name</span>&gt;</span>pact-consummer<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="title">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">version</span>&gt;</span>4.5.6<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.json/json --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.json<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>json<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">version</span>&gt;</span>20180813<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/au.com.dius/pact-jvm-consumer-junit --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>au.com.dius<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-jvm-consumer-junit_2.12<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.24<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>call provider(test)</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class GetPersonAge&#123;</span><br><span class="line">	<span class="built_in">int</span> port = <span class="number">8080</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> GetPersonAge(<span class="keyword">String</span> url) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> GetPersonAge() &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">		Integer age = <span class="keyword">new</span> GetPersonAge().checkAge(<span class="string">"zhangsan"</span>);</span><br><span class="line">		System.out.<span class="built_in">println</span>(<span class="string">"Age is: "</span> + age);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> Integer checkAge(<span class="keyword">String</span> name) &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">String</span> url = <span class="keyword">String</span>.format(<span class="string">"http://localhost:%d/person/%s"</span>, port, name);</span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"URL is: "</span> + url);</span><br><span class="line">			</span><br><span class="line">			HttpClient httpclient = <span class="keyword">new</span> DefaultHttpClient();</span><br><span class="line">			HttpGet httpget = <span class="keyword">new</span> HttpGet(url);</span><br><span class="line">			<span class="keyword">String</span> json = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">			HttpResponse response = httpclient.execute(httpget);</span><br><span class="line">			HttpEntity entity = response.getEntity();</span><br><span class="line">			<span class="keyword">if</span> (entity != <span class="keyword">null</span>) &#123;</span><br><span class="line">				json = EntityUtils.toString(entity, <span class="string">"UTF-8"</span>).<span class="built_in">trim</span>();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"Json is: "</span>  + json);</span><br><span class="line">			<span class="keyword">JSONObject</span> jsonObject = <span class="keyword">new</span> <span class="keyword">JSONObject</span>(json);</span><br><span class="line">			<span class="keyword">String</span> age = jsonObject.<span class="built_in">get</span>(<span class="string">"age"</span>).toString();</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> Integer(age);</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>consumer pact test</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerTest</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Rule</span></span><br><span class="line">    <span class="keyword">public</span> PactProviderRuleMk2 mockProvider = <span class="keyword">new</span> PactProviderRuleMk2(<span class="string">"test_provider"</span>, <span class="string">"localhost"</span>, <span class="number">8080</span>, <span class="keyword">this</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Pact</span>(provider=<span class="string">"test_provider"</span>, consumer=<span class="string">"test_consumer"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> RequestResponsePact <span class="title">createPact</span><span class="params">(PactDslWithProvider builder)</span> </span>&#123;</span><br><span class="line">		Map&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">		headers.put(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>);</span><br><span class="line">		</span><br><span class="line">		DslPart resbody = <span class="keyword">new</span> PactDslJsonBody()</span><br><span class="line">				.stringType(<span class="string">"name"</span>, <span class="string">"zhangsan"</span>)</span><br><span class="line">				.integerType(<span class="string">"age"</span>, <span class="number">5</span>)</span><br><span class="line">				.asBody();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> builder</span><br><span class="line">				.uponReceiving(<span class="string">"A request for age for person zhangsan"</span>)</span><br><span class="line">				.path(<span class="string">"/person/zhangsan"</span>)</span><br><span class="line">				.method(<span class="string">"GET"</span>)</span><br><span class="line">				.willRespondWith()</span><br><span class="line">				.status(<span class="number">200</span>)</span><br><span class="line">				.headers(headers)</span><br><span class="line">				.body(resbody)</span><br><span class="line">				.toPact();		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="annotation">@Test</span></span><br><span class="line">	<span class="annotation">@PactVerification</span>()</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Integer age = <span class="keyword">new</span> GetPersonAge(mockProvider.getUrl()).checkAge(<span class="string">"zhangsan"</span>);</span><br><span class="line">		System.out.println(<span class="string">"Test result, age = "</span> + age);</span><br><span class="line">		assertTrue(age &lt;= <span class="number">6</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="cdc-process-with-pact"><a href="#cdc-process-with-pact" class="headerlink" title="cdc process with pact"></a>cdc process with pact</h1><ol>
-<li>Run Junit pact test in consumer.</li>
-<li><p>Generate contract file(test_consumer-test_provider.json) to trget automatically.</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">provider</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">name</span>": <span class="value"><span class="string">"test_provider"</span></span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">consumer</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">name</span>": <span class="value"><span class="string">"test_consumer"</span></span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">interactions</span>": <span class="value">[</span><br><span class="line">        &#123;</span><br><span class="line">            "<span class="attribute">description</span>": <span class="value"><span class="string">"A request for age for person zhangsan"</span></span>,</span><br><span class="line">            "<span class="attribute">request</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">method</span>": <span class="value"><span class="string">"GET"</span></span>,</span><br><span class="line">                "<span class="attribute">path</span>": <span class="value"><span class="string">"/person/zhangsan"</span></span><br><span class="line">            </span>&#125;</span>,</span><br><span class="line">            "<span class="attribute">response</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">status</span>": <span class="value"><span class="number">200</span></span>,</span><br><span class="line">                "<span class="attribute">headers</span>": <span class="value">&#123;</span><br><span class="line">                    "<span class="attribute">Content-Type</span>": <span class="value"><span class="string">"application/json"</span></span><br><span class="line">                </span>&#125;</span>,</span><br><span class="line">                "<span class="attribute">body</span>": <span class="value">&#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"zhangsan"</span></span>,</span><br><span class="line">                    "<span class="attribute">age</span>": <span class="value"><span class="number">5</span></span><br><span class="line">                </span>&#125;</span>,</span><br><span class="line">                "<span class="attribute">matchingRules</span>": <span class="value">&#123;</span><br><span class="line">                    "<span class="attribute">body</span>": <span class="value">&#123;</span><br><span class="line">                        "<span class="attribute">$.name</span>": <span class="value">&#123;</span><br><span class="line">                            "<span class="attribute">matchers</span>": <span class="value">[</span><br><span class="line">                                &#123;</span><br><span class="line">                                    "<span class="attribute">match</span>": <span class="value"><span class="string">"type"</span></span><br><span class="line">                                </span>&#125;</span><br><span class="line">                            ]</span>,</span><br><span class="line">                            "<span class="attribute">combine</span>": <span class="value"><span class="string">"AND"</span></span><br><span class="line">                        </span>&#125;</span>,</span><br><span class="line">                        "<span class="attribute">$.age</span>": <span class="value">&#123;</span><br><span class="line">                            "<span class="attribute">matchers</span>": <span class="value">[</span><br><span class="line">                                &#123;</span><br><span class="line">                                    "<span class="attribute">match</span>": <span class="value"><span class="string">"integer"</span></span><br><span class="line">                                </span>&#125;</span><br><span class="line">                            ]</span>,</span><br><span class="line">                            "<span class="attribute">combine</span>": <span class="value"><span class="string">"AND"</span></span><br><span class="line">                        </span>&#125;</span><br><span class="line">                    </span>&#125;</span><br><span class="line">                </span>&#125;</span><br><span class="line">            </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">    ]</span>,</span><br><span class="line">    "<span class="attribute">metadata</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">pactSpecification</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">version</span>": <span class="value"><span class="string">"3.0.0"</span></span><br><span class="line">        </span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">pact-jvm</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">version</span>": <span class="value"><span class="string">"3.5.24"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Add the below in provider pom</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>au.com.dius<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>pact-jvm-provider-maven_2.12<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.5.24<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">serviceProviders</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- You can define as many as you need, but each must have a unique name --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">serviceProvider</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">name</span>&gt;</span>test_provider<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- All the provider properties are optional, and have sensible defaults (shown below) --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="title">protocol</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">host</span>&gt;</span>localhost<span class="tag">&lt;/<span class="title">host</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="title">port</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">path</span>&gt;</span>/<span class="tag">&lt;/<span class="title">path</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">consumers</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- Again, you can define as many consumers for each provider as you need, but each must have a unique name --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">consumer</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="title">name</span>&gt;</span>test_consumer<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">              <span class="comment">&lt;!--  currently supports a file path using pactFile or a URL using pactUrl --&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="title">pactFile</span>&gt;</span>../pact-consumer/target/pacts/test_consumer-test_provider.json<span class="tag">&lt;/<span class="title">pactFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">consumer</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="title">consumers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">serviceProvider</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">serviceProviders</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Start the provider application.</p>
-</li>
-<li>Run <code>mvn pact:verify</code><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">D:\Java\pact\pact-jvm\pact-provider&gt;<span class="keyword">mvn </span>pact:verify</span><br><span class="line">[<span class="preprocessor">INFO</span>] Scanning for projects...</span><br><span class="line">[<span class="preprocessor">INFO</span>]</span><br><span class="line">[<span class="preprocessor">INFO</span>] ----------------------&lt; com.izheyi:pact-provider &gt;----------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] <span class="keyword">Building </span>pact-provider <span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>-SNAPSHOT</span><br><span class="line">[<span class="preprocessor">INFO</span>] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>]</span><br><span class="line">[<span class="preprocessor">INFO</span>] --- pact-jvm-provider-maven_2.<span class="number">12</span>:<span class="number">3</span>.<span class="number">5</span>.<span class="number">24</span>:verify (default-cli) <span class="comment">@ pact-provider ---</span></span><br><span class="line"></span><br><span class="line"><span class="label">Verifying</span> a pact <span class="keyword">between </span>test_consumer <span class="keyword">and </span>test_provider</span><br><span class="line">  [Using File ..\pact-consumer\target\pacts\test_consumer-test_provider.json]</span><br><span class="line">  A request for age for person zhangsan</span><br><span class="line">    returns a response which</span><br><span class="line">      has status <span class="preprocessor">code</span> <span class="number">200</span> (OK)</span><br><span class="line">      includes headers</span><br><span class="line">        <span class="string">"Content-Type"</span> with value <span class="string">"application/json"</span> (OK)</span><br><span class="line">      has a matching <span class="keyword">body </span>(OK)</span><br><span class="line">[WARNING] Skipping publishing of verification results as <span class="keyword">it </span>has <span class="keyword">been </span>disabled (pact.verifier.publishResults is not <span class="string">'true'</span>)</span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] <span class="keyword">BUILD </span>SUCCESS</span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br><span class="line">[<span class="preprocessor">INFO</span>] Total time:  <span class="number">7</span>.<span class="number">577</span> s</span><br><span class="line">[<span class="preprocessor">INFO</span>] Finished at: <span class="number">2018</span>-<span class="number">11</span>-<span class="number">13</span>T09:<span class="number">09</span>:<span class="number">01</span>+<span class="number">08</span>:<span class="number">00</span></span><br><span class="line">[<span class="preprocessor">INFO</span>] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/11/04/CDC-介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/04/CDC-介绍/" itemprop="url">CDC - 介绍及工具</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-04T13:53:03+08:00">
-                2018-11-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CDC/" itemprop="url" rel="index">
-                    <span itemprop="name">CDC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/04/CDC-介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/11/04/CDC-介绍/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>随着Microservices的流行，把系统拆分成一个个服务，服务之间会有很多依赖关系，但是每个之间又是相互独立的。当一个服务修改时，怎么保证其它调用它的服务没有受到影响呢？
-</code></pre><h1 id="CDC"><a href="#CDC" class="headerlink" title="CDC"></a>CDC</h1><p>契约测试 ，又称之为 消费者驱动的契约测试(Consumer-Driven Contracts，简称CDC)，根据 消费者驱动契约 ，我们可以将服务分为消费者端和生产者端，而消费者驱动的契约测试的核心思想在于是从消费者业务实现的角度出发，由消费者自己会定义需要的数据格式以及交互细节，并驱动生成一份契约文件。然后生产者根据契约文件来实现自己的逻辑，并在持续集成环境中验证。</p>
-<ul>
-<li><strong>单元测试</strong>    单元测试针对代码单元（通常是类）的测试，单元测试的价值在于能提供最快的反馈。另外好的单元测试还可以帮助你改善设计，在你的团队掌握TDD的前提下，单元测试能辅助重构，帮助改善代码整洁度。</li>
-<li><strong>API测试</strong>    API测试是针对业务接口进行的测试，主要测内部接口功能实现是否完整，比如说内部逻辑是不是正常，异常处理是不是正确。</li>
-<li><strong>契约测试</strong>    契约测试其实是为了测试服务之间连接或者说接口调用的正确性，为了验证服务提供者的功能是不是真正能够满足消费者的需求。它其实体现了测试前移的思想，把本来要通过集成测试才能验证的工作化作单元测试和接口测试，用更轻量的方式快速进行验证。</li>
-<li><strong>集成测试</strong>    它从用户的角度验证整个功能的正确性，测的是端到端的流程，并且加入用户场景和数据，验证整个过程是不是OK，它的价值业务价值最高，是验证一个完整的流程。</li>
-</ul>
-<h1 id="Pact"><a href="#Pact" class="headerlink" title="Pact"></a>Pact</h1><p><a href="https://docs.pact.io/" target="_blank" rel="external">Pact</a> 提供API支持CDC Testing，在Consumer端提供Mock服务秋模拟Provider并生成Contract信息，在Provider端使用生成的Contract信息来验证Provider的服务。<br>Pact工作流程 <a href="https://docs.pact.io/how_pact_works" target="_blank" rel="external">how pact works</a>：<br><img src="/images/cdc/pact.jpg" alt=""></p>
-<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><ol>
-<li>使用Pact的DSL，定义Mock服务。</li>
-<li>使用Pact的DSL，定义响应内容(包括Headers、Status以及Body等)。</li>
-<li>使用@PactVerification运行单元测试，生成契约文件(可以将其保存在文件系统或者Pact-Broker)。 <h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2></li>
-<li>指定契约文件的存储源(如文件系统或者Pact-Broker)。 </li>
-<li>启动Provider，运行PactVerify(e.g., mvn pact:verify)。 </li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2074,7 +1992,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2096,7 +2014,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -1444,7 +1444,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/02/15/熊猫来了探险/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/14/Jmeter-JSR223使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1463,7 +1463,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/02/15/熊猫来了探险/" itemprop="url">熊猫来了探险</a></h1>
+                <a class="post-title-link" href="/2021/04/14/Jmeter-JSR223使用/" itemprop="url">Jmeter: JSR223使用</a></h1>
         
 
         <div class="post-meta">
@@ -1475,8 +1475,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-15T20:56:28+08:00">
-                2021-02-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-14T08:46:44+08:00">
+                2021-04-14
               </time>
             
 
@@ -1498,8 +1498,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -1517,8 +1517,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/02/15/熊猫来了探险/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/02/15/熊猫来了探险/" itemprop="commentsCount"></span>
+                <a href="/2021/04/14/Jmeter-JSR223使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/14/Jmeter-JSR223使用/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1549,13 +1549,37 @@
       
         
           
-            <p><img src="/images/izheyi/2021/02/01.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/02.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/03.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/04.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/05.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/06.jpg" alt=""></p>
-<p><img src="/images/izheyi/2021/02/07.jpg" alt=""></p>
+            <p>Jmeter经常用BeanShell来实现一些其本身不能处理的任务，但是BeanShell的效率不高，现在可以用JSR223来代替，支持groovy脚本，效率更高。</p>
+<h4 id="常用内置变量"><a href="#常用内置变量" class="headerlink" title="常用内置变量"></a>常用内置变量</h4><ul>
+<li><p><strong>Vars</strong> </p>
+<p>定义变量与调用变量</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vars.<span class="built_in">get</span>(<span class="keyword">String</span> <span class="variable">key</span>)：从jmeter中获得变量值</span><br><span class="line"></span><br><span class="line">vars.put(<span class="keyword">String</span> <span class="variable">key</span>，<span class="keyword">String</span> value)：数据存到jmeter变量中</span><br><span class="line"></span><br><span class="line">vars.putObject(<span class="string">"OBJ1"</span>,<span class="keyword">new</span> <span class="keyword">Object</span>());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Props</strong> </p>
+<p>设置属性与调用属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;__setProperty(test1,property1,)&#125;</span>;</span><br><span class="line">props.put(“<span class="built_in">test</span>2”,“property2”);</span><br><span class="line">String <span class="built_in">test</span>1 =props.get(“<span class="built_in">test</span>1”);</span><br><span class="line">String <span class="built_in">test</span>2 = props.get(“<span class="built_in">test</span>2”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Ctx</strong></p>
+<p>通过它来访问当前线程的上下文</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getVariables</span><span class="params">()</span></span>：获取当前线程的所有变量</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getPreviousResult</span><span class="params">()</span></span> ：获取前一个取样器的结果</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>prev</strong></p>
+<p>获取前面的sample采样的结果</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getResponseDataAsString</span><span class="params">()</span></span>：获取响应信息</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getResponseCode</span><span class="params">()</span></span> ：获取响应code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>log</strong></p>
+<p>打印日志 ，日志会保存在jmeter.log中</p>
+</li>
+</ul>
+<h4 id="运行外部文件"><a href="#运行外部文件" class="headerlink" title="运行外部文件"></a>运行外部文件</h4><ul>
+<li><p>Java</p>
+<p>在JSR223中引入源文件并执行，执行与JAVA本身的方法一致</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source(“<span class="string">F:</span><span class="regexp">/Test/</span>demo1.java”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Jar</p>
+<p>有下边两种方法可以引入jar包，执行与JAVA本身的方法一致<br>1、将jar包放到Jmeter安装目录的\lib\ext目录下<br>2、在测试计划中导入</p>
+</li>
+</ul>
 
           
         
@@ -1604,7 +1628,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1623,7 +1647,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="url">Pytest - 获取用例执行结果(pytest_runtest_makereport)</a></h1>
+                <a class="post-title-link" href="/2021/04/02/Jmeter-常用设置in-properties/" itemprop="url">Jmeter: 常用设置in properties</a></h1>
         
 
         <div class="post-meta">
@@ -1635,8 +1659,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-08T11:26:54+08:00">
-                2020-11-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T14:18:15+08:00">
+                2021-04-02
               </time>
             
 
@@ -1658,8 +1682,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -1677,8 +1701,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="commentsCount"></span>
+                <a href="/2021/04/02/Jmeter-常用设置in-properties/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/02/Jmeter-常用设置in-properties/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1709,177 +1733,199 @@
       
         
           
-            <p>可以通过pytest hook 来实现用例执行结果的统计。</p>
+            <p>在Jmeter里常用的设置：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>建议在user.properties里设置。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/20/Jmeter-命令行运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/20/Jmeter-命令行运行/" itemprop="url">Jmeter: 命令行运行和基本参数使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-20T10:33:21+08:00">
+                2021-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/03/20/Jmeter-命令行运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/20/Jmeter-命令行运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>GUI模式仅用于创建测试计划和调试脚本，真正跑性能测试时候，不要用 GUI 模式，用命令行模式</p>
+<h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>-t，–testfile &lt;参数&gt;<br> 要运行的jmeter test（.jmx）文件</p>
+<p>-l，–logfile &lt;参数&gt;<br> 将样本记录到的文件</p>
+<p>-j，–jmeterlogfile &lt;参数&gt;<br> jmeter运行日志文件（jmeter.log）</p>
+<p>-n，–nongui<br> 在命令行模式下运行JMeter</p>
+<p>-g，–reportonly &lt;参数&gt;<br> 仅从测试结果文件生成报告仪表板</p>
+<p>-e，–reportatendofloadtests<br> 负载测试后生成报告仪表板</p>
+<p>-o，–reportoutputfolder &lt;参数&gt;<br> 报告仪表板的输出文件夹</p>
+<p>==========================================</p>
+<p>-s，–server<br> 运行JMeter服务器</p>
+<p>-H，–proxyHost &lt;参数&gt;<br> 设置供JMeter使用的代理服务器</p>
+<p>-P，–proxyPort &lt;参数&gt;<br> 设置代理服务器端口以供JMeter使用</p>
+<p>-r，-runremote<br> 启动远程服务器（在remote_hosts中定义）</p>
+<p>-R，–remotestart &lt;参数&gt;<br> 启动这些远程服务器（覆盖remote_hosts）</p>
+<p>-X，–remoteexit<br> 测试结束时退出远程服务器（CLI模式）</p>
+<p>==========================================</p>
+<p>-J，–jmeterproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他JMeter属性</p>
+<p>-G，–globalproperty &lt;参数&gt; = &lt;值&gt;<br> 定义全局属性或属性文件（发送到服务器）<br> 例如-Gport = 123<br> 或-Gglobal.properties</p>
+<p>-D，–systemproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他系统属性</p>
+<p>-S，–systemPropertyFile &lt;参数&gt;<br> 其他系统属性文件</p>
+<p>-f，-forceDeleteResultFile<br> 在开始测试之前，强制删除现有结果文件和Web报告文件夹（如果存在）</p>
+<p>-L，–loglevel &lt;参数&gt; = &lt;值&gt;<br> [类别=]级别，例如jorphan = INFO，jmeter.util = DEBUG或com.example.foo = WARN</p>
+<p>-d，–homedir &lt;参数&gt;<br> 要使用的jmeter主目录</p>
+<h4 id="设置命令行参数"><a href="#设置命令行参数" class="headerlink" title="设置命令行参数"></a>设置命令行参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Sep 25, 2021 11:01:36 AM java.util.prefs.WindowsPreferences &#60;init&#62;&#10;WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neok.jmx&#10;Starting standalone test @ Sat Sep 25 11:01:37 CST 2021 (1632538897030)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary =      3 in 00:00:00 =    7.0/s Avg:   101 Min:     1 Max:   277 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:01:37 CST 2021 (1632538897689)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<h4 id="设置属性参数"><a href="#设置属性参数" class="headerlink" title="设置属性参数"></a>设置属性参数</h4><p>为了更好的用命令行跟Jenkins集成， 可以设置以下Jmeter属性：线程数、duration、ramp up-time。</p>
 <ol>
-<li><p>初步实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>, <span class="string">'error'</span>: <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    print(report.nodeid)</span><br><span class="line">    <span class="keyword">if</span> report.when == <span class="string">'setup'</span> <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        CASES[<span class="string">'error'</span>] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> report.outcome == <span class="string">'passed'</span>:</span><br><span class="line">            CASES[<span class="string">'passed'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">            CASES[<span class="string">'failed'</span>] += <span class="number">1</span></span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
-<p>这样有一个问题，当有失败重跑情况时，会把每次重跑都统计一次运行结果，结果会有偏差，不应该包含重跑的结果，因为是同一个Case。</p>
+<li><p>设置用户变量</p>
+<p><img src="/images/jmeter/user_var.jpg" alt=""></p>
 </li>
-<li><p>换个方式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>&#125;</span><br><span class="line">RUN_RESULT = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    <span class="keyword">if</span> (report.when == <span class="string">'setup'</span> <span class="keyword">or</span> report.when == <span class="string">'teardown'</span>) <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = <span class="string">'failed'</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = report.outcome</span><br><span class="line">    print(RUN_RESULT)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    CASES[<span class="string">'total'</span>] = len(RUN_RESULT)</span><br><span class="line">    CASES[<span class="string">'passed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'passed'</span>&#125;)</span><br><span class="line">    CASES[<span class="string">'failed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'failed'</span>&#125;)</span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
+<li><p>更改线程组使用变量</p>
+<p><img src="/images/jmeter/use_var.jpg" alt=""></p>
 </li>
-<li><p>结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'test_demo.py::test_demo01[zhangsan]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[lisi]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[wangwu]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo02'</span>: <span class="string">'passed'</span>&#125;</span><br><span class="line">&#123;<span class="string">'total'</span>: <span class="number">4</span>, <span class="string">'passed'</span>: <span class="number">1</span>, <span class="string">'failed'</span>: <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+<li><p>命令行验证</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -Jthread_number=5 -Jramp_up=2 -Jduration=60 -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neo.jmx&#10;Starting standalone test @ Sat Sep 25 11:30:03 CST 2021 (1632540603981)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary +      1 in 00:00:00 =    2.9/s Avg:   242 Min:   242 Max:   242 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0&#10;summary +   1706 in 00:00:25 =   67.1/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   1707 in 00:00:26 =   66.2/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%)&#10;summary +   2013 in 00:00:32 =   63.7/s Avg:    74 Min:     0 Max:  2139 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   3720 in 00:00:57 =   64.8/s Avg:    72 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;summary +     88 in 00:00:03 =   30.7/s Avg:   243 Min:     0 Max:  2136 Err:     0 (0.00%) Active: 0 Started: 5 Finished: 5&#10;summary =   3808 in 00:01:00 =   63.2/s Avg:    76 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:31:04 CST 2021 (1632540664505)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<p><strong>-J是设置本地jmeter属性；-G是设置server的jmeter属性（只有设置了远程机，开启了远程服务，才需要用到-G）</strong></p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/10/20/Allure-定制详细报告/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/10/20/Allure-定制详细报告/" itemprop="url">allure 定制详细报告</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-20T11:21:19+08:00">
-                2020-10-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/10/20/Allure-定制详细报告/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/10/20/Allure-定制详细报告/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>默认的allure报告不能详细的显示出来脚本执行的步骤，能做到跟Log里一样的每一步操作。</p>
-<p>用<code>@allure.step()</code>装饰器来实现。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@allure.step("Input text &#123;text&#125; in [&#123;element&#125;]")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_text</span><span class="params">(self, element, text)</span>:</span></span><br><span class="line">    <span class="string">"""**Description**:</span><br><span class="line">            Fill text to the page_element located by locator</span><br><span class="line"></span><br><span class="line">    :param element: The locator to locate the page_element.</span><br><span class="line">    :param text: value to set to the page_element</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    ele = self.find_element(element)</span><br><span class="line">    ele.clear()</span><br><span class="line">    ele.send_keys(text)</span><br><span class="line">    logger.info(f<span class="string">'Input [&#123;text&#125;] in &#123;element&#125;'</span>)</span><br></pre></td></tr></table></figure>
-<p>运行结果如下：</p>
-<p><img src="/images/allure/step.jpg" alt=""></p>
 
           
         
@@ -1969,7 +2015,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1991,7 +2037,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

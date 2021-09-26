@@ -305,6 +305,829 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/" itemprop="url">CI/CD - 环境搭建(3) - 集成Artifactory</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-12T12:42:55+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/12/CI-CD-环境搭建-3-集成Artifactory/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>When Github have commit，will trigger Jenkins job to upload artifact to artifactory.</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><p>Artifactory installation and running，please refer: <a href="/2018/05/05/CI-CD-artifacroty/">Artifactory</a></p>
+<h1 id="Config-Artifactory-with-Jenkins"><a href="#Config-Artifactory-with-Jenkins" class="headerlink" title="Config Artifactory with Jenkins"></a>Config Artifactory with Jenkins</h1><p>Jenkins &gt; Manage Jenkins &gt; Configure System<br><img src="/images/CI/jenkins_artifactory.jpg" alt=""></p>
+<h1 id="Update-Pipeline-Script"><a href="#Update-Pipeline-Script" class="headerlink" title="Update Pipeline Script"></a>Update Pipeline Script</h1><p>Add script for uploading Artifact<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">mvnHome</span></span><br><span class="line"></span>   <span class="function"><span class="keyword">def</span> <span class="title">baseArtifactoryUrl</span> =</span> <span class="symbol">'com</span>/izheyi/yongfeiuall'</span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">artifactoryServer</span> =</span> <span class="type">Artifactory</span>.server <span class="symbol">'artifact</span>-jenkins'</span><br><span class="line">   </span><br><span class="line">   stage(<span class="symbol">'Preparatio</span>n') &#123; <span class="comment">// for display purposes</span></span><br><span class="line">      <span class="comment">// Get some code from a GitHub repository</span></span><br><span class="line">      git credentialsId: <span class="symbol">'ee7a726b</span>-e672-<span class="number">424</span>d-<span class="number">9</span>b78-e8015668d55a', url: <span class="symbol">'https</span>:<span class="comment">//github.com/yongfeiuall/artifactory-maven-example.git'</span></span><br><span class="line">      <span class="comment">// Get the Maven tool.</span></span><br><span class="line">      <span class="comment">// ** <span class="doctag">NOTE:</span> This 'M3' Maven tool must be configured</span></span><br><span class="line">      <span class="comment">// **       in the global configuration.           </span></span><br><span class="line">      mvnHome = tool <span class="symbol">'M</span>3'</span><br><span class="line">   &#125;</span><br><span class="line">   stage(<span class="symbol">'Buil</span>d') &#123;</span><br><span class="line">      <span class="comment">// Run the maven build</span></span><br><span class="line">      <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">         sh <span class="string">"'$&#123;mvnHome&#125;/bin/mvn' -Dmaven.test.failure.ignore clean package"</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         bat(/<span class="string">"$&#123;mvnHome&#125;\bin\mvn"</span> -<span class="type">Dmaven</span>.test.failure.ignore clean <span class="keyword">package</span>/)</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    stage(<span class="symbol">'publish</span> release build to artifactory') &#123;</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">uploadSpec</span> =</span> <span class="string">"""</span><br><span class="line">            &#123;</span><br><span class="line">                "files": [&#123;</span><br><span class="line">                    "pattern": "target/*.jar",</span><br><span class="line">                    "target": "libs-release-local/$&#123;baseArtifactoryUrl&#125;/test/"</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">buildInfo</span> =</span> artifactoryServer.upload(uploadSpec)</span><br><span class="line">        artifactoryServer.publishBuildInfo buildInfo</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Verify-Uploadiing"><a href="#Verify-Uploadiing" class="headerlink" title="Verify Uploadiing"></a>Verify Uploadiing</h1><ol>
+<li>Run jenkins job<br><img src="/images/CI/jenkins_artifactory_run.jpg" alt=""></li>
+<li>Check on Artifactory<br><img src="/images/CI/jenkins_artifactory_verify.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/" itemprop="url">CI/CD - 环境搭建(2) - Webhook实现Jenkins Job自动运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-09T16:06:00+08:00">
+                2018-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/09/CI-CD-环境搭建-2-Webhook实现Jenkins-Job自动运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>When Github have commit，will trigger Jenkins job run automatically。</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><p><em>Note: GitHub would not know how to contact “localhost” or 127.0.0.1: what GitHub would consider “local” is not your local machine.</em></p>
+<p>Use Ngrok to expose our local host to the Internet. </p>
+<ol>
+<li>Download <a href="https://ngrok.com/download" target="_blank" rel="external">ngrok</a></li>
+<li>Config and run<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@Automation</span> src]<span class="comment"># ./ngrok authtoken 3rsqkJTsPKW432XeLzEZ2_2uVdSyDqgLsTuSSb7FhaH</span></span><br><span class="line">Authtoken saved <span class="keyword">to</span> configuration <span class="attribute">file</span>: <span class="pi">/root/</span>.ngrok2/ngrok.yml</span><br><span class="line">[root<span class="property">@Automation</span> src]<span class="comment"># ./ngrok http 8080</span></span><br><span class="line"></span><br><span class="line">ngrok <span class="keyword">by</span> <span class="property">@inconshreveable</span>                                                                                                                                                   (Ctrl+C <span class="keyword">to</span> quit)</span><br><span class="line">                                                                                                                                                                                            </span><br><span class="line">Session Status                online                                                                                                                                                        </span><br><span class="line">Account                       yongfeiuall (<span class="attribute">Plan</span>: Free)                                                                                                                                      </span><br><span class="line">Version                       <span class="number">2.2</span>.<span class="number">8</span>                                                                                                                                                         </span><br><span class="line">Region                        United States (us)                                                                                                                                            </span><br><span class="line">Web Interface                 <span class="attribute">http</span>:<span class="pi">//127.0.0.1:4040                                                                                                                                         </span><br><span class="line">Forwarding                    http://</span><span class="number">5a</span>6d5b8a.ngrok.io<span class="function"> -&gt;</span> <span class="attribute">localhost</span>:<span class="number">8080</span>                                                                                                                    </span><br><span class="line">Forwarding                    <span class="attribute">https</span>:<span class="pi">//v.ngrok.io -&gt; localhost:8080                                                                                                                   </span><br><span class="line">                                                                                                                                                                                            </span><br><span class="line">Connections                   ttl     opn     rt1     rt5     p50     p90                                                                                                                   </span><br><span class="line">                              35      0       0.00    0.00    5.37    14.10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Create-a-Personal-Access-Token-in-GitHub"><a href="#Create-a-Personal-Access-Token-in-GitHub" class="headerlink" title="Create a Personal Access Token in GitHub"></a>Create a Personal Access Token in GitHub</h1><p><img src="/images/CI/jenkins_git_addtoken.jpg" alt=""><br>Copy the token<br><img src="/images/CI/jenkins_git_token.jpg" alt=""></p>
+<h1 id="Set-Up-Jenkins-Access-to-GitHub-with-Token"><a href="#Set-Up-Jenkins-Access-to-GitHub-with-Token" class="headerlink" title="Set Up Jenkins Access to GitHub with Token"></a>Set Up Jenkins Access to GitHub with Token</h1><h2 id="Add-Token-to-Jenkins"><a href="#Add-Token-to-Jenkins" class="headerlink" title="Add Token to Jenkins"></a>Add Token to Jenkins</h2><p>Jenkins &gt; Credentials<br><img src="/images/CI/jenkins_credential.jpg" alt=""></p>
+<h2 id="Config-Access-to-Github"><a href="#Config-Access-to-Github" class="headerlink" title="Config Access to Github"></a>Config Access to Github</h2><p>Jenkins &gt; Manage Jenkins &gt; Configure System<br><img src="/images/CI/jenkins_githubserver.jpg" alt=""></p>
+<h1 id="Config-the-Webhook"><a href="#Config-the-Webhook" class="headerlink" title="Config the Webhook"></a>Config the Webhook</h1><p>Jenkins does not automatically configure webhooks after config pipeline, need to run the job the first time.</p>
+<p><em>In order to connect to Github, need to use the below format:<br><code>git credentialsId: &#39;xxxxxxxxxxxxx&#39;, url: &#39;https://github.com/yongfeiuall/artifactory-maven-example.git&#39;</code></em></p>
+<p>Then config this job again and save it without any updating, go to Github to check webhook in Repository setting page.<br><img src="/images/CI/jenkins_git_webhook.jpg" alt=""></p>
+<h1 id="Check-trigger-automatically"><a href="#Check-trigger-automatically" class="headerlink" title="Check trigger automatically"></a>Check trigger automatically</h1><p>Update script and commit to Github, Jenkins job run automatically<br><img src="/images/CI/jenkins_pipeline_trigger.jpg" alt=""></p>
+<p>Download the <code>ArtifactoryJenkins-0.0.1-SNAPSHOT.jar</code> file, and extract source code, build successfully.<br><img src="/images/CI/jenkins_pipeline_trigger_check.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/09/CI-CD-环境搭建-1-Jenkins-Pipeline-Github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/09/CI-CD-环境搭建-1-Jenkins-Pipeline-Github/" itemprop="url">CI/CD - 环境搭建(1) - Jenkins Pipeline + Github </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-09T15:41:54+08:00">
+                2018-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/09/CI-CD-环境搭建-1-Jenkins-Pipeline-Github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/09/CI-CD-环境搭建-1-Jenkins-Pipeline-Github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="实现环境"><a href="#实现环境" class="headerlink" title="实现环境"></a>实现环境</h1><p>通过Jenkins Job从Github获取代码并用Maven Build。</p>
+<p><em>说明： 这里只用了一个Server, 用到的工具都安装在此</em></p>
+<p>Jenkins安运行，请参考<a href="/2018/05/05/CI-CD-jenkins安装/">Jenkins安装</a></p>
+<ol>
+<li><p>在Github创建一个Repository<br><img src="/images/CI/jenkins_git_project.jpg" alt=""><br>代码：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package artifactory;</span><br><span class="line"></span><br><span class="line">public class <span class="type">MavenSample</span> &#123;</span><br><span class="line"></span><br><span class="line">	public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) &#123;</span><br><span class="line">		// <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub</span><br><span class="line">		</span><br><span class="line">		<span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"This for testing artifactory, github and jenkins"</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装/升级Maven，并做以下配置(Global Tool Configuration)<br><img src="/images/CI/jenkins_maven.jpg" alt=""></p>
+</li>
+<li>安装/升级Git，并做以下配置(Global Tool Configuration)<br><img src="/images/CI/jenkins_git.jpg" alt=""></li>
+<li>配置JDK(Global Tool Configuration)<br><img src="/images/CI/jenkins_jdk.jpg" alt=""></li>
+<li><p>创建一个Jenkins Pipeline Job<br><img src="/images/CI/jenkins_pipeline_script.jpg" alt=""></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">mvnHome</span></span><br><span class="line"></span>   stage(<span class="symbol">'Preparatio</span>n') &#123; <span class="comment">// for display purposes</span></span><br><span class="line">      <span class="comment">// Get some code from a GitHub repository</span></span><br><span class="line">      git <span class="symbol">'https</span>:<span class="comment">//www.github.com/yongfeiuall/artifactory-maven-example.git'</span></span><br><span class="line">      <span class="comment">// Get the Maven tool.</span></span><br><span class="line">      <span class="comment">// ** <span class="doctag">NOTE:</span> This 'M3' Maven tool must be configured</span></span><br><span class="line">      <span class="comment">// **       in the global configuration.           </span></span><br><span class="line">      mvnHome = tool <span class="symbol">'M</span>3'</span><br><span class="line">   &#125;</span><br><span class="line">   stage(<span class="symbol">'Buil</span>d') &#123;</span><br><span class="line">      <span class="comment">// Run the maven build</span></span><br><span class="line">      <span class="keyword">if</span> (isUnix()) &#123;</span><br><span class="line">         sh <span class="string">"'$&#123;mvnHome&#125;/bin/mvn' -Dmaven.test.failure.ignore clean package"</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         bat(/<span class="string">"$&#123;mvnHome&#125;\bin\mvn"</span> -<span class="type">Dmaven</span>.test.failure.ignore clean <span class="keyword">package</span>/)</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   stage(<span class="symbol">'Result</span>s') &#123;</span><br><span class="line">      archive <span class="symbol">'target</span><span class="comment">/*.jar'</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行Job<br><img src="/images/CI/jenkins_pipeline.jpg" alt=""></p>
+</li>
+</ol>
+<p>最基本的配置好了，接下来会配置当Github有Commit时Job自动运行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/06/放下手机，去感受生活的真实和生命的美好/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/06/放下手机，去感受生活的真实和生命的美好/" itemprop="url">放下手机，去感受生活的真实和生命的美好</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-06T07:24:32+08:00">
+                2018-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/06/放下手机，去感受生活的真实和生命的美好/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/06/放下手机，去感受生活的真实和生命的美好/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有感于最近花太多时间在手机上，现在的人对于手机的依赖是不是跟之前的鸦片一样？</p>
+<p>我们生在这个瞬息万变的时代，科技的创新和发展，作为载体，特别是手机，给我们的工作和生活带来了很多便利，也让我们的生活节奏越来越快。因为快，特别是在大城市，我们模糊了生活和工作的界线，我们会焦虑，就会不断的去学习新知识，了解新科技，生怕自己被这个时代落下。</p>
+<p>见到过开车玩手机的，吃饭之前不让TA先拍个照都感觉对不起TA，甚至在地铁上的劝导口号都成了别看手机，下来再看。不管走到哪里，放眼望去，基本都是低头族，手机俨然成了生活的必需品。</p>
+<p>不要拿手机和Pad去哄孩子，其实大家都知道手机的危害，更不要沉迷于手机让孩子觉得手机比她重要，有太多的案例由于家长玩手机而造成不可挽回的悲剧。请放下手机，全身心的去陪伴孩子，有时候真的感觉到孩子在某一瞬间就长大了，你现在不想陪她，等你想陪她的时候，晚了。</p>
+<p>请放下手机，它不是你生活的唯一。去看看这个世界，去拥抱大自然，多一些与人的交流，感受一下生活的真实和生命的美好。</p>
+<p>科技的发展对于我们，我们的下一代，带来了便利，但是对我们的上一代，有时候看起来是有点残酷的。</p>
+<p>父母对新技术的拒绝和不知所措，不会用手机微信和网络支付，甚至不会连Wifi，我们应该理解，在他们那个年代技术和知识没有爆炸增长，他们过着甚至可以一眼看到头的生活。我们应该给予他们耐心，就像网上流传的手绘微信使用说明，家里电脑桌面上特制的图标和文字。在快速发展的技术面前我们是那么渺小，不能够带着所有人一起赶上这个时代，但不管技术发展多快多好，在家人和亲情面前它才是那渺小的一方。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/05/CI-CD-jenkins安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/05/CI-CD-jenkins安装/" itemprop="url">CI/CD - jenkins安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T15:48:55+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/05/CI-CD-jenkins安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/05/CI-CD-jenkins安装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Jenkins 是一款流行的开源持续集成（Continuous Integration）工具，广泛用于项目开发，具有自动化构建、测试和部署等功能。</p>
+<p>可以.war的方式来运行Jenkins</p>
+<ol>
+<li>从<a href="https://jenkins.io/download/" target="_blank" rel="external">Jenkins</a>下载jenkins.war.</li>
+<li>在目录下运行：<code>java -jar jenkens.war</code></li>
+</ol>
+<p>启动后会有这个错：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Upgrading Jenkins. Failed to update the default Update Site <span class="string">'default'</span>. Plugin upgrades may fail.</span><br><span class="line">javax<span class="class">.net</span><span class="class">.ssl</span><span class="class">.SSLHandshakeException</span>: sun<span class="class">.security</span><span class="class">.validator</span><span class="class">.ValidatorException</span>: PKIX path building failed: sun<span class="class">.security</span><span class="class">.provider</span><span class="class">.certpath</span><span class="class">.SunCertPathBuilderException</span>: unable to find valid certification path to requested target</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.Alerts</span><span class="class">.getSSLException</span>(Alerts<span class="class">.java</span>:<span class="number">192</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.SSLSocketImpl</span><span class="class">.fatal</span>(SSLSocketImpl<span class="class">.java</span>:<span class="number">1917</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.Handshaker</span><span class="class">.fatalSE</span>(Handshaker<span class="class">.java</span>:<span class="number">301</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.Handshaker</span><span class="class">.fatalSE</span>(Handshaker<span class="class">.java</span>:<span class="number">295</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.ClientHandshaker</span><span class="class">.serverCertificate</span>(ClientHandshaker<span class="class">.java</span>:<span class="number">1369</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.ClientHandshaker</span><span class="class">.processMessage</span>(ClientHandshaker<span class="class">.java</span>:<span class="number">156</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.Handshaker</span><span class="class">.processLoop</span>(Handshaker<span class="class">.java</span>:<span class="number">925</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.Handshaker</span><span class="class">.process_record</span>(Handshaker<span class="class">.java</span>:<span class="number">860</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.SSLSocketImpl</span><span class="class">.readRecord</span>(SSLSocketImpl<span class="class">.java</span>:<span class="number">1043</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.SSLSocketImpl</span><span class="class">.performInitialHandshake</span>(SSLSocketImpl<span class="class">.java</span>:<span class="number">1343</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.SSLSocketImpl</span><span class="class">.startHandshake</span>(SSLSocketImpl<span class="class">.java</span>:<span class="number">1371</span>)</span><br><span class="line">	at sun<span class="class">.security</span><span class="class">.ssl</span><span class="class">.SSLSocketImpl</span><span class="class">.startHandshake</span>(SSLSocketImpl<span class="class">.java</span>:<span class="number">1355</span>)</span><br><span class="line">	at sun<span class="class">.net</span><span class="class">.www</span><span class="class">.protocol</span><span class="class">.https</span><span class="class">.HttpsClient</span><span class="class">.afterConnect</span>(HttpsClient<span class="class">.java</span>:<span class="number">563</span>)</span><br><span class="line">	at sun<span class="class">.net</span><span class="class">.www</span><span class="class">.protocol</span><span class="class">.https</span><span class="class">.AbstractDelegateHttpsURLConnection</span><span class="class">.connect</span>(AbstractDelegateHttpsURLConnection<span class="class">.java</span>:<span class="number">185</span>)</span><br><span class="line">	at sun<span class="class">.net</span><span class="class">.www</span><span class="class">.protocol</span><span class="class">.http</span><span class="class">.HttpURLConnection</span><span class="class">.getInputStream0</span>(HttpURLConnection<span class="class">.java</span>:<span class="number">1511</span>)</span><br><span class="line">	at sun<span class="class">.net</span><span class="class">.www</span><span class="class">.protocol</span><span class="class">.http</span><span class="class">.HttpURLConnection</span><span class="class">.getInputStream</span>(HttpURLConnection<span class="class">.java</span>:<span class="number">14</span></span><br></pre></td></tr></table></figure></p>
+<p>不能够安装Plugin。</p>
+<p>解决方法：<br>把HTTPS换成HTTP(/root/.jenkins/hudson.model.UpdateCenter.xml)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version='1.0' encoding='UTF-8'?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">sites</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">site</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">id</span>&gt;</span>default<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">url</span>&gt;</span>https://updates.jenkins.io/update-center.json<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">site</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">sites</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/05/CI-CD-artifacroty/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1200,862 +2023,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-Deploy-Servers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/Terraform-Deploy-Servers/" itemprop="url">Terraform - Deploy Server - Single Server</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:57:02+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/Terraform-Deploy-Servers/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-Deploy-Servers/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>做一些简单的联系，Deploy一些不同的Server。</p>
-<h1 id="Pre-condition"><a href="#Pre-condition" class="headerlink" title="Pre-condition"></a>Pre-condition</h1><p>为了让Terraform和AWS工作，必须把AWS User的AWS_ACCESS_KEY_ID和AWS_SECRET_ACCESS_KEY加到环境变量。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">set</span> AWS_ACCESS_KEY_ID=(your <span class="keyword">access</span> <span class="keyword">key</span> <span class="keyword">id</span>)</span><br><span class="line"><span class="keyword">set</span> AWS_SECRET_ACCESS_KEY=(your secret <span class="keyword">access</span> <span class="keyword">key</span>)</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Single-Server"><a href="#Single-Server" class="headerlink" title="Single Server"></a>Single Server</h1><ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple single server"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/singleserver.jpg" alt=""></li>
-</ol>
-<h1 id="Single-Web-Server"><a href="#Single-Web-Server" class="headerlink" title="Single Web Server"></a>Single Web Server</h1><ol>
-<li>创建Config文件<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; single web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">80</span></span><br><span class="line">		to_port     = <span class="number">80</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>说明：</p>
-<ul>
-<li>AWS默认不允许任何Incoming和Outcoming，我们要建一个Security Group（要同时有Inbound和Outbound）</li>
-<li>把SG要添加到EC2上，用到SG的ID,Terraform里，用<code>&quot;${TYPE.NAME.ATTRIBUTE}&quot;</code>语法来引用其他Resources的Attribute</li>
-<li>The &lt;&lt;-EOF and EOF are allows you to create multiline strings without having to insert newline characters all over the place.</li>
-</ul>
-<ol>
-<li>执行命令<code>terraform plan</code>，<code>terraform apply</code></li>
-<li>验证成功<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yongfeiuall<span class="comment">@automation:~$ curl http://13.113.195.209</span></span><br><span class="line"><span class="variable">&lt;html&gt;</span><span class="variable">&lt;h1&gt;</span> single web server from terraform <span class="variable">&lt;/h1&gt;</span><span class="variable">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>用Browser打开，可以看到。</p>
-<h1 id="Configurable-Web-Server"><a href="#Configurable-Web-Server" class="headerlink" title="Configurable Web Server"></a>Configurable Web Server</h1><p>为了更好的管理，Terraform允许定义Input变量：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">variable</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="preprocessor">[</span>CONFIG <span class="attribute">...</span><span class="preprocessor">]</span><span class="markup"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>The body of the variable declaration can contain three parameters, all of them<br>optional:</p>
-<ul>
-<li><strong>description</strong><br>Use this parameter to document how a variable is used. </li>
-<li><strong>default</strong><br>There are a number of ways to provide a value for the variable.</li>
-<li><strong>type</strong><br>Must be one of “string”, “list”, or “map”.<br>E.g.,<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">variable <span class="string">"list_example"</span> &#123;</span><br><span class="line">description = <span class="string">"An example of a list in Terraform"</span></span><br><span class="line">type = <span class="string">"list"</span></span><br><span class="line"><span class="keyword">default</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>用下面的方式来读取变量<code>&quot;${var.VARIABLE_NAME}&quot;</code>。</p>
-<p>同时，Terraform还允许定义Output变量：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="title">value</span> = VALUE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以返回创建Instance后你想获得的一些属性，例如：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.example.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"server_port"</span> &#123;</span><br><span class="line">	<span class="title">description</span> = <span class="string">"The port the server will use for HTTP requests"</span></span><br><span class="line">	default = <span class="number">80</span></span><br><span class="line">&#125;</span><br><span class="line">output <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.yongfeiuall.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">provider <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"configurable web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; configurable web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/configwebserver.jpg" alt=""></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/Terraform-基础/" itemprop="url">Terraform - 基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:08:22+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/Terraform-基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里我们基于前面学习的AWS进行学习。</p>
-<p>Terraform 是一个 IT 基础架构自动化编排工具，IaaS, 基础架构即代码。具体的说就是可以用代码来管理维护IT资源。并且在真正运行之前可以看到执行计划。由于状态保存到文件中，因此能够离线方式查看资源情况。</p>
-<p>可以去官网查看更多详细信息：<a href="https://www.terraform.io/" target="_blank" rel="external">Terraform</a></p>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>下载安装包<a href="https://www.terraform.io/downloads.html" target="_blank" rel="external">Here</a>，解压压缩包，为了更好的应用，把它添加环境变量PATH。</p>
-<p>打开命令行，验证能用：<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;terraform --version</span><br><span class="line">Terraform v0.11.7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="HashiCorp-Configuration-Language-HCL"><a href="#HashiCorp-Configuration-Language-HCL" class="headerlink" title="HashiCorp Configuration Language (HCL)"></a>HashiCorp Configuration Language (HCL)</h1><p>Terraform用HCL来编写，并保存在后缀有.tf的文件。</p>
-<h2 id="provider"><a href="#provider" class="headerlink" title="provider"></a>provider</h2><p>在main.tf文件中<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line"><span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>用AWS做为Provider。</li>
-<li>部署你的infrastructure到US-EAST-1 Region。</li>
-</ul>
-<h2 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h2><p>对每一种Provider，都有很多不同的Resources进行管理。<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource <span class="string">"PROVIDER_TYPE"</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="string">[CONFIG ...]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>PROVIDER</strong> is the name of a provider</li>
-<li><strong>TYPE</strong> is the type of resources to create in that provider</li>
-<li><strong>NAME</strong> is an identifier you can use throughout the Terraform code to refer to this resource</li>
-<li><strong>CONFIG</strong> consists of one or more configuration parameters that are specific to that resource<br>E.g.,<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">resource</span> <span class="string">"aws_instance"</span> <span class="string">"example"</span> &#123;</span><br><span class="line"><span class="title">ami</span> = <span class="string">"ami-40d28157"</span></span><br><span class="line">instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><p>命令行进入到main.tf的目录执行 Terraform Command。</p>
-<h2 id="terrafrom-plan"><a href="#terrafrom-plan" class="headerlink" title="terrafrom plan"></a>terrafrom plan</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; terraform plan</span><br><span class="line">Refreshing Terraform <span class="keyword">state</span> in-memory prior <span class="keyword">to</span> plan...</span><br><span class="line">(...)</span><br><span class="line">+ aws_instance.example</span><br><span class="line">ami: <span class="string">"ami-40dddded"</span></span><br><span class="line">(...)</span><br></pre></td></tr></table></figure>
-<p>The plan command lets you see what Terraform will do before actually making<br>any changes。</p>
-<ul>
-<li>resources with a plus sign (+) are going to be created</li>
-<li>resources with a minus sign (–) are going to be deleted</li>
-<li>resources with a tilde sign (~) are going to be modified.<h2 id="terraform-apply"><a href="#terraform-apply" class="headerlink" title="terraform apply"></a>terraform apply</h2>这才是真正执行命令，去AWS上进行相应的操作。<h2 id="terraform-graph"><a href="#terraform-graph" class="headerlink" title="terraform graph"></a>terraform graph</h2>To show the dependency graph</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/AWS-VPC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/AWS-VPC/" itemprop="url">AWS - VPC</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T13:36:34+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/AWS-VPC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/AWS-VPC/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Amazon Virtual Private Cloud (Amazon VPC) 允许您在 AWS 云中预配置出一个采用逻辑隔离的部分，在这个部分中，您可以在自己定义的虚拟网络中启动 AWS 资源。</p>
-<p>VPC允许用户在一个隔离的虚拟网络中提供计算资源，设定局域网，用户可以简便的由自己选择对外开放什么服务，也可以为资料库或较高保安要求的档案设定网络隔离，以虚拟的方式设定私有云中的的网络和系统架构，模拟以单个用户为单位的数据中心。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/22/一线城市：Leave Or Not/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/22/一线城市：Leave Or Not/" itemprop="url">或许你要逃离的远方，并不是你想要的生活</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T10:05:44+08:00">
-                2018-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/22/一线城市：Leave Or Not/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/22/一线城市：Leave Or Not/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从过完年，莫名的就感到好累，每天都像一个陀螺一样不停的转，有点迷茫，再加上抢人大战，有个想法就时不时的在脑海里游出来，为了孩子，为了家庭，到底是留下还是离开会更好一些。那就索性把它放出来说道说道。</p>
-<p>一心想在一线城市发展，因为大城市的机会多，你当初来这里或许也是逼不得已的。大城市有很好的包容性，你哭你笑，你成功还是失意，你可以在规则内做你想做的事情而不必在意别人的目光，你可以按照自己的意愿过你自己想要的生活。</p>
-<p>但其实大城市也是无情的，高昂的房价，让人麻木的快节奏，它不会在乎你的死活，你走还是留，它一如既往。特别是奇葩的户籍制度将我们划分了“三六九等”，福利，养老，医疗，教育…所有的东西都跟户籍挂钩，你没有户籍，就算发展的再好，有房有车，你是所谓的中产，也会没有安全感，归属感。而在大城市你能获得户籍的机会也只能呵呵，尽管现在也开始有了积分落户。</p>
-<p>一线城市容不下肉身，三四线放不下灵魂。老家是基本回不去了，尽管那是你的户籍所在地，尽管你的亲情和记忆在那里，但世俗的眼光，至上的关系，格格不入的思想，会让你感到无力和失落，甚至是孤独。</p>
-<p>现在二线城市抢人的节奏真不敢想象，有段子说，你出西安车站跟警察问路，人直接问你什么学历，满足条件，先落个户吧。几个月就进了二十几万人，人是来了，后续的基础设施能跟上吗？人来了直接导致的就是房价上涨，你去了还能够买的起吗？还有就业，教育，医疗，等等等等。</p>
-<p>社会变化再快，政策再诱惑，这个时候更应该静下心来思考和衡量，什么才是自己真正想要的生活，不要到头来只是从大城市的焦虑转变成非一线的焦虑。本质上讲没有选择是完美的，做出任何选择势必会放弃一些其他的东西。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/22/AWS-Route-53/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/22/AWS-Route-53/" itemprop="url">AWS - Route 53</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T08:48:32+08:00">
-                2018-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/22/AWS-Route-53/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/22/AWS-Route-53/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>DNS全称为Domain Name System，即域名系统，其作用就是将我们经常使用的“网址”解析为IP地址。</p>
-<p>Amazon Route 53 是一种可用性高、可扩展性强的云域名系统 (DNS) Web 服务。</p>
-<p>域名与IP之间的对应关系，称为”记录”（record）。要创建记录，需要先选择一个路由策略，它决定了 Amazon Route 53 响应查询的方式：</p>
-<ul>
-<li><strong>Simple</strong><br>就是一般的，跟其他的DNS没差别。用于为您的域执行给定功能的单一资源。</li>
-<li><strong>Weighted</strong><br>用于按照您指定的比例将流量路由到多个资源。比如：<br>有两个IP，第一个Weight=10，第二个Weight=5，那么第一个IP就获得10/(10+5)=2/3的流量。</li>
-<li><strong>Latency</strong><br>就是把请求发到反应最快的那个服务中心。如果您的应用程序托管在多个 Amazon EC2 区域中，您可以通过从延迟最低的 Amazon EC2 区域处理用户的请求来帮助用户提高性能。</li>
-<li><strong>Failover</strong><br>允许您将流量路由到某个资源 (如果该资源正常) 或路由到其他资源 (如果第一个资源不正常)。</li>
-<li><strong>Geolocation</strong><br>根据用户的位置来路由流量。</li>
-<li><strong>Multivalue answer</strong><br>让 Route 53 用随机选择的正常记录 (最多八条) 响应 DNS 查询。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2110,7 +2077,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">355</span>
+                  <span class="site-state-item-count">360</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2132,7 +2099,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
