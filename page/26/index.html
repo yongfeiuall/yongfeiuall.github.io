@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/17/Git自定义-忽略指定文件/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Java线程状态及分析工具/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/17/Git自定义-忽略指定文件/" itemprop="url">Git自定义-忽略指定文件</a></h1>
+                <a class="post-title-link" href="/2015/12/18/Java线程状态及分析工具/" itemprop="url">Java线程状态及监控工具</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-17T12:50:26+08:00">
-                2015-11-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T07:32:08+08:00">
+                2015-12-18
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/11/17/Git自定义-忽略指定文件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/17/Git自定义-忽略指定文件/" itemprop="commentsCount"></span>
+                <a href="/2015/12/18/Java线程状态及分析工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Java线程状态及分析工具/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -409,22 +409,39 @@
 
       
         
-          
-            <p>一般我们总会有些文件无需纳入Git的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。我们可以创建一个名为 .gitignore 的文件，列出要忽略的文件模式。</p>
-<h1 id="文件-gitignore的格式规范"><a href="#文件-gitignore的格式规范" class="headerlink" title="文件.gitignore的格式规范"></a>文件.gitignore的格式规范</h1><ul>
-<li>所有空行或者以注释符号 ＃ 开头的行都会被 Git 忽略。</li>
-<li>可以使用标准的 glob 模式匹配。</li>
-<li>匹配模式最后跟反斜杠（/）说明要忽略的是目录。</li>
-<li>要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。</li>
+          <h1 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h1><p>在监控的过程中，要弄明白下边这6种状态(我们主要关注分析的：Runnable, Blocked, Waiting)：</p>
+<ol>
+<li>NEW<br>　 当线程对象对创建后，即进入了新建状态</li>
+<li>RUNNABLE<br>　 当调用线程对象的start()方法，线程即进入就绪状态。正在 Java 虚拟机中执行的线程处于这种状态。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</li>
+<li>BLOCKED<br>　 处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：<ul>
+<li>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</li>
+<li>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</li>
+<li>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</li>
 </ul>
-<h1 id="忽略文件的原则"><a href="#忽略文件的原则" class="headerlink" title="忽略文件的原则"></a>忽略文件的原则</h1><ul>
-<li>忽略操作系统自动生成的文件，比如缩略图等。</li>
-<li>忽略编译生成的中间文件、可执行文件等，比如Java编译产生的.class文件。</li>
-<li>忽略带有敏感信息的配置文件，比如存放口令的配置文件。</li>
+</li>
+<li>WAITING<br>　 无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。某一线程因为调用下列方法之一而处于等待状态：<ul>
+<li>不带超时值的 Object.wait</li>
+<li>不带超时值的 Thread.join</li>
+<li>LockSupport.park</li>
 </ul>
-<p>Note: 所有配置文件请参见：<a href="https://github.com/github/gitignore" target="_blank" rel="external">https://github.com/github/gitignore</a></p>
-
-          
+</li>
+<li>TIMED_WAITING<br>　 具有指定等待时间的某一等待线程的线程状态。某一线程因为调用以下带有指定正等待时间的方法之一而处于定时等待状态：<ul>
+<li>Thread.sleep</li>
+<li>带有超时值的 Object.wait</li>
+<li>带有超时值的 Thread.join</li>
+<li>LockSupport.parkNanos</li>
+<li>LockSupport.parkUntil</li>
+</ul>
+</li>
+<li>TERMINATED<br>　　已终止线程的线程状态。线程已经结束执行。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/18/Java线程状态及分析工具/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -471,7 +488,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/17/Git自定义-别名/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/15/Java执行机制过程和JVM入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -490,7 +507,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/17/Git自定义-别名/" itemprop="url">Git自定义-别名</a></h1>
+                <a class="post-title-link" href="/2015/12/15/Java执行机制过程和JVM入门/" itemprop="url">Java运行环境、执行过程和JVM入门</a></h1>
         
 
         <div class="post-meta">
@@ -502,8 +519,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-17T11:15:35+08:00">
-                2015-11-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-15T08:55:58+08:00">
+                2015-12-15
               </time>
             
 
@@ -525,8 +542,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -544,8 +561,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/11/17/Git自定义-别名/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/17/Git自定义-别名/" itemprop="commentsCount"></span>
+                <a href="/2015/12/15/Java执行机制过程和JVM入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/15/Java执行机制过程和JVM入门/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -575,709 +592,23 @@
 
       
         
-          
-            <p>有一个小技巧可以使你的Git体验更简单、容易、熟悉：别名。Git并不会在你输入部分命令时自动推断出你想要的命令。 如果不想每次都输入完整的Git命令，可以通过<code>git config</code>文件来轻松地为每一个命令设置一个别名。<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="preprocessor">global</span> <span class="preprocessor">alias</span>.co checkout</span><br><span class="line">$ git config --<span class="preprocessor">global</span> <span class="preprocessor">alias</span>.<span class="keyword">br </span><span class="keyword">branch</span><br><span class="line"></span>$ git config --<span class="preprocessor">global</span> <span class="preprocessor">alias</span>.ci commit</span><br><span class="line">$ git config --<span class="preprocessor">global</span> <span class="preprocessor">alias</span>.st status</span><br></pre></td></tr></table></figure></p>
-<p>以后就可以这么来用: <code>git st</code> rather than <code>sit status</code>。</p>
-<p>有时候这种别名会非常有用和方便。例如，为了解决取消暂存文件的易用性问题，可以向 Git 中添加你自己的取消暂存别名：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git config --global <span class="keyword">alias</span>.unstage <span class="string">'reset HEAD --'</span></span><br></pre></td></tr></table></figure></p>
-<p>这会使下面的两个命令等价：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git unstage fileA</span><br><span class="line">$ git <span class="operator"><span class="keyword">reset</span> <span class="keyword">HEAD</span> <span class="comment">-- fileA</span></span></span><br></pre></td></tr></table></figure></p>
-<p>通常也会添加一个 last 命令，像这样：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git config --global <span class="keyword">alias</span>.last <span class="string">'log -1 HEAD'</span></span><br></pre></td></tr></table></figure></p>
-<p>这样，可以轻松地看到最后一次提交：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git last</span><br><span class="line">commit <span class="number">40</span>cddef63a739782e17e9f3da7ece29b9ec14a94</span><br><span class="line">Author: yongfei.hu &lt;huyongfei@huyongfei-pc.beyondsoft.com&gt;</span><br><span class="line">Date:   Tue Nov <span class="number">17</span> <span class="number">10</span>:<span class="number">21</span>:<span class="number">02</span> <span class="number">2015</span> +<span class="number">0800</span></span><br><span class="line"></span><br><span class="line">    <span class="number">3</span>rd commit</span><br><span class="line"></span><br><span class="line">commit adab21f28df71ab3850882fdad7f4c649fa79366</span><br><span class="line">Author: yongfei.hu &lt;huyongfei@huyongfei-pc.beyondsoft.com&gt;</span><br><span class="line">Date:   Tue Nov <span class="number">17</span> <span class="number">10</span>:<span class="number">20</span>:<span class="number">42</span> <span class="number">2015</span> +<span class="number">0800</span></span><br><span class="line"></span><br><span class="line">    <span class="number">2</span>nd commit</span><br></pre></td></tr></table></figure></p>
-<p><strong>Notes:</strong> 配置Git的时候，加上–global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/15/自动化测试的一些思考/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/15/自动化测试的一些思考/" itemprop="url">本阶段自动化测试的一些思考</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-15T07:16:12+08:00">
-                2015-11-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/15/自动化测试的一些思考/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/15/自动化测试的一些思考/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>算是对目前项目的一个工作总结吧。</p>
-<h1 id="现阶段总结"><a href="#现阶段总结" class="headerlink" title="现阶段总结"></a>现阶段总结</h1><p>现在的项目，从框架的设计到现在的维护，已经接近3年的时间了。<br>团队主要分布于中国（北京和西安），美国和印度。我们是专职的自动化测试团队，做自动化的和做手工测试的严格分开，相对独立。手工测试熟悉业务逻辑，主要设计case。自动化测试主要把manual team提供的自动化case设计自动化脚本，并运行维护。  </p>
-<p>以下只是对本阶段的思考，项目主要是做GUI自动化测试，自动化team在实际的工作中，遇到的一些问题：</p>
+          <h1 id="Java运行过程"><a href="#Java运行过程" class="headerlink" title="Java运行过程"></a>Java运行过程</h1><p><img src="/images/java/java_run.jpg" alt=""></p>
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p>概念性的东西也不多说了，JVM的体系结构如下：<br><img src="/images/java/jvm.jpg" alt=""><br>在系统监控和分析中，我们主要关心的是堆和栈</p>
 <ul>
-<li>不懂业务逻辑，写脚本的过程中或出现问题不能确定是不是bug，要和manual team确认。<br><strong>思考：</strong>automation team要不断学习业务逻辑，并且能站在用户角度考虑问题，设计合理的自动化用例和脚本。</li>
-<li>需求改变，case缺乏维护，自动化的case和脚本维护比较难。<br><strong>思考：</strong>需要经常和manual team沟通，定期更新case。</li>
-<li>自动化测试用例，按照手工Team给的用例来设计脚本，导致了功能检查点单一，脚本冗余，执行时间长等问题。<br><strong>思考：</strong> 自动化的测试用例，应该与传统的手工测试用例区分开来，E.g.,基于流程的自动化用例设计。</li>
-<li>框架的规范化，分布式团队，初期的时候还有规范，后来人员的扩充，造成了对象库，脚本等的冗余，命名的不统一等等。<br><strong>思考：</strong> 对规范进行重新思考和设计，要严格遵循，由团队Lead进行监督和Review。</li>
-<li>框架设计的过程中，也有一些小问题的存在，这里不做说明。<br><strong>思考：</strong> 重新考虑分层，对资源的引用，CI等等。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/15/自动化测试的一些思考/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/14/中关村游荡/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/14/中关村游荡/" itemprop="url">爷俩中关村游荡</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-14T18:37:35+08:00">
-                2015-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/14/中关村游荡/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/14/中关村游荡/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天我们爷俩一块去看衣服。。。爸爸一个没买，闺女买了羽绒服和背心。<br><img src="/images/izheyi/2015/11_14_0.jpg" alt="爸爸试衣服"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/14/中关村游荡/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/12/Git仓库-标签管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/12/Git仓库-标签管理/" itemprop="url">Git仓库-标签管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T14:20:49+08:00">
-                2015-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/12/Git仓库-标签管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/12/Git仓库-标签管理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>允许有意义的名称到一个特定的版本库中的标签操作。</p>
-<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><ol>
-<li>创建新文件“label.txt”，并提交三个版本。</li>
-<li>查看状态<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">commit <span class="number">40</span>cddef63a739782e17e9f3da7ece29b9ec14a94</span><br><span class="line">Author: yongfei.hu &lt;yongfeiuall@<span class="number">163.</span>com&gt;</span><br><span class="line">Date:   Tue Nov <span class="number">17</span> <span class="number">10</span>:<span class="number">21</span>:<span class="number">02</span> <span class="number">2015</span> +<span class="number">0800</span></span><br><span class="line"></span><br><span class="line">    <span class="number">3</span>rd commit</span><br><span class="line"></span><br><span class="line">commit adab21f28df71ab3850882fdad7f4c649fa79366</span><br><span class="line">Author: yongfei.hu &lt;yongfeiuall@<span class="number">163.</span>com&gt;</span><br><span class="line">Date:   Tue Nov <span class="number">17</span> <span class="number">10</span>:<span class="number">20</span>:<span class="number">42</span> <span class="number">2015</span> +<span class="number">0800</span></span><br><span class="line"></span><br><span class="line">    <span class="number">2</span>nd commit</span><br><span class="line"></span><br><span class="line">commit eada2115194c8012be0db423d825d550f7102e09</span><br><span class="line">Author: yongfei.hu &lt;yongfeiuall@<span class="number">163.</span>com&gt;</span><br><span class="line">Date:   Tue Nov <span class="number">17</span> <span class="number">10</span>:<span class="number">20</span>:<span class="number">05</span> <span class="number">2015</span> +<span class="number">0800</span></span><br><span class="line"></span><br><span class="line">    <span class="number">1</span>st commit</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h1><p>默认标签是打在最新提交的commit上的。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/12/Git仓库-标签管理/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/12/Git分支-团队协作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/12/Git分支-团队协作/" itemprop="url">Git分支-团队协作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T08:53:31+08:00">
-                2015-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/12/Git分支-团队协作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/12/Git分支-团队协作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在上节中，已经了解了基本的分支管理，在实际的项目中，肯定是存在远程仓库和团队协作的。下面就来重点讲解，在团队多人协作中的分支推送与抓取。 </p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
-<li>在GitHub上创建新仓库”worktogether”，并添加文件”README.md”。</li>
-<li>Clone远程库到本地。 实际上Git自动把本地的master分支和远程的master分支对应起来了，且远程仓库的默认名称是origin。</li>
-</ol>
-<h1 id="查看远程"><a href="#查看远程" class="headerlink" title="查看远程"></a>查看远程</h1><ul>
-<li><p>查看</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote</span><br><span class="line">origin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看详细</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote -v</span><br><span class="line">origin  <span class="symbol">https:</span>/<span class="regexp">/github.com/yongfeiuall</span><span class="regexp">/worktogether.git (fetch)</span><br><span class="line">origin  https:/</span><span class="regexp">/github.com/yongfeiuall</span><span class="regexp">/worktogether.git (push)</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>栈是运行时单位，堆是存储单位</li>
+<li>栈解决程序运行问题，堆解决数据存储问题</li>
+<li>堆中存的是对象，栈中存的基本数据类型和堆中对象的引用</li>
+<li>栈代表了处理逻辑，而堆代表了数据</li>
+<li>栈异常：java.lang.StackOverflowError</li>
+<li>堆异常：java.lang.OutOfMemoryError</li>
 </ul>
-<h1 id="分支推送"><a href="#分支推送" class="headerlink" title="分支推送"></a>分支推送</h1><p>我们在远程仓库那章节已经学习了怎么使用。 详细请参考：<a href="/2015/11/10/Git仓库-远程仓库/">远程仓库</a><br>修改”README.md”，并提交，推送。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">3</span>, done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">286</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">952</span>b8b0.<span class="number">.242264</span>d  master -&gt; master</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/git/remote_push.jpg" alt="Push Result"></p>
-<h1 id="分支抓取"><a href="#分支抓取" class="headerlink" title="分支抓取"></a>分支抓取</h1><p>团队协作时，在PUSH时难免会有冲突的出现，我们主要是看一下这个处理流程。</p>
-<blockquote>
-<p>另一人推送提交</p>
-</blockquote>
-<ol>
-<li>在另一台电脑clone仓库”worktogether。</li>
-<li>修改文件，并提交。</li>
-<li>Push到远程<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">3</span>, done.</span><br><span class="line">Delta compression <span class="keyword">using</span> up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">307</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">242264</span>d.<span class="number">.5</span>b7966c  master -&gt; master</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>你操作同一个文件</p>
-</blockquote>
-<ol>
-<li>修改文件，并提交</li>
-<li><p>Push到远程</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">To <span class="keyword">https</span>://github.com/yongfeiuall/worktogether.git</span><br><span class="line"> ! [rejected]        master -&gt; master (fetch <span class="keyword">first</span>)</span><br><span class="line">error: failed <span class="built_in">to</span> push some refs <span class="built_in">to</span> <span class="string">'https://github.com/yongfeiuall/worktogether.git'</span></span><br><span class="line">hint: Updates were rejected because <span class="operator">the</span> remote <span class="operator">contains</span> work that you <span class="built_in">do</span></span><br><span class="line">hint: <span class="operator">not</span> have locally. This is usually caused <span class="keyword">by</span> another repository pushing</span><br><span class="line">hint: <span class="built_in">to</span> <span class="operator">the</span> same ref. You may want <span class="built_in">to</span> <span class="keyword">first</span> integrate <span class="operator">the</span> remote changes</span><br><span class="line">hint: (e.g., <span class="string">'git pull ...'</span>) <span class="keyword">before</span> pushing again.</span><br><span class="line">hint: See <span class="operator">the</span> <span class="string">'Note about fast-forwards'</span> <span class="operator">in</span> <span class="string">'git push --help'</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
-<p>推送失败，因为另一个人的最新提交和你试图推送的提交有冲突。</p>
-</li>
-<li><p>get最新的提交</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br><span class="line">remote: <span class="type">Counting</span> objects: <span class="number">3</span>, done.</span><br><span class="line">remote: <span class="type">Compressing</span> objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</span><br><span class="line">remote: <span class="type">Total</span> <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">3</span> (delta <span class="number">0</span>), pack-reused <span class="number">0</span></span><br><span class="line"><span class="type">Unpacking</span> objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), done.</span><br><span class="line"><span class="type">From</span> https://github.com/yongfeiuall/worktogether</span><br><span class="line">   <span class="number">242264</span>d..<span class="number">5</span>b7966c  master     -&gt; origin/master</span><br><span class="line"><span class="type">Auto</span>-merging <span class="type">README</span>.md</span><br><span class="line"><span class="type">CONFLICT</span> (content): <span class="type">Merge</span> conflict <span class="keyword">in</span> <span class="type">README</span>.md</span><br><span class="line"><span class="type">Automatic</span> merge failed; fix conflicts <span class="keyword">and</span> then commit the <span class="literal">result</span>.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>手动解决冲突，并提交</p>
-</li>
-<li>再次Push<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: <span class="number">6</span>, done.</span><br><span class="line">Delta compression <span class="keyword">using</span> up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">4</span>/<span class="number">4</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">6</span>/<span class="number">6</span>), <span class="number">564</span> bytes | <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">6</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">To https:<span class="comment">//github.com/yongfeiuall/worktogether.git</span></span><br><span class="line">   <span class="number">5</span>b7966c.<span class="number">.1</span>d2aaa5  master -&gt; master</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>引用LIAOXUEFENG BLOG</p>
-</blockquote>
-<p>多人协作的工作模式通常是这样：</p>
-<ol>
-<li>首先，可以试图用<code>git push origin branch-name</code>推送自己的修改；</li>
-<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
-<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
-<li>没有冲突或者解决掉冲突后，再用<code>git push origin branch-name</code>推送就能成功！<br>如果<code>git pull</code>提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream branch-name origin/branch-name</code>。</li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/15/Java执行机制过程和JVM入门/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1324,7 +655,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/12/Git分支-分支管理/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/14/HTTP协议基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1343,7 +674,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/12/Git分支-分支管理/" itemprop="url">Git分支-分支管理</a></h1>
+                <a class="post-title-link" href="/2015/12/14/HTTP协议基础/" itemprop="url">HTTP协议基础</a></h1>
         
 
         <div class="post-meta">
@@ -1355,8 +686,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T08:51:53+08:00">
-                2015-11-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T09:27:49+08:00">
+                2015-12-14
               </time>
             
 
@@ -1378,8 +709,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
                   </a>
                 </span>
 
@@ -1397,8 +728,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/11/12/Git分支-分支管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/12/Git分支-分支管理/" itemprop="commentsCount"></span>
+                <a href="/2015/12/14/HTTP协议基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/14/HTTP协议基础/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1428,380 +759,25 @@
 
       
         
-          
-            <p>在实际开发中，一般企业中开发一个项目的分支策略:</p>
-<h1 id="主分支-master"><a href="#主分支-master" class="headerlink" title="主分支(master)"></a>主分支(master)</h1><p>Git主分支的名字，默认叫做Master。它是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。<br>代码库应该有一个、且仅有一个主分支。<br>master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活。</p>
-<h1 id="开发分支-develop"><a href="#开发分支-develop" class="headerlink" title="开发分支(develop)"></a>开发分支(develop)</h1><p>主分支只用来分布重大版本，日常开发都是在这个分支上完成。<br>到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本。</p>
-<h1 id="功能分支-feature"><a href="#功能分支-feature" class="headerlink" title="功能分支(feature)"></a>功能分支(feature)</h1><p>它是为了开发某种特定功能，从Develop分支上面分出来的。开发完成后，要再并入Develop。<br>每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。</p>
-<h1 id="预发布分支-release"><a href="#预发布分支-release" class="headerlink" title="预发布分支(release)"></a>预发布分支(release)</h1><p>预发布分支，它是指发布正式版本之前（即合并到Master分支之前），我们可能需要有一个预发布的版本进行测试。预发布分支是从Develop分支上面 分出来的，预发布结束以后，必须合并进Develop和Master分支。</p>
-<h1 id="bug分支-fix-bug"><a href="#bug分支-fix-bug" class="headerlink" title="bug分支(fix bug)"></a>bug分支(fix bug)</h1><p>软件正式发布以后，难免会出现bug。有了bug就需要修复，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。</p>
-<p>如果当前分支的工作还未完成，bug又急于修改，那该怎么办呢？</p>
-<ol>
-<li>创建文件‘bug.txt’，并提交</li>
-<li><p>创建新分支</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -<span class="tag">b</span> develop</span><br><span class="line">Switched to <span class="tag">a</span> new branch <span class="string">'develop'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改文件，并查看状态</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch develop</span><br><span class="line">Changes not staged for <span class="operator"><span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">        modified:   bug.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)</span></span><br></pre></td></tr></table></figure>
-<p><em>此时需要修改一个紧急的bug。我们可以利用stash功能，把当前工作现场“储藏”起来，修改完bug后再恢复现场后继续工作。</em></p>
-</li>
-<li><p>保存现场</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">Saved working <span class="built_in">directory</span> <span class="operator">and</span> index state WIP <span class="command"><span class="keyword">on</span> <span class="title">develop</span>: <span class="title">3978a2e</span> <span class="title">add</span> <span class="title">bug</span>.<span class="title">txt</span></span></span><br><span class="line">HEAD is now <span class="keyword">at</span> <span class="number">3978</span>a2e <span class="built_in">add</span> bug.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再查看工作区状态</p>
-<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch develop</span><br><span class="line"><span class="literal">nothing</span> <span class="keyword">to</span> commit, working directory clean</span><br></pre></td></tr></table></figure>
-<p>工作区是干净的，就可以创建bug分支进行修改bug。</p>
-</li>
-<li>修改bug完成后，切换到之前的‘develop’分支</li>
-<li><p>查看保存现场</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash <span class="type">list</span></span><br><span class="line">stash@&#123;<span class="number">0</span>&#125;: WIP <span class="function_start"><span class="keyword">on</span></span> develop: <span class="number">3978</span>a2e add bug.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>恢复现场</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git stash pop</span><br><span class="line">On branch develop</span><br><span class="line">Changes not staged for <span class="operator"><span class="keyword">commit</span>:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working <span class="keyword">directory</span>)</span><br><span class="line"></span><br><span class="line">        modified:   bug.txt</span><br><span class="line"></span><br><span class="line"><span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)</span><br><span class="line">Dropped refs/stash@&#123;<span class="number">0</span>&#125; (ea54fb954976da63842dcdd7faab12092ae71130)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>Notes:</strong></p>
+          <p>目前接触到的基本上都是Web端的性能测试，都是基于HTTP协议的，这里对HTTP协议做个简单的认识：</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>官方概念不多说，简单来说，就是一个基于应用层的通信规范：双方要进行通信，大家都要遵守一个规范，这个规范就是HTTP协议。<br>HTTP三点注意事项：</p>
 <ul>
-<li><p>你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;<span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用git stash apply恢复后，stash内容并不删除，你需要用git stash drop来删除；</p>
-</li>
+<li>HTTP是无连接<br>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>HTTP是媒体独立的<br>这意味着，只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。客户端以及服务器指定使用适合的MIME-type内容类型。 </li>
+<li>HTTP是无状态<br>HTTP协议是无状态协议。同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.</li>
 </ul>
-<h1 id="其它分支"><a href="#其它分支" class="headerlink" title="其它分支"></a>其它分支</h1><p>在Git中，由于分支是如此的强大，所以大家可以根据需要创建即可。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/11/Git分支-基础与基本操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/11/Git分支-基础与基本操作/" itemprop="url">Git分支-基础与基本操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-11T14:43:15+08:00">
-                2015-11-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/11/Git分支-基础与基本操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/11/Git分支-基础与基本操作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>分支本质上其实就是一个指向某次提交的可变指针。Git的默认分支名字为master 。而我们是怎么知道当前处于哪个分支当中呢？答案就是在于HEAD这个十分特殊的指针，它专门用于指向于本地分支中的当前分支。</p>
-<p><em>Note: 测试数据准备</em><br> 创建新文件“branch.txt”，并提交三个版本<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span> Is test branch.</span><br></pre></td></tr></table></figure></p>
-<h1 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line"><span class="comment">* master</span></span><br><span class="line">  <span class="keyword">test</span></span><br></pre></td></tr></table></figure>
-<p>命令会列出所有分支，当前分支前面会标一个*号。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/11/Git分支-基础与基本操作/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-远程仓库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/10/Git仓库-远程仓库/" itemprop="url">Git仓库-远程仓库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-10T13:20:41+08:00">
-                2015-11-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/11/10/Git仓库-远程仓库/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/10/Git仓库-远程仓库/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>远程仓库是指托管在因特网或其他网络中的你的项目的版本库。本节只介绍一些很基础的操作应用。</p>
-<p><em>说明：这里我们用github任务远程仓库，需要注册github账号。 </em></p>
-<h1 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h1><p>为了便于管理，Git要求每个远程主机都必须指定一个主机名。git remote命令就用于管理主机名。</p>
+<p><img src="/images/performancetesting/http_woshou.jpg" alt="HTTP 三次握手"><br>第一次握手：建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。<br>第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；<br>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<h1 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h1><p>一次HTTP操作称为一个事务，其工作过程可分为四步：</p>
 <ol>
-<li>在github创建一个新库<br>请参见：<a href="https://help.github.com/articles/create-a-repo/">Create A Repo</a></li>
-<li>关联本地仓库到GitHub仓库<br>运行 git remote add [remote-name] [url] 添加一个新的远程Git仓库，有以下两种方式：</li>
+<li>首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。</li>
+<li>建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。</li>
+<li>服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。</li>
+<li>客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。</li>
 </ol>
-<ul>
-<li><p>HTTPS</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote <span class="built_in">add</span> origin http<span class="variable">s:</span>//github.<span class="keyword">com</span>/yongfeiuall/yongfeiuall.github.io.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>SSH<br>本地Git仓库和GitHub仓库之间的传输是通过SSH加密，需要设置：<a href="https://help.github.com/articles/generating-ssh-keys/">Generating SSH keys</a></p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github<span class="class">.com</span>:yongfeiuall/yongfeiuall<span class="class">.github</span><span class="class">.io</span><span class="class">.git</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的。</p>
-<p><em>Notes: 使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。</em><br>
+<p>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/11/10/Git仓库-远程仓库/#more" rel="contents">
+            <a class="btn" href="/2015/12/14/HTTP协议基础/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1852,7 +828,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/11/10/Git仓库-版本回退/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/Load-Runner-VuGen脚本开发基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1871,7 +847,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/10/Git仓库-版本回退/" itemprop="url">Git仓库-版本回滚</a></h1>
+                <a class="post-title-link" href="/2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="url">Load Runner - VuGen脚本开发基础</a></h1>
         
 
         <div class="post-meta">
@@ -1883,8 +859,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-10T11:15:02+08:00">
-                2015-11-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T13:32:08+08:00">
+                2015-12-10
               </time>
             
 
@@ -1906,8 +882,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
                   </a>
                 </span>
 
@@ -1925,8 +901,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/11/10/Git仓库-版本回退/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/11/10/Git仓库-版本回退/" itemprop="commentsCount"></span>
+                <a href="/2015/12/10/Load-Runner-VuGen脚本开发基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1956,24 +932,1043 @@
 
       
         
-          <h1 id="回滚到之前的版本"><a href="#回滚到之前的版本" class="headerlink" title="回滚到之前的版本"></a>回滚到之前的版本</h1><h2 id="创建新文件“build-txt”，并提交三个版本"><a href="#创建新文件“build-txt”，并提交三个版本" class="headerlink" title="创建新文件“build.txt”，并提交三个版本"></a>创建新文件“build.txt”，并提交三个版本</h2><ul>
-<li><p>build 1</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">st</span> build.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>build 2</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>st build.</span><br><span class="line"><span class="number">2</span>nd build.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>build 3</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>st build.</span><br><span class="line"><span class="number">2</span>nd build.</span><br><span class="line"><span class="number">3</span>rd build.</span><br></pre></td></tr></table></figure>
-</li>
+          
+            <h1 id="Load-Runner"><a href="#Load-Runner" class="headerlink" title="Load Runner"></a>Load Runner</h1><p>主要由以下工具构成</p>
+<ul>
+<li>VuGen（Virtual User Generator） - 开发脚本（录制+编写）</li>
+<li>Controller - 体现多线程，VuGen中也有体现</li>
+<li>Analysis - 结果分析</li>
+<li>Load generator - 压力机（客户端），可以跨平台。</li>
 </ul>
+<h1 id="VuGen工具使用"><a href="#VuGen工具使用" class="headerlink" title="VuGen工具使用"></a>VuGen工具使用</h1><h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><p>录制目的是帮助快速生成脚本。<br><strong>录制原理</strong>：录制的是在B和S之间基本协议的数据包。Lr在B和S之间，相当于一个截取的功能。<br><strong>录制设置</strong>：主要有以下两个方面</p>
+<ol>
+<li>设置字符集编码：Advanced –&gt; Support charset (选中Checkbox和UTF-8)</li>
+<li>设置HTTP/HTML Level： Recording –&gt; HTML-based script –&gt; HTML Advanced –&gt; Script type (选择第2个选项)</li>
+</ol>
+<p><em>Notes：在‘开始录制’窗口，不选择‘Record the application startup’，打开页面后就不会自动录制，到希望录制的地方点击‘Record’再开始录制。</em></p>
+<h2 id="回放"><a href="#回放" class="headerlink" title="回放"></a>回放</h2><p><strong>回放原理</strong>：回放时不需要启动被测试程序（浏览器）不打开浏览器，LR可以模拟多线程。<br><strong>回放设置</strong>：脚本运行顺序、迭代，思考时间，网速模拟等等。</p>
+<h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
+<h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
+<ol>
+<li>主界面Replay Log<br> <em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
+<li>业务是否成功View –&gt;TestResults下 Submit Data</li>
+<li>关联 General Log</li>
+</ol>
+<p>脚本老是失败原因：参数化、关联、思考时间。</p>
+<p><em>Notes: 脚本开发最好是用以下组合（LR11 + Win7 + IE9）</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/TestNG-命令行运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/10/TestNG-命令行运行/" itemprop="url">TestNG 命令行运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T08:59:54+08:00">
+                2015-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/10/TestNG-命令行运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/TestNG-命令行运行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直是在Eclipse里运行测试的，本次简单介绍一下怎么样来实现命令行来执行TestNG。<br>Assuming that you have TestNG in your class path, the simplest way to invoke TestNG is as follows:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java org<span class="class">.testng</span><span class="class">.TestNG</span> testng1<span class="class">.xml</span> [testng2<span class="class">.xml</span> testng3<span class="class">.xml</span> ...]</span><br></pre></td></tr></table></figure></p>
+<p>主要是在Windows下做的配置（<em>有步骤已经做过，请忽略</em>）：</p>
+<ol>
+<li>下载JDK安装，配置环境变量。</li>
+<li>下载testng-6.8.8.jar包，放在C:\TestNG, 并配置了环境变量<ul>
+<li>TESTNG_HOME 为 C:\TESTNG</li>
+<li>CLASSPATH 为 %CLASSPATH%;%TESTNG_HOME%\testng-6.8.jar;  </li>
+</ul>
+</li>
+<li><p>在F:\testng下创建一个java文件command.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> org.testng.annotations.Test;</span><br><span class="line"> <span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String str = <span class="string">"TestNG is working fine"</span>;</span><br><span class="line">	assertEquals(<span class="string">"TestNG is working fine"</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译java文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">javac</span> <span class="tag">Command</span><span class="class">.java</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在同目录下，创建testng.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">name</span>=<span class="value">"Suite1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">classes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Command"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">classes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">test</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用java调用testng.xml</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\testng&gt;java org.testng.TestNG testng.xml</span><br><span class="line">[TestNG] Running:</span><br><span class="line">F:\testng\testng.xml</span><br><span class="line"></span><br><span class="line">===============================================</span><br><span class="line">Suite1</span><br><span class="line">Total tests run: 1, Failures: 0, Skips: 0</span><br><span class="line">===============================================</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/09/Performance-Testing-操作系统监控/" itemprop="url">Linux操作系统监控</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-09T08:37:33+08:00">
+                2015-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Performance Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/09/Performance-Testing-操作系统监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/09/Performance-Testing-操作系统监控/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在性能测试的过程中，要监控的地方应该就是以下部分：</p>
+<ul>
+<li>操作系统</li>
+<li>中间件</li>
+<li>Code</li>
+<li>DB</li>
+<li>网络</li>
+</ul>
+<p>这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。</p>
+<h1 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h1><p>CPU监控的关键指标做一个大概的说明：</p>
+<h2 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h2><p>正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。<br><strong>Notes：运行队列长度最大不要超过当前内核数的3倍。</strong><br>Another common system statistic is that of load average. The load on a system is the total amount of running and runnable process. For example, if two processes were running and three were available to run, the system’s load would be five. The load average is the amount of load over a given amount of time. Typically, the load average is taken over <strong>1 minute, 5 minutes, and 15 minutes</strong>. This enables you to see how the load changes over time.</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>To create the illusion that a given single processor runs multiple tasks simultaneously, the Linux kernel constantly switches between different processes. The switch between different processes is called a context switch, because when it happens, the CPU saves all the context information from the old process and retrieves all the context information for the new process.<br>是CPU在不同进程间按时间片轮换，交互性强的需要高优先级，交互性弱的需要低优先级。在linux系统中，有两种优先级：普通优先级和实时优先级。上下文切换不可避免，如果可能最好减少上下文切换。</p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>一般来自于外部硬件中断，中断也是不可避免的。中断就会有上下文切换，但是上正文切换并不都是中断造成的。<br><em>性能测试不需要特别关心内核的问题（中断、上下文切换），而是关注有时因程序写的不好造成的频繁切换（不正常切换）。</em></p>
+<h2 id="资源利用率"><a href="#资源利用率" class="headerlink" title="资源利用率"></a>资源利用率</h2><p>CPU utilization is a straightforward concept. At any given time, the CPU can be doing one of seven things.<br>First, it can be idle, which means that the processor is not actually doing any work and is waiting for something to do. This is “<strong>idle</strong>“ time.<br>Second, the CPU can be running user code, which is specified as “<strong>user</strong>“ time.<br>Third, the CPU can be executing code in the Linux kernel on behalf of the application code. This is “<strong>system</strong>“ time.<br>Fourth, the CPU can be executing user code that has been “nice”ed or set to run at a lower priority than normal processes. （切换线程优先级时消耗的时间)<br>Fifth, the CPU can be in iowait, which mean the system is spending its time waiting for I/O (such as disk or network) to complete.<br>Sixth, the CPU can be in irq state, which means it is in high-priority kernel code handling a hardware interrupt.<br>Finally, the CPU can be in softirq mode, which means it is executing kernel code that was also triggered by an interrupt, but it is running at a lower priority (the bottom-half code). This can happen when a device interrupt occurs, but the kernel needs to do some work with it before it is ready to hand it over to user space (for example, with a network packet).<br>通常我们只关注：idle, user, system, (+wa)。<br><strong>在正常情况下，用户态和系统态的CUP消耗比率是7：3.</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/11/10/Git仓库-版本回退/#more" rel="contents">
+            <a class="btn" href="/2015/12/09/Performance-Testing-操作系统监控/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/08/Centos下Nginx-php-fpm安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/08/Centos下Nginx-php-fpm安装配置/" itemprop="url">Centos下Nginx + php-fpm安装配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-08T08:21:55+08:00">
+                2015-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/08/Centos下Nginx-php-fpm安装配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/08/Centos下Nginx-php-fpm安装配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h1><p>Nginx是一款轻量级的Web 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器，并在一个BSD-like协议下发行。</p>
+<ol>
+<li><p>编译环境安装<br>我们默认你是安装好了的，如果没有安装的话，请用下面命令安装<br>make安装：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+<p>g++安装：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="operator"><span class="keyword">install</span> gcc gcc-<span class="keyword">c</span>++</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>依赖包安装<br>我们选择/usr/local/src作为源码目录。Nginx需要依赖下面3个包：</p>
+<ul>
+<li><p>rewrite模块需要 pcre 库</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src</span><br><span class="line">wget ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz</span></span><br><span class="line">tar -zxvf pcre-8.37.tar.gz</span><br><span class="line"><span class="keyword">cd</span> pcre-8.37</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gzip模块需要 zlib 库</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">wget http:<span class="comment">//zlib.net/zlib-1.2.8.tar.gz</span></span><br><span class="line">tar -zxvf zlib-<span class="number">1.2</span><span class="number">.8</span>.tar.gz</span><br><span class="line">cd zlib-<span class="number">1.2</span><span class="number">.8</span></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ssl 功能需要openssl库</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">wget http:<span class="comment">//www.openssl.org/source/openssl-1.0.1q.tar.gz</span></span><br><span class="line">tar -zxvf openssl-<span class="number">1.0</span><span class="number">.1</span>q.tar.gz</span><br><span class="line">cd openssl-<span class="number">1.0</span><span class="number">.1</span>q</span><br><span class="line">./config</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/12/08/Centos下Nginx-php-fpm安装配置/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/07/DiffPackage-package-did-not-load-correctly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/07/DiffPackage-package-did-not-load-correctly/" itemprop="url">TFS 'DiffPackage' package did not load correctly</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-07T10:52:26+08:00">
+                2015-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TFS/" itemprop="url" rel="index">
+                    <span itemprop="name">TFS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/07/DiffPackage-package-did-not-load-correctly/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/07/DiffPackage-package-did-not-load-correctly/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Today i got a weird issue, when i compare 2 files in TFS, got the “package did not load correctly” error.</p>
+<p><strong>Solution</strong></p>
+<ol>
+<li>Close Visual Studio</li>
+<li>Open a Developer Command Prompt For VS 2012(as administrator)</li>
+<li>Type <code>devenv /setup</code></li>
+<li>Restart Visual Studio</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/06/Linux下软件安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/06/Linux下软件安装/" itemprop="url">Linux下软件安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-06T10:44:52+08:00">
+                2015-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/06/Linux下软件安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/06/Linux下软件安装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Linux下安装软件的几种方法，做一个简单的介绍：</p>
+<ol>
+<li>直接运行可执行程序，类似于Windows下的安装。</li>
+<li>绿色版，也就是免安装，例如：Tomcat。</li>
+<li>rpm安装<ul>
+<li>查询是否已经安装<br><code>rpm -aq mysql</code></li>
+<li>删除已安装软件<br><code>rpm -e [上一步查询到的内容]</code><br>删除的时候，会有一些依赖关系的报错，可用下面方法强制删除，强制解除依赖关系<br><code>rpm -e --nodeps [上一步查询到的内容]</code></li>
+<li>安装软件<br><code>rpm -ivh [rpm软件包]</code></li>
+</ul>
+</li>
+<li>源码安装<ul>
+<li>生成配置文件<br><code>./configure</code></li>
+<li>编译<br><code>make</code></li>
+<li>安装软件<br><code>make install</code></li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/" itemprop="url">UFT 12.01 Identifies Firefox web object as Window object</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-04T09:47:50+08:00">
+                2015-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>I got a problem:  UFT 12.01 Identifies web object as Window object.<br>Currently I use UFT 12.01. I rolled back Firefox to v31. It seems UFT 12.01 supports this version. But….</p>
+<p><strong>Solution:</strong><br>Go to “Tools -&gt; Add-ons -&gt; Extensions”, enable Unified Functional Testing Extension.</p>
+<p>It should be work now. </p>
+
+          
         
       
     </div>
@@ -2011,7 +2006,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2061,7 +2056,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2072,7 +2067,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2083,7 +2078,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

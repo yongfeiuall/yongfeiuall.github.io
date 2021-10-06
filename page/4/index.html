@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/14/mitmproxy实现接口信息抓取/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/12/Jmeter-常用函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/02/14/mitmproxy实现接口信息抓取/" itemprop="url">mitmproxy实现接口信息抓取</a></h1>
+                <a class="post-title-link" href="/2021/03/12/Jmeter-常用函数/" itemprop="url">Jmeter: 常用函数</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T14:40:41+08:00">
-                2020-02-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-12T09:51:00+08:00">
+                2021-03-12
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mitmproxy/" itemprop="url" rel="index">
-                    <span itemprop="name">mitmproxy</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/02/14/mitmproxy实现接口信息抓取/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/14/mitmproxy实现接口信息抓取/" itemprop="commentsCount"></span>
+                <a href="/2021/03/12/Jmeter-常用函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/12/Jmeter-常用函数/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,31 +410,137 @@
       
         
           
-            <p>对于没有接口文档的系统，能不能快速获得接口信息，或者说在做功能测试的时候就得到接口测试的一些基本信息。这里就要用到<a href="https://www.mitmproxy.org/" target="_blank" rel="external">mitmproxy</a>: mitmproxy is a free and open source interactive HTTPS proxy.</p>
-<p>在windows和Firefox下实验。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>pip直接安装：<br><code>pip install mitmproxy</code></p>
-<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><ul>
-<li>命令行启动<br>  mitmdump</li>
-<li>常用参数<br>  -p  指定端口号<br>  -w     outfile 将日志输出到本地文件<br>  –ignore all hosts with https/ssl 忽略https 证书错误 (–ignore-hosts “.*443$”)<br>  -s  加载自定义python脚本</li>
-<li>添加证书<ol>
-<li>配置好代理，并启动代理后， 浏览器进入mitm.it， 选择相应的证书，下载。</li>
-<li>选项—隐私与安全—安全—证书—查看证书，  您的证书中导入下载的证书， 在“证书颁发机构”中找到mitmproxy， 编辑信任，勾选相应条目。 </li>
-</ol>
-</li>
-</ul>
-<h1 id="抓取接口信息"><a href="#抓取接口信息" class="headerlink" title="抓取接口信息"></a>抓取接口信息</h1><ol>
-<li><p>创建脚本</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from mitmproxy import http, ctx</span><br><span class="line">import openpyxl,<span class="tag">time</span>,json</span><br><span class="line"></span><br><span class="line">class Record:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self<span class="class">.filter_url</span> = <span class="string">'https://reqres.in/api/'</span></span><br><span class="line">        self<span class="class">.cur_time</span> = <span class="tag">time</span>.<span class="function"><span class="title">strftime</span><span class="params">(<span class="string">'%Y%m%d_%H_%M_%S'</span>)</span></span></span><br><span class="line">        book = openpyxl.<span class="function"><span class="title">Workbook</span><span class="params">()</span></span></span><br><span class="line">        <span class="tag">table</span> = book<span class="class">.active</span></span><br><span class="line">        <span class="tag">table</span>.append([<span class="string">'Address'</span>, <span class="string">'Request Type'</span>, <span class="string">'Param Type'</span>,</span><br><span class="line">                      <span class="string">'Header'</span>, <span class="string">'Param'</span>])</span><br><span class="line">        book.<span class="function"><span class="title">save</span><span class="params">(<span class="string">'E:/&#123;cur_time&#125;.xlsx'</span>.format(cur_time=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span> = openpyxl.<span class="function"><span class="title">load_workbook</span><span class="params">(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.format(tmp=self.cur_time)</span></span>)</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.active</span><span class="class">.title</span> = <span class="string">'API'</span></span><br><span class="line">        self<span class="class">.table</span> = self<span class="class">.workbook</span><span class="class">.active</span></span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">write_to_excel</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        url = flow<span class="class">.request</span><span class="class">.url</span></span><br><span class="line">        method = flow<span class="class">.request</span><span class="class">.method</span></span><br><span class="line">        type = flow<span class="class">.request</span><span class="class">.headers</span><span class="class">.get</span>(<span class="string">'Content-Type'</span>)</span><br><span class="line">        <span class="keyword">if</span> type == <span class="string">'application/x-www-form-urlencoded'</span>:</span><br><span class="line">            type = <span class="string">'URL_ENCODE'</span></span><br><span class="line">        elif type == <span class="string">'application/json'</span>:</span><br><span class="line">            type = <span class="string">'JSON'</span></span><br><span class="line">        elif type == <span class="string">'text/xml'</span>:</span><br><span class="line">            type = <span class="string">'XML'</span></span><br><span class="line">        headers = json.<span class="function"><span class="title">dumps</span><span class="params">(dict(flow.request.headers)</span></span>)</span><br><span class="line">        <span class="tag">body</span> = flow<span class="class">.request</span><span class="class">.get_text</span>()</span><br><span class="line">        self<span class="class">.table</span><span class="class">.append</span>([url, method, type, headers, body])</span><br><span class="line">        self<span class="class">.workbook</span><span class="class">.save</span>(<span class="string">'e:/&#123;cur_time&#125;.xlsx'</span>.<span class="function"><span class="title">format</span><span class="params">(cur_time=self.cur_time)</span></span>)</span><br><span class="line"></span><br><span class="line">    def <span class="function"><span class="title">response</span><span class="params">(self, flow)</span></span>:</span><br><span class="line">        <span class="keyword">if</span> self<span class="class">.filter_url</span>:</span><br><span class="line">            <span class="keyword">if</span> flow<span class="class">.request</span><span class="class">.url</span><span class="class">.startswith</span>(self.filter_url):</span><br><span class="line">                self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.<span class="function"><span class="title">write_to_excel</span><span class="params">(flow)</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addons = [</span><br><span class="line">    <span class="function"><span class="title">Record</span><span class="params">()</span></span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置firefox代理<br>设置本地Firefox代理，商品为9999</p>
-</li>
-<li><p>运行mitmdump</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmdump -<span class="tag">p</span> <span class="number">9999</span> -s <span class="tag">a</span><span class="class">.py</span> --ignore all hosts with https/ssl</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>打开测试网站操作</p>
-</li>
-<li>查看结果<br><img src="/images/automation/mitm.jpg" alt=""></li>
-</ol>
+            <p>Jmeter提供了很多，列举一些比较常用函数，详细的自行查看（工具 -&gt; 函数帮助）：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__Random</td>
+<td>生成随机数</td>
+</tr>
+<tr>
+<td>__RandomDate</td>
+<td>生成随机日期</td>
+</tr>
+<tr>
+<td>__RandomString</td>
+<td>生成随机字符串</td>
+</tr>
+<tr>
+<td>__setProperty</td>
+<td>设置属性</td>
+</tr>
+<tr>
+<td>__property</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__P</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__V</td>
+<td>拼接字符串</td>
+</tr>
+<tr>
+<td>__time</td>
+<td>返回指定格式的当前时间</td>
+</tr>
+<tr>
+<td>__MD5</td>
+<td>将字符串MD5加密</td>
+</tr>
+<tr>
+<td>__UUID</td>
+<td>生成随机UUID字符串</td>
+</tr>
+<tr>
+<td>__TestPlanName</td>
+<td>测试计划名称</td>
+</tr>
+<tr>
+<td>__StringFromFile</td>
+<td>从文件中读取一行</td>
+</tr>
+<tr>
+<td>__strLen</td>
+<td>字符串长度</td>
+</tr>
+<tr>
+<td>__split</td>
+<td>将字符串拆分为变量</td>
+</tr>
+<tr>
+<td>__substring</td>
+<td>提取字符串的子串</td>
+</tr>
+<tr>
+<td>__machineName</td>
+<td>机器名</td>
+</tr>
+<tr>
+<td>__machineIP</td>
+<td>机器IP</td>
+</tr>
+<tr>
+<td>__isDefined</td>
+<td>判断变量是否已存在</td>
+</tr>
+<tr>
+<td>__BeanShell</td>
+<td>可执行beanshell脚本</td>
+</tr>
+<tr>
+<td>__char</td>
+<td>根据unicode生成字符</td>
+</tr>
+<tr>
+<td>__chooseRandom</td>
+<td>从指定的范围里面取值</td>
+</tr>
+<tr>
+<td>__counter</td>
+<td>计数器</td>
+</tr>
+<tr>
+<td>__env</td>
+<td>获取环境变量的值</td>
+</tr>
+<tr>
+<td>__eval</td>
+<td>读取变量表达式</td>
+</tr>
+<tr>
+<td>__FileToString</td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td>__intSum</td>
+<td>两个或多个整数的总和</td>
+</tr>
+<tr>
+<td>__longSum</td>
+<td>两个或多个长值的总和</td>
+</tr>
+<tr>
+<td>__digest</td>
+<td>将字符串加密</td>
+</tr>
+<tr>
+<td>__if</td>
+<td>if 判断</td>
+</tr>
+<tr>
+<td>__iterationNum</td>
+<td>线程循环次数</td>
+</tr>
+</tbody>
+</table>
 
           
         
@@ -483,7 +589,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/02/02/小丁画作-2020/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/05/Jmeter-P-函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -502,7 +608,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/02/02/小丁画作-2020/" itemprop="url">奇点绘画画随记（2020）</a></h1>
+                <a class="post-title-link" href="/2021/03/05/Jmeter-P-函数/" itemprop="url">Jmeter: 获取 Jmeter 的属性</a></h1>
         
 
         <div class="post-meta">
@@ -514,8 +620,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-02T10:31:04+08:00">
-                2020-02-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-05T08:59:54+08:00">
+                2021-03-05
               </time>
             
 
@@ -537,8 +643,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -556,8 +662,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/02/02/小丁画作-2020/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/02/02/小丁画作-2020/" itemprop="commentsCount"></span>
+                <a href="/2021/03/05/Jmeter-P-函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/05/Jmeter-P-函数/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -588,8 +694,12 @@
       
         
           
-            <p><img src="/images/izheyi/pic/qidianhui/2020/1.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/2.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/3.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/4.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/5.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/6.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/7.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/2020/8.JPG" alt=""></p>
-<p><img src="/images/izheyi/pic/qidianhui/2020/9.JPG" alt=""></p>
+            <p>在跨平台运行，或者配置路径的时候，需要用到Jmeter的属性。</p>
+<p>可能用下边这个函数：</p>
+<p><strong>__P() 函数</strong></p>
+<p>比如Linux的<code>file.separator</code> 的是 <code>/</code>，Windows的<code>\</code>，${__P(file.separator,)}可以根据不同的系统，获取不同系统下的文件路径分隔符。</p>
+<h5 id="如何查看Jmeter属性"><a href="#如何查看Jmeter属性" class="headerlink" title="如何查看Jmeter属性"></a>如何查看Jmeter属性</h5><p> 测试计划右键添加：非测试元件 -&gt; 属性显示。如下图所示：</p>
+<p><img src="/images/jmeter/property.jpg" alt=""></p>
 
           
         
@@ -638,7 +748,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/01/19/python离线安装外部依赖包/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/02/15/熊猫来了探险/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -657,7 +767,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/01/19/python离线安装外部依赖包/" itemprop="url">python离线安装外部依赖包</a></h1>
+                <a class="post-title-link" href="/2021/02/15/熊猫来了探险/" itemprop="url">熊猫来了探险</a></h1>
         
 
         <div class="post-meta">
@@ -669,333 +779,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-19T11:55:37+08:00">
-                2020-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/01/19/python离线安装外部依赖包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/01/19/python离线安装外部依赖包/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>公司Jenkins运行在内部环境，不能访问外部网络，所以要安装的外部依赖需要用离线的方式来安装。</p>
-<ol>
-<li>制作requirement.txt<br><code>pip freeze &gt; requirement.txt</code></li>
-<li>下载安装包<br> <code>pip download -d d:\package &lt;package_name&gt; # 单个下载</code><br> <code>pip download -d d:\package -r requirements.txt # 批量下载</code></li>
-<li>离线安装<br> <code>pip install --no-index --find-links=d:\package package_name # 单个安装</code><br> <code>pip install --no-index --find-links=d:\package -r requirements.txt # 批量安装</code></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/10/19/分布式持续压测平台/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/19/分布式持续压测平台/" itemprop="url">分布式持续压测平台</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-19T13:25:28+08:00">
-                2019-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/10/19/分布式持续压测平台/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/10/19/分布式持续压测平台/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="压测平台介绍"><a href="#压测平台介绍" class="headerlink" title="压测平台介绍"></a>压测平台介绍</h1><ul>
-<li>QA设计场景和脚本，Github管理</li>
-<li>QA创建Jenkins测试job</li>
-<li>Dev利用Jenkins持续执行测试，直到达到预期性能</li>
-<li>QA对主要接口进行验收测试，验证符合上线性能预期</li>
-</ul>
-<h1 id="压测平台设计"><a href="#压测平台设计" class="headerlink" title="压测平台设计"></a>压测平台设计</h1><ul>
-<li>脚本编写和执行 – Jmeter</li>
-<li>脚本管理 – Github</li>
-<li>驱动执行 – Taurus</li>
-<li>测试调度 – Jenkins</li>
-</ul>
-<p><img src="/images/performancetesting/platform.jpg" alt="Performace Platform"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/09/08/丁丁画画（三年级上学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/08/丁丁画画（三年级上学期）/" itemprop="url">丁丁画画（三年级上学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-08T10:03:01+08:00">
-                2019-09-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-15T20:56:28+08:00">
+                2021-02-15
               </time>
             
 
@@ -1036,8 +821,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/09/08/丁丁画画（三年级上学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/09/08/丁丁画画（三年级上学期）/" itemprop="commentsCount"></span>
+                <a href="/2021/02/15/熊猫来了探险/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/02/15/熊猫来了探险/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1068,7 +853,13 @@
       
         
           
-            <p><img src="/images/izheyi/pic/3/1_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/1_5.JPG" alt=""></p>
+            <p><img src="/images/izheyi/2021/02/01.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/02.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/03.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/04.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/05.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/06.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/07.jpg" alt=""></p>
 
           
         
@@ -1117,7 +908,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/06/11/网站促销活动前端自动化监控/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1136,7 +927,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/11/网站促销活动前端自动化监控/" itemprop="url">网站促销活动前端自动化监控</a></h1>
+                <a class="post-title-link" href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="url">Pytest - 获取用例执行结果(pytest_runtest_makereport)</a></h1>
         
 
         <div class="post-meta">
@@ -1148,8 +939,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T06:54:41+08:00">
-                2019-06-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-08T11:26:54+08:00">
+                2020-11-08
               </time>
             
 
@@ -1190,8 +981,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/11/网站促销活动前端自动化监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/06/11/网站促销活动前端自动化监控/" itemprop="commentsCount"></span>
+                <a href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1222,528 +1013,17 @@
       
         
           
-            <p>商城每年都会有太多有促销活动，大的来说几乎每天都有，对于测试来说，纯手工是个不小的挑战，能否用自动化的方式来快速实现测试？</p>
-<p>对于商城的活动页面其实都是一个模板，只是针对不同的活动，不同的地址，不同的产品。这样来看就可以用自动化的方式来检查信息的正确性。</p>
-<p>活动一般有</p>
-<ul>
-<li>一个主页，上面有图片，标题，价格</li>
-<li>详情页面</li>
-<li>下单</li>
-</ul>
-<p>自动化思路：</p>
+            <p>可以通过pytest hook 来实现用例执行结果的统计。</p>
 <ol>
-<li>从主页通过Selenium来获得所有的图片和产品详细页链接</li>
-<li>通过Request来检查产品链接和图片存在与否</li>
-<li>检查详细页的信息正确</li>
-<li>利用Cookie实现下单流程的实现</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/04/08/丁丁画画（二年级下学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/08/丁丁画画（二年级下学期）/" itemprop="url">丁丁画画（二年级下学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-08T12:37:58+08:00">
-                2019-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/08/丁丁画画（二年级下学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/04/08/丁丁画画（二年级下学期）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/2019/2_2_1.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_2.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_3.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_4.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_5.JPG" alt=""><br><img src="/images/izheyi/pic/2019/2_2_6.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/15/小丁画作-2019/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/15/小丁画作-2019/" itemprop="url">奇点绘画画随记（2019）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-15T16:08:57+08:00">
-                2019-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/15/小丁画作-2019/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/15/小丁画作-2019/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/qidianhui/15.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/16.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/17.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/18.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/19.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/20.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/21.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/22.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/23.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/24.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/25.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/26.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/27.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/28.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/29.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/30.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/31.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/32.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/33.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/34.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/35.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/36.JPG" alt=""><br><img src="/images/izheyi/pic/qidianhui/37.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/06/2019-Flag/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/06/2019-Flag/" itemprop="url">2019 - Flag</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-06T12:41:23+08:00">
-                2019-01-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/06/2019-Flag/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/06/2019-Flag/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="lt-lt-lt-lt-lt-lt-lt-HEAD"><a href="#lt-lt-lt-lt-lt-lt-lt-HEAD" class="headerlink" title="&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</h1><blockquote>
-<p>4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cf95e98… switch pc<br>2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：</p>
-<ol>
-<li>读书<br>基于去年的不足，今年细化，每月一本书，读书笔记到Blog。</li>
-<li>PMP<br>这个东西几年前有看过，一直没付诸行动，挤时间，逼自己一把，今年拿下证书。</li>
-<li>工作<br>a. 保持技术的更新，有自己的想法和应对方法。<br>b. 更全面的看待，处理事情。</li>
-<li>英语<br>a. 再看一下英语基础，试着找一下快速提升的方法。<br>b. 搞定Friends前三季。</li>
-<li>生活<br>a. 控制脾气，控制脾气，控制脾气。<br>b. 放下手机，活的仪式感一些。<br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>c. 培养一个兴趣，报个钢琴班。</li>
-<li>Blog<br>隔周一更。</li>
-</ol>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h1 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h1><ol>
-<li>拿到PMP证书，看音乐会。</li>
-<li><h1 id="国内游。"><a href="#国内游。" class="headerlink" title="国内游。"></a>国内游。</h1>c. 培养一个兴趣。</li>
-<li>其他<br>a. Blog，尽量更新。<br>b. 每周运动三次，发圈Track。</li>
-</ol>
-<h1 id="奖励-1"><a href="#奖励-1" class="headerlink" title="奖励"></a>奖励</h1><ol>
-<li>拿到PMP证书，看音乐会。</li>
-<li>国内游。<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cf95e98… switch pc</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<li><p>初步实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>, <span class="string">'error'</span>: <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    print(report.nodeid)</span><br><span class="line">    <span class="keyword">if</span> report.when == <span class="string">'setup'</span> <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        CASES[<span class="string">'error'</span>] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> report.outcome == <span class="string">'passed'</span>:</span><br><span class="line">            CASES[<span class="string">'passed'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">            CASES[<span class="string">'failed'</span>] += <span class="number">1</span></span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
+<p>这样有一个问题，当有失败重跑情况时，会把每次重跑都统计一次运行结果，结果会有偏差，不应该包含重跑的结果，因为是同一个Case。</p>
+</li>
+<li><p>换个方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>&#125;</span><br><span class="line">RUN_RESULT = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    <span class="keyword">if</span> (report.when == <span class="string">'setup'</span> <span class="keyword">or</span> report.when == <span class="string">'teardown'</span>) <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = <span class="string">'failed'</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = report.outcome</span><br><span class="line">    print(RUN_RESULT)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    CASES[<span class="string">'total'</span>] = len(RUN_RESULT)</span><br><span class="line">    CASES[<span class="string">'passed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'passed'</span>&#125;)</span><br><span class="line">    CASES[<span class="string">'failed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'failed'</span>&#125;)</span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'test_demo.py::test_demo01[zhangsan]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[lisi]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[wangwu]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo02'</span>: <span class="string">'passed'</span>&#125;</span><br><span class="line">&#123;<span class="string">'total'</span>: <span class="number">4</span>, <span class="string">'passed'</span>: <span class="number">1</span>, <span class="string">'failed'</span>: <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 
@@ -1794,7 +1074,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/12/31/2018画展/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/10/20/Allure-定制详细报告/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1813,7 +1093,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/31/2018画展/" itemprop="url">2018画展</a></h1>
+                <a class="post-title-link" href="/2020/10/20/Allure-定制详细报告/" itemprop="url">allure 定制详细报告</a></h1>
         
 
         <div class="post-meta">
@@ -1825,8 +1105,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T13:45:35+08:00">
-                2018-12-31
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-20T11:21:19+08:00">
+                2020-10-20
               </time>
             
 
@@ -1848,8 +1128,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
                   </a>
                 </span>
 
@@ -1867,8 +1147,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/31/2018画展/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/12/31/2018画展/" itemprop="commentsCount"></span>
+                <a href="/2020/10/20/Allure-定制详细报告/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/10/20/Allure-定制详细报告/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1899,10 +1179,882 @@
       
         
           
-            <p>为了画展，让孩子们画了好多次课，这种行为不知道好还是不好，为了一个展览连续的不学新的课程。</p>
-<p><img src="/images/izheyi/2018/12/1.JPG" alt=""></p>
-<h1 id="作品"><a href="#作品" class="headerlink" title="作品"></a>作品</h1><p><img src="/images/izheyi/2018/12/2.JPG" alt=""><br><img src="/images/izheyi/2018/12/3.JPG" alt=""><br><strong>帽子</strong></p>
-<p><em>在无限的黑色网状里，人变的压抑和渺小，红蓝相间的圆点帽子，却又充满活力，色彩艳丽。二者交互辉映，仿佛把人带到一个奇妙的世界，融洽、平静，有一种使人安静下来的力量，我自风情万种，与世无争。</em></p>
+            <p>默认的allure报告不能详细的显示出来脚本执行的步骤，能做到跟Log里一样的每一步操作。</p>
+<p>用<code>@allure.step()</code>装饰器来实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@allure.step("Input text &#123;text&#125; in [&#123;element&#125;]")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_text</span><span class="params">(self, element, text)</span>:</span></span><br><span class="line">    <span class="string">"""**Description**:</span><br><span class="line">            Fill text to the page_element located by locator</span><br><span class="line"></span><br><span class="line">    :param element: The locator to locate the page_element.</span><br><span class="line">    :param text: value to set to the page_element</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    ele = self.find_element(element)</span><br><span class="line">    ele.clear()</span><br><span class="line">    ele.send_keys(text)</span><br><span class="line">    logger.info(f<span class="string">'Input [&#123;text&#125;] in &#123;element&#125;'</span>)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="/images/allure/step.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/10/09/钉钉自定义机器人/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/09/钉钉自定义机器人/" itemprop="url">钉钉自定义机器人</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-09T16:50:45+08:00">
+                2020-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/09/钉钉自定义机器人/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/10/09/钉钉自定义机器人/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有想法是把自动化执行的结果实时发送到钉钉群里，及时提醒。</p>
+<p>简单看了一下，可以通过Webhook自定义机器人来实现：</p>
+<ol>
+<li><p>为钉钉群创建自定义机器人 ，会产生webhook。</p>
+</li>
+<li><p>通过<a href="https://github.com/zhuifengshen/DingtalkChatbot" target="_blank" rel="external">DingtalkChatbot</a>来实现</p>
+</li>
+<li><p>发送机器人信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dingtalkchatbot.chatbot <span class="keyword">import</span> DingtalkChatbot</span><br><span class="line"></span><br><span class="line">webhook = <span class="string">'https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxx'</span></span><br><span class="line"></span><br><span class="line">xiaoding = DingtalkChatbot(webhook)</span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_text(msg='我就是小丁，测试我是小机器人！', is_at_all=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_text(msg='我就是小丁，测试只@一人', at_mobiles=[150xxxxxxxx])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_link(title='测试小丁',</span></span><br><span class="line"><span class="comment">#                    text='我是小机器人', message_url='http://izheyi.com/',</span></span><br><span class="line"><span class="comment">#                    pic_url='http://izheyi.com/uploads/avatar.jpg')</span></span><br><span class="line"></span><br><span class="line">xiaoding.send_markdown(title=<span class="string">'我就是测试小丁！'</span>,</span><br><span class="line">                       text=<span class="string">'哈哈，测试我是小机器人发送Markdown\n'</span></span><br><span class="line">                            <span class="string">'![izheyi](http://izheyi.com/uploads/avatar.jpg)\n'</span></span><br><span class="line">                            <span class="string">'&gt;这里是引用显示'</span>,</span><br><span class="line">                       is_at_all=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<p>我就是小丁，测试我是小机器人！<a href="app://desktop.dingtalk.com/web_content/chatbox.html?isFourColumnMode=false#" target="_blank" rel="external">@所有人</a> </p>
+<p>​             收到      回复</p>
+<p>基本上实现了Python通过小机器人发送信息，下面就可以把测试的结果发到群里了。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xiaoding.send_markdown(title=<span class="string">'我就是测试小丁！'</span>,</span><br><span class="line">                       text=<span class="string">'Automation Test Result: \n'</span></span><br><span class="line">                            <span class="string">'&gt;Total:  25\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; &lt;font size=4 color=#D2691E&gt; Passed:  20 &lt;/font&gt;\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; Failed:  4\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; Error:  1\n\n'</span>,</span><br><span class="line">                       is_at_all=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   Automaton Test Result：</p>
+<blockquote>
+<p>Total:  25</p>
+<p>Passed: 20</p>
+<p>Failed: 4</p>
+<p>Error: 1</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/09/15/pytest-allure-jenkins集成/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/15/pytest-allure-jenkins集成/" itemprop="url">pytest + allure + jenkins集成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-15T14:38:00+08:00">
+                2020-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/15/pytest-allure-jenkins集成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/09/15/pytest-allure-jenkins集成/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Pytest的报告有点简单，把报告换成了allure，可以一并集成到Jenkins上去。</p>
+<ol>
+<li><p>安装插件<a href="https://plugins.jenkins.io/allure-jenkins-plugin" target="_blank" rel="external">Allure Jenkins Plugin</a></p>
+</li>
+<li><p>Allure Commandline 配置</p>
+<p>“全局工具配置”页面 <path里不包含bin目录></path里不包含bin目录></p>
+<p><img src="/images/allure/config.jpg" alt=""></p>
+</li>
+<li><p>创建Job</p>
+<ol>
+<li><p>build</p>
+<p><img src="/images/allure/build.jpg" alt=""></p>
+</li>
+<li><p>post build</p>
+<p><img src="/images/allure/post.jpg" alt=""></p>
+</li>
+</ol>
+</li>
+<li><p>支行Job</p>
+<p><img src="/images/allure/result.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/09/02/Jacoco功能测试覆盖率/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/02/Jacoco功能测试覆盖率/" itemprop="url">Jacoco功能测试覆盖率</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-02T10:17:10+08:00">
+                2020-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/02/Jacoco功能测试覆盖率/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/09/02/Jacoco功能测试覆盖率/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。</p>
+<p>我们需要这两个jar： <code>jacocoagent.jar</code>和<code>jacococli.jar</code>。</p>
+<p>一样是和Git，Jenkins集成，说一下思路</p>
+<ol>
+<li><p>同样<code>mvn install</code>，打包生成jar包</p>
+</li>
+<li><p>项目启动的时候，配置jacoco agent</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:/jacocoagent.jar=includes=*,output=tcpserver,address=localhost,port=<span class="number">11111</span> -jar ./target/project-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动后，生成报告</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar dump --address localhost --port <span class="number">11111</span> --destfile ./jacoco-demo.<span class="keyword">exec</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar report ./jacoco-demo.<span class="keyword">exec</span> --classfiles ./target/classes --html ./report</span><br></pre></td></tr></table></figure>
+<p>没有做任何测试，覆盖率极低。</p>
+</li>
+<li><p>做一些测试之后，生成报告</p>
+<p>反映出实时的测试覆盖率。</p>
+</li>
+</ol>
+<p>以上只是简单例子，也可以在Tomcat里配置。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/08/22/Jacoco自动化代码覆盖率/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/22/Jacoco自动化代码覆盖率/" itemprop="url">Jacoco自动化代码覆盖率</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-22T10:16:54+08:00">
+                2020-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/08/22/Jacoco自动化代码覆盖率/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/08/22/Jacoco自动化代码覆盖率/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。官网(Jacoco)[<a href="https://www.eclemma.org/jacoco/" target="_blank" rel="external">https://www.eclemma.org/jacoco/</a>]</p>
+<h2 id="覆盖率计数器"><a href="#覆盖率计数器" class="headerlink" title="覆盖率计数器"></a>覆盖率计数器</h2><h6 id="1-行覆盖"><a href="#1-行覆盖" class="headerlink" title="1. 行覆盖"></a>1. 行覆盖</h6><h6 id="2-类覆盖"><a href="#2-类覆盖" class="headerlink" title="2. 类覆盖"></a>2. 类覆盖</h6><h6 id="3-方法覆盖"><a href="#3-方法覆盖" class="headerlink" title="3. 方法覆盖"></a>3. 方法覆盖</h6><h6 id="4-分支覆盖"><a href="#4-分支覆盖" class="headerlink" title="4. 分支覆盖"></a>4. 分支覆盖</h6><h6 id="5-指令覆盖"><a href="#5-指令覆盖" class="headerlink" title="5. 指令覆盖"></a>5. 指令覆盖</h6><h6 id="6-圈复杂度"><a href="#6-圈复杂度" class="headerlink" title="6. 圈复杂度"></a>6. 圈复杂度</h6><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Jacoco使用插桩的方式来记录覆盖率数据。<br> 插桩模式有两种：</p>
+<h6 id="1-on-the-fly模式"><a href="#1-on-the-fly模式" class="headerlink" title="1. on-the-fly模式"></a>1. on-the-fly模式</h6><blockquote>
+<p>JVM通过 -javaagent参数指定jar文件启动代理程序，代理程序在ClassLoader装载一个class前判断是否修改class文件，并将探针插入class文件，探针不改变原有方法的行为，只是记录是否已经执行。</p>
+</blockquote>
+<h6 id="2-offline模式"><a href="#2-offline模式" class="headerlink" title="2. offline模式"></a>2. offline模式</h6><blockquote>
+<p>在测试之前先对文件进行插桩，生成插过桩的class或jar包，测试插过桩的class和jar包，生成覆盖率信息到文件，最后统一处理，生成报告。</p>
+</blockquote>
+<h1 id="集成Maven"><a href="#集成Maven" class="headerlink" title="集成Maven"></a>集成Maven</h1><p>下载配置JDK，Maven，Jacoco</p>
+<p>Manven配置(Maven Plug-in)[<a href="https://www.eclemma.org/jacoco/trunk/doc/maven.html" target="_blank" rel="external">https://www.eclemma.org/jacoco/trunk/doc/maven.html</a>]</p>
+<p>用下载的Jacoco的example里的例子演示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Test\Jacoco&gt;mvn install</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] ----------------&lt; org.jacoco:org.jacoco.examples.maven &gt;----------------</span><br><span class="line">[INFO] Building JaCoCo Maven plug-<span class="keyword">in</span> example <span class="number">0.8</span><span class="number">.6</span></span><br><span class="line">[INFO] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] --- jacoco-maven-plugin:<span class="number">0.8</span><span class="number">.6</span>:prepare-agent (default-prepare-agent) @ org.jacoco.examples.maven ---</span><br><span class="line">[INFO] argLine set to -</span><br></pre></td></tr></table></figure>
+<p>Maven构建成功之后，生成代码覆盖报告（\target\site\jacoco）</p>
+<p><img src="/images/jacoco\report.jpg" alt=""></p>
+<h1 id="集成Git和Jenkins"><a href="#集成Git和Jenkins" class="headerlink" title="集成Git和Jenkins"></a>集成Git和Jenkins</h1><ol>
+<li><p>把example上传到Github上</p>
+</li>
+<li><p>配置Jenkins，回传报告</p>
+<p><img src="/images/jacoco\jenkins.jpg" alt=""></p>
+</li>
+<li><p>配置Jacoco Coverage Report</p>
+<p><img src="/images/jacoco\coverage.jpg" alt=""></p>
+</li>
+<li><p>Coverage Trend</p>
+<p><img src="/images/jacoco\trend.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/08/08/Pycharm2020-1-2激活/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/08/Pycharm2020-1-2激活/" itemprop="url">Pycharm2020.1.2激活</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-08T21:20:39+08:00">
+                2020-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/08/08/Pycharm2020-1-2激活/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/08/08/Pycharm2020-1-2激活/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>从方法网络取得，仅供学习研究，请勿用于商业用途！</p>
+<ol>
+<li><p>安装Pycharm</p>
+</li>
+<li><p>下载</p>
+<p>链接: <a href="https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA" target="_blank" rel="external">https://pan.baidu.com/s/1W6k0RRB45iJ15L6_7HEMKA</a> 提取码: fti8 </p>
+</li>
+<li><p>打开Pycharm， 把下载的zip拖拽到IDE窗口，重启Pycharm</p>
+</li>
+<li><p>在弹出的JetbrainsAgent Helper对话框中，点击‘为Pycharm安装’</p>
+</li>
+<li><p>重启Pycharm即可</p>
+</li>
+</ol>
 
           
         
@@ -1942,7 +2094,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1992,7 +2144,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2003,7 +2155,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2014,7 +2166,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

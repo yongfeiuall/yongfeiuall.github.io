@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-Deploy-Servers/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/23/Terraform-Deploy-Servers/" itemprop="url">Terraform - Deploy Server - Single Server</a></h1>
+                <a class="post-title-link" href="/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/" itemprop="url">Python + Selenium: Page Object and Page Factory</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:57:02+08:00">
-                2018-04-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-10T14:13:23+08:00">
+                2018-06-10
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
+                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
+                    <span itemprop="name">Selenium Webdriver</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/23/Terraform-Deploy-Servers/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-Deploy-Servers/" itemprop="commentsCount"></span>
+                <a href="/2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/10/Python-Selenium-Page-Object-and-Page-Factory/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,51 +410,32 @@
       
         
           
-            <p>做一些简单的联系，Deploy一些不同的Server。</p>
-<h1 id="Pre-condition"><a href="#Pre-condition" class="headerlink" title="Pre-condition"></a>Pre-condition</h1><p>为了让Terraform和AWS工作，必须把AWS User的AWS_ACCESS_KEY_ID和AWS_SECRET_ACCESS_KEY加到环境变量。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">set</span> AWS_ACCESS_KEY_ID=(your <span class="keyword">access</span> <span class="keyword">key</span> <span class="keyword">id</span>)</span><br><span class="line"><span class="keyword">set</span> AWS_SECRET_ACCESS_KEY=(your secret <span class="keyword">access</span> <span class="keyword">key</span>)</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Single-Server"><a href="#Single-Server" class="headerlink" title="Single Server"></a>Single Server</h1><ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple single server"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/singleserver.jpg" alt=""></li>
-</ol>
-<h1 id="Single-Web-Server"><a href="#Single-Web-Server" class="headerlink" title="Single Web Server"></a>Single Web Server</h1><ol>
-<li>创建Config文件<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"simple web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; single web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">80</span></span><br><span class="line">		to_port     = <span class="number">80</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>说明：</p>
+            <p>基于种种原因，简单地对Python + Selenium的UI自动化做了一个简单的搭建。一些简单的分层：</p>
 <ul>
-<li>AWS默认不允许任何Incoming和Outcoming，我们要建一个Security Group（要同时有Inbound和Outbound）</li>
-<li>把SG要添加到EC2上，用到SG的ID,Terraform里，用<code>&quot;${TYPE.NAME.ATTRIBUTE}&quot;</code>语法来引用其他Resources的Attribute</li>
-<li>The &lt;&lt;-EOF and EOF are allows you to create multiline strings without having to insert newline characters all over the place.</li>
+<li>conf: 一些配置文件，如网址，Browser Type</li>
+<li>data： 数据驱动的数据</li>
+<li>pages： Page对象</li>
+<li>report： HTML报告，Screenshot</li>
+<li>tests： 脚本</li>
+<li>utils： 公共的方法，封闭Selenium，处理csv</li>
 </ul>
-<ol>
-<li>执行命令<code>terraform plan</code>，<code>terraform apply</code></li>
-<li>验证成功<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yongfeiuall<span class="comment">@automation:~$ curl http://13.113.195.209</span></span><br><span class="line"><span class="variable">&lt;html&gt;</span><span class="variable">&lt;h1&gt;</span> single web server from terraform <span class="variable">&lt;/h1&gt;</span><span class="variable">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/yongfeiuall/python_selenium_page_object_example" target="_blank" rel="external">python_selenium_page_object_example</a></p>
+<h1 id="Page-Object"><a href="#Page-Object" class="headerlink" title="Page Object"></a>Page Object</h1><ol>
+<li><p>做了一个BasicPage类，对Selenium做了简单封装</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicPage</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, driver)</span>:</span></span><br><span class="line">        self.driver = driver</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_page</span><span class="params">(self, url)</span>:</span></span><br><span class="line">        <span class="string">"""**Description**::</span><br><span class="line">                        open the page</span><br><span class="line">        """</span></span><br><span class="line">        self.driver.get(url)</span><br><span class="line">        self.driver.maximize_window()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">input_text</span><span class="params">(self, locator, value)</span>:</span></span><br><span class="line">        <span class="string">"""**Description**::</span><br><span class="line">                Fill value to the element located by locator</span><br><span class="line"></span><br><span class="line">        :param locator:The locator to locate the element.</span><br><span class="line">        :param value:value to set to the element</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        element = self._find_web_element(locator)</span><br><span class="line">        element.send_keys(value)</span><br><span class="line">        <span class="keyword">return</span> self</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Page Object实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.page <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaiduPage</span><span class="params">(BasicPage)</span>:</span></span><br><span class="line"></span><br><span class="line">    search_box = (<span class="string">'id'</span>, <span class="string">'kw'</span>)</span><br><span class="line">    search_button = (<span class="string">'id'</span>, <span class="string">'su'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, keywords)</span>:</span></span><br><span class="line">        self.input_text(self.search_box, keywords)</span><br><span class="line">        self.click_element(self.search_button)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对Browser进行封装，利用Pytest Fixture实现每个脚本运行前运行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"><span class="keyword">from</span> conf.const <span class="keyword">import</span> Const</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.fixture(scope='function', params=[Const.browser])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_browser</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="string">"""**Description**::</span><br><span class="line">                    start browser</span><br><span class="line">    """</span></span><br><span class="line">    name = request.param</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">"firefox"</span> <span class="keyword">or</span> name == <span class="string">"Firefox"</span> <span class="keyword">or</span> name == <span class="string">"ff"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Firefox"</span>)</span><br><span class="line">            driver = webdriver.Firefox()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"chrome"</span> <span class="keyword">or</span> name == <span class="string">"Chrome"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Chrome"</span>)</span><br><span class="line">            driver = webdriver.Chrome()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"ie"</span> <span class="keyword">or</span> name == <span class="string">"Ie"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :Ie"</span>)</span><br><span class="line">            driver = webdriver.Ie()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">"phantomjs"</span> <span class="keyword">or</span> name == <span class="string">"Phantomjs"</span>:</span><br><span class="line">            print(<span class="string">"start browser name :phantomjs"</span>)</span><br><span class="line">            driver = webdriver.PhantomJS()</span><br><span class="line">            <span class="keyword">return</span> driver</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"Not found this browser,You can use 'firefox', 'chrome', 'ie' or 'phantomjs'"</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> msg:</span><br><span class="line">        print(<span class="string">"Couldn't start browser：%s"</span> % str(msg))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>脚本层实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pages.page_object <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> conf.const <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestPO</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_baidu</span><span class="params">(self, start_browser)</span>:</span></span><br><span class="line">        baidu = BaiduPage(start_browser)</span><br><span class="line">        baidu.open_page(URL.baidu)</span><br><span class="line">        baidu.search(<span class="string">"selenium"</span>)</span><br><span class="line">        start_browser.close()</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>用Browser打开，可以看到。</p>
-<h1 id="Configurable-Web-Server"><a href="#Configurable-Web-Server" class="headerlink" title="Configurable Web Server"></a>Configurable Web Server</h1><p>为了更好的管理，Terraform允许定义Input变量：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">variable</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="preprocessor">[</span>CONFIG <span class="attribute">...</span><span class="preprocessor">]</span><span class="markup"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>The body of the variable declaration can contain three parameters, all of them<br>optional:</p>
-<ul>
-<li><strong>description</strong><br>Use this parameter to document how a variable is used. </li>
-<li><strong>default</strong><br>There are a number of ways to provide a value for the variable.</li>
-<li><strong>type</strong><br>Must be one of “string”, “list”, or “map”.<br>E.g.,<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">variable <span class="string">"list_example"</span> &#123;</span><br><span class="line">description = <span class="string">"An example of a list in Terraform"</span></span><br><span class="line">type = <span class="string">"list"</span></span><br><span class="line"><span class="keyword">default</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>用下面的方式来读取变量<code>&quot;${var.VARIABLE_NAME}&quot;</code>。</p>
-<p>同时，Terraform还允许定义Output变量：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="title">value</span> = VALUE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以返回创建Instance后你想获得的一些属性，例如：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">output</span> <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.example.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>创建Config文件</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">variable</span> <span class="string">"server_port"</span> &#123;</span><br><span class="line">	<span class="title">description</span> = <span class="string">"The port the server will use for HTTP requests"</span></span><br><span class="line">	default = <span class="number">80</span></span><br><span class="line">&#125;</span><br><span class="line">output <span class="string">"public_ip"</span> &#123;</span><br><span class="line"><span class="title">value</span> = <span class="string">"<span class="variable">$&#123;aws_instance.yongfeiuall.public_ip&#125;</span>"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">provider <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"ap-northeast-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-28ddc154"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	</span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"configurable web server"</span></span><br><span class="line">	&#125;</span><br><span class="line">	user_data = &lt;&lt;-EOF</span><br><span class="line">				<span class="comment">#!/bin/bash</span></span><br><span class="line">				yum update -y</span><br><span class="line">				yum install -y httpd</span><br><span class="line">				service httpd start</span><br><span class="line">				echo <span class="string">'&lt;html&gt;&lt;h1&gt; configurable web server from terraform &lt;/h1&gt;&lt;/html&gt;'</span> &gt; /var/www/html/index.html</span><br><span class="line">				EOF</span><br><span class="line">	</span><br><span class="line">	vpc_security_group_ids = [<span class="string">"<span class="variable">$&#123;aws_security_group.http.id&#125;</span>"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_security_group"</span> <span class="string">"http"</span> &#123;</span><br><span class="line">	<span class="title">name</span> = <span class="string">"yonfeiuall_single_web"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># HTTP access from anywhere</span></span><br><span class="line">	ingress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		to_port     = <span class="string">"<span class="variable">$&#123;var.server_port&#125;</span>"</span></span><br><span class="line">		protocol    = <span class="string">"tcp"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	  </span><br><span class="line">	<span class="comment"># Outbound internet access</span></span><br><span class="line">	egress &#123;</span><br><span class="line">		<span class="title">from_port</span>   = <span class="number">0</span></span><br><span class="line">		to_port     = <span class="number">0</span></span><br><span class="line">		protocol    = <span class="string">"-1"</span></span><br><span class="line">		cidr_blocks = [<span class="string">"0.0.0.0/0"</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令<code>terraform plan</code>，<code>terraform apply</code></p>
-</li>
-<li>验证成功<br><img src="/images/terraform/configwebserver.jpg" alt=""></li>
-</ol>
+<h1 id="Page-Factory"><a href="#Page-Factory" class="headerlink" title="Page Factory"></a>Page Factory</h1><p>Python跟Java不一样，没有专门的方法来实现，在网上看到有人做了个实现，只是在这里做了个简单的实验：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">__all__ = [<span class="string">'cacheable'</span>, <span class="string">'callable_find_by'</span>, <span class="string">'property_find_by'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cacheable_decorator</span><span class="params">(lookup)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(self, <span class="string">'_elements_cache'</span>):</span><br><span class="line">            self._elements_cache = &#123;&#125;  <span class="comment"># &#123;callable_id: element(s)&#125;</span></span><br><span class="line">        cache = self._elements_cache</span><br><span class="line"></span><br><span class="line">        key = id(lookup)</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> cache:</span><br><span class="line">            cache[key] = lookup(self)</span><br><span class="line">        <span class="keyword">return</span> cache[key]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> func</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cacheable = cacheable_decorator</span><br><span class="line"></span><br><span class="line">_strategy_kwargs = [<span class="string">'id_'</span>, <span class="string">'xpath'</span>, <span class="string">'link_text'</span>, <span class="string">'partial_link_text'</span>,</span><br><span class="line">                    <span class="string">'name'</span>, <span class="string">'tag_name'</span>, <span class="string">'class_name'</span>, <span class="string">'css_selector'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_callable_find_by</span><span class="params">(how, using, multiple, cacheable, context, driver_attr, **kwargs)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># context - driver or a certain element</span></span><br><span class="line">        <span class="keyword">if</span> context:</span><br><span class="line">            ctx = context() <span class="keyword">if</span> callable(context) <span class="keyword">else</span> context.__get__(self)  <span class="comment"># or property</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ctx = getattr(self, driver_attr)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 'how' AND 'using' take precedence over keyword arguments</span></span><br><span class="line">        <span class="keyword">if</span> how <span class="keyword">and</span> using:</span><br><span class="line">            lookup = ctx.find_elements <span class="keyword">if</span> multiple <span class="keyword">else</span> ctx.find_element</span><br><span class="line">            <span class="keyword">return</span> lookup(how, using)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> len(kwargs) != <span class="number">1</span> <span class="keyword">or</span> list(kwargs.keys())[<span class="number">0</span>] <span class="keyword">not</span> <span class="keyword">in</span> _strategy_kwargs:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">"If 'how' AND 'using' are not specified, one and only one of the following "</span></span><br><span class="line">                <span class="string">"valid keyword arguments should be provided: %s."</span> % _strategy_kwargs)</span><br><span class="line"></span><br><span class="line">        key = list(kwargs.keys())[<span class="number">0</span>];</span><br><span class="line">        value = kwargs[key]</span><br><span class="line">        suffix = key[:-<span class="number">1</span>] <span class="keyword">if</span> key.endswith(<span class="string">'_'</span>) <span class="keyword">else</span> key  <span class="comment"># find_element(s)_by_xxx</span></span><br><span class="line">        prefix = <span class="string">'find_elements_by'</span> <span class="keyword">if</span> multiple <span class="keyword">else</span> <span class="string">'find_element_by'</span></span><br><span class="line">        lookup = getattr(ctx, <span class="string">'%s_%s'</span> % (prefix, suffix))</span><br><span class="line">        <span class="keyword">return</span> lookup(value)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cacheable_decorator(func) <span class="keyword">if</span> cacheable <span class="keyword">else</span> func</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callable_find_by</span><span class="params">(how=None, using=None, multiple=False, cacheable=False, context=None, driver_attr=<span class="string">'driver'</span>,</span><br><span class="line">                     **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> _callable_find_by(how, using, multiple, cacheable, context, driver_attr, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">property_find_by</span><span class="params">(how=None, using=None, multiple=False, cacheable=False, context=None, driver_attr=<span class="string">'driver'</span>,</span><br><span class="line">                     **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> property(_callable_find_by(how, using, multiple, cacheable, context, driver_attr, **kwargs))</span><br></pre></td></tr></table></figure></p>
+<p>Page:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> utils.page <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> utils.pageobject_support <span class="keyword">import</span> callable_find_by <span class="keyword">as</span> by</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaiduPage</span><span class="params">(BasicPage)</span>:</span></span><br><span class="line"></span><br><span class="line">    search_box = by(id_=<span class="string">"kw"</span>)</span><br><span class="line">    search_button = by(id_=<span class="string">'su'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, keywords)</span>:</span></span><br><span class="line">        self.search_box().send_keys(keywords)</span><br><span class="line">        self.search_button().click()</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -503,7 +484,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/Terraform-基础/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -522,7 +503,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/23/Terraform-基础/" itemprop="url">Terraform - 基础</a></h1>
+                <a class="post-title-link" href="/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/" itemprop="url">除了爱孩子，没有任何一个理由生二胎</a></h1>
         
 
         <div class="post-meta">
@@ -534,343 +515,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T15:08:22+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Terraform/" itemprop="url" rel="index">
-                    <span itemprop="name">Terraform</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/Terraform-基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/Terraform-基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里我们基于前面学习的AWS进行学习。</p>
-<p>Terraform 是一个 IT 基础架构自动化编排工具，IaaS, 基础架构即代码。具体的说就是可以用代码来管理维护IT资源。并且在真正运行之前可以看到执行计划。由于状态保存到文件中，因此能够离线方式查看资源情况。</p>
-<p>可以去官网查看更多详细信息：<a href="https://www.terraform.io/" target="_blank" rel="external">Terraform</a></p>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>下载安装包<a href="https://www.terraform.io/downloads.html" target="_blank" rel="external">Here</a>，解压压缩包，为了更好的应用，把它添加环境变量PATH。</p>
-<p>打开命令行，验证能用：<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;terraform --version</span><br><span class="line">Terraform v0.11.7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:<span class="command">\Users</span><span class="command">\yongfei</span>.hu&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="HashiCorp-Configuration-Language-HCL"><a href="#HashiCorp-Configuration-Language-HCL" class="headerlink" title="HashiCorp Configuration Language (HCL)"></a>HashiCorp Configuration Language (HCL)</h1><p>Terraform用HCL来编写，并保存在后缀有.tf的文件。</p>
-<h2 id="provider"><a href="#provider" class="headerlink" title="provider"></a>provider</h2><p>在main.tf文件中<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line"><span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>用AWS做为Provider。</li>
-<li>部署你的infrastructure到US-EAST-1 Region。</li>
-</ul>
-<h2 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h2><p>对每一种Provider，都有很多不同的Resources进行管理。<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource <span class="string">"PROVIDER_TYPE"</span> <span class="string">"NAME"</span> &#123;</span><br><span class="line"><span class="string">[CONFIG ...]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>PROVIDER</strong> is the name of a provider</li>
-<li><strong>TYPE</strong> is the type of resources to create in that provider</li>
-<li><strong>NAME</strong> is an identifier you can use throughout the Terraform code to refer to this resource</li>
-<li><strong>CONFIG</strong> consists of one or more configuration parameters that are specific to that resource<br>E.g.,<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">resource</span> <span class="string">"aws_instance"</span> <span class="string">"example"</span> &#123;</span><br><span class="line"><span class="title">ami</span> = <span class="string">"ami-40d28157"</span></span><br><span class="line">instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><p>命令行进入到main.tf的目录执行 Terraform Command。</p>
-<h2 id="terrafrom-plan"><a href="#terrafrom-plan" class="headerlink" title="terrafrom plan"></a>terrafrom plan</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; terraform plan</span><br><span class="line">Refreshing Terraform <span class="keyword">state</span> in-memory prior <span class="keyword">to</span> plan...</span><br><span class="line">(...)</span><br><span class="line">+ aws_instance.example</span><br><span class="line">ami: <span class="string">"ami-40dddded"</span></span><br><span class="line">(...)</span><br></pre></td></tr></table></figure>
-<p>The plan command lets you see what Terraform will do before actually making<br>any changes。</p>
-<ul>
-<li>resources with a plus sign (+) are going to be created</li>
-<li>resources with a minus sign (–) are going to be deleted</li>
-<li>resources with a tilde sign (~) are going to be modified.<h2 id="terraform-apply"><a href="#terraform-apply" class="headerlink" title="terraform apply"></a>terraform apply</h2>这才是真正执行命令，去AWS上进行相应的操作。<h2 id="terraform-graph"><a href="#terraform-graph" class="headerlink" title="terraform graph"></a>terraform graph</h2>To show the dependency graph</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/23/AWS-VPC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/AWS-VPC/" itemprop="url">AWS - VPC</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T13:36:34+08:00">
-                2018-04-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/AWS-VPC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/23/AWS-VPC/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Amazon Virtual Private Cloud (Amazon VPC) 允许您在 AWS 云中预配置出一个采用逻辑隔离的部分，在这个部分中，您可以在自己定义的虚拟网络中启动 AWS 资源。</p>
-<p>VPC允许用户在一个隔离的虚拟网络中提供计算资源，设定局域网，用户可以简便的由自己选择对外开放什么服务，也可以为资料库或较高保安要求的档案设定网络隔离，以虚拟的方式设定私有云中的的网络和系统架构，模拟以单个用户为单位的数据中心。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/22/一线城市：Leave Or Not/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/22/一线城市：Leave Or Not/" itemprop="url">或许你要逃离的远方，并不是你想要的生活</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T10:05:44+08:00">
-                2018-04-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-06T13:33:24+08:00">
+                2018-06-06
               </time>
             
 
@@ -911,8 +557,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/22/一线城市：Leave Or Not/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/22/一线城市：Leave Or Not/" itemprop="commentsCount"></span>
+                <a href="/2018/06/06/除了爱孩子，没有任何一个理由生二胎。/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/06/除了爱孩子，没有任何一个理由生二胎。/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -943,12 +589,12 @@
       
         
           
-            <p>从过完年，莫名的就感到好累，每天都像一个陀螺一样不停的转，有点迷茫，再加上抢人大战，有个想法就时不时的在脑海里游出来，为了孩子，为了家庭，到底是留下还是离开会更好一些。那就索性把它放出来说道说道。</p>
-<p>一心想在一线城市发展，因为大城市的机会多，你当初来这里或许也是逼不得已的。大城市有很好的包容性，你哭你笑，你成功还是失意，你可以在规则内做你想做的事情而不必在意别人的目光，你可以按照自己的意愿过你自己想要的生活。</p>
-<p>但其实大城市也是无情的，高昂的房价，让人麻木的快节奏，它不会在乎你的死活，你走还是留，它一如既往。特别是奇葩的户籍制度将我们划分了“三六九等”，福利，养老，医疗，教育…所有的东西都跟户籍挂钩，你没有户籍，就算发展的再好，有房有车，你是所谓的中产，也会没有安全感，归属感。而在大城市你能获得户籍的机会也只能呵呵，尽管现在也开始有了积分落户。</p>
-<p>一线城市容不下肉身，三四线放不下灵魂。老家是基本回不去了，尽管那是你的户籍所在地，尽管你的亲情和记忆在那里，但世俗的眼光，至上的关系，格格不入的思想，会让你感到无力和失落，甚至是孤独。</p>
-<p>现在二线城市抢人的节奏真不敢想象，有段子说，你出西安车站跟警察问路，人直接问你什么学历，满足条件，先落个户吧。几个月就进了二十几万人，人是来了，后续的基础设施能跟上吗？人来了直接导致的就是房价上涨，你去了还能够买的起吗？还有就业，教育，医疗，等等等等。</p>
-<p>社会变化再快，政策再诱惑，这个时候更应该静下心来思考和衡量，什么才是自己真正想要的生活，不要到头来只是从大城市的焦虑转变成非一线的焦虑。本质上讲没有选择是完美的，做出任何选择势必会放弃一些其他的东西。</p>
+            <p>二胎，在中国是个永远逃不掉的话题，有的人甚至三胎都提上了日程。</p>
+<p>二孩政策都放开了，你不生就是自私；重男轻女的思想，没有男孩就是无后；一个孩子太单了，给她有个伴；当你老了，多个孩子好养老；你看周围的朋友都生了，你也应该生……太多的所谓正确的理由和建议充斥在耳旁，但生与不生，只有你知道自己内心最真实的想法。</p>
+<p>想生二胎，首先想到的就是经济基础，网上有太多计算，生二胎要花多少多少钱，特别是在大城市，感觉一般工薪族是生不起的。时代不同了，养孩子远不止吃饱穿好，就说一点，教育，记得奇葩说里说过不要假装现代社会金钱不重要，不要误导年轻人，没有钱也能很好养育孩子。</p>
+<p>孩子好生不好养，最主要的还是时间和精力。你有没有内心强大到再来一轮？有没有人给你带孩子？你能不能给她足够多的陪伴？你能不能平衡好大宝和二宝的关系？</p>
+<p>最近跟闺女聊了很多，发现她并不是大人眼中想的那么独立，在新环境中她也有委屈，有愤怒，有失落，在面对她的种种问题的时候，我却束手无策，心理难免还是会有一些不好受。浮躁的社会，跟风攀比的家长，眼花缭乱的培训班，让孩子无所适从。在教育孩子上面还有很长的路要走，实在是没有准备好再有一个孩子，应该怎样让她们都能在这个浮躁的社会里成为幸福的人。</p>
+<p>生与不生都是自己的问题，每个家庭的情况不同，选择自然也不同。生育是一种能力，不是一种义务，除了爱孩子，没有任何一个理由生二胎。</p>
 
           
         
@@ -997,7 +643,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/22/AWS-Route-53/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/03/参观北京天文馆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1016,7 +662,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/22/AWS-Route-53/" itemprop="url">AWS - Route 53</a></h1>
+                <a class="post-title-link" href="/2018/06/03/参观北京天文馆/" itemprop="url">参观北京天文馆</a></h1>
         
 
         <div class="post-meta">
@@ -1028,8 +674,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T08:48:32+08:00">
-                2018-04-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-03T11:00:09+08:00">
+                2018-06-03
               </time>
             
 
@@ -1051,8 +697,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
                   </a>
                 </span>
 
@@ -1070,8 +716,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/22/AWS-Route-53/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/22/AWS-Route-53/" itemprop="commentsCount"></span>
+                <a href="/2018/06/03/参观北京天文馆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/03/参观北京天文馆/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1102,16 +748,824 @@
       
         
           
-            <p>DNS全称为Domain Name System，即域名系统，其作用就是将我们经常使用的“网址”解析为IP地址。</p>
-<p>Amazon Route 53 是一种可用性高、可扩展性强的云域名系统 (DNS) Web 服务。</p>
-<p>域名与IP之间的对应关系，称为”记录”（record）。要创建记录，需要先选择一个路由策略，它决定了 Amazon Route 53 响应查询的方式：</p>
+            <p>上次来过一次，来的晚了票都卖完了，这次没开馆之前就到了。</p>
+<p>a馆是老馆，就一个小展厅，球幕电影也一般；b馆是新馆，还可以吧。总体感觉，要是没有或者有少量天文知识的，不听讲解的话，其实啥也看不太明白了。孩子来了也是跟着看个热闹。<br><img src="/images/izheyi/2018/06/tianwenguan_00.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_01.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_02.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_03.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_04.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_05.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_06.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_07.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_08.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_09.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_10.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_11.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_12.JPG" alt=""><br><img src="/images/izheyi/2018/06/tianwenguan_13.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/06/01/少先队员入队-Mini世界实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/01/少先队员入队-Mini世界实践/" itemprop="url">少先队员入队 - Mini世界实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T20:59:30+08:00">
+                2018-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/01/少先队员入队-Mini世界实践/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/06/01/少先队员入队-Mini世界实践/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>期盼了很长时间，也练习了很长时间，系红领巾，站队，唱歌。。。终于入队了。<br><img src="/images/izheyi/2018/06/rudui_01.JPG" alt=""><br><img src="/images/izheyi/2018/06/rudui_02.JPG" alt=""></p>
+<p>正好赶上六一儿童节，学校有心的带领着大家去迷你世界体验馆感受了一把。<br><img src="/images/izheyi/2018/06/mini_01.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_02.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_03.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_04.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_05.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_06.jpg" alt=""><br><img src="/images/izheyi/2018/06/mini_07.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/31/CI-CD-环境搭建-7-集成Terraform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="url">CI/CD - 环境搭建(7) - 集成Terraform</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-31T16:09:49+08:00">
+                2018-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/31/CI-CD-环境搭建-7-集成Terraform/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/31/CI-CD-环境搭建-7-集成Terraform/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>实现Jenkins + Terraform在AWS上创建基本环境。</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
+<li>Terraform，please refer: <a href="/categories/Terraform/">Terraform知识</a></li>
+</ul>
+<h1 id="Terraform-Config"><a href="#Terraform-Config" class="headerlink" title="Terraform Config"></a>Terraform Config</h1><p>创建<code>main.tf</code>，并push到Github上。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">provider</span> <span class="string">"aws"</span> &#123;</span><br><span class="line">	<span class="title">region</span> = <span class="string">"us-east-1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"yongfeiuall"</span> &#123;</span><br><span class="line">	<span class="title">ami</span> = <span class="string">"ami-1853ac65"</span></span><br><span class="line">	instance_type = <span class="string">"t2.micro"</span></span><br><span class="line">	tags&#123;</span><br><span class="line">	<span class="title">Name</span> = <span class="string">"integration with jenkins"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Jenkins-Config"><a href="#Jenkins-Config" class="headerlink" title="Jenkins Config"></a>Jenkins Config</h1><p>创建Pipeline Job：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'Preparation'</span>) &#123; // for display purposes</span><br><span class="line">      // Get some code from a GitHub repository</span><br><span class="line">      git credentialsId: <span class="string">'ee7a726b-e672-424d-9b78-e8015668d55a'</span>, url: <span class="string">'git@github.com:yongfeiuall/pipeline-terraform-example.git'</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'variable file'</span>) &#123;</span><br><span class="line">      sh <span class="string">'sudo cp ~/variables.tf ~/.jenkins/workspace/ci-terraform'</span></span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'init'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform --version"</span></span><br><span class="line">        sh <span class="string">"terraform init"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'plan'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform plan"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'apply'</span>)&#123;</span><br><span class="line">        sh <span class="string">"terraform apply -auto-approve"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>说明：</p>
 <ul>
-<li><strong>Simple</strong><br>就是一般的，跟其他的DNS没差别。用于为您的域执行给定功能的单一资源。</li>
-<li><strong>Weighted</strong><br>用于按照您指定的比例将流量路由到多个资源。比如：<br>有两个IP，第一个Weight=10，第二个Weight=5，那么第一个IP就获得10/(10+5)=2/3的流量。</li>
-<li><strong>Latency</strong><br>就是把请求发到反应最快的那个服务中心。如果您的应用程序托管在多个 Amazon EC2 区域中，您可以通过从延迟最低的 Amazon EC2 区域处理用户的请求来帮助用户提高性能。</li>
-<li><strong>Failover</strong><br>允许您将流量路由到某个资源 (如果该资源正常) 或路由到其他资源 (如果第一个资源不正常)。</li>
-<li><strong>Geolocation</strong><br>根据用户的位置来路由流量。</li>
-<li><strong>Multivalue answer</strong><br>让 Route 53 用随机选择的正常记录 (最多八条) 响应 DNS 查询。</li>
+<li>Terraform预先安装在了Server上，没有用Jenkins安装</li>
+<li>AWS access key和secret key不能公开，所以加了<code>stage(&#39;variable file)</code>，提前放到Server上去</li>
+<li><code>terraform apply</code>加上<code>-auto-approve</code></li>
+</ul>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p><img src="/images/CI/jenkins_terraform.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/27/南戴河游玩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/27/南戴河游玩/" itemprop="url">南戴河游玩</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-27T13:23:23+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/27/南戴河游玩/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/27/南戴河游玩/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>两周前的周末跟妈妈去了南戴河玩，妈妈公司组织的活动，爸爸没有去。</p>
+<p>玩的很开心，下次带你看更大的海^_^</p>
+<p><img src="/images/izheyi/2018/05/1.JPG" alt=""><br><img src="/images/izheyi/2018/05/2.JPG" alt=""><br><img src="/images/izheyi/2018/05/3.JPG" alt=""><br><img src="/images/izheyi/2018/05/4.JPG" alt=""><br><img src="/images/izheyi/2018/05/5.JPG" alt=""><br><img src="/images/izheyi/2018/05/6.JPG" alt=""><br><img src="/images/izheyi/2018/05/7.JPG" alt=""><br><img src="/images/izheyi/2018/05/8.JPG" alt=""><br><img src="/images/izheyi/2018/05/9.JPG" alt=""><br><img src="/images/izheyi/2018/05/10.JPG" alt=""><br><img src="/images/izheyi/2018/05/11.JPG" alt=""><br><img src="/images/izheyi/2018/05/12.JPG" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/23/CI-CD-环境搭建-6-实现Salt部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/23/CI-CD-环境搭建-6-实现Salt部署/" itemprop="url">CI/CD - 环境搭建(6) - 实现Salt部署</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-23T16:38:20+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/23/CI-CD-环境搭建-6-实现Salt部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/23/CI-CD-环境搭建-6-实现Salt部署/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>利用Salt，从Artifactory上Get Build，并部署。</p>
+<h1 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h1><ul>
+<li>集成Artifactory，please refer: <a href="/2018/05/12/CI-CD-环境搭建-3-集成Artifactory/">集成Artifactory</a></li>
+<li>Salt安装，refer：<a href="/2018/02/27/Salt-简单Demo/">安装SaltStack</a></li>
+</ul>
+<h1 id="Salt-Config"><a href="#Salt-Config" class="headerlink" title="Salt Config"></a>Salt Config</h1><ol>
+<li><p>创建Salt State</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># cd /srv/salt/</span></span><br><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># ls</span></span><br><span class="line">artifact.sls  file.sls  _grains  mysql.sls  top.sls  webserver.sls</span><br><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># cat artifact.sls </span></span><br><span class="line">spring_module_downloaded:</span><br><span class="line">  artifactory.downloaded:</span><br><span class="line">   - artifact:</span><br><span class="line">       artifactory_url: http://<span class="number">192.168</span><span class="number">.220</span><span class="number">.129</span>:<span class="number">8081</span>/artifactory</span><br><span class="line">       repository: <span class="string">'libs-release-local'</span></span><br><span class="line">       artifact_id: <span class="string">'ci-example'</span></span><br><span class="line">       group_id: <span class="string">'com.izheyi'</span></span><br><span class="line">       packaging: <span class="string">'jar'</span></span><br><span class="line">       classifier: <span class="string">'sources'</span></span><br><span class="line">       version: <span class="string">'1.0.1'</span></span><br><span class="line">   - target_file: /<span class="built_in">opt</span>/artifact_project.jar</span><br><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># cat top.sls </span></span><br><span class="line">base:</span><br><span class="line">  <span class="string">'*'</span>:</span><br><span class="line">    - artifact</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行Command</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]# salt <span class="emphasis">'*'</span> state.highstate</span><br><span class="line"><span class="header">192.168.220.131:</span><br><span class="line">----------</span></span><br><span class="line"><span class="code">          ID: spring_module_downloaded</span></span><br><span class="line"><span class="code">    Function: artifactory.downloaded</span></span><br><span class="line"><span class="code">      Result: True</span></span><br><span class="line"><span class="code">     Comment: Artifact downloaded from URL: http://192.168.220.129:8081/artifactory/libs-release-local/com/izheyi/ci-example/1.0.1/ci-example-1.0.1.jar</span></span><br><span class="line"><span class="code">     Started: 02:02:49.649477</span></span><br><span class="line"><span class="code">    Duration: 860.559 ms</span></span><br><span class="line"><span class="code">     Changes:   </span></span><br><span class="line"><span class="code">              ----------</span></span><br><span class="line"><span class="code">              downloaded_file:</span></span><br><span class="line"><span class="code">                  /opt/artifact_project.jar</span></span><br><span class="line"></span><br><span class="line"><span class="header">Summary</span><br><span class="line">------------</span></span><br><span class="line">Succeeded: 1 (changed=1)</span><br><span class="line"><span class="header">Failed:    0</span><br><span class="line">------------</span></span><br><span class="line">Total states run:     1</span><br><span class="line">[root@Automation salt]#</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去Minion检查</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> <span class="built_in">opt</span>]<span class="preprocessor"># ls</span></span><br><span class="line">alfresco-community  artifact_project.jar  my_new_directory  rh</span><br><span class="line">[root<span class="constant">@Automation</span> <span class="built_in">opt</span>]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用Command运行</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># salt <span class="string">'*'</span> cmd.run <span class="string">'cd /opt; java -jar artifact_project.jar'</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查成功</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> <span class="built_in">opt</span>]<span class="preprocessor"># curl http://192.168.220.131:8080/</span></span><br><span class="line">Hello World!</span><br><span class="line">[root<span class="constant">@Automation</span> <span class="built_in">opt</span>]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="With-Jenkins"><a href="#With-Jenkins" class="headerlink" title="With Jenkins"></a>With Jenkins</h1><p>用Shell：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sshpass -<span class="tag">p</span> yongfei<span class="class">.hu</span> ssh -o <span class="string">"StrictHostKeyChecking no"</span>  root@<span class="number">192.168</span>.<span class="number">220.130</span> <span class="string">"salt '*' state.highstate"</span></span><br><span class="line"></span><br><span class="line">sshpass -<span class="tag">p</span> yongfei<span class="class">.hu</span> ssh -o <span class="string">"StrictHostKeyChecking no"</span>  root@<span class="number">192.168</span>.<span class="number">220.130</span> <span class="string">"salt '*' cmd.run 'cd /opt; java -jar artifact_project.jar'"</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/20/CI-CD-环境搭建-5-集成Automation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/CI-CD-环境搭建-5-集成Automation/" itemprop="url">CI/CD - 环境搭建(5) - 集成Automation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-20T14:58:12+08:00">
+                2018-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/20/CI-CD-环境搭建-5-集成Automation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/20/CI-CD-环境搭建-5-集成Automation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里用一个简单spring boot例子，运行部署Job后自动触发Automaion job。</p>
+<h1 id="Automation"><a href="#Automation" class="headerlink" title="Automation"></a>Automation</h1><p>简单的用Python + Requests + Tox做个验证。</p>
+<ul>
+<li><p>自动化脚本：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">r = requests.<span class="function"><span class="title">get</span><span class="params">(<span class="string">'http://localhost:8000'</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(r.status_code)</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(r.text)</span></span></span><br><span class="line"></span><br><span class="line">assert r<span class="class">.status_code</span> == <span class="number">200</span></span><br><span class="line">assert <span class="string">'Hello World!'</span> <span class="keyword">in</span> r.text</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Job配置<br><img src="/images/CI/jenkins_automation.jpg" alt=""></p>
+</li>
+<li><p>结果验证<br><img src="/images/CI/jenkins_automation_result.jpg" alt=""></p>
+</li>
 </ul>
 
           
@@ -1161,7 +1615,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/21/AWS-AMI/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/20/Python编程-从入门到实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1180,7 +1634,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/21/AWS-AMI/" itemprop="url">AWS - AMI</a></h1>
+                <a class="post-title-link" href="/2018/05/20/Python编程-从入门到实践/" itemprop="url">Python编程 - 从入门到实践</a></h1>
         
 
         <div class="post-meta">
@@ -1192,8 +1646,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-21T16:27:34+08:00">
-                2018-04-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-20T13:21:54+08:00">
+                2018-05-20
               </time>
             
 
@@ -1215,8 +1669,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
+                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
+                    <span itemprop="name">胡璐读书</span>
                   </a>
                 </span>
 
@@ -1234,8 +1688,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/21/AWS-AMI/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/21/AWS-AMI/" itemprop="commentsCount"></span>
+                <a href="/2018/05/20/Python编程-从入门到实践/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/20/Python编程-从入门到实践/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1266,11 +1720,17 @@
       
         
           
-            <p>Amazon 系统映像 (AMI) 是一种包含软件配置 (例如，操作系统、应用程序服务器和应用程序) 的模板。通过 AMI，您可以启动实例，实例是作为云中虚拟服务器运行的 AMI 的副本。您可以启动多个 AMI 实例，如下图所示。<br><img src="/images/aws/ami.jpg" alt=""></p>
-<p>AMI生命周期:<br><img src="/images/aws/ami_lifecycle.jpg" alt=""></p>
-<p>AMI有两种类型：EBS &amp; Instance。</p>
-<p>可以从Instance和EBS Snapshot创建。建议使用EBS。<br><img src="/images/aws/ami_list.jpg" alt=""></p>
-<p>还可以对AMI进行共享，复制和取消注册等，有需要再细看吧。</p>
+            <p>系统的把基础知识又过了一遍，算是个简单笔记吧。</p>
+<h2 id="简单数据类型"><a href="#简单数据类型" class="headerlink" title="简单数据类型"></a>简单数据类型</h2><p>String - 大小写<br>title(), upper(), lower()</p>
+<p>String - 连接<br>+</p>
+<p>String - 空白<br>\n, \t, lstrip(), rstrip(), strip()<br>len(), split(), Str()</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>正向0，反向-1<br>append(), insert()<br>remove(), del(), pop(),<br>sort(), reverse(), sorted(),<br>遍历 - for in</p>
+<p>数字列表<br>range(), min(), max(), sum()</p>
+<p>列表解析<br>切片 - 切片表示法[:] 创建列表的副</p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>遍历字典，Key，Value<br>Set剔除重复项</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>可变参数允许你传入0个或任意个参数，这些可变参数在函数调用时自动组装为一个tuple。而关键字参数允许你传入0个或任意个含参数名的参数，这些关键字参数在函数内部自动组装为一个dict。<br>一个星（<em>）：表示接收的参数作为元组来处理<br>两个星（*</em>）：表示接收的参数作为字典来处理</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p><strong>init</strong>()<br>将实例用作属性</p>
+<h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><p>读取模式 （’r’ ）、写入模式 （’w’ ）、附加模式 （’a’ ）或让你能够读取和写入文件的模式（’r+’ ）。如果你省略了模式实参，Python将以默认的只读模式打开文件。</p>
 
           
         
@@ -1319,7 +1779,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/21/AWS-EC2-Elastic-Load-Balancing/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1338,7 +1798,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/21/AWS-EC2-Elastic-Load-Balancing/" itemprop="url">AWS - Elastic Load Balancing & Auto Scaling</a></h1>
+                <a class="post-title-link" href="/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/" itemprop="url">CI/CD - 环境搭建(4) - 自动更新Next Release Version</a></h1>
         
 
         <div class="post-meta">
@@ -1350,8 +1810,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-21T14:41:16+08:00">
-                2018-04-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-13T12:22:02+08:00">
+                2018-05-13
               </time>
             
 
@@ -1373,8 +1833,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
                   </a>
                 </span>
 
@@ -1392,8 +1852,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/21/AWS-EC2-Elastic-Load-Balancing/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/21/AWS-EC2-Elastic-Load-Balancing/" itemprop="commentsCount"></span>
+                <a href="/2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/13/CI-CD-环境搭建-4-自动更新Next-Release-Version/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1424,495 +1884,16 @@
       
         
           
-            <h1 id="ELB"><a href="#ELB" class="headerlink" title="ELB"></a>ELB</h1><p>Elastic Load Balancing 在多个可用区中的多个 EC2 实例之间分配应用程序的传入流量。这可以提高应用程序的容错能力。Elastic Load Balancing 会检测运行状况不佳的实例，并且仅将流量路由到运行状况良好的实例。<br><img src="/images/aws/aws_elb_classic.jpg" alt=""></p>
-<p>面向 Internet 的负载均衡器有一个可公开解析的 DNS 名称，因此可以通过 Internet 将请求从客户端路由到已向负载均衡器注册的 EC2 实例。</p>
-<p><img src="/images/aws/aws_elb_internet.jpg" alt=""></p>
-<p>E.g., 创建ELB后，只有一个公共的DNS。<br><img src="/images/aws/aws_elb.jpg" alt=""></p>
-<h1 id="Auto-Scaling"><a href="#Auto-Scaling" class="headerlink" title="Auto Scaling"></a>Auto Scaling</h1><p>You can use Auto Scaling to manage Amazon EC2 capacity automatically, maintain the right number of instances for your application, operate a healthy group of instances, and scale it according to your needs.</p>
-<p>您可创建 EC2 实例的集合，称为 Auto Scaling 组 。您可以指定每个 Auto Scaling 组中最少的实例数量，Auto Scaling 会确保您的组中的实例永远不会低于这个数量。您可以指定每个 Auto Scaling 组中最大的实例数量，Auto Scaling 会确保您的组中的实例永远不会高于这个数量。如果您在创建组的时候或在创建组之后的任何时候指定了所需容量，Auto Scaling 会确保您的组一直具有此数量的实例。如果您指定了扩展策略，则 Auto Scaling 可以在您的应用程序的需求增加或降低时启动或终止实例。<br><img src="/images/aws/aws_scaling.jpg" alt=""></p>
-<p>简单的一个小例子<br><img src="/images/aws/aws_scaling_group.jpg" alt=""></p>
-<p>配置完成后，自动生成3个Instances，并加到配置的ELB中。通过EC2 public ip和ELB DNS都可以正常访问到静态页面。</p>
-<p>我把两个Instances Terminated，因为设置了desired capacity is 3，它会自动再启动两个Instances，并自动加到ELB中。<br><img src="/images/aws/aws_scaling_check.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/19/AWS-EC2-Bootstrap-Script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/AWS-EC2-Bootstrap-Script/" itemprop="url">AWS - EC2 - Bootstrap Script</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T16:15:10+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/19/AWS-EC2-Bootstrap-Script/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/19/AWS-EC2-Bootstrap-Script/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当您在 Amazon EC2 中启动实例时，您可以选择将用户数据传递到可用于执行常见自动配置任务甚至在实例启动后运行脚本的实例。您可以将两类用户数据传递到 Amazon EC2：Shell 脚本和 cloud-init 指令。</p>
-<p>我们就就前面的例子试验一下，安装Apache，并创建简单Web验证。</p>
-<ol>
-<li>在IAM新建一个Role，对该EC2授予AmazonS3FullAccess权限。</li>
-<li>把’index.html’upload到S3上。</li>
-<li>Launch Instance with IAM role and script。<br><img src="/images/aws/ec2_strapscript.jpg" alt=""></li>
-<li>验证.<br><img src="/images/aws/ec2_strapscript_verify.jpg" alt=""></li>
+            <p>前面已经实现最基本的当有Code Commit，会自动运行Jenkins Job，并把Artifact Upload到Artifactory上去。这中间的Version是手动来更改的，最好也跟着一并做成全自动化的。</p>
+<h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><p>Build成功后，自动更新Verion Number在Pom文件，并上传至Github。</p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><ol>
+<li><p>通过Shell Script对Pipeline做了一些修改，增加获得Version，更改Version，上传Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">   def mvnHome</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Checkout and Preparation'</span>) &#123; // <span class="keyword">for</span> display purposes</span><br><span class="line">      // Get some code from a GitHub repository</span><br><span class="line">      git credentialsId: <span class="string">'ee7a726b-e672-424d-9b78-e8015668d55a'</span>, url: <span class="string">'git@github.com:yongfeiuall/artifactory-maven-example.git'</span></span><br><span class="line">      // Get the Maven tool.</span><br><span class="line">      // ** NOTE: This <span class="string">'M3'</span> Maven tool must be configured</span><br><span class="line">      // **       <span class="keyword">in</span> the global configuration.           </span><br><span class="line">      mvnHome = tool <span class="string">'M3'</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Get current version'</span>) &#123;</span><br><span class="line">        sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' help:evaluate -Dexpression=project.version | grep -e '^[^\\[]' &gt; version.out"</span></span><br><span class="line">        version = <span class="built_in">read</span>File(<span class="string">"version.out"</span>).trim()</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Version is <span class="variable">$&#123;version&#125;</span>"</span></span><br><span class="line">		sh <span class="string">'cat version.out |awk -F "-" \'</span>&#123;<span class="built_in">print</span> <span class="variable">$1</span>&#125;\<span class="string">' &gt; release.out'</span></span><br><span class="line">        release = <span class="built_in">read</span>File(<span class="string">"release.out"</span>).trim()</span><br><span class="line">		<span class="built_in">echo</span> <span class="string">"Release version is <span class="variable">$&#123;release&#125;</span>"</span></span><br><span class="line">        </span><br><span class="line">        sh <span class="string">'cat release.out|awk \'</span>&#123;n=split(<span class="variable">$1</span>,A,<span class="string">"."</span>);i=<span class="number">2</span>;major=A[<span class="number">1</span>];<span class="keyword">while</span>(i&lt;n) major = major <span class="string">"."</span> A[i++];<span class="built_in">print</span> major&#125;\<span class="string">' &gt; major.out'</span></span><br><span class="line">        sh <span class="string">'cat release.out|awk \'</span>&#123;n=split(<span class="variable">$1</span>,A,<span class="string">"."</span>);<span class="built_in">print</span> A[n]&#125;\<span class="string">' &gt; minor.out'</span></span><br><span class="line">        major = <span class="built_in">read</span>File(<span class="string">"major.out"</span>).trim()</span><br><span class="line">        minor = <span class="built_in">read</span>File(<span class="string">"minor.out"</span>).trim() as Integer</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">   stage(<span class="string">'Build'</span>) &#123;</span><br><span class="line">      // Run the maven build</span><br><span class="line">      sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' clean install -DskipTests"</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   stage(<span class="string">'Results'</span>) &#123;</span><br><span class="line">      archive <span class="string">'target/*.jar'</span></span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    stage(<span class="string">'Update pom with next development version'</span>) &#123;</span><br><span class="line">        sh <span class="string">"'<span class="variable">$&#123;mvnHome&#125;</span>/bin/mvn' versions:set -DnewVersion=<span class="variable">$&#123;major&#125;</span>.<span class="variable">$&#123;minor+1&#125;</span>-SNAPSHOT -DoldVersion=* -DgroupId=* -DartifactId=* -DgenerateBackupPoms=false"</span></span><br><span class="line">        sh script:<span class="string">'git status'</span></span><br><span class="line">        modifiedFiles = sh(<span class="built_in">return</span>Stdout: <span class="literal">true</span>, script: <span class="string">"git ls-files -m"</span>).trim()</span><br><span class="line">        <span class="built_in">echo</span> modifiedFiles</span><br><span class="line">        <span class="keyword">if</span>(modifiedFiles) &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit required"</span></span><br><span class="line">            fileAdded = sh(<span class="built_in">return</span>Stdout: <span class="literal">true</span>, script: <span class="string">"git add ."</span>)</span><br><span class="line">            sh(script: <span class="string">"git commit -m 'RELEASE_BUILD: changing to next development'"</span>)</span><br><span class="line">            sh(script: <span class="string">"git push --set-upstream origin master"</span>)</span><br><span class="line">          </span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit completed"</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"commit not required"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行Jenkins Job<br><img src="/images/CI/jenkins_next_version_maven.jpg" alt=""></p>
+</li>
+<li>Github验证<br><img src="/images/CI/jenkins_next_version_github.jpg" alt=""></li>
 </ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/19/AWS-EC2-IAM-Role/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/AWS-EC2-IAM-Role/" itemprop="url">AWS - EC2 - IAM Role</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T14:18:28+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/19/AWS-EC2-IAM-Role/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/19/AWS-EC2-IAM-Role/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>可以使用 Amazon EC2 和 AWS Identity and Access Management (IAM) 的功能，在不共享您的安全凭证情况下允许其他用户、服务和应用程序使用您的 Amazon EC2 资源。</p>
-<p>我们拿EC2和S3来做个例子，SSH到新创建的Instance，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line">Unable to locate credentials. You can configure credentials by running <span class="string">"aws configure"</span>.</span><br></pre></td></tr></table></figure></p>
-<p>必须要Configure，建立Credential之后才能执行该Command。</p>
-<p>我们用IAM Role的方式来处理：</p>
-<ol>
-<li>在IAM新建一个Role，对该EC2授予AmazonS3FullAccess权限。</li>
-<li>把这个Role Attach到EC2上。<br><img src="/images/aws/ec2_iam.jpg" alt=""></li>
-<li>执行同一Command。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line">Unable to locate credentials. You can configure credentials by running <span class="string">"aws configure"</span>.</span><br><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]$ aws s3 ls</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">05</span>:<span class="number">57</span>:<span class="number">09</span> yongfeiuall</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">02</span>:<span class="number">43</span>:<span class="number">42</span> yongfeiuall.cloudfront</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">23</span>:<span class="number">52</span>:<span class="number">51</span> yongfeiuall.lifecycle</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">14</span> <span class="number">00</span>:<span class="number">24</span>:<span class="number">46</span> yongfeiuall.staticwebsite</span><br><span class="line"><span class="number">2018</span>-<span class="number">04</span>-<span class="number">13</span> <span class="number">22</span>:<span class="number">17</span>:<span class="number">33</span> yongfeiuall.sydney</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/18/AWS-EC2-Security-Group/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/AWS-EC2-Security-Group/" itemprop="url">AWS - EC2 - Security Group</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T16:07:13+08:00">
-                2018-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index">
-                    <span itemprop="name">AWS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/18/AWS-EC2-Security-Group/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/18/AWS-EC2-Security-Group/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>安全组 起着虚拟防火墙的作用，可控制一个或多个实例的流量。在您启动实例时，将一个或多个安全组与该实例相关联。为每个安全组添加规则，规定流入或流出其关联实例的流量。</p>
-<p>说白了，就是入站规则与出站规则的集合。</p>
-<p>在新建的Instance上安装Apache，并创建一个简单的HTML文件<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># vi index.html </span></span><br><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># ls</span></span><br><span class="line">index.html</span><br><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># cat index.html </span></span><br><span class="line">&lt;html&gt;&lt;h1&gt;<span class="constant">Welcome</span> <span class="constant">Yongfeiuall</span>&lt;<span class="regexp">/h1&gt;&lt;/html</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在Security Group Inbound只加SSH，在Browser里输入Public IP：<br><img src="/images/aws/sg_default.jpg" alt=""><br>在Inbound中增加HTTP， 刷新页面：<br><img src="/images/aws/sg_http.jpg" alt=""></p>
 
           
         
@@ -1952,7 +1933,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2002,7 +1983,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2013,7 +1994,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2024,7 +2005,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

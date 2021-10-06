@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/23/Packaging-python-packages-with-Poetry/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/06/FastAPI-登录认证（20）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/09/23/Packaging-python-packages-with-Poetry/" itemprop="url">Packaging python packages with Poetry</a></h1>
+                <a class="post-title-link" href="/2021/10/06/FastAPI-登录认证（20）/" itemprop="url">FastAPI: JWT登录认证（20）</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-23T09:09:06+08:00">
-                2021-09-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-06T21:30:11+08:00">
+                2021-10-06
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/09/23/Packaging-python-packages-with-Poetry/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/23/Packaging-python-packages-with-Poetry/" itemprop="commentsCount"></span>
+                <a href="/2021/10/06/FastAPI-登录认证（20）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/06/FastAPI-登录认证（20）/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,203 +410,51 @@
       
         
           
-            <p>Poetry is a tool for <strong>dependency management</strong> and <strong>packaging</strong> in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><ol>
-<li><p>Install with windows <strong>powershell</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users&#62; (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -&#10;Retrieving Poetry metadata&#10;&#10;This installer is deprecated. Poetry versions installed using this script will not be able to use &#39;self update&#39; command to upgrade to 1.2.0a1 or later.&#10;# Welcome to Poetry!&#10;&#10;This will download and install the latest version of Poetry,&#10;a dependency and package manager for Python.&#10;&#10;It will add the `poetry` command to Poetry&#39;s bin directory, located at:&#10;&#10;%USERPROFILE%\.poetry\bin&#10;&#10;This path will then be added to your `PATH` environment variable by&#10;modifying the `HKEY_CURRENT_USER/Environment/PATH` registry key.&#10;&#10;You can uninstall at any time by executing this script with the --uninstall option,&#10;and these changes will be reverted.&#10;&#10;Installing version: 1.1.10&#10;  - Downloading poetry-1.1.10-win32.tar.gz (41.47MB)&#10;  &#10;  &#10;Poetry (1.1.10) is installed now. Great!&#10;&#10;To get started you need Poetry&#39;s bin directory (%USERPROFILE%\.poetry\bin) in your `PATH`&#10;environment variable. Future applications will automatically have the&#10;correct environment, but you may need to restart your current shell.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Verify</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users&#62; poetry --version&#10;Poetry version 1.1.10</span><br></pre></td></tr></table></figure>
+            <p>至此，FastAPI的基本使用和整个流程都过完了。接下来看一下登录认证，是一个系统里最基本的功能，有些页面只能登录之后才能够访问。</p>
+<p>有Session和Token两种方式实现，目前最流行的下面token方式：</p>
+<ol>
+<li>用户登录后，返回一个token给前端，后台不存储该token</li>
+<li>前端再带着这个token去访问需要登录的页面</li>
+<li><p>后端根据token去判断用户，确定当前登录用户</p>
+<p>Bearer的简单OAuth2，前面已聊过<a href="2021/10/03/FastAPI-Security（14）/">FastAPI: Security（14）</a>，当时还没有生成token，OAuth2不能生成token，我们一般用<code>JWT</code>来实现</p>
 </li>
 </ol>
-<h2 id="Basic-Usage"><a href="#Basic-Usage" class="headerlink" title="Basic Usage"></a>Basic Usage</h2><ol>
-<li><p>Create a new project</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS E:\&#62; poetry new jenkins-tool&#10;Created package jenkins_tool in jenkins-tool&#10;PS E:\&#62; tree .\jenkins-tool\ /F&#10;&#25991;&#20214;&#22841; PATH &#21015;&#34920;&#10;&#21367;&#24207;&#21015;&#21495;&#20026; 4428-676B&#10;E:\JENKINS-TOOL&#10;&#9474;  pyproject.toml&#10;&#9474;  README.rst&#10;&#9474;&#10;&#9500;&#9472;jenkins_tool&#10;&#9474;      __init__.py&#10;&#9474;&#10;&#9492;&#9472;tests&#10;        test_jenkins_tool.py&#10;        __init__.py</span><br></pre></td></tr></table></figure>
+<h4 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h4><p>JWT全称是<code>Json Web Token</code>，JWT认证目前是前后端分离中非常流行的一种认证方式，生成的token分为三个部分: HEADER.PAYLOAD.SIGNATURE, 这三个部分都是可逆算法base64加密后的字符串, 最后用<code>.</code>拼接</p>
+<ol>
+<li><p>HEADER</p>
+<p>通常是加密算法</p>
+</li>
+<li><p>PAYLOAD</p>
+<p>存储的自定义信息和token的过期时间</p>
+</li>
+<li><p>SIGNATURE</p>
+<p>这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64后的)</li>
+<li>payload (base64后的)</li>
+<li>secret （盐值(salt): 指的是加密时加入的自定义的字符串, 最好是随机或者杂乱的字符串, 这样更能够确定加密后字符串的唯一性, 可以使用settings中的SECRET_KEY）</li>
+</ul>
+<p>这个部分需要base64加密后的header和base64加密后的payload使用<code>.</code>连接组成的字符串，然后通过header中声明的加密方式进行加盐<code>secret</code>组合加密，然后就构成了jwt的第三部分。</p>
+</li>
+</ol>
+<p>   python中有好几多库可以实现JWT认证，这里也用官网使用的<code>python-jose</code>，Python-jose需要一个额外的加密后端。这里我们使用的是推荐的后端:<code>pyca/cryptography</code></p>
+   <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install python-jose<span class="string">[cryptography]</span></span><br></pre></td></tr></table></figure>
+<h6 id="生成token"><a href="#生成token" class="headerlink" title="生成token"></a>生成token</h6>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jose <span class="keyword">import</span> jwt</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加密密钥</span></span><br><span class="line">SECRET_KEY = <span class="string">"testjwt"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置过期时间 示例5分钟</span></span><br><span class="line">expire = datetime.utcnow() + timedelta(minutes=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># exp 是固定写法必须得传  username和uid是自己存的值</span></span><br><span class="line">to_encode = &#123;<span class="string">"exp"</span>: expire, <span class="string">"username"</span>: <span class="string">"admin"</span>, <span class="string">"uid"</span>: <span class="string">"12345"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成token</span></span><br><span class="line">token = jwt.encode(to_encode, SECRET_KEY, algorithm=<span class="string">"HS256"</span>)</span><br></pre></td></tr></table></figure>
+<h6 id="解密token"><a href="#解密token" class="headerlink" title="解密token"></a>解密token</h6>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jose.exceptions <span class="keyword">import</span> ExpiredSignatureError, JWTError</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    payload = jwt.decode(token, SECRET_KEY, algorithms=<span class="string">"HS256"</span> )</span><br><span class="line">    print(payload)</span><br><span class="line"><span class="keyword">except</span> ExpiredSignatureError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">"token过期"</span>)</span><br><span class="line"><span class="keyword">except</span> JWTError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">"token验证失败"</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="FastAPI实现JWT认证"><a href="#FastAPI实现JWT认证" class="headerlink" title="FastAPI实现JWT认证"></a>FastAPI实现JWT认证</h4><ol>
+<li><p>加密解密的公共方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_jwt_token</span><span class="params">(data: dict, expires_delta: Optional[timedelta] = None)</span>:</span></span><br><span class="line">    to_encode = data.copy()</span><br><span class="line">    <span class="keyword">if</span> expires_delta:</span><br><span class="line">        expire = datetime.utcnow() + expires_delta</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        expire = datetime.utcnow() + timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)</span><br><span class="line">    to_encode.update(&#123;<span class="string">"exp"</span>: expire&#125;)</span><br><span class="line">    token = jwt.encode(claims=to_encode, key=config.SECRET_KEY, algorithm=config.ALGORITHM)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode_jwt_token</span><span class="params">(token: str)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        payload = jwt.decode(token=token, key=config.SECRET_KEY, algorithms=config.ALGORITHM)</span><br><span class="line">        <span class="keyword">return</span> payload</span><br><span class="line">    <span class="keyword">except</span> (jwt.JWTError, jwt.ExpiredSignatureError, AttributeError) <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,</span><br><span class="line">                            detail=f<span class="string">'access token failed: &#123;e&#125;'</span>,</span><br><span class="line">                            <span class="comment"># 根据OAuth2规范, 认证失败需要在响应头中添加如下键值对</span></span><br><span class="line">                            headers=&#123;<span class="string">'WWW-Authenticate'</span>: <span class="string">"Bearer"</span>&#125;</span><br><span class="line">                            )</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol>
-<li><p>Copy script to <code>jenkins_tool/jenkins_tool</code></p>
-</li>
-<li><p>Update <code>pyproject.toml</code></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[tool.poetry]&#10;name = &#34;jenkins-tool&#34;&#10;version = &#34;0.1.0&#34;&#10;description = &#34;Manage Jenkins Job&#34;&#10;authors = [&#34;yongfeiuall &#60;yongfeiuall@163.com&#62;&#34;]&#10;&#10;[tool.poetry.dependencies]&#10;python = &#34;^3.6&#34;&#10;python-jenkins=&#34;^1.7.0&#34;&#10;&#10;[tool.poetry.dev-dependencies]&#10;&#10;[build-system]&#10;requires = [&#34;poetry-core&#62;=1.0.0&#34;]&#10;build-backend = &#34;poetry.core.masonry.api&#34;&#10;&#10;[tool.poetry.scripts]&#10;jt = &#34;jenkins_tool.client:main&#34;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Build</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS E:\jenkins-tool&#62; poetry build&#10;Creating virtualenv jenkins-tool-vo3-Lls6-py3.6 in C:\Users\AppData\Local\pypoetry\Cache\virtualenvs&#10;Building jenkins-tool (0.1.0)&#10;  - Building sdist&#10;  - Built jenkins-tool-0.1.0.tar.gz&#10;  - Building wheel&#10;  - Built jenkins_tool-0.1.0-py3-none-any.whl</span><br></pre></td></tr></table></figure>
+<li><p>登录生成Token</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="string">"/api/login"</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@router.post('/api/login', tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">user_login</span><span class="params">(username: str = Form<span class="params">(...)</span>, password: str = Form<span class="params">(...)</span>, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.get_user_by_mail(db, username)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">"User not found"</span>)</span><br><span class="line">    <span class="keyword">if</span> password != db_user.hash_password:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'passwod incorrect'</span>)</span><br><span class="line"></span><br><span class="line">    data = &#123;<span class="string">'email'</span>: db_user.email, <span class="string">'user_id'</span>: db_user.id&#125;</span><br><span class="line">    token = jwttoken.create_jwt_token(data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">"token"</span>: token, <span class="string">"token_type"</span>: <span class="string">"bearer"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@router.get('/current/user', tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_current_user</span><span class="params">(token: Optional[str] = Header<span class="params">(...)</span>, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    payload = jwttoken.decode_jwt_token(token)</span><br><span class="line">    email: str = payload.get(<span class="string">"email"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> email <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,</span><br><span class="line">                            detail=f<span class="string">'access token failed'</span>,</span><br><span class="line">                            <span class="comment"># 根据OAuth2规范, 认证失败需要在响应头中添加如下键值对</span></span><br><span class="line">                            headers=&#123;<span class="string">'WWW-Authenticate'</span>: <span class="string">"Bearer"</span>&#125;</span><br><span class="line">                            )</span><br><span class="line"></span><br><span class="line">    user = crud.get_user_by_mail(db, email=email)</span><br><span class="line">    <span class="keyword">if</span> user <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">"User not found"</span>)</span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="Verification"><a href="#Verification" class="headerlink" title="Verification"></a>Verification</h2><ol>
-<li><p>Unzip <code>jenkins-tool-0.1.0.tar.gz</code></p>
-</li>
-<li><p>Install <code>PS E:\jenkins-tool\dist\jenkins-tool-0.1.0&gt; python .\setup.py install</code></p>
-</li>
-<li><p>Verify </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS E:\jenkins-tool\dist\jenkins-tool-0.1.0&#62; jt -h&#10;usage: jt [-h] [-v] [-V VIEW_NAME]&#10;&#10;Manage Jenkins Job&#10;&#10;optional arguments:&#10;  -h, --help            show this help message and exit&#10;  -v, --version         Show version&#10;  -V VIEW_NAME, --view VIEW_NAME&#10;                        Get Jenkins job last build number by view</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/" itemprop="url">remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-15T14:46:05+08:00">
-                2021-09-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/15/remote-Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>I got this error on my console when i tried to push blog to github</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: Support <span class="keyword">for</span> password authentication was removed on August <span class="number">13</span>, <span class="number">2021.</span> Please use a personal access token instead.</span><br></pre></td></tr></table></figure>
-<p>Account passwords will no longer be accepted for authenticating Git operations.</p>
-<p>You need to add a <strong>Personal Access Token</strong> instead, and you can follow the below method to add.</p>
 <ol>
-<li>Log in Github</li>
-<li>Go to <code>User -&gt; Settings -&gt; Developer settings</code></li>
-<li>Click on <strong>Personal access tokens</strong> </li>
-<li>Config settings and  <strong>Generate token</strong></li>
-<li>Copy the token to replace username:password in hexo config.yml</li>
-<li>Push again</li>
+<li><p>验证Token</p>
+<p><img src="/images/fastapi/jwt.jpg" alt=""></p>
+</li>
 </ol>
 
           
@@ -656,7 +504,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/15/批量验证RackShift上物理机Web-Console正确打开/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/06/FastAPI-Docker部署（19）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -675,7 +523,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/09/15/批量验证RackShift上物理机Web-Console正确打开/" itemprop="url">批量验证RackShift上物理机Web Console正确打开</a></h1>
+                <a class="post-title-link" href="/2021/10/06/FastAPI-Docker部署（19）/" itemprop="url">FastAPI: Docker部署（19）</a></h1>
         
 
         <div class="post-meta">
@@ -687,8 +535,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-15T14:10:38+08:00">
-                2021-09-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-06T17:10:27+08:00">
+                2021-10-06
               </time>
             
 
@@ -710,8 +558,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
                   </a>
                 </span>
 
@@ -729,8 +577,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/09/15/批量验证RackShift上物理机Web-Console正确打开/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/15/批量验证RackShift上物理机Web-Console正确打开/" itemprop="commentsCount"></span>
+                <a href="/2021/10/06/FastAPI-Docker部署（19）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/06/FastAPI-Docker部署（19）/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -761,14 +609,18 @@
       
         
           
-            <p>最近云平台集成RackShift来批量管理近100台物理机，需要验证一下每台机器从界面能正确打开Console。手工就有点扯了，简单写了下边Selenium脚本来实现</p>
-<ol>
-<li>到物理机列表面</li>
-<li>选择每页100条显示</li>
-<li>循环每台机器打开，并截图</li>
-<li>检查截图显示是否正确</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.action_chains <span class="keyword">import</span> ActionChains</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">URL = <span class="string">'http://xxx/#/login'</span></span><br><span class="line">driver = webdriver.Chrome()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open system</span></span><br><span class="line">driver.get(url=URL)</span><br><span class="line">driver.maximize_window()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Login</span></span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="app"]/div/div/div[1]/form/div[5]/div[2]/div/div[1]/input'</span>).send_keys(<span class="string">'admin'</span>)</span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="app"]/div/div/div[1]/form/div[5]/div[3]/div/div[1]/input'</span>).send_keys(<span class="string">'admin'</span>)</span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="app"]/div/div/div[1]/form/div[6]/button'</span>).click()</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Select page</span></span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="pane-bare-metal"]/div[3]/div/span[2]/div/div[1]/input'</span>).click()</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//ul[@class="el-scrollbar__view el-select-dropdown__list"]/li[4]'</span>).click()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open console and capture</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">98</span>):</span><br><span class="line">    ip = driver.find_element_by_xpath(f<span class="string">'//table[@class="el-table__body"]/tbody/tr[&#123;i&#125;]/td[4]/div'</span>).text</span><br><span class="line"></span><br><span class="line">    element = driver.find_element_by_xpath(f<span class="string">'//table[@class="el-table__body"]/tbody/tr[&#123;i&#125;]//button'</span>)</span><br><span class="line">    dropdown = element.get_attribute(<span class="string">'aria-controls'</span>)</span><br><span class="line"></span><br><span class="line">    element.click()</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    xpath = <span class="string">'//ul[@id="'</span> + dropdown + <span class="string">'"]/li[4]'</span></span><br><span class="line">    driver.find_element_by_xpath(xpath).click()</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># capture</span></span><br><span class="line">    handles = driver.window_handles</span><br><span class="line"></span><br><span class="line">    driver.switch_to.window(handles[-<span class="number">1</span>])</span><br><span class="line">    ActionChains(driver).send_keys(Keys.ENTER).perform()</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    driver.get_screenshot_as_file(f<span class="string">'./image/&#123;ip&#125;.png'</span>)</span><br><span class="line"></span><br><span class="line">    driver.close()</span><br><span class="line">    driver.switch_to.window(handles[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"> driver.quit()</span><br></pre></td></tr></table></figure>
+            <p>用Docker去部署应用已是目前最流行和通用的方式。现在把之前的项目部署到Docker上去。</p>
+<h4 id="准备Dockerfile"><a href="#准备Dockerfile" class="headerlink" title="准备Dockerfile"></a>准备Dockerfile</h4><p>项目根目录下创建<code>Dockerfile</code></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">FROM</span> python:<span class="number">3.7</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">WORKDIR</span> <span class="bash">/fastapi</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">COPY</span> <span class="bash">./requirements.txt /fastapi/requirements.txt</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">RUN</span> <span class="bash">pip install --no-cache-dir --upgrade -r /fastapi/requirements.txt</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">COPY</span> <span class="bash">. /fastapi/</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">CMD</span> <span class="bash">[<span class="string">"uvicorn"</span>, <span class="string">"main:app"</span>, <span class="string">"--host"</span>, <span class="string">"0.0.0.0"</span>, <span class="string">"--port"</span>, <span class="string">"80"</span>]</span></span><br></pre></td></tr></table></figure>
+<h4 id="Build-Docker-Image"><a href="#Build-Docker-Image" class="headerlink" title="Build Docker Image"></a>Build Docker Image</h4><p>去到项目根目录下，执行下面命令</p>
+<p><code>docker build -t myfastapi:user .</code></p>
+<p>验证</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS E:\fastapi&#62; docker image ls&#10;REPOSITORY   TAG       IMAGE ID       CREATED          SIZE&#10;myfastapi    user      0790ae3493a3   14 seconds ago   972MB</span><br></pre></td></tr></table></figure>
+<h4 id="Start-Docker-Container"><a href="#Start-Docker-Container" class="headerlink" title="Start Docker Container"></a>Start Docker Container</h4><p>执行下面命令，部署应用到Container</p>
+<p><code>docker run -d --name fastapiservice -p 80:80 myfastapi:user</code></p>
+<p>验证</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS E:\fastapi&gt; docker container ls</span><br><span class="line">CONTAINER ID   IMAGE            COMMAND                  CREATED              STATUS              PORTS                NAMES</span><br><span class="line"><span class="number">7</span>b550b5a7ebb   myfastapi:user   <span class="string">"uvicorn main:app --…"</span>   About a minute ago   Up About a minute   <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">80</span>-&gt;<span class="number">80</span>/tcp   fastapiservice</span><br></pre></td></tr></table></figure>
+<h4 id="验证部署成功"><a href="#验证部署成功" class="headerlink" title="验证部署成功"></a>验证部署成功</h4><p><img src="/images/fastapi/docker.jpg" alt=""></p>
 
           
         
@@ -817,7 +669,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/08/22/Command-line-to-execute-python-script/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/05/FastAPI-项目结构（17）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -836,7 +688,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/08/22/Command-line-to-execute-python-script/" itemprop="url">Command line to execute python script</a></h1>
+                <a class="post-title-link" href="/2021/10/05/FastAPI-项目结构（17）/" itemprop="url">FastAPI: 项目结构（18）</a></h1>
         
 
         <div class="post-meta">
@@ -848,8 +700,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-22T14:04:25+08:00">
-                2021-08-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-05T15:16:39+08:00">
+                2021-10-05
               </time>
             
 
@@ -871,8 +723,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
                   </a>
                 </span>
 
@@ -890,8 +742,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/08/22/Command-line-to-execute-python-script/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/08/22/Command-line-to-execute-python-script/" itemprop="commentsCount"></span>
+                <a href="/2021/10/05/FastAPI-项目结构（17）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/05/FastAPI-项目结构（17）/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -922,664 +774,39 @@
       
         
           
-            <p>We get jenkins job number here <a href="/2021/07/30/python-get-jenkins-job-and-build-number-info/">Jenkins</a></p>
-<p>Use <code>argparse</code> to implement call python script.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'Manage Jenkins Job'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-v'</span>, <span class="string">'--version'</span>, action=<span class="string">'store_true'</span>, help=<span class="string">'Show version'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-V'</span>, <span class="string">'--view'</span>, dest=<span class="string">'view_name'</span>, help=<span class="string">'Get Jenkins job last build number by view'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> len(sys.argv) == <span class="number">1</span>:</span><br><span class="line">    parser.print_help()</span><br><span class="line"><span class="keyword">elif</span> len(sys.argv) == <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">if</span> sys.argv[<span class="number">1</span>] <span class="keyword">in</span> [<span class="string">'-h'</span>, <span class="string">'--help'</span>]:</span><br><span class="line">        parser.print_help()</span><br><span class="line">    <span class="keyword">elif</span> sys.argv[<span class="number">1</span>] <span class="keyword">in</span> [<span class="string">'-v'</span>, <span class="string">'--version'</span>]:</span><br><span class="line">        print(f<span class="string">'&#123;__version__&#125;'</span>)</span><br><span class="line"><span class="keyword">elif</span> len(sys.argv) == <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">if</span> sys.argv[<span class="number">1</span>] <span class="keyword">in</span> [<span class="string">'-V'</span>, <span class="string">'--view'</span>]:</span><br><span class="line">        print(args.view_name)</span><br><span class="line">        subprocess.call(f<span class="string">'python ./job_version.py &#123;args.view_name&#125;'</span>, shell=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<p>Command run:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:\ python .\cli.py&#10;usage: cli.py [-h] [-v] [-V VIEW_NAME]&#10;&#10;Manage Jenkins Job&#10;&#10;optional arguments:&#10;  -h, --help            show this help message and exit&#10;  -v, --version         Show version&#10;  -V VIEW_NAME, --view VIEW_NAME&#10;                        Get Jenkins job last build number by view</span><br></pre></td></tr></table></figure>
-<p>Get job number:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS E:\neolink_tools&#62; python .\cli.py -V jenkins view name&#10;&#123;&#10;    &#34;a&#34;: 12,&#10;    &#34;b&#34;: 17,&#10;    &#34;c&#34;: 20,&#10;    &#34;d&#34;: 37&#10;&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/08/05/Jenkins-pipeline-with-pytest-and-allure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/08/05/Jenkins-pipeline-with-pytest-and-allure/" itemprop="url">Jenkins pipeline with pytest and allure</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-05T09:49:27+08:00">
-                2021-08-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">Jenkins</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/08/05/Jenkins-pipeline-with-pytest-and-allure/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/08/05/Jenkins-pipeline-with-pytest-and-allure/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Use pipeline to better manage Jenkins job:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> pipeline &#123;</span><br><span class="line">   agent &#123;</span><br><span class="line">	  label <span class="string">'jenkins_master'</span></span><br><span class="line">	&#125;</span><br><span class="line">   </span><br><span class="line">    parameters &#123;</span><br><span class="line">	  string defaultValue: <span class="string">'/tests/'</span>, description: <span class="string">'Set test suite'</span>, name: <span class="string">'TestSuite'</span>, trim: true</span><br><span class="line">	  choice choices: [<span class="string">'qa'</span>, <span class="string">'dev'</span>, <span class="string">'product'</span>], description: <span class="string">'Set test run env'</span>, name: <span class="string">'Environment'</span></span><br><span class="line">	  string defaultValue: <span class="string">''</span>, description: <span class="string">'Set tag to run'</span>, name: <span class="string">'Tag'</span>, trim: true</span><br><span class="line">	  string defaultValue: <span class="string">'2'</span>, description: <span class="string">'Set rerun times when failed'</span>, name: <span class="string">'Rerun'</span>, trim: true</span><br><span class="line">	  string defaultValue: <span class="string">'1'</span>, description: <span class="string">'Set multiple thread to run'</span>, name: <span class="string">'Parallel'</span>, trim: true</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">   stages &#123;</span><br><span class="line">      stage(<span class="string">'Get Automaiton Code'</span>) &#123;</span><br><span class="line">          steps&#123;</span><br><span class="line">            git credentialsId: <span class="string">'xxxxxxx'</span>, url: <span class="string">'https://xxx/api_automation.git'</span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">	  </span><br><span class="line">	  stage(<span class="string">'Run Automation'</span>) &#123;</span><br><span class="line">          steps&#123;</span><br><span class="line">            sh label: <span class="string">''</span>, script: <span class="string">'''if [ ! $Tag ]; then</span><br><span class="line"></span><br><span class="line">             pytest -s -v $&#123;WORKSPACE&#125;$&#123;TestSuite&#125; --reruns $&#123;Rerun&#125; -n $&#123;Parallel&#125; --alluredir=./report/json --clean-alluredir</span><br><span class="line"></span><br><span class="line">            else</span><br><span class="line"></span><br><span class="line">             pytest -s -v $&#123;WORKSPACE&#125;$&#123;TestSuite&#125; -m $&#123;Tag&#125; --reruns $&#123;Rerun&#125; -n $&#123;Parallel&#125; --alluredir=./report/json --clean-alluredir</span><br><span class="line"></span><br><span class="line">            fi'''</span></span><br><span class="line">          &#125;</span><br><span class="line">          &#125;</span><br><span class="line">	  </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    post(<span class="string">'Allure Report'</span>) &#123;</span><br><span class="line">            always&#123;</span><br><span class="line">                script&#123;</span><br><span class="line">                    allure includeProperties: false, jdk: <span class="string">''</span>, report: <span class="string">'report/html/'</span>, results: [[path: <span class="string">'report/json'</span>]]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/30/python-get-jenkins-job-and-build-number-info/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/30/python-get-jenkins-job-and-build-number-info/" itemprop="url">python get Jenkins job and build number info</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-30T15:25:26+08:00">
-                2021-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
-                    <span itemprop="name">Jenkins</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/07/30/python-get-jenkins-job-and-build-number-info/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/30/python-get-jenkins-job-and-build-number-info/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>For multiple services Jenkins job, find a way to get each job and lasted build number for release static, here the way:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jenkins</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Login</span></span><br><span class="line">s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get all jobs under certain view</span></span><br><span class="line">jobs = s.get_jobs(view_name=VIEW_NAME)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get job and last build number</span></span><br><span class="line">dic = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">    name = job[<span class="string">'name'</span>]</span><br><span class="line">    build = s.get_job_info(name)[<span class="string">'lastCompletedBuild'</span>][<span class="string">'number'</span>]</span><br><span class="line">    dic[name] = build</span><br><span class="line">print(json.dumps(dic, indent=<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
-<p>Result:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"a"</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="string">"b"</span>: <span class="number">17</span>,</span><br><span class="line">    <span class="string">"c"</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="string">"d"</span>: <span class="number">37</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/12/丁丁画画（四年级）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/12/丁丁画画（四年级）/" itemprop="url">丁丁画画（四年级）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-12T19:59:15+08:00">
-                2021-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/07/12/丁丁画画（四年级）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/12/丁丁画画（四年级）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/4/1.JPG" alt=""></p>
-<p><img src="/images/izheyi/pic/4/2.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/14/Jmeter-JSR223使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/14/Jmeter-JSR223使用/" itemprop="url">Jmeter: JSR223使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-14T08:46:44+08:00">
-                2021-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/04/14/Jmeter-JSR223使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/14/Jmeter-JSR223使用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Jmeter经常用BeanShell来实现一些其本身不能处理的任务，但是BeanShell的效率不高，现在可以用JSR223来代替，支持groovy脚本，效率更高。</p>
-<h4 id="常用内置变量"><a href="#常用内置变量" class="headerlink" title="常用内置变量"></a>常用内置变量</h4><ul>
-<li><p><strong>Vars</strong> </p>
-<p>定义变量与调用变量</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vars.<span class="built_in">get</span>(<span class="keyword">String</span> <span class="variable">key</span>)：从jmeter中获得变量值</span><br><span class="line"></span><br><span class="line">vars.put(<span class="keyword">String</span> <span class="variable">key</span>，<span class="keyword">String</span> value)：数据存到jmeter变量中</span><br><span class="line"></span><br><span class="line">vars.putObject(<span class="string">"OBJ1"</span>,<span class="keyword">new</span> <span class="keyword">Object</span>());</span><br></pre></td></tr></table></figure>
+            <p>如前言所述，开发一个项目，不可能所所有的文件都放到一个文件里，是需要有结构化的目录。</p>
+<p>简单结构如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:.&#10;&#9474;  config.py&#10;&#9474;  dependencies.py&#10;&#9474;  main.py&#10;&#9474;  requirements.txt&#10;&#9474;&#10;&#9500;&#9472;models&#10;&#9474;  &#9474;  crud.py&#10;&#9474;  &#9474;  database.py&#10;&#9474;  &#9474;  models.py&#10;&#9474;  &#9474;  schemas.py&#10;&#9474;  &#9474;  __init__.py&#10;&#9474;&#10;&#9500;&#9472;routers&#10;&#9474;  &#9474;  users.py&#10;&#9474;  &#9474;  __init__.py&#10;&#9474;&#10;&#9500;&#9472;static&#10;&#9474;      fastapi.jpg&#10;&#9474;&#10;&#9500;&#9472;templates&#10;&#9474;  &#9474;  index.html&#10;&#9474;&#10;&#9500;&#9472;utils&#10;&#9474;  &#9474;  __init__.py</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>models</p>
+<p>对数据库和数据的定义操作</p>
 </li>
-<li><p><strong>Props</strong> </p>
-<p>设置属性与调用属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;__setProperty(test1,property1,)&#125;</span>;</span><br><span class="line">props.put(“<span class="built_in">test</span>2”,“property2”);</span><br><span class="line">String <span class="built_in">test</span>1 =props.get(“<span class="built_in">test</span>1”);</span><br><span class="line">String <span class="built_in">test</span>2 = props.get(“<span class="built_in">test</span>2”);</span><br></pre></td></tr></table></figure>
+<li><p>routers</p>
+<p>路由控制，更好的按模块化划分系统功能实现</p>
 </li>
-<li><p><strong>Ctx</strong></p>
-<p>通过它来访问当前线程的上下文</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getVariables</span><span class="params">()</span></span>：获取当前线程的所有变量</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getPreviousResult</span><span class="params">()</span></span> ：获取前一个取样器的结果</span><br></pre></td></tr></table></figure>
+<li><p>static</p>
+<p>引用的静态资源文件，js,css</p>
 </li>
-<li><p><strong>prev</strong></p>
-<p>获取前面的sample采样的结果</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getResponseDataAsString</span><span class="params">()</span></span>：获取响应信息</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getResponseCode</span><span class="params">()</span></span> ：获取响应code</span><br></pre></td></tr></table></figure>
+<li><p>templates</p>
+<p>前面页面的模板文件</p>
 </li>
-<li><p><strong>log</strong></p>
-<p>打印日志 ，日志会保存在jmeter.log中</p>
+<li><p>dependencies</p>
+<p>系统所需的依赖项</p>
+</li>
+<li><p>main</p>
+<p>系统启动入口</p>
+</li>
+<li><p>config</p>
+<p>配置参数，连接数据等</p>
+</li>
+<li><p>utils</p>
+<p>公共的方法，E.g., JWT token的处理</p>
+</li>
+<li><p>requirements</p>
+<p>系统所依赖的外部库</p>
 </li>
 </ul>
-<h4 id="运行外部文件"><a href="#运行外部文件" class="headerlink" title="运行外部文件"></a>运行外部文件</h4><ul>
-<li><p>Java</p>
-<p>在JSR223中引入源文件并执行，执行与JAVA本身的方法一致</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source(“<span class="string">F:</span><span class="regexp">/Test/</span>demo1.java”);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Jar</p>
-<p>有下边两种方法可以引入jar包，执行与JAVA本身的方法一致<br>1、将jar包放到Jmeter安装目录的\lib\ext目录下<br>2、在测试计划中导入</p>
-</li>
-</ul>
+<p>项目请参见：<a href="https://github.com/yongfeiuall/fastapi" target="_blank" rel="external">github-fastapi</a></p>
 
           
         
@@ -1628,7 +855,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/05/FastAPI-APIRouter（17）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1647,7 +874,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/04/02/Jmeter-常用设置in-properties/" itemprop="url">Jmeter: 常用设置in properties</a></h1>
+                <a class="post-title-link" href="/2021/10/05/FastAPI-APIRouter（17）/" itemprop="url">FastAPI: APIRouter（17）</a></h1>
         
 
         <div class="post-meta">
@@ -1659,8 +886,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T14:18:15+08:00">
-                2021-04-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-05T14:59:41+08:00">
+                2021-10-05
               </time>
             
 
@@ -1682,8 +909,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
                   </a>
                 </span>
 
@@ -1701,8 +928,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/04/02/Jmeter-常用设置in-properties/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/02/Jmeter-常用设置in-properties/" itemprop="commentsCount"></span>
+                <a href="/2021/10/05/FastAPI-APIRouter（17）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/05/FastAPI-APIRouter（17）/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1733,9 +960,12 @@
       
         
           
-            <p>在Jmeter里常用的设置：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-<p>建议在user.properties里设置。</p>
+            <p>从前面的例子看，所有的Views操作都放在一个文件里，代码不易维护。为了更好的管理路径和代码，可以通过<code>APIRouter</code>来为该模块创建路径操作，给我们提供了在多个文件中注册路由的功能。</p>
+<h4 id="使用Router"><a href="#使用Router" class="headerlink" title="使用Router"></a>使用Router</h4><p>在项目下创建<code>routers -&gt; users.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> APIRouter, Depends, HTTPException</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> Session</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> crud,schemas</span><br><span class="line"><span class="keyword">from</span> dependencies <span class="keyword">import</span> get_db</span><br><span class="line"></span><br><span class="line">router = APIRouter()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建用户</span></span><br><span class="line"><span class="decorator">@router.post("/users/", response_model=schemas.User, tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_user</span><span class="params">(user: schemas.UserCreate, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> crud.create_user(db, user=user)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过id查询用户</span></span><br><span class="line"><span class="decorator">@router.get("/user/&#123;user_id&#125;", response_model=schemas.User, tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_user</span><span class="params">(user_id: int, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.get_user(db, user_id=user_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">"User not found"</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 所有用户</span></span><br><span class="line"><span class="decorator">@router.get('/users/', response_model=List[schemas.User], tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_users</span><span class="params">(start: int=<span class="number">0</span>, limit: int=<span class="number">10</span>, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> crud.get_users(db, start, limit)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Delete user</span></span><br><span class="line"><span class="decorator">@router.delete('/user/&#123;user_id&#125;', response_model=schemas.User, tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_user</span><span class="params">(user_id: int, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.delete_user(db, user_id=user_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'User not found'</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update User</span></span><br><span class="line"><span class="decorator">@router.put('/user/&#123;user_id&#125;', response_model=schemas.User, tags=['users'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_user</span><span class="params">(user_id: int, update_user: schemas.UserUpdate, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.update_user(db, user_id=user_id, update_user=update_user)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'User not found'</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br></pre></td></tr></table></figure>
+<h4 id="注册Router"><a href="#注册Router" class="headerlink" title="注册Router"></a>注册Router</h4><p>将我们的 APIRouter 注册到核心对象上去。<code>main.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入 FastAPI</span></span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> routers <span class="keyword">import</span> users</span><br><span class="line"><span class="keyword">import</span> uvicorn</span><br><span class="line"><span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例化 FastAPI</span></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line">app.include_router(users.router)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/router.jpg" alt=""></p>
 
           
         
@@ -1784,7 +1014,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/20/Jmeter-命令行运行/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/04/FastAPI-static-template（16）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1803,7 +1033,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/03/20/Jmeter-命令行运行/" itemprop="url">Jmeter: 命令行运行和基本参数使用</a></h1>
+                <a class="post-title-link" href="/2021/10/04/FastAPI-static-template（16）/" itemprop="url">FastAPI: static file & template（16）</a></h1>
         
 
         <div class="post-meta">
@@ -1815,8 +1045,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-20T10:33:21+08:00">
-                2021-03-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-04T20:32:18+08:00">
+                2021-10-04
               </time>
             
 
@@ -1838,8 +1068,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
                   </a>
                 </span>
 
@@ -1857,8 +1087,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/03/20/Jmeter-命令行运行/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/20/Jmeter-命令行运行/" itemprop="commentsCount"></span>
+                <a href="/2021/10/04/FastAPI-static-template（16）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/04/FastAPI-static-template（16）/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1889,43 +1119,870 @@
       
         
           
-            <p>GUI模式仅用于创建测试计划和调试脚本，真正跑性能测试时候，不要用 GUI 模式，用命令行模式</p>
-<h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>-t，–testfile &lt;参数&gt;<br> 要运行的jmeter test（.jmx）文件</p>
-<p>-l，–logfile &lt;参数&gt;<br> 将样本记录到的文件</p>
-<p>-j，–jmeterlogfile &lt;参数&gt;<br> jmeter运行日志文件（jmeter.log）</p>
-<p>-n，–nongui<br> 在命令行模式下运行JMeter</p>
-<p>-g，–reportonly &lt;参数&gt;<br> 仅从测试结果文件生成报告仪表板</p>
-<p>-e，–reportatendofloadtests<br> 负载测试后生成报告仪表板</p>
-<p>-o，–reportoutputfolder &lt;参数&gt;<br> 报告仪表板的输出文件夹</p>
-<p>==========================================</p>
-<p>-s，–server<br> 运行JMeter服务器</p>
-<p>-H，–proxyHost &lt;参数&gt;<br> 设置供JMeter使用的代理服务器</p>
-<p>-P，–proxyPort &lt;参数&gt;<br> 设置代理服务器端口以供JMeter使用</p>
-<p>-r，-runremote<br> 启动远程服务器（在remote_hosts中定义）</p>
-<p>-R，–remotestart &lt;参数&gt;<br> 启动这些远程服务器（覆盖remote_hosts）</p>
-<p>-X，–remoteexit<br> 测试结束时退出远程服务器（CLI模式）</p>
-<p>==========================================</p>
-<p>-J，–jmeterproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他JMeter属性</p>
-<p>-G，–globalproperty &lt;参数&gt; = &lt;值&gt;<br> 定义全局属性或属性文件（发送到服务器）<br> 例如-Gport = 123<br> 或-Gglobal.properties</p>
-<p>-D，–systemproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他系统属性</p>
-<p>-S，–systemPropertyFile &lt;参数&gt;<br> 其他系统属性文件</p>
-<p>-f，-forceDeleteResultFile<br> 在开始测试之前，强制删除现有结果文件和Web报告文件夹（如果存在）</p>
-<p>-L，–loglevel &lt;参数&gt; = &lt;值&gt;<br> [类别=]级别，例如jorphan = INFO，jmeter.util = DEBUG或com.example.foo = WARN</p>
-<p>-d，–homedir &lt;参数&gt;<br> 要使用的jmeter主目录</p>
-<h4 id="设置命令行参数"><a href="#设置命令行参数" class="headerlink" title="设置命令行参数"></a>设置命令行参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Sep 25, 2021 11:01:36 AM java.util.prefs.WindowsPreferences &#60;init&#62;&#10;WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neok.jmx&#10;Starting standalone test @ Sat Sep 25 11:01:37 CST 2021 (1632538897030)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary =      3 in 00:00:00 =    7.0/s Avg:   101 Min:     1 Max:   277 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:01:37 CST 2021 (1632538897689)&#10;... end of run</span><br></pre></td></tr></table></figure>
-<h4 id="设置属性参数"><a href="#设置属性参数" class="headerlink" title="设置属性参数"></a>设置属性参数</h4><p>为了更好的用命令行跟Jenkins集成， 可以设置以下Jmeter属性：线程数、duration、ramp up-time。</p>
-<ol>
-<li><p>设置用户变量</p>
-<p><img src="/images/jmeter/user_var.jpg" alt=""></p>
+            <p>合理的使用静态资源和页面模板，更好的来实现网站前后端分离。</p>
+<p>静态资源通过<code>aiofiles</code>来实现。</p>
+<p>简单理解，模板就是 <code>web</code> 后端向前端发送的 <code>html</code> 模型，还是<code>jinia2</code>来实现。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> aiofiles</span><br><span class="line"></span><br><span class="line">pip <span class="keyword">install</span> jinja2</span><br></pre></td></tr></table></figure>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><ol>
+<li><p>在项目根目录下，创建<code>static</code>和<code>templates</code>文件夹。</p>
 </li>
-<li><p>更改线程组使用变量</p>
-<p><img src="/images/jmeter/use_var.jpg" alt=""></p>
+<li><p>在static下添加一个图片<code>fastapi.jpg</code>。</p>
 </li>
-<li><p>命令行验证</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -Jthread_number=5 -Jramp_up=2 -Jduration=60 -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neo.jmx&#10;Starting standalone test @ Sat Sep 25 11:30:03 CST 2021 (1632540603981)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary +      1 in 00:00:00 =    2.9/s Avg:   242 Min:   242 Max:   242 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0&#10;summary +   1706 in 00:00:25 =   67.1/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   1707 in 00:00:26 =   66.2/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%)&#10;summary +   2013 in 00:00:32 =   63.7/s Avg:    74 Min:     0 Max:  2139 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   3720 in 00:00:57 =   64.8/s Avg:    72 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;summary +     88 in 00:00:03 =   30.7/s Avg:   243 Min:     0 Max:  2136 Err:     0 (0.00%) Active: 0 Started: 5 Finished: 5&#10;summary =   3808 in 00:01:00 =   63.2/s Avg:    76 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:31:04 CST 2021 (1632540664505)&#10;... end of run</span><br></pre></td></tr></table></figure>
-<p><strong>-J是设置本地jmeter属性；-G是设置server的jmeter属性（只有设置了远程机，开启了远程服务，才需要用到-G）</strong></p>
+<li><p>在templates下添加一个页面模板。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Welcome<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"&#123;&#123; url_for('static', path='/fastapi.jpg') &#125;&#125;"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Welcome: &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口返回html页面。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.staticfiles <span class="keyword">import</span> StaticFiles</span><br><span class="line"><span class="keyword">from</span> fastapi.templating <span class="keyword">import</span> Jinja2Templates</span><br><span class="line"></span><br><span class="line">app.mount(<span class="string">"/static"</span>, StaticFiles(directory=<span class="string">"static"</span>), name=<span class="string">"static"</span>)</span><br><span class="line"></span><br><span class="line">templates = Jinja2Templates(directory=<span class="string">"templates"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Return html page</span></span><br><span class="line"><span class="decorator">@app.get("/user/&#123;user_id&#125;", response_class=HTMLResponse)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_user</span><span class="params">(request: Request, user_id: int, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.get_user(db, user_id=user_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">"User not found"</span>)</span><br><span class="line">    <span class="keyword">return</span> templates.TemplateResponse(<span class="string">'index.html'</span>, &#123;<span class="string">'request'</span>: request, <span class="string">'username'</span>: db_user.email&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结果</p>
+<p><img src="/images/fastapi/response_html.jpg" alt=""></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/04/FastAPI-数据库操作（15）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/04/FastAPI-数据库操作（15）/" itemprop="url">FastAPI: Mysql数据库操作（15）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-04T17:24:50+08:00">
+                2021-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/04/FastAPI-数据库操作（15）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/04/FastAPI-数据库操作（15）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>FastAPI可以通过SQLAlchemy将其轻松的适应于任何的数据库。SQLAlchemy是一个ORM（object-relational mapping）的框架。在ORM中，你创建一个类就会通过SQLAlchemy将其自动转成一张表，在类中的每一个属性就会将其转成表中的字段。</p>
+<p>需要安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install sqlalchemy&#10;pip install pymysql</span><br></pre></td></tr></table></figure>
+<p>统一来管理数据库相关：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├─db</span><br><span class="line">│      crud.py</span><br><span class="line">│      database.py</span><br><span class="line">│      models.py</span><br><span class="line">│      schemas.py</span><br><span class="line">│      __init__.py</span><br></pre></td></tr></table></figure>
+<h4 id="database-py-数据库配置相关"><a href="#database-py-数据库配置相关" class="headerlink" title="database.py 数据库配置相关"></a>database.py 数据库配置相关</h4><p>在数据库相关的配置文件中，首先创建一个SQLAlchemy的”engine”，然后创建SessionLocal实例进行会话，最后创建模型类的基类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"></span><br><span class="line">SQLALCHEMY_DATABASE_URL = <span class="string">"mysql+pymysql://root:123456@127.0.0.1:3306/test"</span></span><br><span class="line"></span><br><span class="line">engine = create_engine(</span><br><span class="line">    SQLALCHEMY_DATABASE_URL, encoding=<span class="string">'utf8'</span>, echo=<span class="keyword">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># SQLAlchemy中，CRUD是通过会话进行管理的，所以需要先创建会话，</span></span><br><span class="line">SessionLocal = sessionmaker(autocommit=<span class="keyword">False</span>, autoflush=<span class="keyword">False</span>, bind=engine)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建基本映射类</span></span><br><span class="line">Base = declarative_base()</span><br></pre></td></tr></table></figure>
+<h4 id="models-py-数据库模型表"><a href="#models-py-数据库模型表" class="headerlink" title="models.py 数据库模型表"></a>models.py 数据库模型表</h4><p>通过数据库配置文件中的基类来创建模型类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Boolean, Column, Integer, String</span><br><span class="line"><span class="keyword">from</span> database <span class="keyword">import</span> Base</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">"users"</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="keyword">True</span>, index=<span class="keyword">True</span>)</span><br><span class="line">    email = Column(String(<span class="number">32</span>), unique=<span class="keyword">True</span>, index=<span class="keyword">True</span>)</span><br><span class="line">    hash_password = Column(String(<span class="number">32</span>))</span><br><span class="line">    is_active = Column(Boolean, default=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="schemas-py-模型验证"><a href="#schemas-py-模型验证" class="headerlink" title="schemas.py 模型验证"></a>schemas.py 模型验证</h4><p>定义请求参数模型验证与响应模型验证的Pydantic模型，其中响应模型中设置orm_mode=True参数，表示与ORM模型兼容，因为后续中返回的数据库查询是orm模型，通过设置这个参数可以将orm模型通过pydantic模型进行验证。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserBase</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    email: str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserCreate</span><span class="params">(UserBase)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    请求模型验证：</span><br><span class="line">    email:</span><br><span class="line">    password:</span><br><span class="line">    """</span></span><br><span class="line">    password: str</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserUpdate</span><span class="params">(UserBase)</span>:</span></span><br><span class="line">    is_active: bool</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(UserBase)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    响应模型：</span><br><span class="line">    id:</span><br><span class="line">    email:</span><br><span class="line">    is_active</span><br><span class="line">    并且设置orm_mode与之兼容</span><br><span class="line">    """</span></span><br><span class="line">    id: int</span><br><span class="line">    is_active: bool</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></span><br><span class="line">        orm_mode = <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h4 id="crud-py-数据库操作相关"><a href="#crud-py-数据库操作相关" class="headerlink" title="crud.py 数据库操作相关"></a>crud.py 数据库操作相关</h4><p>通过传入数据库连接以及参数等进行数据库操作，包括创建用户、查询用户等，返回的是orm模型对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> Session</span><br><span class="line"><span class="keyword">import</span> models, schemas</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get user by id</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_user</span><span class="params">(db: Session, user_id: int)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> db.query(models.User).filter(models.User.id == user_id).first()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get all users</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_users</span><span class="params">(db: Session, start: int=<span class="number">0</span>, limit: int=<span class="number">10</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> db.query(models.User).offset(start).limit(limit).all()</span><br><span class="line"></span><br><span class="line"><span class="comment"># creae user</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_user</span><span class="params">(db: Session, user: schemas.UserCreate)</span>:</span></span><br><span class="line">    fake_hashed_password = user.password + <span class="string">"notreallyhashed"</span></span><br><span class="line">    user = models.User(email=user.email, hash_password=fake_hashed_password)</span><br><span class="line">    db.add(user)</span><br><span class="line">    db.commit()  <span class="comment"># 提交保存到数据库中</span></span><br><span class="line">    db.refresh(user)  <span class="comment"># 刷新</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br><span class="line"></span><br><span class="line"><span class="comment"># Delete user</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_user</span><span class="params">(db: Session, user_id: int)</span>:</span></span><br><span class="line">    user = db.query(models.User).filter(models.User.id == user_id).first()</span><br><span class="line">    <span class="keyword">if</span> user:</span><br><span class="line">        db.delete(user)</span><br><span class="line">        db.commit()</span><br><span class="line">        db.flush()</span><br><span class="line">        <span class="keyword">return</span> user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update user</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_user</span><span class="params">(db: Session, user_id: int, update_user: schemas.UserUpdate)</span>:</span></span><br><span class="line">    user = db.query(models.User).filter(models.User.id == user_id).first()</span><br><span class="line">    <span class="keyword">if</span> user:</span><br><span class="line">        update_user = update_user.dict(exclude_unset=<span class="keyword">True</span>)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> update_user.items():</span><br><span class="line">            setattr(user, k, v)</span><br><span class="line">        db.commit()</span><br><span class="line">        db.flush()</span><br><span class="line">        db.refresh(user)</span><br><span class="line">        <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
+<h4 id="调用验证"><a href="#调用验证" class="headerlink" title="调用验证"></a>调用验证</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">Base.metadata.create_all(bind=engine) <span class="comment">#数据库初始化，如果没有库或者表，会自动创建</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例化 FastAPI</span></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Dependency</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_db</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    每一个请求处理完毕后会关闭当前连接，不同的请求使用不同的连接</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    db = SessionLocal()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">yield</span> db</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        db.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建用户</span></span><br><span class="line"><span class="decorator">@app.post("/users/", response_model=schemas.User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_user</span><span class="params">(user: schemas.UserCreate, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> crud.db_create_user(db=db, user=user)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过id查询用户</span></span><br><span class="line"><span class="decorator">@app.get("/user/&#123;user_id&#125;", response_model=schemas.User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_user</span><span class="params">(user_id: int, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.get_user(db, user_id=user_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">"User not found"</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br><span class="line"></span><br><span class="line"><span class="comment"># 所有用户</span></span><br><span class="line"><span class="decorator">@app.get('/users/', response_model=List[schemas.User])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_users</span><span class="params">(start: int=<span class="number">0</span>, limit: int=<span class="number">10</span>, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> crud.get_users(db, start, limit)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Delete user</span></span><br><span class="line"><span class="decorator">@app.delete('/user/&#123;user_id&#125;', response_model=schemas.User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_user</span><span class="params">(user_id: int, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.delete_user(db, user_id=user_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'User not found'</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update User</span></span><br><span class="line"><span class="decorator">@app.put('/user/&#123;user_id&#125;', response_model=schemas.User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_user</span><span class="params">(user_id: int, update_user: schemas.UserUpdate, db: Session = Depends<span class="params">(get_db)</span>)</span>:</span></span><br><span class="line">    db_user = crud.update_user(db, user_id=user_id, update_user=update_user)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> db_user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'User not found'</span>)</span><br><span class="line">    <span class="keyword">return</span> db_user</span><br></pre></td></tr></table></figure>
+<p>DB:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc users;</span><br><span class="line">+---------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field         | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+---------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| id            | int(11)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| email         | varchar(32) | YES  | UNI | NULL    |                |</span><br><span class="line">| hash_password | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| is_active     | tinyint(1)  | YES  |     | NULL    |                |</span><br><span class="line">+---------------+-------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/db_add.jpg" alt=""></p>
+<p><img src="/images/fastapi/db_search.jpg" alt=""></p>
+<p><img src="/images/fastapi/db_update.jpg" alt=""></p>
+<p><img src="/images/fastapi/db_delete.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/03/FastAPI-Security（14）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/03/FastAPI-Security（14）/" itemprop="url">FastAPI: Security（14）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-03T09:58:29+08:00">
+                2021-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/03/FastAPI-Security（14）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/03/FastAPI-Security（14）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>安全，权限对于任何一个系统是不可避免的。</p>
+<p>FastAPI提供了多种工具，可帮助你以标准的方式轻松、快速地处理安全性，而无需研究和学习所有的安全规范。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="string">"token"</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(token: str = Depends<span class="params">(oauth2_scheme)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'token'</span>: token&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/security_np.jpg" alt=""></p>
+<h5 id="简单-Bear-OAuth2实现完整流程"><a href="#简单-Bear-OAuth2实现完整流程" class="headerlink" title="简单 Bear OAuth2实现完整流程"></a>简单 Bear OAuth2实现完整流程</h5><p>在FastAPI中, 提供了多种认证解决方案工具, 其中也包括了OAuth2, 可以使用<code>OAuth2PasswordBearer</code>类来实现OAuth2的功能, 使用的是OAuth2中的一种认证方案, 通过<code>bearer token</code>来携带<code>token</code>, 具体做法就是:</p>
+<p>在请求头中添加参数<code>Authorization</code>, 其值为<code>Bearer</code>和<code>token</code>中间使用<code>空格</code>连接形成的字符串, 如<code>Bearer your_token_string</code>, 注意, <code>Authorization</code>和<code>Bearer</code>都是规范中固定的写法, 不可修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">fake_user = &#123;</span><br><span class="line">    <span class="string">'admin'</span>:&#123;</span><br><span class="line">        <span class="string">'username'</span>: <span class="string">'admin'</span>,</span><br><span class="line">        <span class="string">'hash_password'</span>: <span class="string">'fakehashadmin'</span>,</span><br><span class="line">        <span class="string">'enabled'</span>: <span class="keyword">True</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="string">"token"</span>)<span class="comment"># 这个参数的作用是当输入完用户密码后, 点击Authorize按钮后, 会请求127.0.0.1:8000/token这个网址, 把用户密码通过Form表单的形式传递给这个请求, 即这个/token就是我们网站的后台登录接口.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fake_hash_password</span><span class="params">(password: str)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"fakehash"</span> + password</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    enbaled: Optional[bool] = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserPwd</span><span class="params">(User)</span>:</span></span><br><span class="line">    hash_password: str</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/login')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(form: OAuth2PasswordRequestForm = Depends<span class="params">()</span>)</span>:</span></span><br><span class="line">    user = fake_user.get(form.username)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'user incorrect'</span>)</span><br><span class="line">    u = UserPwd(**user)</span><br><span class="line">    hashpwd = fake_hash_password(form.password)</span><br><span class="line">    <span class="keyword">if</span> hashpwd != u.hash_password:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'passwod incorrect'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">"access_token"</span>: u.username, <span class="string">"token_type"</span>: <span class="string">"bearer"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/security_username.jpg" alt=""></p>
+<p><img src="/images/fastapi/security_password.jpg" alt=""></p>
+<p><img src="/images/fastapi/security_correct.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/03/FastAPI-Dependencies（13）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/03/FastAPI-Dependencies（13）/" itemprop="url">FastAPI: Dependencies（13）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-03T08:35:43+08:00">
+                2021-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/03/FastAPI-Dependencies（13）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/03/FastAPI-Dependencies（13）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>FastAPI 提供了简单易用，但功能强大的<strong>依赖注入</strong>系统，可以让开发人员轻松地把组件集成至 <strong>FastAPI</strong>。</p>
+<p>编程中的<strong>「依赖注入」</strong>是声明代码（本文中为<em>路径操作函数</em> ）运行所需的，或要使用的「依赖」的一种方式。</p>
+<h4 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result</span><span class="params">(start: int = <span class="number">0</span>, limit: int = <span class="number">10</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'start'</span>: start, <span class="string">'limit'</span>: limit&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: dict = Depends<span class="params">(result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/books/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">books</span><span class="params">(res: dict = Depends<span class="params">(result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>这里只能传给 Depends 一个参数。</p>
+<p>接收到新的请求时，<strong>FastAPI</strong> 执行如下操作：</p>
+<ul>
+<li>用正确的参数调用依赖项函数（「可依赖项」）</li>
+<li>获取函数返回的结果</li>
+<li>把函数返回的结果赋值给<em>路径操作函数</em>的参数</li>
+</ul>
+<h4 id="Class-依赖注入"><a href="#Class-依赖注入" class="headerlink" title="Class 依赖注入"></a>Class 依赖注入</h4><p>也可以用Python Class来实现依赖注入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Result</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, start: int = <span class="number">0</span>, limit: int = <span class="number">10</span>)</span>:</span></span><br><span class="line">        self.start = start</span><br><span class="line">        self.limit = limit</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: Result = Depends<span class="params">(Result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>引用时，也可以用下边方式：</p>
+<p><code>res: Result = Depends()</code></p>
+<h4 id="子依赖注入"><a href="#子依赖注入" class="headerlink" title="子依赖注入"></a>子依赖注入</h4><p>FastAPI 支持创建含任意深度的子依赖项。类似于函数调用：fun1 -&gt; fun2 -&gt; fun3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int = <span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> start</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(start: int = Depends<span class="params">(result1)</span>, limit: int = <span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit:</span><br><span class="line">        <span class="keyword">return</span> limit</span><br><span class="line">    <span class="keyword">return</span> start</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: dict = Depends<span class="params">(result2)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/?start=2&#10;2&#10;&#10;http://127.0.0.1:8000/users/?limit=5&#10;5</span><br></pre></td></tr></table></figure>
+<h4 id="多次使用同一个依赖项"><a href="#多次使用同一个依赖项" class="headerlink" title="多次使用同一个依赖项"></a>多次使用同一个依赖项</h4><p>如果在同一个<em>路径操作</em> 多次声明了同一个依赖项，例如，多个依赖项共用一个子依赖项，FastAPI 在处理同一请求时，只调用一次该子依赖项。</p>
+<p>FastAPI 不会为同一个请求多次调用同一个依赖项，而是把依赖项的返回值进行「缓存」，并把它传递给同一请求中所有需要使用该返回值的「依赖项」。</p>
+<p>在高级使用场景中，如果不想使用「缓存」值，而是为需要在同一请求的每一步操作（多次）中都实际调用依赖项，可以把 <code>Depends</code> 的参数 <code>use_cache</code> 的值设置为 <code>False</code></p>
+<h4 id="路径依赖"><a href="#路径依赖" class="headerlink" title="路径依赖"></a>路径依赖</h4><p>以在<em>路径操作装饰器</em>中添加一个由 <code>dependencies</code> 组成的 <code>list</code>来注入多个引用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> start != <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'start not == 2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(limit: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit != <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'limit not == 5'</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/', dependencies=[Depends(result1), Depends(result2)])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/injection_path_1.jpg" alt=""></p>
+<p><img src="/images/fastapi/injection_path_2.jpg" alt=""></p>
+<p><img src="/images/fastapi/injection_path_3.jpg" alt=""></p>
+<h4 id="全局依赖"><a href="#全局依赖" class="headerlink" title="全局依赖"></a>全局依赖</h4><p>有时，我们要为整个应用添加依赖项。</p>
+<p>可以把依赖项添加至整个 <code>FastAPI</code> 应用。后续就可以为所有<em>路径操作</em>应用该依赖项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> start != <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'start not == 2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(limit: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit != <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'limit not == 5'</span>)</span><br><span class="line"></span><br><span class="line">app = FastAPI(dependencies=[Depends(result1), Depends(result2)])</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/books/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/injection_path_3.jpg" alt=""></p>
+<p><img src="/images/fastapi/injection_path_4.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/02/FastAPI-响应模型（12）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/02/FastAPI-响应模型（12）/" itemprop="url">FastAPI: 响应模型（12）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-02T09:27:24+08:00">
+                2021-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/02/FastAPI-响应模型（12）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/02/FastAPI-响应模型（12）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在前面的操作中也看到，请求响应返回的就是请求体的内容，比如，要是登记注册就是返回用户名和密码，这种行为是不行的。</p>
+<p>可以使用 <code>response_model</code> 参数来声明用于响应的模型。</p>
+<ul>
+<li>将输出数据转换为其声明的类型。</li>
+<li>校验数据。</li>
+<li>会将输出数据限制在该模型定义内。</li>
+<li>在 OpenAPI 的<em>路径操作</em>中为响应添加一个 JSON Schema。</li>
+<li>并在自动生成文档系统中使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/response_model.jpg" alt=""></p>
+<p>上面的例子中，可以看到响应里会自动的返回请求体里默认的字段。如果请求体中不传，就不要返回带默认值的字段，可以用<code>response_model_exclude_unset</code>来实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes, response_model_exclude_unset=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/response_model_default.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/02/FastAPI-响应状态码（11）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/02/FastAPI-响应状态码（11）/" itemprop="url">FastAPI: 响应状态码（11）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-02T09:27:09+08:00">
+                2021-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/02/FastAPI-响应状态码（11）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/02/FastAPI-响应状态码（11）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>可以使用 <code>status_code</code> 参数来声明用于响应的 HTTP 状态码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@app.post('/uploads/', status_code=201)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(files: List[UploadFile] = File<span class="params">(...)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'filename'</span>: [file.filename <span class="keyword">for</span> file <span class="keyword">in</span> files]&#125;</span><br></pre></td></tr></table></figure>
+<p>默认返回的状态码是200，修改后返回201。</p>
+<p>HTTP的状态码很多，也不容易 记住所有状态码的意思，FastAPI提供了更方便的方式。</p>
+<p><img src="/images/fastapi/response_code.jpg" alt=""></p>
 
           
         
@@ -1965,7 +2022,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2015,7 +2072,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2026,7 +2083,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2037,7 +2094,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

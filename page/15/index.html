@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/19/跟任何人都聊的来/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/17/AWS-EC2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/19/跟任何人都聊的来/" itemprop="url">跟任何人都聊的来</a></h1>
+                <a class="post-title-link" href="/2018/04/17/AWS-EC2/" itemprop="url">AWS - EC2</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-19T08:53:27+08:00">
-                2018-02-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T16:23:45+08:00">
+                2018-04-17
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/19/跟任何人都聊的来/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/19/跟任何人都聊的来/" itemprop="commentsCount"></span>
+                <a href="/2018/04/17/AWS-EC2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/17/AWS-EC2/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,33 +410,339 @@
       
         
           
-            <p>所有交谈技巧都离不开交谈之道：真正在意对方，把对方放在心上。</p>
-<h1 id="坚持自己的个性"><a href="#坚持自己的个性" class="headerlink" title="坚持自己的个性"></a>坚持自己的个性</h1><p>不管我们是偏向于安静还是表达，都不是错误。我们越是煞费苦心地改变自己，就越会感觉沮丧。</p>
-<p>每个人都是独一无二的。沟通的技能不要模仿他人，而且自我学习和成长。</p>
-<h2 id="内向-VS-外向"><a href="#内向-VS-外向" class="headerlink" title="内向 VS 外向"></a>内向 VS 外向</h2><ul>
-<li>内向型是指通过独处就可以获得能量的人。</li>
-<li>外向型是指通过群体交流获得获得能量的人。</li>
-<li>内向让交谈更有深度，外向让交谈更具行动力。</li>
+            <p>Amazon Elastic Compute Cloud (Amazon EC2) 是一种 Web 服务，可以在云中提供安全并且可以调整大小的计算容量。<br>使用 Amazon EC2 可避免前期的硬件投入，因此您能够快速开发和部署应用程序。通过使用 Amazon EC2，您可以根据自身需要启动任意数量的虚拟服务器、配置安全和网络以及管理存储。Amazon EC2 允许您根据需要进行缩放以应对需求变化或流行高峰，降低流量预测需求。</p>
+<h1 id="Regions-and-Availability-Zones"><a href="#Regions-and-Availability-Zones" class="headerlink" title="Regions and Availability Zones"></a>Regions and Availability Zones</h1><p>每个区域 都是一个独立的地理区域。每个区域都有多个相互隔离的位置，称为可用区。<br>每一个区域都是完全独立的。每个可用区都是独立的，但区域内的可用区通过低延迟链接相连。<br><img src="/images/aws/ec2_region.jpg" alt=""></p>
+<h1 id="Launch-Instance"><a href="#Launch-Instance" class="headerlink" title="Launch Instance"></a>Launch Instance</h1><p>在<code>EC2 -&gt; Dashboard</code>中进行操作。 创建时所有的配置都用Default。</p>
+<h1 id="Key-Pairs"><a href="#Key-Pairs" class="headerlink" title="Key Pairs"></a>Key Pairs</h1><p>Amazon EC2 使用公有密钥密码术加密和解密登录信息。公有密钥密码术使用公有密钥加密某个数据 (如一个密码)，然后收件人可以使用私有密钥解密数据。公有和私有密钥被称为密钥对。<br>要登录您的实例，您必须创建一个密钥对，并在启动实例时指定密钥对的名称，然后使用私有密钥连接实例。</p>
+<p>你可以在‘Key Paris’创建，也可以在创建Instance的时候创建。</p>
+<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>用Xshell，创建是生成的Key Pairs文件和Public IP登录：<br><em>User Name: ec2-user</em><br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Connecting <span class="keyword">to</span> <span class="number">52.197</span>.<span class="number">124.231</span>:<span class="number">22</span>...</span><br><span class="line">Connection established.</span><br><span class="line"><span class="keyword">To</span> escape <span class="keyword">to</span> local shell, press <span class="attribute">'Ctrl</span>+Alt+]'.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       __|  __|_  )</span><br><span class="line">       _|  (     /   Amazon Linux AMI</span><br><span class="line">      ___|\___|___|</span><br><span class="line"></span><br><span class="line">https://aws.amazon.com/amazon-linux-ami/<span class="number">2017.09</span>-<span class="keyword">release</span>-notes/</span><br><span class="line"><span class="number">8</span> <span class="keyword">package</span>(s) needed <span class="keyword">for</span> security, <span class="keyword">out</span> <span class="keyword">of</span> <span class="number">13</span> available</span><br><span class="line">Run <span class="string">"sudo yum update"</span> <span class="keyword">to</span> apply <span class="keyword">all</span> updates.</span><br><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> ~]$</span><br></pre></td></tr></table></figure></p>
+<h1 id="Credentials-in-EC2"><a href="#Credentials-in-EC2" class="headerlink" title="Credentials in EC2"></a>Credentials in EC2</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># cd .aws</span></span><br><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> .aws]<span class="preprocessor"># ls</span></span><br><span class="line">config  credentials</span><br><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> .aws]<span class="preprocessor"># cat credentials </span></span><br><span class="line">[<span class="keyword">default</span>]</span><br><span class="line">aws_access_key_id = AKIAJ2ZSIKQE5VQKADCA</span><br><span class="line">aws_secret_access_key = <span class="number">6</span>XcK5zvSVPKE4eSJHbmOOspElNyytyLsuCbUQ5GW</span><br></pre></td></tr></table></figure>
+<h1 id="Meta-Data"><a href="#Meta-Data" class="headerlink" title="Meta Data"></a>Meta Data</h1><p>实例元数据 是有关您的实例的数据，可以用来配置或管理正在运行的实例。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/</span></span></span><br><span class="line"><span class="number">1.0</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">01</span>-<span class="number">19</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">03</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">08</span>-<span class="number">29</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">10</span>-<span class="number">10</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">12</span>-<span class="number">15</span></span><br><span class="line"><span class="number">2008</span>-<span class="number">02</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2008</span>-<span class="number">09</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2009</span>-<span class="number">04</span>-<span class="number">04</span></span><br><span class="line"><span class="number">2011</span>-<span class="number">01</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2011</span>-<span class="number">05</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2012</span>-<span class="number">01</span>-<span class="number">12</span></span><br><span class="line"><span class="number">2014</span>-<span class="number">02</span>-<span class="number">25</span></span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">05</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">10</span>-<span class="number">20</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">04</span>-<span class="number">19</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">06</span>-<span class="number">30</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">09</span>-<span class="number">02</span></span><br><span class="line">latest[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/</span></span></span><br><span class="line">ami-id</span><br><span class="line">ami-launch-index</span><br><span class="line">ami-manifest-path</span><br><span class="line">block-device-mapping/</span><br><span class="line">hostname</span><br><span class="line">instance-action</span><br><span class="line">instance-id</span><br><span class="line">instance-type</span><br><span class="line">local-hostname</span><br><span class="line">local-ipv4</span><br><span class="line">mac</span><br><span class="line">metrics/</span><br><span class="line">network/</span><br><span class="line">placement/</span><br><span class="line">profile</span><br><span class="line"><span class="keyword">public</span>-hostname</span><br><span class="line"><span class="keyword">public</span>-ipv4</span><br><span class="line"><span class="keyword">public</span>-keys/</span><br><span class="line">reservation-id</span><br><span class="line">security-groups</span><br><span class="line">services/[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/public-ipv4</span></span></span><br><span class="line"><span class="number">54.64</span><span class="number">.167</span><span class="number">.73</span>[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/hostname</span></span></span><br><span class="line">ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33.</span>ap-northeast-<span class="number">1.</span>compute.internal[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/16/爷爷，你一直都在/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/爷爷，你一直都在/" itemprop="url">爷爷，你一直都在</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-16T13:37:38+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/16/爷爷，你一直都在/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/16/爷爷，你一直都在/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近脑袋里时不时的会蹦出来和爷爷的点点滴滴，也会在梦里见到他，尽管已走了好几年了，但在梦里还能够跟他说上几句话，很真实，很温暖，仿佛就在昨天。</p>
+<p>他是经历过饥荒年代的人，在奶奶眼里是个很伟大的人，为了家做了很多牺牲。在那个年代出生的人难免都有些重男轻女的思想，而我是整个大家的长子，再加上隔辈亲，爷爷和奶奶都对我格外的好，我小时候多病，奶奶常说，也不知道你爷爷怎么这么有钱，每次看病要钱都是现成的。从记事起到他走，也就短短20年，但从他身上学到了很多，正直，努力，做一个对家对自己负责的人。</p>
+<p>本应该是你享福的时候，你却走了，而你走的时候是我最难的时候，也没能见上你最后一面，尽管自责了很多，但是个永远的遗憾。如果你还在的话，看着儿孙满堂，各自有家有事业，我都能想象的到你开心的样子；如果你还在的话，我也能实现小时候给你吹过的牛，等我长大了孝顺你，带你去看天安门；如果你还在的话，我还能坐在那里和你聊天，从你那里得到安慰和想法，哪怕只是静静的坐在那里看着你，现在想想，是多么奢侈的事情啊。</p>
+<p>曾经看过一段话，人死了分三个阶段，第一次是断气的时候，从生物学上他死了；第二次是出殡的时候，亲戚朋友都来缅怀他，从社会上他没了；第三次是最后一个还记得他的人把他忘记的时候，他才真正的死了。</p>
+<p>死亡不是尽头，遗忘才是。我想我永远也不会忘记你，也希望你一样能记得我。在这时间的长河里，在几生几世之后，如果我们有缘再相见，我想我们会比在这一世更亲。</p>
+<p>在写下这些话的时候，我已控制不住自己湿了眼眶，收笔，爷爷你还好吗？想你！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/15/AWS-CloudFront/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/15/AWS-CloudFront/" itemprop="url">AWS - CloudFront</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-15T10:40:07+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/15/AWS-CloudFront/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/15/AWS-CloudFront/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>就是提供CDN服务的。</p>
+<p>Amazon CloudFront 是一种将静态和动态 Web 内容（例如 .html、.css、.php、图像及媒体文件）加速分配给最终用户的 Web 服务。CloudFront 通过全球节点网络传送内容。</p>
+<p>在`Contect Delivery -&gt; CloudFront’中进行设置。</p>
+<ul>
+<li>Web分配 - 通过 HTTP 或 HTTPS 提供。</li>
+<li>RTMP分配 - 使用 Adobe Media Server 和 Adobe 实时消息协议 (RTMP) 流式处理媒体文件。RTMP 分配必须使用 Amazon S3 存储桶作为源。</li>
 </ul>
-<p>要想人际沟通有成效，就要具备两个基本的事实：</p>
+<p>简单使用：</p>
 <ol>
-<li>了解并接受自己</li>
-<li>了解并接受对方</li>
+<li>创建Bucket<br><img src="/images/aws/cloudfront_bucket.jpg" alt=""><br>可直接<code>https://s3.amazonaws.com/yongfeiuall.cloudfront/%E8%87%AA%E5%8A%A8.png</code>访问该Object。</li>
+<li>创建CloudFront<br><img src="/images/aws/cloudfront_web.jpg" alt=""><br>详细配置信息参考<a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html" target="_blank" rel="external">配置</a></li>
+<li>验证<br>用分配的域名访问<code>http://d25774ade37.cloudfront.net/%E8%87%AA%E5%8A%A8.png</code>,成功</li>
 </ol>
-<p>交谈的目的不是向对方炫耀你有多么聪明，而是在两之间建立联系。</p>
-<h1 id="准备越充分，越自信"><a href="#准备越充分，越自信" class="headerlink" title="准备越充分，越自信"></a>准备越充分，越自信</h1><p>一定要自信，至少看上去如此。除了心态，充分的准备，也能让我们自信。<br>不管你处在什么水平，都有进步的空间。坚持下去，时间长了，你就会养成事前思考和准备的习惯。</p>
-<h1 id="保持一颗好奇心，让自己变得有趣"><a href="#保持一颗好奇心，让自己变得有趣" class="headerlink" title="保持一颗好奇心，让自己变得有趣"></a>保持一颗好奇心，让自己变得有趣</h1><p>大家同属人类，这就说明彼此之间会有一些类似的经历或者感受，这些相似点就可以拉进彼此之间的距离。</p>
-<p>我们没有必要成为各个领域的专家，但每个领域略知一二，就可以成为一个有趣的人。</p>
-<p>简单来说，好奇心就是从不同的角度观察常见事物。</p>
-<h1 id="学会从他人思维角度出发，把对方放在心上"><a href="#学会从他人思维角度出发，把对方放在心上" class="headerlink" title="学会从他人思维角度出发，把对方放在心上"></a>学会从他人思维角度出发，把对方放在心上</h1><p>重点在于我们自身的责任，而不是他人的行为。我们无法控制他人，最多就是给他人带来影响。</p>
-<h2 id="学会倾听，别人才能聊的开"><a href="#学会倾听，别人才能聊的开" class="headerlink" title="学会倾听，别人才能聊的开"></a>学会倾听，别人才能聊的开</h2><p>拉里金说：“每天早晨我都会想到，今天我所说的任何内容都不会让我增长知识，因此，要想吸取很多知识，就要去倾听。”</p>
-<h2 id="学会提问，别人才能聊的透"><a href="#学会提问，别人才能聊的透" class="headerlink" title="学会提问，别人才能聊的透"></a>学会提问，别人才能聊的透</h2><p>有效的提问需要注意以下几点：</p>
-<ul>
-<li>提一个封闭式问题</li>
-<li>然后选择开放式问题。5W1H</li>
-<li>仔细倾听对方的回答</li>
-<li>重复</li>
-</ul>
 
           
         
@@ -485,7 +791,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/12/过年-还有没有年味/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/15/AWS-Hosting-a-Static-Website/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -504,7 +810,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/12/过年-还有没有年味/" itemprop="url">过年-还有没有年味</a></h1>
+                <a class="post-title-link" href="/2018/04/15/AWS-Hosting-a-Static-Website/" itemprop="url">AWS - Hosting a Static Website</a></h1>
         
 
         <div class="post-meta">
@@ -516,8 +822,831 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-12T08:17:36+08:00">
-                2018-02-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-15T08:17:38+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/15/AWS-Hosting-a-Static-Website/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/15/AWS-Hosting-a-Static-Website/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在静态网站上，单独的网页包含静态内容。它们也可能包含客户端脚本。</p>
+<h1 id="设置静态网站"><a href="#设置静态网站" class="headerlink" title="设置静态网站"></a>设置静态网站</h1><ol>
+<li>创建Bucket<br>新建Bucket，并配置网站<br><img src="/images/aws/s3_storage_staticwebsite.jpg" alt=""></li>
+<li>上传网站内容<br><img src="/images/aws/s3_storage_staticfile.jpg" alt=""></li>
+<li>测试网站<br>两个文件都为Private：<br><img src="/images/aws/s3_storage_staticwebsite_private.jpg" alt=""><br>把两个文件Make Public：<br><img src="/images/aws/s3_storage_staticwebsite_index.jpg" alt=""><br>把index.html设为Private：<br><img src="/images/aws/s3_storage_staticwebsite_error.jpg" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/14/AWS-CLI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/14/AWS-CLI/" itemprop="url">AWS - CLI</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T06:49:31+08:00">
+                2018-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/14/AWS-CLI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/14/AWS-CLI/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>AWS 命令行界面 (CLI) 是用于管理 AWS 服务的统一工具。只通过一个工具进行下载和配置，您可以使用命令行控制多个 AWS 服务并利用脚本来自动执行这些服务。</p>
+<p>去这里下载<a href="https://aws.amazon.com/cli/?nc1=h_ls" target="_blank" rel="external">AWS Command Line Interface</a><br>Windows下运行： 在 PowerShell 或 Windows 命令处理程序中运行命令。</p>
+<p>我们要通过User的AWS Access Key ID和AWS Secret Access Key来登录AWS,在User创建：<br><img src="/images/aws/cli.jpg" alt=""><br><img src="/images/aws/cli_key.jpg" alt=""></p>
+<p>登录：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\yongfei.hu&gt;aws configure</span><br><span class="line">AWS <span class="keyword">Access</span> Key ID [<span class="type">None</span>]: AKIAJ2ZSIKQE5VQKADCA</span><br><span class="line">AWS Secret <span class="keyword">Access</span> Key [<span class="type">None</span>]: XcK5zvSVPKE4eSJHbmOOspElNyytyLsuCbUQ5GW</span><br><span class="line"><span class="keyword">Default</span> region <span class="keyword">name</span> [<span class="type">None</span>]: ap-northeast-<span class="number">1</span></span><br><span class="line"><span class="keyword">Default</span> output <span class="keyword">format</span> [<span class="type">None</span>]:</span><br><span class="line"></span><br><span class="line">C:\Users\yongfei.hu&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接下来就可以用命令行对AWS进行操作了。 E.g.,<br><img src="/images/aws/cli_ls.jpg" alt=""></p>
+<p>只做个简单说明，以后用到了再研究。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/13/AWS-S3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/AWS-S3/" itemprop="url">AWS - S3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-13T10:26:28+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/13/AWS-S3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/13/AWS-S3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Amazon S3 提供了一个简单 Web 服务接口，可用于随时在 Web 上的任何位置存储和检索任何数量的数据。<br>Amazon S3 将数据存储为存储桶中的对象。对象由文件和描述该文件的任何可选元数据组成。</p>
+<p>可以在<code>AWS -&gt; S3</code>通过Console进行管理。</p>
+<h1 id="Bucket"><a href="#Bucket" class="headerlink" title="Bucket"></a>Bucket</h1><p>可以简单理解为Folder好了。</p>
+<h2 id="Transfer-Acceleration"><a href="#Transfer-Acceleration" class="headerlink" title="Transfer Acceleration"></a>Transfer Acceleration</h2><p>Amazon S3 Transfer Acceleration 可在客户与 S3 存储桶之间实现快速、轻松、安全的远距离文件传输。Transfer Acceleration 利用 Amazon CloudFront 的全球分布式边缘站点。当数据到达某个边缘站点时，会被经过优化的网络路径路由至 Amazon S3。</p>
+<h1 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h1><p>Amazon S3 是一种简单的键值存储，专门用于存储任意多的对象。</p>
+<h2 id="Storage-Class"><a href="#Storage-Class" class="headerlink" title="Storage Class"></a>Storage Class</h2><p><img src="/images/aws/s3_storage_class.jpg" alt=""><br>GLACIER 存储类适用于在不常访问数据的位置对数据存档。存档对象不可用于实时访问。您必须先还原对象，然后才可以访问它们。</p>
+<ul>
+<li>您无法在创建对象时指定 GLACIER 作为存储类别。您在创建 GLACIER 对象时，先将对象作为存储类进行上传，然后使用生命周期管理将这些对象转换为 GLACIER 存储类别。</li>
+<li>您必须先将 GLACIER 对象还原才能访问它们 (STANDARD、RRS、STANDARD_IA 和 ONEZONE_IA 对象可随时访问)。</li>
+</ul>
+<h2 id="Versioning"><a href="#Versioning" class="headerlink" title="Versioning"></a>Versioning</h2><p>使用版本控制可在一个存储桶中保留多个版本的对象。必须在您的存储桶上显式启用版本控制。默认情况下，版本控制处于禁用状态。无论是否已启用版本控制，存储桶中的每个对象都具有版本 ID。如果未启用版本控制，Amazon S3 将版本 ID 值设置为空。<br><img src="/images/aws/s3_storage_version.jpg" alt=""></p>
+<h1 id="Cross-Region-Replication-CRR"><a href="#Cross-Region-Replication-CRR" class="headerlink" title="Cross-Region Replication (CRR)"></a>Cross-Region Replication (CRR)</h1><p>跨区域复制是一项存储桶级别配置，该功能支持跨不同 AWS 区域中的存储桶自动异步复制对象。我们将这些存储桶分别称为源 存储桶和目标 存储桶。<br><img src="/images/aws/s3_storage_crr.jpg" alt=""></p>
+<p>设置成功后，在源Bucket里Upload后，在目标Bucket里会自动Rep。<br>但是对之前源Bucket里有的Objects不会Rep。我们可以通过命令行的方式把之前的Objects同步过去。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">C:</span>\Users\yongfei.hu&gt;aws s3 cp --recursive <span class="string">s3:</span><span class="comment">//yongfeiuall s3://yongfeiuall.sydney</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/aws.txt to s3://yongfeiuall.sydney/aws.txt</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/replication.txt to s3://yongfeiuall.sydney/replication.txt</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/koala.jpg to s3://yongfeiuall.sydney/koala.jpg</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Life-Cycle-Management"><a href="#Life-Cycle-Management" class="headerlink" title="Life Cycle Management"></a>Life Cycle Management</h1><p>生命周期配置 是一组规则，用于定义 Amazon S3 对一组对象应用的操作。有两种类型的操作：</p>
+<ul>
+<li>转换操作 – 定义对象转换为另一个存储类的时间。例如，您可以选择在对象创建 30 天后将其转换为 STANDARD_IA 存储类，或在对象创建 1 年后将其存档到 GLACIER 存储类。</li>
+<li>过期操作 – 定义对象的过期时间。Amazon S3 将代表您删除过期的对象。</li>
+</ul>
+<p><img src="/images/aws/s3_storage_lifecycle.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/11/AWS-IAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/11/AWS-IAM/" itemprop="url">AWS - IAM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T15:13:52+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/11/AWS-IAM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/11/AWS-IAM/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>AWS Identity and Access Management (IAM) 是一种 Web 服务，可以帮助您安全地控制对 AWS 资源的访问。您可以使用 IAM 控制对哪个用户进行身份验证 (登录) 和授权 (具有权限) 以使用资源。</p>
+<h2 id="多重验证-MFA"><a href="#多重验证-MFA" class="headerlink" title="多重验证(MFA)"></a>多重验证(MFA)</h2><p>您可以向您的账户和各个用户添加双重身份验证以实现更高安全性。借助 MFA，您或您的用户不仅必须提供使用账户所需的密码或访问密钥，还必须提供来自经过特殊配置的设备的代码。</p>
+<p>在<code>IAM -&gt; Dashboard</code>来实现这个功能：<br><img src="/images/aws/iam_mfa.jpg" alt=""><br>这里我用了Authy，重新登录后会提示：<br><img src="/images/aws/iam_login.jpg" alt=""></p>
+<h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><p>创建 AWS 账户时，会创建一个 AWS 账户<strong>根用户</strong>身份。使用 根用户，您可以对 AWS 账户中的所有资源进行完全、无限制的访问，包括访问您的账单信息，您还能更改自己的密码。</p>
+<h3 id="User管理"><a href="#User管理" class="headerlink" title="User管理"></a>User管理</h3><p>在<code>IAM -&gt; Users</code>来实现对用户管理(CRUD，Add Permission, Add Group)。<br><img src="/images/aws/iam_user.jpg" alt=""><br>创建成功后，可以用这个<code>https://account_id.signin.aws.amazon.com/console</code>来登录。</p>
+<h3 id="设置密码策略"><a href="#设置密码策略" class="headerlink" title="设置密码策略"></a>设置密码策略</h3><p>在<code>IAM -&gt; Account Settings</code>来实现对密码策略的管理。</p>
+<h3 id="MFA"><a href="#MFA" class="headerlink" title="MFA"></a>MFA</h3><p>在<code>IAM -&gt; Users -&gt; Summary -&gt;  Security Credentials</code>来实现对User启用MFA。</p>
+<h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><p>没什么好说的，在<code>IAM -&gt; Groups</code>来实现对组的管理(CRUD，Add Permission, Add/Remove User)。</p>
+<h2 id="Role"><a href="#Role" class="headerlink" title="Role"></a>Role</h2><p>也没啥说的，在<code>IAM -&gt; Roles</code>来实现对角色的管理(CRUD，Add Permission)。</p>
+<h2 id="Policy"><a href="#Policy" class="headerlink" title="Policy"></a>Policy</h2><p>策略是 AWS 中的一个实体；在附加到身份或资源时，策略定义了它们的权限。在<code>IAM -&gt; Policies</code>来实现对策略的管理。</p>
+<p>做了一些基本的操作，Security Status：<br><img src="/images/aws/iam.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/08/AWS-介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/AWS-介绍/" itemprop="url">AWS - 介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T12:55:49+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/08/AWS-介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/08/AWS-介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>想了解一下云计算相关的知识，正好公司在用AWS，做一个基本的学习和了解。</p>
+<p>云计算是通过 Internet 云服务平台按需提供计算能力、数据库存储、应用程序和其他 IT 资源，采用按需支付定价模式。<br>云计算包含三个主要类型，通常被称作：基础设施即服务 (IaaS)、平台即服务 (PaaS) 和软件即服务 (SaaS)。</p>
+<p>Amazon Web Services (AWS) 是一个安全的云服务平台，提供计算能力、数据库存储、内容交付以及其他功能来帮助实现业务扩展和增长。</p>
+<p>AWS所有的Service：<br><img src="/images/aws/product.jpg" alt=""></p>
+<h2 id="申请12月免费账户"><a href="#申请12月免费账户" class="headerlink" title="申请12月免费账户"></a>申请12月免费账户</h2><p>这没什么好说的，申请入口：<a href="https://aws.amazon.com/free/" target="_blank" rel="external">AWS Free Tier</a>，填写正确的信息就好了，要写正确的信用卡号和手机号以做验证，要不然不能申请成功。</p>
+<p>申请成功后，登录就可以进入到Console。</p>
+<h2 id="创建Billing-Alarm"><a href="#创建Billing-Alarm" class="headerlink" title="创建Billing Alarm"></a>创建Billing Alarm</h2><p>尽管是免费的账户，还是设置一个Alarm好一些，万一花了钱就不好了，而且还是美元。</p>
+<ol>
+<li>在账户下的‘My Billing Dashboard’中设置，</li>
+<li>在‘Alert&amp; Notifications’中Enable你的Monitor your estimated charges，</li>
+<li>选择‘Receive Billing Alerts’，保存，并点击‘Manage Billing Alerts’，</li>
+<li>到‘CloudWatch -&gt; Alarms - Billing’，</li>
+<li>Create Alarm，设置Exceed钱数和接受邮件地址，</li>
+<li>去设置的邮箱Verify，Alarm States is OK, 到此创建成功。</li>
+</ol>
+<p>接下来，会把各个常用模块做个简单学习。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/07/如何看待工资？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/07/如何看待工资？/" itemprop="url">如何看待工资？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-07T13:21:20+08:00">
+                2018-04-07
               </time>
             
 
@@ -558,8 +1687,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/12/过年-还有没有年味/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/12/过年-还有没有年味/" itemprop="commentsCount"></span>
+                <a href="/2018/04/07/如何看待工资？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/07/如何看待工资？/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -590,11 +1719,13 @@
       
         
           
-            <p>一过小年，春节的气氛也越来越浓，一去超市发现东西跟不要钱似的，已开始狂买和吃喝的节奏。在北京切身的感受是人少了好多，其他无感，已经感受不到那种心中过年的味道。</p>
-<p>小时候家里穷，盼新年是因为可以有新衣服穿，有好吃的，有压岁钱…所以小孩子都会期待春节的到来，对于那个年代的大人也是一样，忙碌了一年，春节就像是对自己过去一年的奖励，好好犒劳一下自己，期望来年可以过的更好。</p>
-<p>随着物质生活的提高，过年就显得没有什么特别之处了，想吃想穿，随时都可以；年龄的成长，欲望的增大，各种压力和琐碎的事情，已经完全没有了小时候那种过年的味道，那种急切的期盼。</p>
-<p>抢到回家的票了，尽管很晚，尽管回来的票还没着落，但可以回家了。现在的过年不是为了庆祝，而是为了回家，为了陪伴亲人。我们这些在外漂泊的人，当初离开家也是没有其他选择，在外拼搏，成长，想让自己变得更好，而父母也在不经意间变老，想想你一年能回家几次，能跟父母见上几面。树欲静而风不止，子欲养而亲不待，真正值得我们珍惜的不是功名，不是出人头地，而是我们最爱的人。</p>
-<p>记住，你一直在路上，有人一直在等你。</p>
+            <p>在上一家公司的时候就想过这个问题，但是一直没有深思考，说一下自己的一些见解，仅代表个人看法，如有不妥，还请指正。</p>
+<h2 id="工作价值：工资"><a href="#工作价值：工资" class="headerlink" title="工作价值：工资"></a>工作价值：工资</h2><p>我一直觉得工资不是评判一个人价值的唯一指标，就像考试第一名并不能代表你就是最优秀的学生。金钱/成绩确实很重要，但不是唯一。</p>
+<p>但是从另一个角度想想，工资是不是公司衡量你工作价值的一个标准？工资是不是能反应出你的能力和努力后的成长？如果你的工资不高或者涨的不多，你有没有思考过，是不是因为自身的能力在标准之下？</p>
+<h2 id="为什么追求高工资"><a href="#为什么追求高工资" class="headerlink" title="为什么追求高工资"></a>为什么追求高工资</h2><p>如今的我们跟上一辈的不同之处，还在于我们以近乎全裸的方式来到大城市，一无所有，没有亲戚邻居的帮衬，一切都得靠自己去努力，而大城市里的一切又是那么的昂贵，怎么才能活下去？怎么才能在这里扎根？这是要直面的且最基本的需求，所以追求高工资就也无可厚非。其实大家都是普通人，绝大多数人都只能通过努力工作来改变自己的命运，过上所谓的体面生活，而工资对普通人可以说是唯一的收入来源，有的人甚至以牺牲健康的代价去拼命加班，去挣更多的工资，不就是希望自己能在这个所谓的大都市里站住脚，让自己能有安全感。</p>
+<p>活过而立之年，再想想，人追求越来越高的工资，真的就是单纯的为了追求金钱，追求物质？从人的需求层次来看，人最终追求的应该就是自由选择的权利，去做自己想做的事。从古至今来看，金钱好像是能够获得这种权利最容易的方式。</p>
+<h2 id="保持工资持续增长"><a href="#保持工资持续增长" class="headerlink" title="保持工资持续增长"></a>保持工资持续增长</h2><p>从个人自身来看，你要舍得投资自己(ROI最高)，不断输入，去努力，去提升自己的价值，相信不断成长的你，工资也会呈上升曲线。</p>
+<p>如今是一个‘大众创业，万众创新’的时代，是一个在别人嘴里站在风口猪都会飞的时代，也就是大家一直都在说的做事要顺势而为，其实工资也一样，在一个夕阳产业里，你再努力，工作价值再大，工资的增长未必能达到你的预期。所以要选对行业，站对队。</p>
 
           
         
@@ -643,7 +1774,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/04/Salt-基础/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/06/北京海洋馆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -662,7 +1793,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/04/Salt-基础/" itemprop="url">Salt - 基础</a></h1>
+                <a class="post-title-link" href="/2018/04/06/北京海洋馆/" itemprop="url">北京海洋馆</a></h1>
         
 
         <div class="post-meta">
@@ -674,354 +1805,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-04T15:45:52+08:00">
-                2018-02-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/02/04/Salt-基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/04/Salt-基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Salt,一种全新的基础设施管理方式，部署轻松，在几分钟内可运行起来，扩展性好，很容易管理上万台服务器，速度够快，服务器之间秒级通讯。salt底层采用动态的连接总线, 使其可以用于编配, 远程执行, 配置管理等等.</p>
-<h1 id="SaltStack-Communication"><a href="#SaltStack-Communication" class="headerlink" title="SaltStack Communication"></a>SaltStack Communication</h1><p>请参见：<a href="https://docs.saltstack.com/en/getstarted/system/communication.html" target="_blank" rel="external">Salt Communication</a></p>
-<h1 id="SaltStack-Component"><a href="#SaltStack-Component" class="headerlink" title="SaltStack Component"></a>SaltStack Component</h1><p>介绍一些主要的Salt概念：</p>
-<ul>
-<li><strong>salt master</strong>: sends commands and configurations to minions</li>
-<li><p><strong>salt minions</strong>: receives commands from master</p>
-</li>
-<li><p><strong>execution modules</strong>: Execution modules are sets of related functions that perform work on minions.</p>
-</li>
-<li><p><strong>formulas(states)</strong>: representation of a system configuration, a grouping of one or more state files, possibly with pillar data and configuration files or anything else which defines a neat package for a particular application.</p>
-</li>
-<li><p><strong>grains</strong>: static information about minions: include operating system, memory, and many other system properties. </p>
-</li>
-<li><strong>pillar</strong>: secure user-defined variables stored on master and assigned to minions</li>
-<li><p><strong>mine</strong>: an area on the master server where the results from regularly executed commands on minions can be stored. </p>
-</li>
-<li><p><strong>top file</strong>: matches formulas and pillar data to minions</p>
-</li>
-<li><p><strong>runners</strong>: modules that execute on the master server instead of minions. </p>
-</li>
-<li><strong>returners</strong>: Send data returned by Salt minions to another system, such as a database. Salt returners can run on the Salt minion or on the Salt master.</li>
-<li><strong>reactor</strong>: provides a mechanism for triggering actions in response to generated events. </li>
-<li><strong>salt SSH</strong>: command to run commands on systems without minions</li>
-</ul>
-<h1 id="Salt-Commands"><a href="#Salt-Commands" class="headerlink" title="Salt Commands"></a>Salt Commands</h1><ul>
-<li><strong>salt-master</strong>: This is the master daemon process. You can start the master service with this command directly, or more typically, through an init script or service file.</li>
-<li><strong>salt-minion</strong>: Likewise, this is minion daemon process, used to communicate with the master and execute commands. Most users will also start this from init scripts or service files.</li>
-<li><strong>salt-key</strong>: This tool is used to manage minion public keys. This tool is used to view current keys and to make decisions about public keys sent by prospective minions. It can also generate keys to place on minions out-of-band.</li>
-<li><strong>salt</strong>: This command is used to target minions in order to run ad-hoc execution modules. This is the main tool used for remote execution.</li>
-<li><strong>salt-ssh</strong>: This command allows you to use SSH as an alternative to ZeroMQ for the transport mechanism.</li>
-<li><strong>salt-run</strong>: This command is used to run runner modules on the master server.</li>
-<li><strong>salt-call</strong>: This command is used to run execution modules directly on a minion you are logged into. This is often used to debug problematic commands by bypassing the master.</li>
-<li><strong>salt-cloud</strong>: This command is used to control and provision cloud resources from many different providers. New minions can easily be spun up and bootstrapped.</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/27/聊一聊加班这回事/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/27/聊一聊加班这回事/" itemprop="url">聊一聊加班这回事</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T15:46:47+08:00">
-                2018-01-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/27/聊一聊加班这回事/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/27/聊一聊加班这回事/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="加班的认知"><a href="#加班的认知" class="headerlink" title="加班的认知"></a>加班的认知</h2><p>天下武功唯快不破，特别是现在的互联网时代追求快，干不完的项目，做不完的事，这也是造成加班是家常便饭的原因之一，而且形成了一种‘风气’。还有一些所谓的专家鼓吹比你优秀的人都加班，你有啥不加班的理由，我很怀疑你们是不是‘托’。是，优秀的人在努力，年轻人也不应该荒废自己本该努力拼搏的年纪，但是加班不是唯一的方式，尤其是机械的硬性加班。</p>
-<p>浮躁的社会，焦虑的社会，各方面的原因造成有些年轻人，拿自己能加班来作为自己的一个优势，更有甚者拿加班来评判自己工作努力与否，有些悲哀，有些无奈。甚至有些领导跟下属直言，不能加班的团队是没有前途的，为了加班而加班，是非常愚蠢的行为。当然了，也不能说一定就不加班，有一些紧急突发的情况，有一些你值得去做的事情，为了你心中的梦想。</p>
-<p>加班不是敬业，对于脑力劳动者，也可以说是知识工作者，不能以工作时长和加班与否来判断其价值，而要看成果。加班跟这个人是不是好员工没有半毛钱关系，当一个人规定自己按时上下班时，才会充分利用好时间，才会有效率，加班是拉长了时间，其实效率可能是低的。</p>
-<h2 id="加班思考"><a href="#加班思考" class="headerlink" title="加班思考"></a>加班思考</h2><p>注重工作和生活平衡的人，应该不会喜欢无目的的加班，而生活和工作分不开的人，好像对他来说加不加班也没啥两样。不管你追求的是哪种生活方式，首先得和公司是一致的，毕竟个人和公司相互认同才能更好的合作发展；还有要知道自己想要的是什么，不要刻意的让自己跟别人看齐，无谓的加班和状态，只会让自己感到深深的自我否定。</p>
-<p>你是因为时间管理差，工作效率低而加班？还是因为确实是组织分配给了你干不完的活？还是像有些软件园里做的一样，工作吃住都在园区，回去也是无聊，那就通过加班来打发下班后无聊的时间？还是因为回家要带孩子辅导作业，面对家庭的琐事，为了逃避这些而选择加班？还是为了你的梦想？</p>
-<p>单纯的从加班来看，加班其实是件很容易的事情，也不见得是坏事情，不提倡加班，也不反对加班，但是最重要的是要弄明白为什么加班，目的和意义是啥。加班不能让你成长，思考才能。愿大家都能按照自己的意愿找到属于自己的生活方式，能够一直做自己，我觉得这是这个时代最奢侈的一件事。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/21/闺女七岁了/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/21/闺女七岁了/" itemprop="url">闺女七岁了</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T08:41:18+08:00">
-                2018-01-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-06T07:40:52+08:00">
+                2018-04-06
               </time>
             
 
@@ -1062,8 +1847,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/21/闺女七岁了/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/21/闺女七岁了/" itemprop="commentsCount"></span>
+                <a href="/2018/04/06/北京海洋馆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/06/北京海洋馆/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1094,852 +1879,9 @@
       
         
           
-            <p>时间过的真快，转眼你就七岁了，七是个很神奇的数字，比如人生每隔七年都是一个自我选择和改变的时间点，比如七年之痒……希望你的第一个七年是快乐的，幸福的，尽管对你也有严格，有批评，有发火，有时候甚至是不公平。<br><img src="/images/izheyi/2018/01/01.JPG" alt=""><br>这七年你成长了很多，从一个呱呱坠地的婴儿到一个小学生，从只会哇哇大哭到有自己的思想，爸爸妈妈看到现在的你，真的很欣慰，祝贺你的成长。</p>
-<p><img src="/images/izheyi/2018/01/03.JPG" alt=""><br>说实话有时候你的缠人真的很‘烦’^_^对你认死理，你所谓的‘听话’也很无奈……但比起这些，我最害怕的是我知道有一天你会离爸爸妈妈而去，去寻找自己的人生。虽然很害怕，但还是会祝福你，希望你能找到属于自己的幸福和人生，请记住你的身后永远都会站着爸爸妈妈。</p>
-<p><img src="/images/izheyi/2018/01/02.JPG" alt=""><br>其实养一个孩子最大的成本是时间成本，从你来到这个世界时的手足无措，到慢慢的可以抱起你，可以把你放在肩头，再到现在想办法在学习上“对付”你(o^^o)只有认真自己去带了，才知道其他的成本跟时间比起来都不算啥。所以我也希望你长大后回想自己的童年时，想到的不光有快乐，还有爸爸、妈妈、以及所有家人对你的爱。</p>
-<p><img src="/images/izheyi/2018/01/04.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/20/新任经理人管理必修课/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/20/新任经理人管理必修课/" itemprop="url">新任经理人管理必修课</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-20T08:33:31+08:00">
-                2018-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/20/新任经理人管理必修课/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/20/新任经理人管理必修课/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>回顾这近两年从业务到主管的晋升，有不少困难和迷茫，尽管级别高了，但是如何管好人，带好团队，怎么顺利的完成角色的转变，依然有很大的挑战，还有很多东西需要学习，很长的路要走。</p>
-<h1 id="做领导后有何不同"><a href="#做领导后有何不同" class="headerlink" title="做领导后有何不同"></a>做领导后有何不同</h1><p>不知道该怎么给团队安排任务<br>往下对团队负责，往上对领导，要双面负责</p>
-<ol>
-<li>做经理后，是不是做我之前最擅长的事情<br>以前只管理自己，个人目标<br>现在管理他人，团队目标<br>跟之前完全不一样，需要培养领导力，建立流程，解决问题，决策能力</li>
-<li>权力<br>我是领导我有权，为什么不听我的？<br>增加的是你的职权，同时也带给你责任<br>权利的来源：职权、专家权利、影响力<br>影响力来自于创造双赢的结果<br>观察在行使职权的过程中是不是获得了信任，是不是建立了双赢的关系</li>
-<li>自由<br>更多事情占用很多时间，开会，沟通<br>经理人花大量时间在‘人’身上， 由事到人</li>
-<li>一切都在掌控之中<br>你会面对各方面带来的限制，你需要能够来处理<br>管理者都会有纠结和痛苦</li>
-<li>有人教我<br>而现实是你要：<br>自我反思<br>总结觉察</li>
-</ol>
-<h2 id="领导力两难"><a href="#领导力两难" class="headerlink" title="领导力两难"></a>领导力两难</h2><ol>
-<li>领导责任<br>为了下属而做， 指导和管理下属</li>
-<li>业务责任<br>为了老板而做， 上级交办自己要完成的</li>
-</ol>
-<p>对下属，抢下属的工作，或表示不信任，或表示不懂管理<br>对自己，停滞不前，也会让自己丧失进一步提升的机会</p>
-<p>领导力缺口</p>
-<h1 id="是下属没追求，还是领导没要求"><a href="#是下属没追求，还是领导没要求" class="headerlink" title="是下属没追求，还是领导没要求"></a>是下属没追求，还是领导没要求</h1><p>目标设定法</p>
-<ol>
-<li>了解自己的现在的位置</li>
-<li>明确目的地</li>
-<li>我如何到达</li>
-</ol>
-<p>目标设定原则</p>
-<ol>
-<li>SMART原则</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/20/新任经理人管理必修课/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/15/小强升职记-时间管理故事书/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/15/小强升职记-时间管理故事书/" itemprop="url">小强升职记 - 时间管理故事书</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T12:22:53+08:00">
-                2018-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/胡璐读书/" itemprop="url" rel="index">
-                    <span itemprop="name">胡璐读书</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/15/小强升职记-时间管理故事书/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/15/小强升职记-时间管理故事书/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>双十一打包买的书，以为是职场的书，没啥可看的，结果发现是写时间管理的书，非常值的读。</p>
-<p>一直都会有思考，职业价值观是什么？通俗的讲可能应当是活着是为了啥？每天忙来忙去的工作到底是为了什么？为什么每天弄的都这么忙？从这本书里感受到了共鸣，找到了一些答案，很有启发。</p>
-<p><em>新窗口打开查看大图</em><br><img src="/images/reading/time.jpg" alt=""></p>
-<p>衣柜整理法流程图：<br><img src="/images/reading/yigui.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/11/2018-学习计划/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/11/2018-学习计划/" itemprop="url">2018 - 学习计划</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-11T12:40:57+08:00">
-                2018-01-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/11/2018-学习计划/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/11/2018-学习计划/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/shenghuo/18planing.jpg" alt=""><br><img src="/images/shenghuo/18planing_1.jpg" alt=""></p>
-<p>给自己一个动力，一点压力，希望从各个方面都有一个提升。</p>
-<h2 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h2><p>今年阅读10本书，不追多，不限书的种类，但是要做到把学到的知识转化为自己的能力，转化为自己的思想。</p>
-<ol>
-<li>每个人都在强调读书的重要性，自己也有所感悟，坚持一年看看到底会有怎样的事情发生。</li>
-<li>家里也有很多一时兴起买的书，消灭掉它们。</li>
-</ol>
-<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><ol>
-<li>提升工作效率 - 学习方法。</li>
-<li>英语 - Friends continue。</li>
-</ol>
-<h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><ol>
-<li>公司用到的所有环节和相关知识都能掌握。</li>
-<li>从更高的角度去看待技术。</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>每周更新一篇Blog，不限内容。</li>
-<li>和闺女好好的 - 脾气。</li>
-</ol>
-<h2 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h2><ol>
-<li>读3本书： 给自己鼓掌点赞。</li>
-<li>读5本书： 家用打印机。</li>
-<li>读10本书： 给自己放假一天。</li>
-<li>所用技术全掌握： 看场话剧或音乐剧。</li>
-<li>都完成： 看一看大海。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/01/Consul-集群/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/01/Consul-集群/" itemprop="url">Consul - 集群</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-01T11:11:54+08:00">
-                2018-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consul/" itemprop="url" rel="index">
-                    <span itemprop="name">Consul</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/01/Consul-集群/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/01/Consul-集群/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="搭建集群"><a href="#搭建集群" class="headerlink" title="搭建集群"></a>搭建集群</h1><p>Consul推荐在每个数据中心运行3或5个Servers以避免Server失败导致的数据丢失。</p>
-<p>基于此，我们先用4个虚拟机来做试验：<br>|:—IP Address–:|:—–Role—-:|<br>| 192.168.244.130 | Consul Server |<br>| 192.168.244.131 | Consul Server |<br>| 192.168.244.132 | Consul Server |<br>| 192.168.244.133 | Consul Client |</p>
-<h2 id="Server-Configuration"><a href="#Server-Configuration" class="headerlink" title="Server Configuration"></a>Server Configuration</h2><h3 id="1-生成Key，创建必要配置目录和文件"><a href="#1-生成Key，创建必要配置目录和文件" class="headerlink" title="1. 生成Key，创建必要配置目录和文件"></a>1. 生成Key，创建必要配置目录和文件</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/server</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/consul-server-data</span></span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># ls</span></span><br><span class="line">consul-server-data  <span class="built_in">ping</span>.json  server  web.json</span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># consul keygen</span></span><br><span class="line">Vz3jcuLn6a6Ekq5PbrJO2w==</span><br></pre></td></tr></table></figure>
-<p><em>Key: It should be the same for all the servers and clients in a datacenter. If it’s different the consul members will refuse to join.</em></p>
-<h3 id="2-创建Configration"><a href="#2-创建Configration" class="headerlink" title="2. 创建Configration"></a>2. 创建Configration</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">bind_addr</span>": <span class="value"><span class="string">"192.168.244.130"</span></span>, </span><br><span class="line">"<span class="attribute">datacenter</span>": <span class="value"><span class="string">"dc1"</span></span>,</span><br><span class="line">"<span class="attribute">data_dir</span>": <span class="value"><span class="string">"/etc/consul.d/consul-server-data"</span></span>,</span><br><span class="line">"<span class="attribute">encrypt</span>": <span class="value"><span class="string">"Vz3jcuLn6a6Ekq5PbrJO2w=="</span></span>,</span><br><span class="line">"<span class="attribute">log_level</span>": <span class="value"><span class="string">"INFO"</span></span>,</span><br><span class="line">"<span class="attribute">enable_syslog</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">enable_debug</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">node_name</span>": <span class="value"><span class="string">"ConsulServer1"</span></span>,</span><br><span class="line">"<span class="attribute">server</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">bootstrap_expect</span>": <span class="value"><span class="number">3</span></span>,</span><br><span class="line">"<span class="attribute">rejoin_after_leave</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">retry_join</span>": <span class="value">[ </span><br><span class="line">  <span class="string">"192.168.244.130"</span>,</span><br><span class="line">  <span class="string">"192.168.244.131"</span>,</span><br><span class="line">  <span class="string">"192.168.244.132"</span></span><br><span class="line">  ]</span><br><span class="line"> </span>&#125;</span><br></pre></td></tr></table></figure>
-<p><em>在每一个Server都要以下相同操作, 唯一要修改的就是IP地址和node_name。</em></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/01/Consul-集群/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/26/Consul-Key-Value和Web-UI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/26/Consul-Key-Value和Web-UI/" itemprop="url">Consul - Key/Value和Web UI</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-26T10:28:03+08:00">
-                2017-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Consul/" itemprop="url" rel="index">
-                    <span itemprop="name">Consul</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/26/Consul-Key-Value和Web-UI/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/26/Consul-Key-Value和Web-UI/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Key-Value"><a href="#Key-Value" class="headerlink" title="Key/Value"></a>Key/Value</h1><p>为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# <span class="keyword">mkdir</span> <span class="keyword">test</span></span><br><span class="line">[root@Automation ~]# consul kv get <span class="keyword">test</span>/</span><br><span class="line"><span class="keyword">Error</span>! <span class="keyword">No</span> key exists at: <span class="keyword">test</span>/</span><br></pre></td></tr></table></figure></p>
-<p>consul支持http api和consul client进行K/V操作<br>1.添加: consul kv put [-flags=xx] key value<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv 1</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test/kv1 11</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv1</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put -flags=21 test/kv2 admin</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test/kv2</span><br></pre></td></tr></table></figure></p>
-<p>consul支持64位整数的flags表示kv的metadata<br>2.查询: consul kv get [-deatiled] key<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get test/kv</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">[root@Automation ~]<span class="preprocessor"># consul kv get -detailed test/kv</span></span><br><span class="line">CreateIndex      <span class="number">215</span></span><br><span class="line">Flags            <span class="number">0</span></span><br><span class="line">Key              test/kv</span><br><span class="line">LockIndex        <span class="number">0</span></span><br><span class="line">ModifyIndex      <span class="number">695</span></span><br><span class="line">Session          -</span><br><span class="line">Value            <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
-<p>3.查询所有的key: consul kv get -recurse<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># consul kv get -recurse</span></span><br><span class="line"><span class="built_in">test</span>:<span class="number">15</span></span><br><span class="line"><span class="built_in">test</span>/kv:<span class="number">1</span></span><br><span class="line"><span class="built_in">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="built_in">test</span>/kv2:admin</span><br></pre></td></tr></table></figure></p>
-<p>4.删除key: consul kv delete key<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# consul kv <span class="operator"><span class="keyword">delete</span> <span class="keyword">test</span>/kv</span><br><span class="line"><span class="keyword">Success</span>! Deleted <span class="keyword">key</span>: <span class="keyword">test</span>/kv</span><br><span class="line">[root@Automation ~]# consul kv <span class="keyword">get</span> -recurse</span><br><span class="line"><span class="keyword">test</span>:<span class="number">15</span></span><br><span class="line"><span class="keyword">test</span>/kv1:<span class="number">11</span></span><br><span class="line"><span class="keyword">test</span>/kv2:<span class="keyword">admin</span></span></span><br></pre></td></tr></table></figure></p>
-<p>5.前缀匹配删除: consul kv delete -recurse key-prefix<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv delete -recurse test</span></span><br><span class="line">Success! Deleted keys <span class="keyword">with</span> prefix: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get -recurse</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure></p>
-<p>6.修改kv<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test new</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">new</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv put test update</span></span><br><span class="line">Success! Data written <span class="keyword">to</span>: test</span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># consul kv get test</span></span><br><span class="line">update</span><br></pre></td></tr></table></figure></p>
-<h1 id="Web-UI"><a href="#Web-UI" class="headerlink" title="Web UI"></a>Web UI</h1><p>启动Consul代理并设置 -ui 参数来启动自有主机的界面：<br><code>[root@Automation ~]# consul agent -dev -enable-script-checks -ui -config-dir /etc/consul.d</code><br><img src="/images/consul/ui.jpg" alt=""></p>
+            <p>今年的清明节很不简单，竟然下起了雪，风不小，但是也没有那么的冷。</p>
+<p>本来打算是去天文馆的，去的晚，票都售罄了，就去了它隔壁。</p>
+<p><img src="/images/izheyi/2018/04/haiyangguan_01.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_02.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_03.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_04.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_05.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_06.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_07.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_08.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_09.JPG" alt=""><br><img src="/images/izheyi/2018/04/haiyangguan_10.JPG" alt=""></p>
 
           
         
@@ -1979,7 +1921,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2029,7 +1971,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2040,7 +1982,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2051,7 +1993,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

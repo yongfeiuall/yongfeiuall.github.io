@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/08/08/Selenium如何处理Table/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/10/01/2015国庆香山游/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/08/08/Selenium如何处理Table/" itemprop="url">Selenium如何处理Table</a></h1>
+                <a class="post-title-link" href="/2015/10/01/2015国庆香山游/" itemprop="url">2015国庆香山游</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-08-08T16:08:13+08:00">
-                2014-08-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-01T15:37:09+08:00">
+                2015-10-01
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/08/08/Selenium如何处理Table/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/08/08/Selenium如何处理Table/" itemprop="commentsCount"></span>
+                <a href="/2015/10/01/2015国庆香山游/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/10/01/2015国庆香山游/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -409,169 +409,10 @@
 
       
         
-          
-            <p>由于webdriver中没有专门的table类，所以我们需要简单的封装出一个易用易扩展的Table类来帮助简化代码。</p>
-<p>以下是我之前用Java语言来实现的一个简单的封装：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name:<span class="variable">&lt;/b&gt;</span> WebTable<span class="variable">&lt;/br&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span>This class is used to handling</span><br><span class="line"> <span class="keyword">*</span> web table<span class="variable">&lt;/br&gt;</span></span><br><span class="line"> <span class="keyword">*</span> </span><br><span class="line"> <span class="keyword">*</span> <span class="comment">@author &lt;i&gt;Yongfei Hu&lt;/i&gt;</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line"></span><br><span class="line">public class WebTable &#123;</span><br><span class="line"></span><br><span class="line">	private WebElement webTable;</span><br><span class="line">	StartingSelenium ss = new StartingSelenium();</span><br><span class="line"></span><br><span class="line">	public WebTable(WebElement webTable) &#123;</span><br><span class="line">		this.webTable = webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public WebElement getWebTable() &#123;</span><br><span class="line">		return webTable;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableRows<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get table</span><br><span class="line">	 <span class="keyword">*</span> rows list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableRows</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableRows() &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableRows = webTable.findElements(By.tagName(<span class="string">"tr"</span>));</span><br><span class="line">		return tableRows;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getTableColumns<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> table columns list</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param currentRow</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return tableColumns</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	private List<span class="variable">&lt;WebElement&gt;</span> getTableColumns(WebElement currentRow) &#123;</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = currentRow.findElements(By</span><br><span class="line">				.tagName(<span class="string">"td"</span>));</span><br><span class="line">		return tableColumns;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table row count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowCount() &#123;</span><br><span class="line">		int rowCount = getTableRows().size();</span><br><span class="line">		Reporter.log(<span class="string">"Rows in the table: "</span> + rowCount, true);</span><br><span class="line">		return rowCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getColumnCount<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> table column count</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return columnCount</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getColumnCount() &#123;</span><br><span class="line">		WebElement headerRow = getTableRows().get(0);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(headerRow);</span><br><span class="line">		int columnCount = tableColumns.size();</span><br><span class="line">		Reporter.log(<span class="string">"Column in the table: "</span> + columnCount, true);</span><br><span class="line">		return columnCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to get the</span><br><span class="line">	 <span class="keyword">*</span> specific cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return cellText</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public String getCellText(int row, int column) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		List<span class="variable">&lt;WebElement&gt;</span> tableColumns = getTableColumns(currentRow);</span><br><span class="line">		return tableColumns.get(column).getText();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: getRowByCellText<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description:<span class="variable">&lt;/b&gt;</span> This method is to get</span><br><span class="line">	 <span class="keyword">*</span> the row number by the cell data</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param cellText</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@return rowNumber</span></span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public int getRowByCellText(String cellText) &#123;</span><br><span class="line">		int rowCount = getRowCount();</span><br><span class="line">		int colCount = getColumnCount();</span><br><span class="line">		int getRow = 0;</span><br><span class="line">		boolean flag;</span><br><span class="line"></span><br><span class="line">		for (int i = 0; i <span class="variable">&lt; rowCount; i++) &#123;</span><br><span class="line">			flag = false;</span><br><span class="line"></span><br><span class="line">			for (int j = 0; j &lt; colCount; j++) &#123;</span><br><span class="line">				if (getCellText(i, j).equals(cellText)) &#123;</span><br><span class="line">					getRow = i;</span><br><span class="line">					flag = true;</span><br><span class="line">					Reporter.log("The text: " + cellText + " in row number: "</span><br><span class="line">							+ getRow, true);</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (flag) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return getRow;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * &lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index).click();</span><br><span class="line">		Reporter.log(<span class="string">"Clickin a link on the row: "</span> + row, true);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="variable">&lt;b&gt;</span>Name: clickLinkInCell<span class="variable">&lt;/b&gt;</span> <span class="variable">&lt;b&gt;</span>Description: <span class="variable">&lt;/b&gt;</span> This method is to click</span><br><span class="line">	 <span class="keyword">*</span> link in the specific cell</span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param row</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param column</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param index</span></span><br><span class="line">	 <span class="keyword">*</span> <span class="comment">@param linkName</span></span><br><span class="line">	 <span class="keyword">*</span> </span><br><span class="line">	 <span class="keyword">*</span>/</span><br><span class="line">	public void clickLinkInCell(int row, int column, int index, String linkName) &#123;</span><br><span class="line">		WebElement currentRow = getTableRows().get(row);</span><br><span class="line">		WebElement currentCell = getTableColumns(currentRow).get(column);</span><br><span class="line">		WebElement we = currentCell.findElements(By.tagName(<span class="string">"a"</span>)).get(index);</span><br><span class="line">		ss.clickUsingJS(we, linkName);</span><br><span class="line">		try &#123;</span><br><span class="line">			Thread.sleep(3000);</span><br><span class="line">		&#125; catch (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/07/10/dataProvider实现数据驱动/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/07/10/dataProvider实现数据驱动/" itemprop="url">dataProvider实现数据驱动</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-07-10T07:30:44+08:00">
-                2014-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/07/10/dataProvider实现数据驱动/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/07/10/dataProvider实现数据驱动/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>废话不多讲，直接进主题，怎么实现用Excel配置测试数据，用dataProvider来调用测试数据。</p>
-<p>jxl目前来看只支持.xls格式的文件，所以我们采用Apache POI来实现对.xlsx的操作，详细信息请参见：<a href="http://poi.apache.org/">POI</a></p>
-<h1 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h1><p>创建数据文件，并写入内容</p>
-<p><img src="/images/Selenium/dataprovider_data.jpg" alt="Test Data"></p>
-<p>此处我们只是做个实验，把文件放在了C盘下，在实际的项目中可以放在整个项目中。<br>
+          <p>今天风是可不小，在山顶都差点没把人给吹走，本来还说坐缆车下来呢，谁知缆车也停了。不过玩的很开心。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2014/07/10/dataProvider实现数据驱动/#more" rel="contents">
+            <a class="btn" href="/2015/10/01/2015国庆香山游/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -622,7 +463,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/06/01/Selenium-Highlight页面元素/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/09/19/Dad-s-birthday/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -641,7 +482,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/06/01/Selenium-Highlight页面元素/" itemprop="url">Selenium Highlight页面元素</a></h1>
+                <a class="post-title-link" href="/2015/09/19/Dad-s-birthday/" itemprop="url">Dad's birthday</a></h1>
         
 
         <div class="post-meta">
@@ -653,8 +494,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-06-01T15:56:37+08:00">
-                2014-06-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-09-19T21:01:54+08:00">
+                2015-09-19
               </time>
             
 
@@ -676,8 +517,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
                   </a>
                 </span>
 
@@ -695,8 +536,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/06/01/Selenium-Highlight页面元素/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/06/01/Selenium-Highlight页面元素/" itemprop="commentsCount"></span>
+                <a href="/2015/09/19/Dad-s-birthday/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/09/19/Dad-s-birthday/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -727,11 +568,8 @@
       
         
           
-            <p>大家都知道QTP的对象高亮显示功能特别强大， Selenium Webderiver也可以实现此功能。</p>
-<p>高亮显示有时候对Debug还是相当有用的。</p>
-<h1 id="解决脚本"><a href="#解决脚本" class="headerlink" title="解决脚本"></a>解决脚本</h1><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;Summary&gt;</span> </span></span><br><span class="line"><span class="comment"><span class="xmlDocTag">///</span> Highlight WebElement </span></span><br><span class="line"><span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/Summary&gt;</span> </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">highlightElement</span>(<span class="params">WebDriver driver, WebElement element</span>) </span>&#123;   </span><br><span class="line">	<span class="keyword">if</span>(element.isDisplayed())</span><br><span class="line">	&#123;</span><br><span class="line">	JavascriptExecutor js = (JavascriptExecutor) driver;         </span><br><span class="line">	js.executeScript(<span class="string">"element = arguments[0];"</span> +            </span><br><span class="line">	<span class="string">"original_style = element.getAttribute('style');"</span> +            </span><br><span class="line">			<span class="string">"element.setAttribute('style', original_style + \";"</span> +        </span><br><span class="line">	<span class="string">"background: yellow; border: 2px solid red;\");"</span> +         </span><br><span class="line">			<span class="string">"setTimeout(function()&#123;element.setAttribute('style', original_style);&#125;, 1000);"</span>, element); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		System.<span class="keyword">out</span>.println(<span class="string">"Can't idnetify the object: "</span> + element);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="调用脚本"><a href="#调用脚本" class="headerlink" title="调用脚本"></a>调用脚本</h1><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://ww.baidu.com"</span>);</span><br><span class="line">WebElement button = driver.findElement(By.<span class="property">id</span>(<span class="string">"su"</span>));</span><br><span class="line">hilightElement(driver, button);</span><br></pre></td></tr></table></figure>
-<h1 id="结果显示"><a href="#结果显示" class="headerlink" title="结果显示"></a>结果显示</h1><p><img src="/images/Selenium/highlight_result.jpg" alt="Highlight Result"></p>
+            <p>在爸爸的记忆中，这可能是爸爸收到的第一份生日卡片，谢谢妈妈和小丁的心意，爸爸也爱你们^_^<img src="/images/izheyi/2015/dbirthday_0.jpg" alt=""></p>
+<p><img src="/images/izheyi/2015/dbirthday_1.jpg" alt=""><br><img src="/images/izheyi/2015/dbirthday_2.jpg" alt=""></p>
 
           
         
@@ -780,7 +618,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/23/ReportNG替换TestNG默认结果报告/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/05/01/blog-说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -799,7 +637,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/05/23/ReportNG替换TestNG默认结果报告/" itemprop="url">ReportNG替换TestNG默认结果报告</a></h1>
+                <a class="post-title-link" href="/2015/05/01/blog-说明/" itemprop="url">blog 说明</a></h1>
         
 
         <div class="post-meta">
@@ -811,8 +649,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-23T15:46:35+08:00">
-                2014-05-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-05-01T08:36:57+08:00">
+                2015-05-01
               </time>
             
 
@@ -834,8 +672,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
                   </a>
                 </span>
 
@@ -853,8 +691,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/05/23/ReportNG替换TestNG默认结果报告/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/23/ReportNG替换TestNG默认结果报告/" itemprop="commentsCount"></span>
+                <a href="/2015/05/01/blog-说明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/05/01/blog-说明/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -884,12 +722,10 @@
 
       
         
-          <p>TestNG默认的报告虽然内容挺全，但是展现效果却不太理想，不易阅读。因此我们想利用ReportNG来替代TestNG默认的report。</p>
-<p>什么是ReportNG呢？这里不多说，请直接参见<a href="http://reportng.uncommons.org/">ReprotNG</a></p>
-<p>要替换默认报告，我们需要做以下操作：<br>
+          <h1 id="Why-have-this-blog"><a href="#Why-have-this-blog" class="headerlink" title="Why have this blog"></a>Why have this blog</h1><p>本人略懒，忘性很大，一直以来都想自己弄个blog记录一下自己学习的笔记和技术参考。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2014/05/23/ReportNG替换TestNG默认结果报告/#more" rel="contents">
+            <a class="btn" href="/2015/05/01/blog-说明/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -940,7 +776,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/01/26/Exporting-UFT-12-results-into-html-throws-the-error-about-IDS-BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -959,7 +795,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/" itemprop="url">Prop.Properties配置测试应用的环境和其他配置项</a></h1>
+                <a class="post-title-link" href="/2015/01/26/Exporting-UFT-12-results-into-html-throws-the-error-about-IDS-BC/" itemprop="url">Exporting UFT 12 results into html throws the error about 'IDS_BC'</a></h1>
         
 
         <div class="post-meta">
@@ -971,634 +807,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-20T08:14:58+08:00">
-                2014-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/20/Prop-Properties配置测试应用的环境和其他配置项/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>prop.propertiesfile contains important info that needs to be changed before the test is run, such as: Browser type (browser =), Product (test-prod). Depend your test setup; you may not need the test-env and other configurations.</p>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Browser type</span></span><br><span class="line"><span class="preprocessor"># 1 =&gt; FireFox</span></span><br><span class="line"><span class="preprocessor"># 2 =&gt; IE</span></span><br><span class="line"><span class="preprocessor"># 3 =&gt; Chrome</span></span><br><span class="line"><span class="preprocessor"># 4 =&gt; Safari</span></span><br><span class="line">BrowserType = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Test server and login information</span></span><br><span class="line">BaseURL = http:<span class="comment">//www.site.com/</span></span><br><span class="line">UserName = </span><br><span class="line">UserPwd = </span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># UI actions' timeout in millisecond</span></span><br><span class="line">Timeout = <span class="number">30000</span></span><br></pre></td></tr></table></figure>
-<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalSetting</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Properties prop = getProperties();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String baseURL = prop.getProperty(<span class="string">"BaseURL"</span>);</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> browserType = Integer.parseInt(prop.getProperty(<span class="string">"BrowserType"</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">String <span class="title">getProperty</span><span class="params">(String property)</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> prop.<span class="title">getProperty</span><span class="params">(property)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">Properties <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Properties prop = <span class="keyword">new</span> Properties();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			FileInputStream file = <span class="keyword">new</span> FileInputStream(<span class="string">"prop1.properties"</span>);</span><br><span class="line">			prop.load(file);</span><br><span class="line">			file.close();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> prop;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#引用<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">Test</span></span><br><span class="line">public void <span class="function">doTest</span>()</span>&#123;</span><br><span class="line">	<span class="tag">System</span><span class="class">.out</span><span class="class">.Println</span>(<span class="tag">GlobalSetting</span><span class="class">.baseURL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/05/19/Selenium抓图并保存到TestNG报告中/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/05/19/Selenium抓图并保存到TestNG报告中/" itemprop="url">Selenium抓图并保存到TestNG报告中</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-05-19T15:38:15+08:00">
-                2014-05-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/05/19/Selenium抓图并保存到TestNG报告中/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/05/19/Selenium抓图并保存到TestNG报告中/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里不讲解怎么在Eclipse安装配置TestNG，网上一搜一大把，大家自己去实践一下。<br>在这里主要说一下用Java来实现Selenium Webdriver的截图功能和把截图写到TestNG的报告中。</p>
-<h1 id="Capture-screenshot"><a href="#Capture-screenshot" class="headerlink" title="Capture screenshot"></a>Capture screenshot</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Capture screenshot</span></span><br><span class="line"><span class="keyword">public</span> String captureScreenShot() </span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    String dir = <span class="string">"screenshot"</span>; </span><br><span class="line">    String date = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyyMMdd"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">    String time = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"HHmmss"</span>).format(<span class="keyword">new</span> Date());</span><br><span class="line">    String screenShotPath = dir + <span class="keyword">File</span>.separator + date + <span class="keyword">File</span>.separator + time + <span class="string">".png"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">File</span> <span class="keyword">source</span> = ((TakesScreenshot)driver).getScreenshotAs(OutputType.<span class="keyword">FILE</span>);</span><br><span class="line">        FileUtils.copyFile(<span class="keyword">source</span>, <span class="keyword">new</span> <span class="keyword">File</span>(screenShotPath)); </span><br><span class="line">        screenShotPath = screenShotPath.substring(screenShotPath.indexOf(<span class="string">"\\"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(IOException e) </span><br><span class="line">    &#123;</span><br><span class="line">        screenShotPath = <span class="string">"Failed to capture screenshot: "</span> + e.getMessage();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> screenShotPath; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Write-to-TestNG"><a href="#Write-to-TestNG" class="headerlink" title="Write to TestNG"></a>Write to TestNG</h1><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="literal">void</span> writeToTestNG(<span class="built_in">String</span> proMessage) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">String</span> png = captureScreenShot();</span><br><span class="line">    Reporter<span class="built_in">.</span><span class="keyword">log</span>(<span class="string">"["</span> + logTime + <span class="string">"] "</span> + proMessage);</span><br><span class="line">    <span class="built_in">String</span> <span class="keyword">log</span> = <span class="literal">new</span> File(<span class="string">"screenshot"</span>)<span class="built_in">.</span>getAbsolutePath();</span><br><span class="line">    Reporter<span class="built_in">.</span><span class="keyword">log</span>(<span class="string">"&lt;br/&gt;&lt;img src=\""</span> + <span class="keyword">log</span>  + <span class="string">"/"</span> + png + <span class="string">"\" /&gt;"</span>);</span><br></pre></td></tr></table></figure>
-<h1 id="Call-function"><a href="#Call-function" class="headerlink" title="Call function"></a>Call function</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    openURL();</span><br><span class="line">    BaiduSearch yy = <span class="keyword">new</span> BaiduSearch(driver);</span><br><span class="line">    yy.searchFor(<span class="string">"searchTest"</span>);</span><br><span class="line">    writeToTestNG(<span class="string">"testing "</span>);</span><br><span class="line">    driver.quit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p><img src="/images/Selenium/capture_pic_to_report.jpg" alt="TestNG"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/04/04/IE浏览器Zoom和Protected-Model-Setting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/04/04/IE浏览器Zoom和Protected-Model-Setting/" itemprop="url">IE浏览器Zoom和Protected Model Setting</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-04-04T15:35:17+08:00">
-                2014-04-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/04/04/IE浏览器Zoom和Protected-Model-Setting/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/04/04/IE浏览器Zoom和Protected-Model-Setting/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Selenium Webdriver在IE下跑脚本的时候要保证页面大小为100%，且要在IE internet options, selectSecurity tab and uncheck “Enable Protected Mode” for all security zone.</p>
-<p>为了不手动来做这些设置，我们可以在Launch IE Driver的时候控制，如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"webdriver.ie.driver"</span>, <span class="string">"resource\\IEDriverServer.exe"</span>);</span><br><span class="line">DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//zoom</span></span><br><span class="line">ieCapabilities.setCapability(<span class="string">"ignoreZoomSetting"</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Security</span></span><br><span class="line">ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">WebDriver driver = <span class="keyword">new</span> InternetExplorerDriver(ieCapabilities);</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/03/16/IEDriverServer在进程中没有关闭？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="url">IEDriverServer在进程中没有关闭？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-03-16T15:32:21+08:00">
-                2014-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/03/16/IEDriverServer在进程中没有关闭？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有时候跑完脚本后，IEDriverServer.exe进程没杀掉。</p>
-<p><strong>解决方法：</strong></p>
-<p>在关闭driver时用Driver.Quit();不要用Driver.Close();<br>Driver.Quit() – Quit this dirver, closing every associated windows;<br>Driver.Close() – Close the current window, quiting the browser if it is the last window currently open.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/01/02/获取ToolTip几种方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/01/02/获取ToolTip几种方法/" itemprop="url">获取ToolTip几种方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-01-02T09:41:59+08:00">
-                2014-01-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-01-26T15:04:33+08:00">
+                2015-01-26
               </time>
             
 
@@ -1639,8 +849,167 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/01/02/获取ToolTip几种方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/01/02/获取ToolTip几种方法/" itemprop="commentsCount"></span>
+                <a href="/2015/01/26/Exporting-UFT-12-results-into-html-throws-the-error-about-IDS-BC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/01/26/Exporting-UFT-12-results-into-html-throws-the-error-about-IDS-BC/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Exporting UFT 12 results into html throws the error “A reference to variable or parameter ‘IDS_BC’ cannot be resolved.” </p>
+<p>I have recently upgraded from QTP 11 to UFT 12. The vbscript I used for QTP 11 worked great, but it is not running with UFT 12.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/01/26/Exporting-UFT-12-results-into-html-throws-the-error-about-IDS-BC/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/26/使用Java操作MongoDB-Insert-ISODate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/26/使用Java操作MongoDB-Insert-ISODate/" itemprop="url">使用Java操作MongoDB - Insert ISODate</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-26T08:10:11+08:00">
+                2014-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/26/使用Java操作MongoDB-Insert-ISODate/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/26/使用Java操作MongoDB-Insert-ISODate/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1671,9 +1040,9 @@
       
         
           
-            <h1 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h1><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">' Mouseover </span></span><br><span class="line">Browser(<span class="string">"XXXX"</span>).Page(<span class="string">"YYYY"</span>).Link(<span class="string">"Link A"</span>).MouseOver </span><br><span class="line"><span class="comment">' Wait 1 second to get the tool tip displayed. </span></span><br><span class="line">wait <span class="number">1</span></span><br><span class="line"><span class="comment">' Capture the text of the tooltip object </span></span><br><span class="line">txt= Window(<span class="string">"nativeclass:=tooltips_class32"</span>).GetROProperty(<span class="string">"text"</span>) </span><br><span class="line">msgbox txt</span><br></pre></td></tr></table></figure>
-<h1 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp=Brower(<span class="string">"name"</span>).Page(<span class="string">"page"</span>).Image(<span class="string">"imagename).GetROProperty("</span>alt<span class="string">") </span></span><br><span class="line">msgbox temp</span><br></pre></td></tr></table></figure>
-<h1 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">temp=Brower(<span class="string">"name"</span>).Page(<span class="string">"page"</span>).Image(<span class="string">"imagename).GetROProperty("</span>tooltip<span class="string">") </span></span><br><span class="line">msgbox temp</span><br></pre></td></tr></table></figure>
+            <p>We could insert data with json as:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">name_collection1</span>": <span class="value">[</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">attribute_1</span>":<span class="value"><span class="string">"value1"</span></span>,</span><br><span class="line">        "<span class="attribute">attribute_2</span>":<span class="value"><span class="string">"value2"</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">attribute_3</span>":<span class="value"><span class="number">2</span></span>,</span><br><span class="line">        "<span class="attribute">attribute_4</span>":<span class="value"><span class="string">"value4"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">    ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>If you want to use ISODate function or any other javascript function you should see how MongoDB Java Driver deals with it. For example in case of ISODate:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"bornAt"</span>:&#123; <span class="string">"<span class="variable">$date</span>"</span> : <span class="string">"2015-01-05T10:09:15.210Z"</span>&#125;</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -1721,7 +1090,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2013/12/02/关键字驱动测试框架之十-后话/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/25/使用Java操作MongoDB-Query/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1740,7 +1109,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/12/02/关键字驱动测试框架之十-后话/" itemprop="url">关键字驱动测试框架之十 - 后话</a></h1>
+                <a class="post-title-link" href="/2014/12/25/使用Java操作MongoDB-Query/" itemprop="url">使用Java操作MongoDB - Query</a></h1>
         
 
         <div class="post-meta">
@@ -1752,8 +1121,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-12-02T12:08:52+08:00">
-                2013-12-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-25T20:01:15+08:00">
+                2014-12-25
               </time>
             
 
@@ -1775,8 +1144,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QTP/" itemprop="url" rel="index">
-                    <span itemprop="name">QTP</span>
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
                   </a>
                 </span>
 
@@ -1794,8 +1163,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/12/02/关键字驱动测试框架之十-后话/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2013/12/02/关键字驱动测试框架之十-后话/" itemprop="commentsCount"></span>
+                <a href="/2014/12/25/使用Java操作MongoDB-Query/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/25/使用Java操作MongoDB-Query/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1826,9 +1195,626 @@
       
         
           
-            <p>本来这个框架的设计就是在POC阶段而已，由于各种方面的原因，没有真正能够应用起来，不过在研究的过程中，还是学到了很多思想，技术 ==，能够从更高一点LEVEL去看自动化测试。</p>
-<p>后来本人也看了robotframework的关键字驱动测试框架，感觉思路上大体都是相通的，但是学习成本个人感觉还是蛮高的。</p>
-<p>看过一篇文章<a href="http://www.cnblogs.com/jackei/archive/2012/11/25/2787231.html" target="_blank" rel="external">关键字驱动的过去和未来</a>，作者：陈雷 (Jackei)。非常有感触，贴到这以便查看。</p>
+            <p><strong>Query</strong><br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">Mongo mg = <span class="keyword">new</span> Mongo(<span class="string">"localhost"</span>, <span class="number">27017</span>);</span><br><span class="line"><span class="comment">// get db</span></span><br><span class="line">db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"><span class="comment">// get collection</span></span><br><span class="line">dc = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// findOne</span></span><br><span class="line">System.out.<span class="built_in">println</span>(dc.findOne());</span><br><span class="line"></span><br><span class="line"><span class="comment">// find all</span></span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find();</span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">cursor</span>.hasNext())&#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// display certain column</span></span><br><span class="line">BasicDBObject keys = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">keys.put(<span class="string">"name"</span>, <span class="number">1</span>);</span><br><span class="line">keys.put(<span class="string">"_id"</span>, <span class="number">0</span>);</span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find(<span class="keyword">new</span> BasicDBObject(), keys);</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cursor</span>.hasNext()) &#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// equal | greater | less | not equal | regex</span></span><br><span class="line">BasicDBObject query = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line"><span class="comment">//query.put("name", "hulu1");</span></span><br><span class="line"><span class="comment">//query.put("number", new BasicDBObject("$gt", 2));</span></span><br><span class="line"><span class="comment">//query.put("number", new BasicDBObject("$gte", 2));</span></span><br><span class="line"><span class="comment">//query.put("number", new BasicDBObject("$lt", 5));</span></span><br><span class="line"><span class="comment">//query.put("number", new BasicDBObject("$lte", 5));</span></span><br><span class="line"><span class="comment">//query.put("name", new BasicDBObject("$ne", "hulu1"));</span></span><br><span class="line">query.put(<span class="string">"name"</span>, <span class="keyword">new</span> BasicDBObject(<span class="string">"$regex"</span>, <span class="string">"hulu.*"</span>));</span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find(query);</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cursor</span>.hasNext()) &#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// in | not in</span></span><br><span class="line">BasicDBObject query = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">List&lt;<span class="keyword">String</span>&gt; list = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line">list.<span class="built_in">add</span>(<span class="string">"hulu1"</span>);</span><br><span class="line">list.<span class="built_in">add</span>(<span class="string">"hulu4"</span>);</span><br><span class="line">query.put(<span class="string">"name"</span>, <span class="keyword">new</span> BasicDBObject(<span class="string">"$nin"</span>, list));</span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find(query);</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cursor</span>.hasNext()) &#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// and</span></span><br><span class="line">BasicDBObject query = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">query.put(<span class="string">"number"</span>, <span class="keyword">new</span> BasicDBObject(<span class="string">"$gt"</span>, <span class="number">2</span>));</span><br><span class="line">query.put(<span class="string">"name"</span>, <span class="string">"hulu1"</span>);</span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find(query);</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cursor</span>.hasNext()) &#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">BasicDBObject query = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">List&lt;BasicDBObject&gt; obj = <span class="keyword">new</span> ArrayList&lt;BasicDBObject&gt;();</span><br><span class="line">obj.<span class="built_in">add</span>(<span class="keyword">new</span> BasicDBObject(<span class="string">"name"</span>, <span class="string">"hulu1"</span>));</span><br><span class="line">obj.<span class="built_in">add</span>(<span class="keyword">new</span> BasicDBObject(<span class="string">"number"</span>, <span class="keyword">new</span> BasicDBObject(<span class="string">"$gt"</span>, <span class="number">2</span>)));</span><br><span class="line">query.put(<span class="string">"$or"</span>, obj);</span><br><span class="line">DBCursor <span class="built_in">cursor</span> = dc.find(query);</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cursor</span>.hasNext()) &#123;</span><br><span class="line">System.out.<span class="built_in">println</span>(<span class="built_in">cursor</span>.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/24/使用Java操作MongoDB-Update/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/24/使用Java操作MongoDB-Update/" itemprop="url">使用Java操作MongoDB - Update</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-24T13:01:15+08:00">
+                2014-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/24/使用Java操作MongoDB-Update/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/24/使用Java操作MongoDB-Update/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Update</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Mongo mg = new Mongo(<span class="string">"localhost"</span>, 27017);</span><br><span class="line"><span class="comment">// get db</span></span><br><span class="line"><span class="keyword">db</span> = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"><span class="comment">// get collection</span></span><br><span class="line">dc = <span class="keyword">db</span>.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Update</span></span><br><span class="line">BasicDBObject <span class="keyword">query</span> = new BasicDBObject();</span><br><span class="line"><span class="keyword">query</span>.put(<span class="string">"name"</span>, <span class="string">"hulu22"</span>);</span><br><span class="line"><span class="keyword">query</span>.put(<span class="string">"title"</span>, <span class="string">"PO"</span>);</span><br><span class="line">BasicDBObject newDoc = new BasicDBObject();</span><br><span class="line">newDoc.put(<span class="string">"$set"</span>, new BasicDBObject(<span class="string">"title"</span>, <span class="string">"PM"</span>).<span class="keyword">append</span>(<span class="string">"name"</span>, <span class="string">"hulu22"</span>));<span class="comment">// $unset: Removes the specified field from a document.</span></span><br><span class="line"></span><br><span class="line">dc.<span class="keyword">update</span>(<span class="keyword">query</span>, newDoc);</span><br><span class="line"></span><br><span class="line">dc.<span class="keyword">update</span>(<span class="keyword">query</span>, newDoc, false, false);</span><br><span class="line"></span><br><span class="line">dc.updateMulti(<span class="keyword">query</span>, newDoc);</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/22/使用Java操作MongoDB-Delete/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/22/使用Java操作MongoDB-Delete/" itemprop="url">使用Java操作MongoDB - Delete</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-22T13:01:15+08:00">
+                2014-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/22/使用Java操作MongoDB-Delete/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/22/使用Java操作MongoDB-Delete/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Delete</strong><br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Mongo</span> mg = new <span class="type">Mongo</span>(<span class="string">"localhost"</span>, <span class="number">27017</span>);</span><br><span class="line">// get db</span><br><span class="line">db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line">// get collection</span><br><span class="line">dc = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">//<span class="type">Delete</span></span><br><span class="line"><span class="type">DBObject</span> doc = dc.findOne();</span><br><span class="line"><span class="type">WriteResult</span> <span class="literal">result</span> = dc.remove(doc);</span><br><span class="line"><span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"Number of documents are deleted : "</span> + <span class="literal">result</span>.getN());</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// delete</span></span><br><span class="line">WriteResult wr = dc.remove(<span class="keyword">new</span> BasicDBObject(<span class="string">"name"</span>, <span class="string">"tom"</span>));</span><br><span class="line">System.<span class="keyword">out</span>.println(wr.getN());</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/22/使用Java操作MongoDB-Insert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/22/使用Java操作MongoDB-Insert/" itemprop="url">使用Java操作MongoDB - Insert</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-22T08:10:11+08:00">
+                2014-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/22/使用Java操作MongoDB-Insert/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/22/使用Java操作MongoDB-Insert/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Insert</strong><br>Can use the below 4 methods to implement:<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Mongo mg = <span class="keyword">new</span> Mongo(<span class="string">"localhost"</span>, <span class="number">27017</span>);</span><br><span class="line">// <span class="built_in">get</span> db</span><br><span class="line">db = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line">// <span class="built_in">get</span> collection</span><br><span class="line">dc = db.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">//<span class="number">1</span><span class="keyword">st</span> save</span><br><span class="line">BasicDBObject doc = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">doc.<span class="keyword">put</span>(<span class="string">"name"</span>, <span class="string">"add"</span>);</span><br><span class="line">doc.<span class="keyword">put</span>(<span class="string">"method"</span>, <span class="string">"save"</span>);</span><br><span class="line">dc.save(doc);</span><br><span class="line"></span><br><span class="line">//<span class="number">2</span>nd <span class="built_in">insert</span> (using BasicDBObject)</span><br><span class="line">BasicDBObject document = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">document.<span class="keyword">put</span>(<span class="string">"database"</span>, <span class="string">"mongo"</span>);</span><br><span class="line">document.<span class="keyword">put</span>(<span class="string">"table"</span>, <span class="string">"testing"</span>);</span><br><span class="line">BasicDBObject documentDetail = <span class="keyword">new</span> BasicDBObject();</span><br><span class="line">documentDetail.<span class="keyword">put</span>(<span class="string">"records"</span>, <span class="string">"99"</span>);</span><br><span class="line">documentDetail.<span class="keyword">put</span>(<span class="string">"index"</span>, <span class="string">"vps_index1"</span>);</span><br><span class="line">documentDetail.<span class="keyword">put</span>(<span class="string">"active"</span>, <span class="string">"true"</span>);</span><br><span class="line">document.<span class="keyword">put</span>(<span class="string">"detail"</span>, documentDetail);</span><br><span class="line">dc.<span class="built_in">insert</span>(document);</span><br><span class="line"></span><br><span class="line">//<span class="number">3</span>rd <span class="built_in">insert</span> (using BasicDBObjectBuilder)</span><br><span class="line">BasicDBObjectBuilder documentBuilder = BasicDBObjectBuilder.start()</span><br><span class="line">.<span class="built_in">add</span>(<span class="string">"database"</span>, <span class="string">"mkyongDB"</span>)</span><br><span class="line">.<span class="built_in">add</span>(<span class="string">"table"</span>, <span class="string">"hosting"</span>);</span><br><span class="line">dc.<span class="built_in">insert</span>(documentBuilder.<span class="built_in">get</span>());</span><br><span class="line"></span><br><span class="line">//<span class="number">3</span>rd <span class="built_in">insert</span> (using Map)</span><br><span class="line">Map&lt;String, Object&gt; documentMap = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">documentMap.<span class="keyword">put</span>(<span class="string">"name"</span>, <span class="string">"insert"</span>);</span><br><span class="line">documentMap.<span class="keyword">put</span>(<span class="string">"method"</span>, <span class="string">"map"</span>);</span><br><span class="line">dc.<span class="built_in">insert</span>(<span class="keyword">new</span> BasicDBObject(documentMap));</span><br><span class="line"></span><br><span class="line">//<span class="number">4</span><span class="keyword">th</span> <span class="built_in">insert</span> (using JSON --&gt; simplest way)</span><br><span class="line">String json = <span class="string">"&#123;name : 'insert', recommend : true, method : 'JSON'&#125;"</span>;</span><br><span class="line">DBObject dbObject = (DBObject) JSON.parse(json);</span><br><span class="line">dc.<span class="built_in">insert</span>(dbObject);</span><br></pre></td></tr></table></figure></p>
+<p><strong>Insert Multiple Documents</strong><br>For multiple data, we can implement this with previous 4th method:<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>[] myList = &#123;<span class="string">"&#123;number : 1, name: 'hulu1', tags: ['test', 'develop'], comments: [&#123;user: 'hu', like: 0&#125;, &#123;user: 'lu', like: 1&#125;]&#125;"</span>&#125;;	</span><br><span class="line">InsertMultipleDocuments(myList);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> InsertMultipleDocuments(<span class="built_in">String</span>[] array) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">String</span> json : array) &#123;</span><br><span class="line">DBObject dbObject = (DBObject) <span class="built_in">JSON</span>.parse(json);</span><br><span class="line">dc.insert(dbObject);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/12/20/使用Java操作MongoDB-Basic-Usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/20/使用Java操作MongoDB-Basic-Usage/" itemprop="url">使用Java操作MongoDB - Basic Usage</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-20T12:10:11+08:00">
+                2014-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/20/使用Java操作MongoDB-Basic-Usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/12/20/使用Java操作MongoDB-Basic-Usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>List the basic usage, will introduce ‘CRUD’ in the following blogs:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Mongo mg = new Mongo(<span class="string">"localhost"</span>, 27017);</span><br><span class="line"></span><br><span class="line"><span class="comment">// get db</span></span><br><span class="line"><span class="keyword">db</span> = mg.getDB(<span class="string">"CRUD"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// get collection</span></span><br><span class="line">dc = <span class="keyword">db</span>.getCollection(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//remove collection</span></span><br><span class="line"><span class="keyword">db</span>.getCollection(<span class="string">"test"</span>).<span class="keyword">drop</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//remove db</span></span><br><span class="line"><span class="keyword">db</span>.dropDatabase();</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1868,7 +1854,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1918,7 +1904,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">360</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1929,7 +1915,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1940,7 +1926,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
