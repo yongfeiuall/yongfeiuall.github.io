@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/03/公司产品部署流程/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/18/AWS-EC2-Security-Group/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/03/公司产品部署流程/" itemprop="url">CI/CD - 当前公司产品部署流程</a></h1>
+                <a class="post-title-link" href="/2018/04/18/AWS-EC2-Security-Group/" itemprop="url">AWS - EC2 - Security Group</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-03T14:20:05+08:00">
-                2018-04-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T16:07:13+08:00">
+                2018-04-18
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/03/公司产品部署流程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/03/公司产品部署流程/" itemprop="commentsCount"></span>
+                <a href="/2018/04/18/AWS-EC2-Security-Group/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/18/AWS-EC2-Security-Group/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,22 +410,496 @@
       
         
           
-            <p>花了点时间把项目目前整个部署的流程从头到尾详细的梳理了一遍，了解了部署中的一些细节。目前这个过程算是半自动化的吧，在部署的过程中用到以下工具：</p>
+            <p>安全组 起着虚拟防火墙的作用，可控制一个或多个实例的流量。在您启动实例时，将一个或多个安全组与该实例相关联。为每个安全组添加规则，规定流入或流出其关联实例的流量。</p>
+<p>说白了，就是入站规则与出站规则的集合。</p>
+<p>在新建的Instance上安装Apache，并创建一个简单的HTML文件<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># vi index.html </span></span><br><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># ls</span></span><br><span class="line">index.html</span><br><span class="line">[root<span class="variable">@ip</span>-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> html]<span class="comment"># cat index.html </span></span><br><span class="line">&lt;html&gt;&lt;h1&gt;<span class="constant">Welcome</span> <span class="constant">Yongfeiuall</span>&lt;<span class="regexp">/h1&gt;&lt;/html</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在Security Group Inbound只加SSH，在Browser里输入Public IP：<br><img src="/images/aws/sg_default.jpg" alt=""><br>在Inbound中增加HTTP， 刷新页面：<br><img src="/images/aws/sg_http.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/17/AWS-EC2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/17/AWS-EC2/" itemprop="url">AWS - EC2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T16:23:45+08:00">
+                2018-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/17/AWS-EC2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/17/AWS-EC2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Amazon Elastic Compute Cloud (Amazon EC2) 是一种 Web 服务，可以在云中提供安全并且可以调整大小的计算容量。<br>使用 Amazon EC2 可避免前期的硬件投入，因此您能够快速开发和部署应用程序。通过使用 Amazon EC2，您可以根据自身需要启动任意数量的虚拟服务器、配置安全和网络以及管理存储。Amazon EC2 允许您根据需要进行缩放以应对需求变化或流行高峰，降低流量预测需求。</p>
+<h1 id="Regions-and-Availability-Zones"><a href="#Regions-and-Availability-Zones" class="headerlink" title="Regions and Availability Zones"></a>Regions and Availability Zones</h1><p>每个区域 都是一个独立的地理区域。每个区域都有多个相互隔离的位置，称为可用区。<br>每一个区域都是完全独立的。每个可用区都是独立的，但区域内的可用区通过低延迟链接相连。<br><img src="/images/aws/ec2_region.jpg" alt=""></p>
+<h1 id="Launch-Instance"><a href="#Launch-Instance" class="headerlink" title="Launch Instance"></a>Launch Instance</h1><p>在<code>EC2 -&gt; Dashboard</code>中进行操作。 创建时所有的配置都用Default。</p>
+<h1 id="Key-Pairs"><a href="#Key-Pairs" class="headerlink" title="Key Pairs"></a>Key Pairs</h1><p>Amazon EC2 使用公有密钥密码术加密和解密登录信息。公有密钥密码术使用公有密钥加密某个数据 (如一个密码)，然后收件人可以使用私有密钥解密数据。公有和私有密钥被称为密钥对。<br>要登录您的实例，您必须创建一个密钥对，并在启动实例时指定密钥对的名称，然后使用私有密钥连接实例。</p>
+<p>你可以在‘Key Paris’创建，也可以在创建Instance的时候创建。</p>
+<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>用Xshell，创建是生成的Key Pairs文件和Public IP登录：<br><em>User Name: ec2-user</em><br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Connecting <span class="keyword">to</span> <span class="number">52.197</span>.<span class="number">124.231</span>:<span class="number">22</span>...</span><br><span class="line">Connection established.</span><br><span class="line"><span class="keyword">To</span> escape <span class="keyword">to</span> local shell, press <span class="attribute">'Ctrl</span>+Alt+]'.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       __|  __|_  )</span><br><span class="line">       _|  (     /   Amazon Linux AMI</span><br><span class="line">      ___|\___|___|</span><br><span class="line"></span><br><span class="line">https://aws.amazon.com/amazon-linux-ami/<span class="number">2017.09</span>-<span class="keyword">release</span>-notes/</span><br><span class="line"><span class="number">8</span> <span class="keyword">package</span>(s) needed <span class="keyword">for</span> security, <span class="keyword">out</span> <span class="keyword">of</span> <span class="number">13</span> available</span><br><span class="line">Run <span class="string">"sudo yum update"</span> <span class="keyword">to</span> apply <span class="keyword">all</span> updates.</span><br><span class="line">[ec2-user@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">37</span>-<span class="number">102</span> ~]$</span><br></pre></td></tr></table></figure></p>
+<h1 id="Credentials-in-EC2"><a href="#Credentials-in-EC2" class="headerlink" title="Credentials in EC2"></a>Credentials in EC2</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># cd .aws</span></span><br><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> .aws]<span class="preprocessor"># ls</span></span><br><span class="line">config  credentials</span><br><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> .aws]<span class="preprocessor"># cat credentials </span></span><br><span class="line">[<span class="keyword">default</span>]</span><br><span class="line">aws_access_key_id = AKIAJ2ZSIKQE5VQKADCA</span><br><span class="line">aws_secret_access_key = <span class="number">6</span>XcK5zvSVPKE4eSJHbmOOspElNyytyLsuCbUQ5GW</span><br></pre></td></tr></table></figure>
+<h1 id="Meta-Data"><a href="#Meta-Data" class="headerlink" title="Meta Data"></a>Meta Data</h1><p>实例元数据 是有关您的实例的数据，可以用来配置或管理正在运行的实例。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/</span></span></span><br><span class="line"><span class="number">1.0</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">01</span>-<span class="number">19</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">03</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">08</span>-<span class="number">29</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">10</span>-<span class="number">10</span></span><br><span class="line"><span class="number">2007</span>-<span class="number">12</span>-<span class="number">15</span></span><br><span class="line"><span class="number">2008</span>-<span class="number">02</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2008</span>-<span class="number">09</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2009</span>-<span class="number">04</span>-<span class="number">04</span></span><br><span class="line"><span class="number">2011</span>-<span class="number">01</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2011</span>-<span class="number">05</span>-<span class="number">01</span></span><br><span class="line"><span class="number">2012</span>-<span class="number">01</span>-<span class="number">12</span></span><br><span class="line"><span class="number">2014</span>-<span class="number">02</span>-<span class="number">25</span></span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">05</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">10</span>-<span class="number">20</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">04</span>-<span class="number">19</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">06</span>-<span class="number">30</span></span><br><span class="line"><span class="number">2016</span>-<span class="number">09</span>-<span class="number">02</span></span><br><span class="line">latest[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/</span></span></span><br><span class="line">ami-id</span><br><span class="line">ami-launch-index</span><br><span class="line">ami-manifest-path</span><br><span class="line">block-device-mapping/</span><br><span class="line">hostname</span><br><span class="line">instance-action</span><br><span class="line">instance-id</span><br><span class="line">instance-type</span><br><span class="line">local-hostname</span><br><span class="line">local-ipv4</span><br><span class="line">mac</span><br><span class="line">metrics/</span><br><span class="line">network/</span><br><span class="line">placement/</span><br><span class="line">profile</span><br><span class="line"><span class="keyword">public</span>-hostname</span><br><span class="line"><span class="keyword">public</span>-ipv4</span><br><span class="line"><span class="keyword">public</span>-keys/</span><br><span class="line">reservation-id</span><br><span class="line">security-groups</span><br><span class="line">services/[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/public-ipv4</span></span></span><br><span class="line"><span class="number">54.64</span><span class="number">.167</span><span class="number">.73</span>[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor"># curl http:<span class="comment">//169.254.169.254/latest/meta-data/hostname</span></span></span><br><span class="line">ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33.</span>ap-northeast-<span class="number">1.</span>compute.internal[root@ip-<span class="number">172</span>-<span class="number">31</span>-<span class="number">43</span>-<span class="number">33</span> ~]<span class="preprocessor">#</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/16/爷爷，你一直都在/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/爷爷，你一直都在/" itemprop="url">爷爷，你一直都在</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-16T13:37:38+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/16/爷爷，你一直都在/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/16/爷爷，你一直都在/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近脑袋里时不时的会蹦出来和爷爷的点点滴滴，也会在梦里见到他，尽管已走了好几年了，但在梦里还能够跟他说上几句话，很真实，很温暖，仿佛就在昨天。</p>
+<p>他是经历过饥荒年代的人，在奶奶眼里是个很伟大的人，为了家做了很多牺牲。在那个年代出生的人难免都有些重男轻女的思想，而我是整个大家的长子，再加上隔辈亲，爷爷和奶奶都对我格外的好，我小时候多病，奶奶常说，也不知道你爷爷怎么这么有钱，每次看病要钱都是现成的。从记事起到他走，也就短短20年，但从他身上学到了很多，正直，努力，做一个对家对自己负责的人。</p>
+<p>本应该是你享福的时候，你却走了，而你走的时候是我最难的时候，也没能见上你最后一面，尽管自责了很多，但是个永远的遗憾。如果你还在的话，看着儿孙满堂，各自有家有事业，我都能想象的到你开心的样子；如果你还在的话，我也能实现小时候给你吹过的牛，等我长大了孝顺你，带你去看天安门；如果你还在的话，我还能坐在那里和你聊天，从你那里得到安慰和想法，哪怕只是静静的坐在那里看着你，现在想想，是多么奢侈的事情啊。</p>
+<p>曾经看过一段话，人死了分三个阶段，第一次是断气的时候，从生物学上他死了；第二次是出殡的时候，亲戚朋友都来缅怀他，从社会上他没了；第三次是最后一个还记得他的人把他忘记的时候，他才真正的死了。</p>
+<p>死亡不是尽头，遗忘才是。我想我永远也不会忘记你，也希望你一样能记得我。在这时间的长河里，在几生几世之后，如果我们有缘再相见，我想我们会比在这一世更亲。</p>
+<p>在写下这些话的时候，我已控制不住自己湿了眼眶，收笔，爷爷你还好吗？想你！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/15/AWS-CloudFront/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/15/AWS-CloudFront/" itemprop="url">AWS - CloudFront</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-15T10:40:07+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/15/AWS-CloudFront/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/15/AWS-CloudFront/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>就是提供CDN服务的。</p>
+<p>Amazon CloudFront 是一种将静态和动态 Web 内容（例如 .html、.css、.php、图像及媒体文件）加速分配给最终用户的 Web 服务。CloudFront 通过全球节点网络传送内容。</p>
+<p>在`Contect Delivery -&gt; CloudFront’中进行设置。</p>
 <ul>
-<li>Jenkins</li>
-<li>Git</li>
-<li>Artifactory</li>
-<li>Rundeck</li>
-<li>Salt</li>
+<li>Web分配 - 通过 HTTP 或 HTTPS 提供。</li>
+<li>RTMP分配 - 使用 Adobe Media Server 和 Adobe 实时消息协议 (RTMP) 流式处理媒体文件。RTMP 分配必须使用 Amazon S3 存储桶作为源。</li>
 </ul>
-<p>大概的示意图：<br><img src="/images/CI/deploy.jpg" alt=""></p>
+<p>简单使用：</p>
 <ol>
-<li>pipeline job</li>
-<li>push to artifactory(jar, deb, zip)</li>
-<li>salt configuration and work with Git</li>
-<li>check deploy build version</li>
+<li>创建Bucket<br><img src="/images/aws/cloudfront_bucket.jpg" alt=""><br>可直接<code>https://s3.amazonaws.com/yongfeiuall.cloudfront/%E8%87%AA%E5%8A%A8.png</code>访问该Object。</li>
+<li>创建CloudFront<br><img src="/images/aws/cloudfront_web.jpg" alt=""><br>详细配置信息参考<a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html" target="_blank" rel="external">配置</a></li>
+<li>验证<br>用分配的域名访问<code>http://d25774ade37.cloudfront.net/%E8%87%AA%E5%8A%A8.png</code>,成功</li>
 </ol>
-<p>再慢慢深入一些，能从AWS-Terraform-Salt-Automation，做到真正的全自动化。</p>
 
           
         
@@ -474,7 +948,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/01/CI-CD理解/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/15/AWS-Hosting-a-Static-Website/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -493,7 +967,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/01/CI-CD理解/" itemprop="url">CI/CD - 理解</a></h1>
+                <a class="post-title-link" href="/2018/04/15/AWS-Hosting-a-Static-Website/" itemprop="url">AWS - Hosting a Static Website</a></h1>
         
 
         <div class="post-meta">
@@ -505,8 +979,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T15:48:27+08:00">
-                2018-04-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-15T08:17:38+08:00">
+                2018-04-15
               </time>
             
 
@@ -528,8 +1002,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -547,8 +1021,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/01/CI-CD理解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/01/CI-CD理解/" itemprop="commentsCount"></span>
+                <a href="/2018/04/15/AWS-Hosting-a-Static-Website/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/15/AWS-Hosting-a-Static-Website/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -579,677 +1053,14 @@
       
         
           
-            <p><strong>持续集成</strong>(Continuous integration)是一种软件开发实践，即团队开发成员经常集成它们的工作，通过每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。<br><img src="/images/CI/ci.jpg" alt=""></p>
-<p><strong>持续交付</strong>(Continuous deliver)是一种软件工程手法，利用技术和工具快速地交付生产阶段的代码。<br>持续交付可以看作持续集成的下一步。它强调的是，不管怎么更新，软件是随时随地可以交付的。<br><img src="/images/CI/ci_1.jpg" alt=""></p>
-<p><strong>持续部署</strong>(continuous deployment)是持续交付的下一步，指的是代码通过评审以后，自动部署到生产环境。<br>持续部署的前提是能自动化完成测试、构建、部署等步骤。它与持续交付的区别，可以参考下图。<br><img src="/images/CI/cd.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/25/丁丁画画（一年级下学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/25/丁丁画画（一年级下学期）/" itemprop="url">丁丁画画（一年级下学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T14:05:42+08:00">
-                2018-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/25/丁丁画画（一年级下学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/25/丁丁画画（一年级下学期）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/images/izheyi/pic/2018/1_2_1.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_2.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_3.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_4.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_5.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_6.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_7.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_8.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_9.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_10.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_11.JPG" alt=""><br><img src="/images/izheyi/pic/2018/1_2_12.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/18/丁丁画画（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/丁丁画画（一）/" itemprop="url">丁丁画画（一年级上学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-18T13:58:14+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/18/丁丁画画（一）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/18/丁丁画画（一）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>整理东西，发现在学校的美术课，课余时间，还画不不少的画，Mark一下。以后每个学期整理一次。<br><img src="/images/izheyi/pic/2017/1_1_1.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_2.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_3.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_4.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_5.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_6.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_7.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_8.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_9.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_10.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_11.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_12.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_13.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_14.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_15.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_16.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_17.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_18.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_19.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_20.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_21.JPG" alt=""><br><img src="/images/izheyi/pic/2017/1_1_22.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/11/Salt-State/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/Salt-State/" itemprop="url">Salt - State</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T15:17:10+08:00">
-                2018-03-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/11/Salt-State/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/11/Salt-State/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>States是SaltStack中的配置语言，在日常进行配置管理时需要编写大量的States文件。如安装软件啊，更改配置啊等，就需要编写states sls文件（描述状态配置的文件）去描述和实现这些功能。编写states sls文件一般是是YAML语法格式，也支持使用Python语言来编写。<br>定义例子：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apache: #state名称：apache</span><br><span class="line">  pkg: #管理对象类型：pkg，进行软件安装（yum、apt）</span><br><span class="line">    -<span class="ruby"> installed <span class="comment">#pkg要执行的方法：install，如未安装就进行安装</span></span><br><span class="line"></span>  service: #管理对象类型：service，管理系统守护进程</span><br><span class="line">    -<span class="ruby"> running <span class="comment">#service要执行的方法：running，如未运行就进行启动</span></span><br><span class="line"></span>    -<span class="ruby"> <span class="symbol">require:</span> <span class="comment">#关键字require，确保apache服务只有在成功安装软件包后才会启动</span></span><br><span class="line"></span>      -<span class="ruby"> <span class="symbol">pkg:</span> apache</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="State-Tree"><a href="#State-Tree" class="headerlink" title="State Tree"></a>State Tree</h1><p>Top file:配置管理入口文件，和pillar类似，指定minions需要完成那些配置管理，默认为top.sls<br><em>注：在定义top.sls时,会先找apache/init.sls,如果没有的话，会找<br>apache.sls</em><br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="keyword">base</span>:</span><br><span class="line">　　　　<span class="string">'*'</span>:</span><br><span class="line">　　　　  - apache</span><br></pre></td></tr></table></figure></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>跟系统文件树一样，salt state文件也有自己的树系统，这通过配置文件中的file_roots配置<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#在/etc/salt/master 中配置下面选项，指定salt state的根目录在/srv/salt</span></span><br><span class="line"><span class="label">file_roots:</span></span><br><span class="line">  base:</span><br><span class="line">    - /srv/salt</span><br></pre></td></tr></table></figure></p>
-<p>修改master配置文件后需要重启。</p>
-<h2 id="创建Top文件"><a href="#创建Top文件" class="headerlink" title="创建Top文件"></a>创建Top文件</h2><p>在/srv/salt目录下创建一个top.sls文件，这个文件提供了其它文件的映射。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">vi</span> <span class="tag">top</span><span class="class">.sls</span></span><br><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">cat</span> <span class="tag">top</span><span class="class">.sls</span> </span><br><span class="line"><span class="rule"><span class="attribute">base</span>:<span class="value"></span><br><span class="line">  <span class="string">'*'</span>:</span><br><span class="line">    - webserver</span></span></span><br></pre></td></tr></table></figure></p>
-<h2 id="创建State文件"><a href="#创建State文件" class="headerlink" title="创建State文件"></a>创建State文件</h2><p>在top.sls相同的目录下，创建一个名为webserver.sls的空文件，也可以在同目录下创建一个文件夹webserver，在里边创建init.sls。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">vi</span> <span class="tag">webserver</span><span class="class">.sls</span></span><br><span class="line"><span class="attr_selector">[root@Automation salt]</span># <span class="tag">cat</span> <span class="tag">webserver</span><span class="class">.sls</span> </span><br><span class="line"><span class="rule"><span class="attribute">httpd</span>:<span class="value">                  </span><br><span class="line">  pkg:                  </span><br><span class="line">    - installed</span></span></span><br></pre></td></tr></table></figure></p>
-<h2 id="执行Salt-State"><a href="#执行Salt-State" class="headerlink" title="执行Salt State"></a>执行Salt State</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]# salt <span class="emphasis">'*'</span> state.highstate</span><br><span class="line"><span class="header">192.168.244.130:</span><br><span class="line">----------</span></span><br><span class="line"><span class="code">          ID: httpd</span></span><br><span class="line"><span class="code">    Function: pkg.installed</span></span><br><span class="line"><span class="code">      Result: True</span></span><br><span class="line"><span class="code">     Comment: Package httpd is already installed.</span></span><br><span class="line"><span class="code">     Started: 20:54:04.497245</span></span><br><span class="line"><span class="code">    Duration: 2334.569 ms</span></span><br><span class="line"><span class="code">     Changes:   </span></span><br><span class="line"></span><br><span class="line"><span class="header">Summary</span><br><span class="line">------------</span></span><br><span class="line">Succeeded: 1</span><br><span class="line"><span class="header">Failed:    0</span><br><span class="line">------------</span></span><br><span class="line">Total states run:     1</span><br></pre></td></tr></table></figure>
-<p>master将会指导所有的目标minions运行state.highstate。<br>当minion执行highstate，它将会下载top文件中匹配的内容，minion将表达式中匹配的内容下载、编译、执行。一旦完成，minion将返回所有的动作执行结果和所有更改。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/11/Salt-State/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/07/Salt-Grains和Pillar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/07/Salt-Grains和Pillar/" itemprop="url">Salt - Grains和Pillar</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-07T16:05:23+08:00">
-                2018-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/07/Salt-Grains和Pillar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/07/Salt-Grains和Pillar/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Grains-VS-Pillar"><a href="#Grains-VS-Pillar" class="headerlink" title="Grains VS Pillar"></a>Grains VS Pillar</h1><p><img src="/images/salt/grain.jpg" alt=""></p>
-<h1 id="Grains"><a href="#Grains" class="headerlink" title="Grains"></a>Grains</h1><p>静态数据，当Minion启动的时候收集的MInion本地的相关信息。不重启minion，这些信息数据是不会改变的。</p>
-<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><ul>
-<li><p>列出主机的详细信息:</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]# salt 192.168.* grains.items</span><br><span class="line">192.168.244.130:</span><br><span class="line">    -<span class="ruby">---------</span><br><span class="line"></span>    SSDs:</span><br><span class="line">    biosreleasedate:</span><br><span class="line">        07/02/2015</span><br><span class="line">    biosversion:</span><br><span class="line">        6.00</span><br><span class="line">    cpu_flags:</span><br><span class="line">        -<span class="ruby"> fpu</span><br><span class="line"></span>        -<span class="ruby"> vme</span><br><span class="line"></span>        -<span class="ruby"> de</span><br><span class="line"></span>        -<span class="ruby"> pse</span><br><span class="line"></span>        -<span class="ruby"> tsc</span><br><span class="line"></span>        -<span class="ruby"> msr</span><br><span class="line"></span>        -<span class="ruby"> pae</span><br><span class="line"></span>        -<span class="ruby"> mce</span><br><span class="line"></span>......</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出所有主机的系统版本:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item os</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    os:</span><br><span class="line">        CentOS</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>直接获得内容</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.get os</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    CentOS</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="目标选择"><a href="#目标选择" class="headerlink" title="目标选择"></a>目标选择</h2><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># salt -G <span class="string">'os:Centos'</span> test.ping </span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><ol>
-<li><p>修改minion - /etc/salt/minion</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Custom <span class="literal">static</span> grains <span class="keyword">for</span> <span class="keyword">this</span> minion can be specified here and used <span class="keyword">in</span> SLS</span><br><span class="line"># files just like all other grains. This example sets <span class="number">4</span> custom grains, <span class="keyword">with</span></span><br><span class="line"># the <span class="string">'roles'</span> grain having two values that can be matched against.</span><br><span class="line">grains:</span><br><span class="line">  roles:</span><br><span class="line">    - webserver</span><br><span class="line">    - memcache</span><br><span class="line">  deployment: datacenter4</span><br><span class="line">  cabinet: <span class="number">13</span></span><br><span class="line">  cab_u: <span class="number">14</span>-<span class="number">15</span></span><br></pre></td></tr></table></figure>
-<p>重启服务验证：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item deployment</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    deployment:</span><br><span class="line">        datacenter4</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>基于文件 - /etc/salt/grains</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> salt]<span class="preprocessor"># cat grains </span></span><br><span class="line">centos: minion</span><br></pre></td></tr></table></figure>
-<p>重启服务验证：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item centos</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    centos:</span><br><span class="line">        minion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>_grains目录自定义grain<br>grains脚本目录，必须是base下创建_grains目录（如：/srv/salt/_grains）<br>创建一个python脚本在/srv/salt/_grains目录下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation _grains]<span class="comment"># cat my_grains </span></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_grains</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 初始化grains字典</span></span><br><span class="line">    grains = &#123;&#125;</span><br><span class="line">    <span class="comment"># 设置字典中的key-value</span></span><br><span class="line">    grains[<span class="string">'eb'</span>] = <span class="string">'eb'</span></span><br><span class="line">    grains[<span class="string">'add'</span>] = <span class="string">'beijing'</span></span><br><span class="line">    <span class="comment"># 返回字典</span></span><br><span class="line">    <span class="keyword">return</span> grains</span><br></pre></td></tr></table></figure>
-<p>通过master同步脚本文件至每台minion</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">salt</span> <span class="string">'*'</span> saltutil.sync_grains</span><br></pre></td></tr></table></figure>
-<p>文件放在minion主机的/var/cache/salt/minion/extmods/grains目录下</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="type">Automation</span> salt]<span class="comment"># tree minion</span></span><br><span class="line">minion</span><br><span class="line">├── extmods</span><br><span class="line">│   └── grains</span><br><span class="line">│       ├── my_grains.py</span><br><span class="line">│       └── my_grains.pyc</span><br><span class="line">├── files</span><br><span class="line">│   └── base</span><br><span class="line">│       └── _grains</span><br><span class="line">│           └── my_grains.py</span><br><span class="line">├── module_refresh</span><br><span class="line">└── <span class="keyword">proc</span></span><br><span class="line"></span><br><span class="line"><span class="number">6</span> directories, <span class="number">4</span> files</span><br></pre></td></tr></table></figure>
-<p>在Master上验证：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> grains.item add</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    add:</span><br><span class="line">        beijing</span><br></pre></td></tr></table></figure>
-</li>
+            <p>在静态网站上，单独的网页包含静态内容。它们也可能包含客户端脚本。</p>
+<h1 id="设置静态网站"><a href="#设置静态网站" class="headerlink" title="设置静态网站"></a>设置静态网站</h1><ol>
+<li>创建Bucket<br>新建Bucket，并配置网站<br><img src="/images/aws/s3_storage_staticwebsite.jpg" alt=""></li>
+<li>上传网站内容<br><img src="/images/aws/s3_storage_staticfile.jpg" alt=""></li>
+<li>测试网站<br>两个文件都为Private：<br><img src="/images/aws/s3_storage_staticwebsite_private.jpg" alt=""><br>把两个文件Make Public：<br><img src="/images/aws/s3_storage_staticwebsite_index.jpg" alt=""><br>把index.html设为Private：<br><img src="/images/aws/s3_storage_staticwebsite_error.jpg" alt=""></li>
 </ol>
-<p>grains优先级（item名称相同的情况下）： 系统自带 &gt; grains文件写到 &gt; minion配置文件写的 &gt; 自己写的脚本</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/07/Salt-Grains和Pillar/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+          
         
       
     </div>
@@ -1296,7 +1107,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Execute-Commands‘/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/14/AWS-CLI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1315,7 +1126,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/04/Salt-Execute-Commands‘/" itemprop="url">Salt - Execute Commands</a></h1>
+                <a class="post-title-link" href="/2018/04/14/AWS-CLI/" itemprop="url">AWS - CLI</a></h1>
         
 
         <div class="post-meta">
@@ -1327,8 +1138,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-04T16:55:30+08:00">
-                2018-03-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T06:49:31+08:00">
+                2018-04-14
               </time>
             
 
@@ -1350,8 +1161,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -1369,8 +1180,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/04/Salt-Execute-Commands‘/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/04/Salt-Execute-Commands‘/" itemprop="commentsCount"></span>
+                <a href="/2018/04/14/AWS-CLI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/14/AWS-CLI/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1401,188 +1212,184 @@
       
         
           
-            <p>SaltStak用下面的方式来远程执行命令（run shell commands, update packages, and distribute files to all managed systems simultaneously. ）：<br><img src="/images/salt/command.jpg" alt=""></p>
+            <p>AWS 命令行界面 (CLI) 是用于管理 AWS 服务的统一工具。只通过一个工具进行下载和配置，您可以使用命令行控制多个 AWS 服务并利用脚本来自动执行这些服务。</p>
+<p>去这里下载<a href="https://aws.amazon.com/cli/?nc1=h_ls" target="_blank" rel="external">AWS Command Line Interface</a><br>Windows下运行： 在 PowerShell 或 Windows 命令处理程序中运行命令。</p>
+<p>我们要通过User的AWS Access Key ID和AWS Secret Access Key来登录AWS,在User创建：<br><img src="/images/aws/cli.jpg" alt=""><br><img src="/images/aws/cli_key.jpg" alt=""></p>
+<p>登录：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\yongfei.hu&gt;aws configure</span><br><span class="line">AWS <span class="keyword">Access</span> Key ID [<span class="type">None</span>]: AKIAJ2ZSIKQE5VQKADCA</span><br><span class="line">AWS Secret <span class="keyword">Access</span> Key [<span class="type">None</span>]: XcK5zvSVPKE4eSJHbmOOspElNyytyLsuCbUQ5GW</span><br><span class="line"><span class="keyword">Default</span> region <span class="keyword">name</span> [<span class="type">None</span>]: ap-northeast-<span class="number">1</span></span><br><span class="line"><span class="keyword">Default</span> output <span class="keyword">format</span> [<span class="type">None</span>]:</span><br><span class="line"></span><br><span class="line">C:\Users\yongfei.hu&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接下来就可以用命令行对AWS进行操作了。 E.g.,<br><img src="/images/aws/cli_ls.jpg" alt=""></p>
+<p>只做个简单说明，以后用到了再研究。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/13/AWS-S3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/AWS-S3/" itemprop="url">AWS - S3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-13T10:26:28+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/13/AWS-S3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/13/AWS-S3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Amazon S3 提供了一个简单 Web 服务接口，可用于随时在 Web 上的任何位置存储和检索任何数量的数据。<br>Amazon S3 将数据存储为存储桶中的对象。对象由文件和描述该文件的任何可选元数据组成。</p>
+<p>可以在<code>AWS -&gt; S3</code>通过Console进行管理。</p>
+<h1 id="Bucket"><a href="#Bucket" class="headerlink" title="Bucket"></a>Bucket</h1><p>可以简单理解为Folder好了。</p>
+<h2 id="Transfer-Acceleration"><a href="#Transfer-Acceleration" class="headerlink" title="Transfer Acceleration"></a>Transfer Acceleration</h2><p>Amazon S3 Transfer Acceleration 可在客户与 S3 存储桶之间实现快速、轻松、安全的远距离文件传输。Transfer Acceleration 利用 Amazon CloudFront 的全球分布式边缘站点。当数据到达某个边缘站点时，会被经过优化的网络路径路由至 Amazon S3。</p>
+<h1 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h1><p>Amazon S3 是一种简单的键值存储，专门用于存储任意多的对象。</p>
+<h2 id="Storage-Class"><a href="#Storage-Class" class="headerlink" title="Storage Class"></a>Storage Class</h2><p><img src="/images/aws/s3_storage_class.jpg" alt=""><br>GLACIER 存储类适用于在不常访问数据的位置对数据存档。存档对象不可用于实时访问。您必须先还原对象，然后才可以访问它们。</p>
 <ul>
-<li><p>cmd 模块是常用的执行远程命令模块，具有强大的功能</p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@Automation ~]</span># salt <span class="number">192.168.244.130</span> cmd.run 'ls  /etc/salt'</span><br><span class="line"><span class="number">192.168.244.130</span>:</span><br><span class="line">    minion</span><br><span class="line">    minion.d</span><br><span class="line">    pki</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>sys.doc: 类似linux的man命令，可以显示minion支持的模块的详细操作说明</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="comment"># salt 192.168.244.130 sys.doc pkg.version</span></span><br><span class="line">'pkg.<span class="property">version</span>:'</span><br><span class="line"></span><br><span class="line">    Returns a <span class="type">string</span> representing <span class="keyword">the</span> package <span class="property">version</span> <span class="keyword">or</span> an empty <span class="type">string</span> <span class="keyword">if</span> <span class="keyword">not</span></span><br><span class="line">    installed. If more than one package <span class="property">name</span> <span class="keyword">is</span> specified, a dict <span class="keyword">of</span></span><br><span class="line">    <span class="property">name</span>/<span class="property">version</span> pairs <span class="keyword">is</span> returned.</span><br><span class="line"></span><br><span class="line">    CLI Example:</span><br><span class="line"></span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package <span class="property">name</span>&gt;</span><br><span class="line">        salt '*' pkg.<span class="property">version</span> &lt;package1&gt; &lt;package2&gt; &lt;package3&gt; ...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装package</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># salt <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span> pkg.install cowsay</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    ----------</span><br><span class="line">    cowsay:</span><br><span class="line">        ----------</span><br><span class="line">        <span class="keyword">new</span>:</span><br><span class="line">            <span class="number">3.03</span>-<span class="number">8.</span>el6</span><br><span class="line">        old:</span><br></pre></td></tr></table></figure>
-</li>
+<li>您无法在创建对象时指定 GLACIER 作为存储类别。您在创建 GLACIER 对象时，先将对象作为存储类进行上传，然后使用生命周期管理将这些对象转换为 GLACIER 存储类别。</li>
+<li>您必须先将 GLACIER 对象还原才能访问它们 (STANDARD、RRS、STANDARD_IA 和 ONEZONE_IA 对象可随时访问)。</li>
 </ul>
-<p>只是简单介绍一下命令执行，saltstack有非常多的模块来进行服务器管理，有需要再深入。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/03/04/Salt-Targeting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/04/Salt-Targeting/" itemprop="url">Salt - Targeting</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-04T14:51:22+08:00">
-                2018-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/04/Salt-Targeting/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/04/Salt-Targeting/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>是指那些minion会作为运行命令或是执行状态的目标。这些目标可以是一个主机名，系统信息，定义的分组，甚至是自定义的绑定的对象。</p>
-<p>Targeting的匹配方式：</p>
+<h2 id="Versioning"><a href="#Versioning" class="headerlink" title="Versioning"></a>Versioning</h2><p>使用版本控制可在一个存储桶中保留多个版本的对象。必须在您的存储桶上显式启用版本控制。默认情况下，版本控制处于禁用状态。无论是否已启用版本控制，存储桶中的每个对象都具有版本 ID。如果未启用版本控制，Amazon S3 将版本 ID 值设置为空。<br><img src="/images/aws/s3_storage_version.jpg" alt=""></p>
+<h1 id="Cross-Region-Replication-CRR"><a href="#Cross-Region-Replication-CRR" class="headerlink" title="Cross-Region Replication (CRR)"></a>Cross-Region Replication (CRR)</h1><p>跨区域复制是一项存储桶级别配置，该功能支持跨不同 AWS 区域中的存储桶自动异步复制对象。我们将这些存储桶分别称为源 存储桶和目标 存储桶。<br><img src="/images/aws/s3_storage_crr.jpg" alt=""></p>
+<p>设置成功后，在源Bucket里Upload后，在目标Bucket里会自动Rep。<br>但是对之前源Bucket里有的Objects不会Rep。我们可以通过命令行的方式把之前的Objects同步过去。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">C:</span>\Users\yongfei.hu&gt;aws s3 cp --recursive <span class="string">s3:</span><span class="comment">//yongfeiuall s3://yongfeiuall.sydney</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/aws.txt to s3://yongfeiuall.sydney/aws.txt</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/replication.txt to s3://yongfeiuall.sydney/replication.txt</span></span><br><span class="line"><span class="string">copy:</span> <span class="string">s3:</span><span class="comment">//yongfeiuall/koala.jpg to s3://yongfeiuall.sydney/koala.jpg</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Life-Cycle-Management"><a href="#Life-Cycle-Management" class="headerlink" title="Life Cycle Management"></a>Life Cycle Management</h1><p>生命周期配置 是一组规则，用于定义 Amazon S3 对一组对象应用的操作。有两种类型的操作：</p>
 <ul>
-<li><p>Minion Id 匹配</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation ~]</span># <span class="tag">salt</span> 192<span class="class">.168</span><span class="class">.244</span><span class="class">.130</span> <span class="tag">test</span><span class="class">.ping</span></span><br><span class="line">192<span class="class">.168</span><span class="class">.244</span><span class="class">.130</span>:</span><br><span class="line">    <span class="tag">True</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通配符匹配</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@Automation ~]</span># <span class="tag">salt</span> 192<span class="class">.168</span>.* <span class="tag">test</span><span class="class">.ping</span></span><br><span class="line">192<span class="class">.168</span><span class="class">.244</span><span class="class">.130</span>:</span><br><span class="line">    <span class="tag">True</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>正则表达式匹配</p>
-</li>
-<li>列表匹配</li>
-<li>Grains匹配</li>
-<li>Node groups匹配</li>
-<li>Pillar匹配<br><img src="/images/salt/target.jpg" alt=""></li>
+<li>转换操作 – 定义对象转换为另一个存储类的时间。例如，您可以选择在对象创建 30 天后将其转换为 STANDARD_IA 存储类，或在对象创建 1 年后将其存档到 GLACIER 存储类。</li>
+<li>过期操作 – 定义对象的过期时间。Amazon S3 将代表您删除过期的对象。</li>
 </ul>
+<p><img src="/images/aws/s3_storage_lifecycle.jpg" alt=""></p>
 
           
         
@@ -1631,7 +1438,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/11/AWS-IAM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1650,7 +1457,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/" itemprop="url">Salt - 环境安装的问题：Vagrant Up起不来</a></h1>
+                <a class="post-title-link" href="/2018/04/11/AWS-IAM/" itemprop="url">AWS - IAM</a></h1>
         
 
         <div class="post-meta">
@@ -1662,8 +1469,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T09:38:46+08:00">
-                2018-02-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T15:13:52+08:00">
+                2018-04-11
               </time>
             
 
@@ -1685,8 +1492,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -1704,8 +1511,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/" itemprop="commentsCount"></span>
+                <a href="/2018/04/11/AWS-IAM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/11/AWS-IAM/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1736,13 +1543,17 @@
       
         
           
-            <p>按照官网的步骤，执行<code>Vagrant Up</code>，没有反应，只是鼠标闪动，Google了很多，都说是Vagrant和Virtualbox版本不兼容，Windows真不行。就下载了老版本，Vbox: 4.3.40, Vagrant: 1.9.5。</p>
-<h1 id="版本不兼容"><a href="#版本不兼容" class="headerlink" title="版本不兼容"></a>版本不兼容</h1><p><code>Vagrant Up</code>可以运行了，但是有以下错误：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">D</span>:<span class="string">\salt</span> learn<span class="string">\salt-vagrant-demo&gt;vagrant</span> up</span><br><span class="line">Bringing machine <span class="string">'master'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion1'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion2'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">==&gt; <span class="attribute">master</span>: Box <span class="string">'bento/ubuntu-16.04'</span> could <span class="keyword">not</span> be found. Attempting <span class="keyword">to</span> find <span class="keyword">and</span> install...</span><br><span class="line">    <span class="attribute">master</span>: Box <span class="attribute">Provider</span>: virtualbox</span><br><span class="line">    <span class="attribute">master</span>: Box <span class="attribute">Version</span>: &gt;= <span class="number">0</span></span><br><span class="line">The box <span class="string">'bento/ubuntu-16.04'</span> could <span class="keyword">not</span> be found <span class="keyword">or</span></span><br><span class="line">could <span class="keyword">not</span> be accessed <span class="keyword">in</span> the remote catalog. If <span class="keyword">this</span> <span class="keyword">is</span> a private</span><br><span class="line">box <span class="literal">on</span> HashiCorp<span class="string">'s Atlas, please verify you'</span>re logged <span class="keyword">in</span> via</span><br><span class="line">`vagrant login`. Also, please double-check the name. The expanded</span><br><span class="line">URL <span class="keyword">and</span> error message are shown <span class="attribute">below</span>:</span><br><span class="line"></span><br><span class="line"><span class="attribute">URL</span>: [<span class="string">"https://atlas.hashicorp.com/bento/ubuntu-16.04"</span>]</span><br><span class="line"><span class="attribute">Error</span>: The requested URL returned <span class="attribute">error</span>: <span class="number">404</span> Not Found</span><br></pre></td></tr></table></figure></p>
-<p>这是因为：所有的Vagrant boxes都Move到了app.vagrantup.com。</p>
-<p>在Vagrantfile里加入以下命令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vagrant::DEFAULT_SERVER_URL.<span class="function"><span class="title">replace</span><span class="params">(<span class="string">'https://vagrantcloud.com'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>重新<code>Vagrant Up</code>，运行成功。</p>
-<h1 id="配置问题"><a href="#配置问题" class="headerlink" title="配置问题"></a>配置问题</h1><p>下载VM完成后，失败：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">D</span>:<span class="string">\salt</span> learn<span class="string">\salt-vagrant-demo&gt;vagrant</span> up</span><br><span class="line">Bringing machine <span class="string">'master'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion1'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">Bringing machine <span class="string">'minion2'</span> up <span class="keyword">with</span> <span class="string">'virtualbox'</span> provider...</span><br><span class="line">==&gt; <span class="attribute">master</span>: Checking <span class="keyword">if</span> box <span class="string">'bento/ubuntu-16.04'</span> <span class="keyword">is</span> up <span class="keyword">to</span> date...</span><br><span class="line">There was an error <span class="keyword">while</span> executing `VBoxManage`, a CLI used <span class="keyword">by</span> Vagrant</span><br><span class="line"><span class="keyword">for</span> controlling VirtualBox. The command <span class="keyword">and</span> stderr <span class="keyword">is</span> shown below.</span><br><span class="line"></span><br><span class="line"><span class="attribute">Command</span>: [<span class="string">"hostonlyif"</span>, <span class="string">"create"</span>]</span><br><span class="line"></span><br><span class="line"><span class="attribute">Stderr</span>: <span class="number">0</span>%...</span><br><span class="line">Progress <span class="attribute">state</span>: E_FAIL</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: Failed <span class="keyword">to</span> create the host-only adapter</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: Code E_FAIL (<span class="number">0x80004005</span>) - Unspecified error (extended info <span class="keyword">not</span> available)</span><br><span class="line">VBoxManage.<span class="attribute">exe</span>: <span class="attribute">error</span>: <span class="attribute">Context</span>: <span class="string">"int __cdecl handleCreate(struct HandlerArg *,int,int *)"</span> at line <span class="number">66</span> <span class="keyword">of</span> file VBoxManageHostonly.cpp</span><br></pre></td></tr></table></figure></p>
-<p>解决方法：<br>在安装目录下（c:\Program Files (x86)\Vagrant\embedded\gems\gems\vagrant-1.7.4\plugins\providers\virtualbox\action.rb），注释以下代码：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">b</span><span class="class">.use</span> PrepareNFSSettings</span><br><span class="line"><span class="id">#b</span><span class="class">.use</span> ClearNetworkInterfaces</span><br><span class="line"><span class="id">#b</span><span class="class">.use</span> Network</span><br><span class="line"><span class="tag">b</span><span class="class">.use</span> ForwardPorts</span><br></pre></td></tr></table></figure></p>
+            <p>AWS Identity and Access Management (IAM) 是一种 Web 服务，可以帮助您安全地控制对 AWS 资源的访问。您可以使用 IAM 控制对哪个用户进行身份验证 (登录) 和授权 (具有权限) 以使用资源。</p>
+<h2 id="多重验证-MFA"><a href="#多重验证-MFA" class="headerlink" title="多重验证(MFA)"></a>多重验证(MFA)</h2><p>您可以向您的账户和各个用户添加双重身份验证以实现更高安全性。借助 MFA，您或您的用户不仅必须提供使用账户所需的密码或访问密钥，还必须提供来自经过特殊配置的设备的代码。</p>
+<p>在<code>IAM -&gt; Dashboard</code>来实现这个功能：<br><img src="/images/aws/iam_mfa.jpg" alt=""><br>这里我用了Authy，重新登录后会提示：<br><img src="/images/aws/iam_login.jpg" alt=""></p>
+<h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><p>创建 AWS 账户时，会创建一个 AWS 账户<strong>根用户</strong>身份。使用 根用户，您可以对 AWS 账户中的所有资源进行完全、无限制的访问，包括访问您的账单信息，您还能更改自己的密码。</p>
+<h3 id="User管理"><a href="#User管理" class="headerlink" title="User管理"></a>User管理</h3><p>在<code>IAM -&gt; Users</code>来实现对用户管理(CRUD，Add Permission, Add Group)。<br><img src="/images/aws/iam_user.jpg" alt=""><br>创建成功后，可以用这个<code>https://account_id.signin.aws.amazon.com/console</code>来登录。</p>
+<h3 id="设置密码策略"><a href="#设置密码策略" class="headerlink" title="设置密码策略"></a>设置密码策略</h3><p>在<code>IAM -&gt; Account Settings</code>来实现对密码策略的管理。</p>
+<h3 id="MFA"><a href="#MFA" class="headerlink" title="MFA"></a>MFA</h3><p>在<code>IAM -&gt; Users -&gt; Summary -&gt;  Security Credentials</code>来实现对User启用MFA。</p>
+<h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><p>没什么好说的，在<code>IAM -&gt; Groups</code>来实现对组的管理(CRUD，Add Permission, Add/Remove User)。</p>
+<h2 id="Role"><a href="#Role" class="headerlink" title="Role"></a>Role</h2><p>也没啥说的，在<code>IAM -&gt; Roles</code>来实现对角色的管理(CRUD，Add Permission)。</p>
+<h2 id="Policy"><a href="#Policy" class="headerlink" title="Policy"></a>Policy</h2><p>策略是 AWS 中的一个实体；在附加到身份或资源时，策略定义了它们的权限。在<code>IAM -&gt; Policies</code>来实现对策略的管理。</p>
+<p>做了一些基本的操作，Security Status：<br><img src="/images/aws/iam.jpg" alt=""></p>
 
           
         
@@ -1791,7 +1602,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/02/27/Salt-简单Demo/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/08/AWS-介绍/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1810,7 +1621,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/27/Salt-简单Demo/" itemprop="url">Salt - 安装SaltStack</a></h1>
+                <a class="post-title-link" href="/2018/04/08/AWS-介绍/" itemprop="url">AWS - 介绍</a></h1>
         
 
         <div class="post-meta">
@@ -1822,8 +1633,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T13:43:57+08:00">
-                2018-02-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T12:55:49+08:00">
+                2018-04-08
               </time>
             
 
@@ -1845,8 +1656,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SaltStack/" itemprop="url" rel="index">
-                    <span itemprop="name">SaltStack</span>
+                  <a href="/categories/AWS/" itemprop="url" rel="index">
+                    <span itemprop="name">AWS</span>
                   </a>
                 </span>
 
@@ -1864,8 +1675,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/27/Salt-简单Demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/27/Salt-简单Demo/" itemprop="commentsCount"></span>
+                <a href="/2018/04/08/AWS-介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/08/AWS-介绍/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1896,21 +1707,183 @@
       
         
           
-            <h1 id="官方Demo环境安装"><a href="#官方Demo环境安装" class="headerlink" title="官方Demo环境安装"></a>官方Demo环境安装</h1><p>A Salt Demo using Vagrant，(Git, VirtualBox and Vagrant must already be installed.)请参考：<a href="https://github.com/UtahDave/salt-vagrant-demo" target="_blank" rel="external">Salt Vagrant Demo</a></p>
-<p>过程中遇到的问题，搞了好久，Windows系统就是麻烦：<a href="/2018/02/28/Salt-环境安装的问题：Vagrant-Up起不来/">Vagrant Up起不来</a></p>
-<p>I HATE WINDOWS！！！ 到处是坑，I GIVE UP，还是自己搭建环境吧，不用官方教程了。 以下自己捣鼓：</p>
-<h1 id="Salt安装"><a href="#Salt安装" class="headerlink" title="Salt安装"></a>Salt安装</h1><p>在SaltMaster主机上安装salt-master：<code>yum -y install salt-master</code><br>在Minion主机上安装salt-minion：<code>yum -y install salt-minion</code></p>
-<h1 id="Salt配置"><a href="#Salt配置" class="headerlink" title="Salt配置"></a>Salt配置</h1><ul>
-<li><p>配置salt-master : /etc/salt/master</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># salt运行的用户，影响到salt的执行权限</span></span><br><span class="line">user: root</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor">#s alt的运行线程，开的线程越多一般处理的速度越快，但一般不要超过CPU的个数</span></span><br><span class="line">worker_threads: <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master的管理端口</span></span><br><span class="line">publish_port : <span class="number">4505</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master跟minion的通讯端口，用于文件服务，认证，接受返回结果等</span></span><br><span class="line">ret_port : <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 如果这个master运行的salt-syndic连接到了一个更高层级的master,那么这个参数需要配置成连接到的这个高层级master的监听端口</span></span><br><span class="line">syndic_master_port : <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 指定pid文件位置</span></span><br><span class="line">pidfile: /<span class="keyword">var</span>/run/salt-master.pid</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># saltstack 可以控制的文件系统的开始位置</span></span><br><span class="line">root_dir: /</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 日志文件地址</span></span><br><span class="line">log_file: /<span class="keyword">var</span>/log/salt_master.log</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 分组设置</span></span><br><span class="line">nodegroups:</span><br><span class="line">  group_all: <span class="string">'*'</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># salt state执行时候的根目录</span></span><br><span class="line">file_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/file</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 设置pillar 的根目录</span></span><br><span class="line">pillar_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/pillar</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置salt-minion : /etc/salt/minion</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># minion的识别ID，可以是IP，域名，或是可以通过DNS解析的字符串</span></span><br><span class="line">id: <span class="number">192.168</span><span class="number">.0</span><span class="number">.100</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># salt运行的用户权限</span></span><br><span class="line">user: root</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master的识别ID，可以是IP，域名，或是可以通过DNS解析的字符串</span></span><br><span class="line">master : <span class="number">192.168</span><span class="number">.0</span><span class="number">.100</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># master通讯端口</span></span><br><span class="line">master_port: <span class="number">4506</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 备份模式，minion是本地备份，当进行文件管理时的文件备份模式</span></span><br><span class="line">backup_mode: minion</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 执行salt-call时候的输出方式</span></span><br><span class="line">output: nested</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># minion等待master接受认证的时间</span></span><br><span class="line">acceptance_wait_time: <span class="number">10</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 失败重连次数，0表示无限次，非零会不断尝试到设置值后停止尝试</span></span><br><span class="line">acceptance_wait_time_max: <span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 重新认证延迟时间，可以避免因为master的key改变导致minion需要重新认证的syn风暴</span></span><br><span class="line">random_reauth_delay: <span class="number">60</span></span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 日志文件位置</span></span><br><span class="line">log_file: /<span class="keyword">var</span>/logs/salt_minion.log</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># 文件路径基本位置</span></span><br><span class="line">file_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /etc/salt/minion/file</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># pillar基本位置</span></span><br><span class="line">pillar_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /data/salt/minion/pillar</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Salt启动"><a href="#Salt启动" class="headerlink" title="Salt启动"></a>Salt启动</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># master</span></span><br><span class="line">service salt-master restart</span><br><span class="line"> </span><br><span class="line"><span class="preprocessor"># minion</span></span><br><span class="line">service salt-minion restart</span><br></pre></td></tr></table></figure>
-<h1 id="ACCEPT-CONNECTIONS"><a href="#ACCEPT-CONNECTIONS" class="headerlink" title="ACCEPT CONNECTIONS"></a>ACCEPT CONNECTIONS</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key</span></span><br><span class="line">Accepted Keys:</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Rejected Keys:</span><br><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key -y -a <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span></span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Key <span class="keyword">for</span> minion <span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span> accepted.</span><br><span class="line">[root@Automation salt]<span class="preprocessor"># salt-key --list-all</span></span><br><span class="line">Accepted Keys:</span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span></span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
-<h1 id="验证安装成功"><a href="#验证安装成功" class="headerlink" title="验证安装成功"></a>验证安装成功</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation salt]<span class="preprocessor"># salt <span class="string">'*'</span> test.ping</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.244</span><span class="number">.130</span>:</span><br><span class="line">    True</span><br></pre></td></tr></table></figure>
+            <p>想了解一下云计算相关的知识，正好公司在用AWS，做一个基本的学习和了解。</p>
+<p>云计算是通过 Internet 云服务平台按需提供计算能力、数据库存储、应用程序和其他 IT 资源，采用按需支付定价模式。<br>云计算包含三个主要类型，通常被称作：基础设施即服务 (IaaS)、平台即服务 (PaaS) 和软件即服务 (SaaS)。</p>
+<p>Amazon Web Services (AWS) 是一个安全的云服务平台，提供计算能力、数据库存储、内容交付以及其他功能来帮助实现业务扩展和增长。</p>
+<p>AWS所有的Service：<br><img src="/images/aws/product.jpg" alt=""></p>
+<h2 id="申请12月免费账户"><a href="#申请12月免费账户" class="headerlink" title="申请12月免费账户"></a>申请12月免费账户</h2><p>这没什么好说的，申请入口：<a href="https://aws.amazon.com/free/" target="_blank" rel="external">AWS Free Tier</a>，填写正确的信息就好了，要写正确的信用卡号和手机号以做验证，要不然不能申请成功。</p>
+<p>申请成功后，登录就可以进入到Console。</p>
+<h2 id="创建Billing-Alarm"><a href="#创建Billing-Alarm" class="headerlink" title="创建Billing Alarm"></a>创建Billing Alarm</h2><p>尽管是免费的账户，还是设置一个Alarm好一些，万一花了钱就不好了，而且还是美元。</p>
+<ol>
+<li>在账户下的‘My Billing Dashboard’中设置，</li>
+<li>在‘Alert&amp; Notifications’中Enable你的Monitor your estimated charges，</li>
+<li>选择‘Receive Billing Alerts’，保存，并点击‘Manage Billing Alerts’，</li>
+<li>到‘CloudWatch -&gt; Alarms - Billing’，</li>
+<li>Create Alarm，设置Exceed钱数和接受邮件地址，</li>
+<li>去设置的邮箱Verify，Alarm States is OK, 到此创建成功。</li>
+</ol>
+<p>接下来，会把各个常用模块做个简单学习。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/04/07/如何看待工资？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/07/如何看待工资？/" itemprop="url">如何看待工资？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-07T13:21:20+08:00">
+                2018-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随想/" itemprop="url" rel="index">
+                    <span itemprop="name">随想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/07/如何看待工资？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/07/如何看待工资？/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在上一家公司的时候就想过这个问题，但是一直没有深思考，说一下自己的一些见解，仅代表个人看法，如有不妥，还请指正。</p>
+<h2 id="工作价值：工资"><a href="#工作价值：工资" class="headerlink" title="工作价值：工资"></a>工作价值：工资</h2><p>我一直觉得工资不是评判一个人价值的唯一指标，就像考试第一名并不能代表你就是最优秀的学生。金钱/成绩确实很重要，但不是唯一。</p>
+<p>但是从另一个角度想想，工资是不是公司衡量你工作价值的一个标准？工资是不是能反应出你的能力和努力后的成长？如果你的工资不高或者涨的不多，你有没有思考过，是不是因为自身的能力在标准之下？</p>
+<h2 id="为什么追求高工资"><a href="#为什么追求高工资" class="headerlink" title="为什么追求高工资"></a>为什么追求高工资</h2><p>如今的我们跟上一辈的不同之处，还在于我们以近乎全裸的方式来到大城市，一无所有，没有亲戚邻居的帮衬，一切都得靠自己去努力，而大城市里的一切又是那么的昂贵，怎么才能活下去？怎么才能在这里扎根？这是要直面的且最基本的需求，所以追求高工资就也无可厚非。其实大家都是普通人，绝大多数人都只能通过努力工作来改变自己的命运，过上所谓的体面生活，而工资对普通人可以说是唯一的收入来源，有的人甚至以牺牲健康的代价去拼命加班，去挣更多的工资，不就是希望自己能在这个所谓的大都市里站住脚，让自己能有安全感。</p>
+<p>活过而立之年，再想想，人追求越来越高的工资，真的就是单纯的为了追求金钱，追求物质？从人的需求层次来看，人最终追求的应该就是自由选择的权利，去做自己想做的事。从古至今来看，金钱好像是能够获得这种权利最容易的方式。</p>
+<h2 id="保持工资持续增长"><a href="#保持工资持续增长" class="headerlink" title="保持工资持续增长"></a>保持工资持续增长</h2><p>从个人自身来看，你要舍得投资自己(ROI最高)，不断输入，去努力，去提升自己的价值，相信不断成长的你，工资也会呈上升曲线。</p>
+<p>如今是一个‘大众创业，万众创新’的时代，是一个在别人嘴里站在风口猪都会飞的时代，也就是大家一直都在说的做事要顺势而为，其实工资也一样，在一个夕阳产业里，你再努力，工作价值再大，工资的增长未必能达到你的预期。所以要选对行业，站对队。</p>
+
           
         
       
@@ -1949,7 +1922,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1999,7 +1972,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">391</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2010,7 +1983,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2021,7 +1994,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

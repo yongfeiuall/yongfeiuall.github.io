@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/27/八达岭长城/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/26/Robot-Framework-Table-Handling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/02/27/八达岭长城/" itemprop="url">八达岭长城</a></h1>
+                <a class="post-title-link" href="/2016/04/26/Robot-Framework-Table-Handling/" itemprop="url">Robot Framework-Table Handling</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-27T14:42:00+08:00">
-                2016-02-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-26T15:53:14+08:00">
+                2016-04-26
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/02/27/八达岭长城/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/27/八达岭长城/" itemprop="commentsCount"></span>
+                <a href="/2016/04/26/Robot-Framework-Table-Handling/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/26/Robot-Framework-Table-Handling/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -409,16 +409,20 @@
 
       
         
-          <p>一块去爬了长城，又是陪家里人去的。这次带了小丁，玩的很开心，也不用去上学。</p>
-<p>还是很不错的，自己一直爬到了最高点，赞一个！！！</p>
-<p><img src="/images/izheyi/2016/02/changcheng_0.jpg" alt=""><br><img src="/images/izheyi/2016/02/changcheng_1.jpg" alt=""><br><img src="/images/izheyi/2016/02/changcheng_2.jpg" alt=""><br><img src="/images/izheyi/2016/02/changcheng_3.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/02/27/八达岭长城/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p>Robot Framework provide some table handling keyword, one for get cell text, rest are for check point keyword,actually, it’s not enouth for us to handle table actions in script designing.</p>
+<p>When we use Java or other languages to design script under Selenium Webdriver, we also need to customize class to implement relevant methods, such as, getTableRowCount, clickLinkInTableCell…..</p>
+<p>But for Robot Framework, search from Google, seems there not a good solution，think about many ways，finally, find the below method to handle table actions, maybe it’s not the best way, anyway, it’s worked.</p>
+<h1 id="Get-Table-Row-Count"><a href="#Get-Table-Row-Count" class="headerlink" title="Get Table Row Count"></a>Get Table Row Count</h1><p>We can use ‘Get Matching Xpath Count’ method to get table row count.<br><img src="/images/rf/table_get_row_count.jpg" alt=""><br>Here, the locator is the row(tr) locator rather than table locator,  and need to use xpath.</p>
+<h1 id="Get-Row-By-Cell-Text"><a href="#Get-Row-By-Cell-Text" class="headerlink" title="Get Row By Cell Text"></a>Get Row By Cell Text</h1><p>Based on ‘Get Table Row Count’ keyword, use for loop to judge text in which row, to Get Row By Cell Textget current row index/number.<br><img src="/images/rf/table_get_row_by_text.jpg" alt=""></p>
+<h1 id="Click-Link-In-Table-Cell"><a href="#Click-Link-In-Table-Cell" class="headerlink" title="Click Link In Table Cell"></a>Click Link In Table Cell</h1><p>From ‘Get Row By Cell Text’, get the current row index, then we can the link in table cell.<br><img src="/images/rf/table_click_link_in_cell.jpg" alt=""></p>
+<h1 id="Example-And-More"><a href="#Example-And-More" class="headerlink" title="Example And More"></a>Example And More</h1><ul>
+<li>We can use the customized method like the below way<br><img src="/images/rf/table_call.jpg" alt=""><br><strong>Notes:</strong> we will get the below error if we define locator with prefix ‘xpath=’, i am not sure why, or maybe only happened on my laptop, so please don’t use the prefix when define tr locator.<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InvalidSelectorException</span>: <span class="type">Message</span>: <span class="type">The</span> given selector xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr <span class="keyword">is</span> either invalid <span class="keyword">or</span> does <span class="keyword">not</span> <span class="literal">result</span> <span class="keyword">in</span> a <span class="type">WebElement</span>. <span class="type">The</span> following error occurred:</span><br><span class="line"><span class="type">InvalidSelectorError</span>: <span class="type">Unable</span> to locate an element <span class="keyword">with</span> the xpath expression xpath=//table[contains(@id, 'calendar_tableview')]/tbody/tr because <span class="keyword">of</span> the following error:</span><br><span class="line"><span class="type">TypeError</span>: <span class="type">The</span> expression cannot be converted to <span class="keyword">return</span> the specified <span class="keyword">type</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Do-more-jobs"><a href="#Do-more-jobs" class="headerlink" title="Do more jobs"></a>Do more jobs</h1><p>We can implement more actions based on the above major implementation, such as ‘Get Table Column Count’, ‘Select Checkbox In Table Cell’, ‘Select From List In Table Cell’………</p>
+
+          
         
       
     </div>
@@ -465,7 +469,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/18/java内存泄露分析/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/21/Robot-Framework-基础知识学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -484,7 +488,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/02/18/java内存泄露分析/" itemprop="url">java内存泄露分析</a></h1>
+                <a class="post-title-link" href="/2016/04/21/Robot-Framework-基础知识学习/" itemprop="url">Robot Framework-基础知识学习</a></h1>
         
 
         <div class="post-meta">
@@ -496,8 +500,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-18T13:35:59+08:00">
-                2016-02-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-21T17:36:41+08:00">
+                2016-04-21
               </time>
             
 
@@ -519,8 +523,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
                   </a>
                 </span>
 
@@ -538,8 +542,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/02/18/java内存泄露分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/18/java内存泄露分析/" itemprop="commentsCount"></span>
+                <a href="/2016/04/21/Robot-Framework-基础知识学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/21/Robot-Framework-基础知识学习/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -570,23 +574,181 @@
       
         
           
-            <blockquote>
-<p>在这里，我们还是先温习一下‘对象气球’：<br>对象就像一个充满氢气的气球，我们没有办法直接去得到它，要想对它的使用都必须通过一根连着它的绳子来访问，这根绳子就是对象的引用。<br>一根绳子同时只能连着一个气球，就像一个引用同时只能指向一个对象；<br>可以用多根绳子同时连接一个气球，也就是可以有多个引用同时指向同一个对象；<br>如果某个气球没有任何绳子连着它，那它就会飞走，同样，某个对象如果没有引用连接它，它就会成为垃圾，等着被java的垃圾收集器回收；<br>如果某根绳子没有连接任何气球，那么它就是一个空引用，对它的访问没有意义。<br>同样，某个引用如果没有指向对象，那么对它的访问将会抛出NullPointerException</p>
-</blockquote>
-<h1 id="Java内存回收机制"><a href="#Java内存回收机制" class="headerlink" title="Java内存回收机制"></a>Java内存回收机制</h1><p> Java 的内存管理就是对象的分配和释放问题。分配内存的方式多种多样，取决于该种语言的语法结构。但不论是哪一种语言的内存分配方式，最后都要返回所分配的内存块的起始地址，即返回一个指针到内存块的首地址。在Java 中所有对象都是在堆（Heap）中分配的，对象的创建通常都是采用new或者是反射的方式，但对象释放却有直接的手段，所以对象的回收都是由Java虚拟机通过垃圾收集器去完成的。这种收支两条线的方法确实简化了程序员的工作，但同时也加重了JVM的工作，这也是Java 程序运行速度较慢的原因之一。因为，GC 为了能够正确释放对象，GC 必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC 都需要进行监控。监视对象状态是为了更加准确地、及时地释放对象，而释放对象的根本原则就是该对象不再被引用。</p>
-<h1 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h1><h2 id="GC类型"><a href="#GC类型" class="headerlink" title="GC类型"></a>GC类型</h2><ul>
-<li><strong>新生代的GC</strong><br>Minor GC（新生代回收）的触发条件比较简单，Eden空间不足就开始进行Minor GC回收新生代。</li>
-<li><strong>老年代GC</strong><br>而Full GC（老年代回收，一般伴随一次Minor GC）则有几种触发条件：<br>（1）老年代空间不足<br>（2）PermSpace空间不足<br>（3）统计得到的Minor GC晋升到老年代的平均大小大于老年代的剩余空间</li>
-</ul>
-<h2 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h2><ul>
-<li>Java堆内存</li>
-<li>Perm内存</li>
-<li>Java进程本地内存</li>
-</ul>
-<h1 id="瓶颈分析"><a href="#瓶颈分析" class="headerlink" title="瓶颈分析"></a>瓶颈分析</h1><p>定位分析：</p>
+            <p>我觉得不管学什么东西，最先要知道是什么，原理是什么，能做什么，基础的操作，对于细节性的东西，技术点相关知识，可以在日后的工作中再慢慢的补充，以便形成自己的知识体系。</p>
+<p>周末和晚上的时间，学习了一些基础知识，这里只罗列一些点，想更详细的说明和学习，就去Robot Framework官网查看<a href="http://robotframework.org/robotframework/#user-guide" target="_blank" rel="external">User Guide</a></p>
 <ol>
-<li>生成堆的dump文件</li>
-<li>分析dump文件<br>详细参考文章相关章节：<a href="http://wenku.baidu.com/link?url=p6SRx-GOp_awHt2oBbNoLYJ5jKa7ygsa7LbqVWXGkQFtCForji55bQGuGVzfcoBaIhzOYnCZordP1NFR7L5CeJPcUb2lW5TEWRoJ4HE2j_y" target="_blank" rel="external">分析</a></li>
+<li>Robot Framework是个什么样的框架</li>
+<li>RIDE的基本操作：各种组件的创建和脚本运行等</li>
+<li>Test Suite、Resource、Keyword之前的关系</li>
+<li>一些主要是关键字的了解</li>
+<li>RF里的分层</li>
+</ol>
+<p>对于分层，这里还是有点困惑的，有说要做到流程和数据的分离，有的说本来就是关键字驱动，直接都写到Case里就行，封装的层太多了，也不见得是个好事；有说应该分四层，或者五层，有的说三层就够了，封的多了也是麻烦。这就跟什么是测试框架这个问题一样，一百人可能就有一百种对测试框架的理解和定义。不管怎么分，分几层，对当前的项目适合，能把控的了，应该就是没有太大问题的。</p>
+<p><em>但是现在对于分层，跟Team有一些不同见解:(</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/18/Robot-Framework-Web测试环境/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/18/Robot-Framework-Web测试环境/" itemprop="url">Robot Framework-Web测试环境</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-18T08:36:36+08:00">
+                2016-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/18/Robot-Framework-Web测试环境/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/18/Robot-Framework-Web测试环境/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我们用Selenium Webdriver来进行Web测试，以下是运行环境的搭建：</p>
+<h1 id="Selenium2Library"><a href="#Selenium2Library" class="headerlink" title="Selenium2Library"></a>Selenium2Library</h1><p>如果要做Web的自动化话，需要安装Selenium的库，用以下命令<code>pip install robotframework-selenium2library</code><br>在RIDE设计自动化的时候，先要import安装的Selenium2Library。</p>
+<h1 id="ExtendedSelenium2Library"><a href="#ExtendedSelenium2Library" class="headerlink" title="ExtendedSelenium2Library"></a>ExtendedSelenium2Library</h1><p>Extended Selenium 2 (WebDriver) web testing library for Robot Framework，点击 <a href="https://github.com/rickypc/robotframework-extendedselenium2library" target="_blank" rel="external">Here</a> 查看详细信息。</p>
+<h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><p>对于Firefox，是默认的浏览器，我们不需要做设置就可以直接运行；但是对于IE和Chrome，我们需要下载相应的Driver做设置：</p>
+<ol>
+<li>去<a href="http://docs.seleniumhq.org/download/" target="_blank" rel="external">Selenium官网</a></li>
+<li>放到环境变量path路径的目录里或把他所在的目录加到path环境变量中</li>
+</ol>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ol>
+<li>显示“[ WARN ] Keyword ‘Capture Page Screenshot’ could not be run on failure: No browser is open”，<br>遇到此问题，请打开文件浏览器至Selenium2Library的utils目录，修改其中的browsercache.py文件，将close(self)方法中的语句“browser.quit()”修改为“browser.close()”。即可解决此问题。 </li>
+<li>IE浏览器<br>IE页面的显示比例要为100%。</li>
 </ol>
 
           
@@ -636,7 +798,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/10/大虾真好吃/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -655,7 +817,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/02/10/大虾真好吃/" itemprop="url">大虾真好吃</a></h1>
+                <a class="post-title-link" href="/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/" itemprop="url">Robot Framework Enviroment Setup on Windows 32 bit</a></h1>
         
 
         <div class="post-meta">
@@ -667,8 +829,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-10T12:12:44+08:00">
-                2016-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-15T15:43:53+08:00">
+                2016-04-15
               </time>
             
 
@@ -690,8 +852,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
+                  <a href="/categories/Robot-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot Framework</span>
                   </a>
                 </span>
 
@@ -709,8 +871,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/02/10/大虾真好吃/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/10/大虾真好吃/" itemprop="commentsCount"></span>
+                <a href="/2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/15/Robot-Framework-Enviroment-Setup-on-Windows-32-bit/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -741,652 +903,871 @@
       
         
           
-            <p><img src="/images/izheyi/2016/02/xia_0.JPG" alt=""><br><img src="/images/izheyi/2016/02/xia_1.JPG" alt=""><br><img src="/images/izheyi/2016/02/xia_2.JPG" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/09/过年去南锣鼓巷/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/09/过年去南锣鼓巷/" itemprop="url">过年去南锣鼓巷</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-09T11:11:45+08:00">
-                2016-02-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/02/09/过年去南锣鼓巷/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/09/过年去南锣鼓巷/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>来北京这么多年，一直说来这看看，终于如愿了，玩的很开心，吃的还不错。<br>话不多说，上图：）<br><img src="/images/izheyi/2016/02/nanluo_0.JPG" alt=""><br><img src="/images/izheyi/2016/02/nanluo_1.JPG" alt=""><br><img src="/images/izheyi/2016/02/nanluo_2.JPG" alt=""><br><img src="/images/izheyi/2016/02/nanluo_5.JPG" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/02/09/过年去南锣鼓巷/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/02/08/2016新年快乐/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/02/08/2016新年快乐/" itemprop="url">2016新年快乐</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-08T20:46:06+08:00">
-                2016-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/02/08/2016新年快乐/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/02/08/2016新年快乐/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今年过年，由于种种原因，没能回家过年，还蛮遗憾的。新年第一天，出去活动一下，开心每一天。<br><img src="/images/izheyi/2016/02/yiheyuan_00.JPG" alt=""><br><img src="/images/izheyi/2016/02/yiheyuan_0.JPG" alt=""><br><img src="/images/izheyi/2016/02/yiheyuan_1.JPG" alt=""><br><img src="/images/izheyi/2016/02/yiheyuan_2.JPG" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/02/08/2016新年快乐/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/30/包饺子/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/30/包饺子/" itemprop="url">包饺子</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-30T10:56:51+08:00">
-                2016-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/01/30/包饺子/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/30/包饺子/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>去商场置办年货，正好赶上有包饺子的活动，小丁和妈妈就去参加了。<br><img src="/images/izheyi/2016/01/jiaozi_0.JPG" alt=""><br><img src="/images/izheyi/2016/01/jiaozi_1.JPG" alt=""><br><img src="/images/izheyi/2016/01/jiaozi_2.JPG" alt=""><br><img src="/images/izheyi/2016/01/jiaozi_3.JPG" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/01/30/包饺子/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/15/Java线程堆栈分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/15/Java线程堆栈分析/" itemprop="url">Java线程堆栈分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-15T09:13:00+08:00">
-                2016-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/01/15/Java线程堆栈分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/15/Java线程堆栈分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>线程堆栈也称作线程调用堆栈。Java线程堆栈是虚拟机中线程（包括锁）状态的一个瞬间快照，即系统在某个时刻所有线程的运行状态,包括每一个线程的调用堆栈，锁的持有情况等信息。</p>
-<p>线程堆栈的信息都包含：</p>
-<ol>
-<li>线程的名字，ID，线程的数量等。</li>
-<li>线程的运行状态，锁的状态（锁被哪个线程持有，哪个线程再等待锁等）。</li>
-<li>调用堆栈（即函数的调用层次关系）。调用堆栈包含完整的类名，所执行的方法，源代码的行数。</li>
+            <h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><p>Windows7 32位，Python 2.7</p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h2><ol>
+<li>去<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载最新版本，python-2.7.11.msi。</li>
+<li>双击默认安即可（<strong>在安装过程中记得选择：Add python.exe to Path</strong>），一路Next。</li>
 </ol>
-<p>借助线程堆栈，可以分析许多问题，如线程死锁、锁争用、死循环、识别耗时操作等等。在多线程场合下的稳定性问题分析和性能问题分析，线程堆栈分析是最有效的方法，在多数情况下甚至无需对系统了解就可以进行相应的分析。<br>线程堆栈最善于分析如下类型的问题:<br>• 系统无缘无故CPU过高。<br>• 系统挂起，无响应。<br>• 系统运行越来越慢。<br>• 性能瓶颈（如无法充分利用CPU等）<br>• 线程死锁、死循环，饿死等。<br>• 由于线程数量太多导致系统失败（如无法创建线程等）。</p>
-<h1 id="输出线程状态"><a href="#输出线程状态" class="headerlink" title="输出线程状态"></a>输出线程状态</h1><p>Java虚拟机提供了线程转储(Thread dump)的后门，通过这个后门，可以将线程堆栈打印出来。<br>我们这里拿Linux做例子，写了一个简单的java程序在Linux一直运行着：</p>
+<h2 id="安装wxPython"><a href="#安装wxPython" class="headerlink" title="安装wxPython"></a>安装wxPython</h2><ol>
+<li>去<a href="https://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/" target="_blank" rel="external">Here</a>，wxPython2.8-win32-unicode-2.8.12.1-py27.exe，要下载unicode版本，2.8.12.1是RIDE稳定支持的版本，py27是Python2.7。</li>
+<li>双击默认安即可，一路Next。</li>
+</ol>
+<h2 id="安装Robot-Framework"><a href="#安装Robot-Framework" class="headerlink" title="安装Robot Framework"></a>安装Robot Framework</h2><ol>
+<li>因为刚安装的python自带pip，直接用些工具安装就行，</li>
+<li>默认pip的版本低，可以通过<code>pip install -U pip</code>升级。</li>
+<li>用<code>pip install robotframework</code>安装Robot Framework。<br><em>注：如果安装不成功，就自己下载源码包进行安装</em></li>
+</ol>
+<h2 id="安装RIDE"><a href="#安装RIDE" class="headerlink" title="安装RIDE"></a>安装RIDE</h2><ol>
+<li>用<code>pip install robotframework-ride</code>安装。</li>
+</ol>
+<p>到此，基本的环境就搭建完成了。 在命令行输入<code>ride.py</code>就可以打开可视窗体，进行自动化设计了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/" itemprop="url">快速获得文件夹下所有文件和文件夹的名字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-11T14:28:03+08:00">
+                2016-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/11/快速获得文件夹下所有文件和文件夹的名字/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/11/快速获得文件夹下所有文件和文件夹的名字/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Windows下，因为之前做QTP，是用Vbs写了一段代码，用的时候，只要指定要查找的文件夹就可以。现在发现了一个更便捷的方式，Mark一下。</p>
+<p>只需要用下边这个批处理脚本即可：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir <span class="keyword">*</span>.<span class="keyword">*</span> /b &gt; list.txt</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用方法：</strong></p>
+<ol>
+<li>把此脚本文件保存为.bat文件，</li>
+<li>Copy此脚本到要查找的文件夹下，</li>
+<li>运行此脚本文件，</li>
+<li>查找的名称会保存到当前文件夹的’list.txt’文件中。</li>
+</ol>
+<p><img src="/images/automation/dir.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/04/11/测试用例详细程度的一些思考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/11/测试用例详细程度的一些思考/" itemprop="url">测试用例详细程度的一些思考</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-11T09:05:26+08:00">
+                2016-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试管理/" itemprop="url" rel="index">
+                    <span itemprop="name">测试管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/11/测试用例详细程度的一些思考/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/04/11/测试用例详细程度的一些思考/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>已经有三四年没有做过手工测试了，最近换了一个新工作，也要去做手工测试，去写用例，目前大多数的公司都是这个样子的哈。</p>
+<p>在写用例的过程中，Team反映了这么个问题，领导要求把用例写的很细，具体到每个Step的描述，可是这样在执行的时候往往因为时间的原因而执行不完，但是领导认为不够详细的话，执行起来可能会有问题，比如让不熟悉功能的人按用例执行，问我的标准是什么？</p>
+<p>那测试用例的标准应该是什么呢？应该详细到何种程度呢？我想这也应该是大多数测试人员所要面临的问题。</p>
+<p>我觉得我们可以从以下几个方面来权衡:</p>
+<ol>
+<li><p>项目的角度</p>
 <ul>
-<li>kill -3 [java pid]<br>不会在当前终端输出，它会输出到代码执行的或指定的地方去。比如，kill -3 tomcat pid, 输出堆栈到log目录下。</li>
-<li>Jstack [java pid]<br>这个比较简单，在当前终端显示，也可以重定向到指定文件中。</li>
-<li>JvisualVM：Thread Dump<br>不做说明，打开JvisualVM后，都是界面操作，过程还是很简单的。</li>
+<li><p><strong>目标</strong><br>不管是文档还是代码，当然也包括测试用例，都要符合项目的最终目标。</p>
+</li>
+<li><p><strong>需求和设计会不会经常变更</strong><br>如果变更频繁的话，用例可能很快就失效，用例越详细，成本会越大。</p>
+</li>
 </ul>
-<h1 id="解读线程状态"><a href="#解读线程状态" class="headerlink" title="解读线程状态"></a>解读线程状态</h1><h2 id="dump的线程信息"><a href="#dump的线程信息" class="headerlink" title="dump的线程信息"></a>dump的线程信息</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"main"</span> prio=<span class="number">10</span> tid=<span class="number">0</span>x00007f730c008800 nid=<span class="number">0</span>x63eb runnable [<span class="number">0</span>x00007f73117c6000]</span><br><span class="line">   java<span class="class">.lang</span><span class="class">.Thread</span><span class="class">.State</span>: RUNNABLE</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.writeBytes</span>(Native Method)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.FileOutputStream</span><span class="class">.write</span>(FileOutputStream<span class="class">.java</span>:<span class="number">345</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flushBuffer</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">82</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.BufferedOutputStream</span><span class="class">.flush</span>(BufferedOutputStream<span class="class">.java</span>:<span class="number">140</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407ab8&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.BufferedOutputStream</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.write</span>(PrintStream<span class="class">.java</span>:<span class="number">482</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.writeBytes</span>(StreamEncoder<span class="class">.java</span>:<span class="number">221</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.implFlushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">291</span>)</span><br><span class="line">        at sun<span class="class">.nio</span><span class="class">.cs</span><span class="class">.StreamEncoder</span><span class="class">.flushBuffer</span>(StreamEncoder<span class="class">.java</span>:<span class="number">104</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407b90&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.OutputStreamWriter</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.OutputStreamWriter</span><span class="class">.flushBuffer</span>(OutputStreamWriter<span class="class">.java</span>:<span class="number">185</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.newLine</span>(PrintStream<span class="class">.java</span>:<span class="number">546</span>)</span><br><span class="line">        - eliminated &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at java<span class="class">.io</span><span class="class">.PrintStream</span><span class="class">.println</span>(PrintStream<span class="class">.java</span>:<span class="number">737</span>)</span><br><span class="line">        - locked &lt;<span class="number">0</span>x00000000cc407a98&gt; (<span class="tag">a</span> java<span class="class">.io</span><span class="class">.PrintStream</span>)</span><br><span class="line">        at test.<span class="function"><span class="title">fun2</span><span class="params">(test.java:<span class="number">19</span>)</span></span></span><br><span class="line">        at test.<span class="function"><span class="title">fun1</span><span class="params">(test.java:<span class="number">12</span>)</span></span></span><br><span class="line">        at test.<span class="function"><span class="title">main</span><span class="params">(test.java:<span class="number">6</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>线程堆栈里面的最直观的信息是当前线程的调用上下文，即从哪个函数中调用到哪个函数中（从下往上看），正执行到哪个类的哪一行.</p>
+</li>
+<li><p>公司流程的角度</p>
+<ul>
+<li><strong>整体测试流程和要求</strong><br>公司整个测试流程上有没有相应的标准和公司内部定义的用例模板，可能也需要遵循这些标准，当然了，如果流程不合理了，也是可以进行相应更改。</li>
+</ul>
+</li>
+<li><p>测试的角度</p>
+<ul>
+<li><p><strong>采用的测试方法</strong><br>如果是传统的开发模式，用例可以写到足够的详细，但如果要是采用的探索性测试，那就只需要测试思路就OK。</p>
+</li>
+<li><p><strong>测试用例的用途</strong><br>比如一些金融项目里有全职自动化组，他们不懂业务，只是根据手工测试用例来进行自动化，那用例就需要很详细，包括测试数据==，</p>
+</li>
+<li><p><strong>用例执行者</strong><br>对于新人，用例应该足够的详细，以确保这些人的正常工作。</p>
+</li>
+<li><p><strong>用例粒度</strong><br>传统的开发模式下，有的要求一个bug要对应到一个case,这就要求用例要定的很细，但是现在的开发中，是不必要这么做的，比如：对用户名的修改功能测试，我们写一个用例就可以了，没必要按正常和异常的场景来设计多个用例。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/31/Win7查看端口号被占用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/31/Win7查看端口号被占用/" itemprop="url">Win7查看端口号被占用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T12:54:10+08:00">
+                2016-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/31/Win7查看端口号被占用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/31/Win7查看端口号被占用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>开始-运行输入CMD</li>
+<li><p>在CMD窗口中输入netstat -aon|findstr 80，80表示要查看的端口号</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;netstat -aon|findstr <span class="number">80</span></span><br><span class="line">  TCP    <span class="number">10.24</span><span class="number">.32</span><span class="number">.104</span>:<span class="number">49323</span>     <span class="number">220.181</span><span class="number">.132</span><span class="number">.85</span>:<span class="number">80</span>      ESTABLISHED     <span class="number">3516</span></span><br></pre></td></tr></table></figure>
+<p>说明是有程序在占有了80端口，那么是什么程序占了80端口呢？看到最右侧有占有这个程序的进程ID：3516，我们只需要查出3516是哪个程序就可以了</p>
+</li>
+<li><p>在CMD中继续输入以下命令：tasklist|findstr “3516”，3516就是之前的进程ID。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youfei.hu&gt;tasklist|findstr <span class="string">"3516"</span></span><br><span class="line"><span class="number">360</span>Tray.exe                   <span class="number">3516</span> Console                    <span class="number">1</span>     <span class="number">48</span>,<span class="number">640</span> K</span><br></pre></td></tr></table></figure>
+<p>可以看到3516对应的是360程序占用这个端口。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/31/Change-Win7-profession-version-lanuage-from-Chinese-to-English/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/31/Change-Win7-profession-version-lanuage-from-Chinese-to-English/" itemprop="url">Change Win7 profession version lanuage from Chinese to English</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-31T11:33:25+08:00">
+                2016-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/31/Change-Win7-profession-version-lanuage-from-Chinese-to-English/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/31/Change-Win7-profession-version-lanuage-from-Chinese-to-English/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>新工作给了个本是中文的操作系统，工作中需要用英文的系统，重装英文的系统有点麻烦，如果是旗舰版或者企业版，可以直接从‘控制面板’的里‘显示语言’来完成这个切换工作。</p>
+<p>我这个偏偏是专业版，以上的方式行不通，可以用下面的工具和方法来实现转换：</p>
+<ol>
+<li>下载： Vistalizator.exe</li>
+<li>下载win7相应版本英语语言包： windows6.1-kb2483139-x64-en-us_language.exe</li>
+<li>运行Vistalizator.exe 增加语言选择<br><img src="/images/automation/vistalizator.jpg" alt=""></li>
+<li>选择按装好的英文—点击‘更改语言’按钮<br><em>此过程中可能需要安装一些用到的update</em></li>
+<li>退出Vistalizator.exe</li>
+<li>重启计算机，当前的显示语言已经切换到了english</li>
+</ol>
+<p>同时也下载office2013相应的语言包，对office进行语言切换。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/04/Python-函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/03/04/Python-函数/" itemprop="url">Python-函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-04T10:56:52+08:00">
+                2016-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/04/Python-函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/04/Python-函数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h1><p>你可以定义一个由自己想要功能的函数，以下是简单的规则：</p>
+<ul>
+<li>函数代码块以def关键词开头，后接函数标识符名称和圆括号()。</li>
+<li>任何传入参数和自变量必须放在圆括号中间。圆括号之间可以用于定义参数。</li>
+<li>函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。</li>
+<li>函数内容以冒号起始，并且缩进。</li>
+<li>Return[expression]结束函数，选择性地返回一个值给调用方。不带表达式的return相当于返回 None。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">functionname</span><span class="params">( parameters )</span>:</span></span><br><span class="line">   <span class="string">"函数_文档字符串"</span></span><br><span class="line">   function_suite</span><br><span class="line">   <span class="keyword">return</span> [expression]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h1><ul>
+<li><strong>必备参数</strong><br>必备参数须以正确的顺序传入函数。调用时的数量必须和声明时的一样。</li>
+<li><strong>默认参数</strong><br>设置默认参数时，有几点要注意： 1. 必选参数在前，默认参数在后，否则Python的解释器会报错； 2. 当函数有多个参数时，把变化大的参数放前面，变化小的参数放后面。变化小的参数就可以作为默认参数。</li>
+<li><p><strong>可变参数</strong><br>加了星号（<em>）的变量名会存放所有未命名的变量参数。</em>args是可变参数，args接收的是一个tuple；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">functionname</span><span class="params">([formal_args,] *args )</span>:</span></span><br><span class="line">   <span class="string">"函数_文档字符串"</span></span><br><span class="line">   function_suite</span><br><span class="line">   <span class="keyword">return</span> [expression</span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可写函数说明</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printinfo</span><span class="params">( arg1, *vartuple )</span>:</span></span><br><span class="line">   <span class="string">"打印任何传入的参数"</span></span><br><span class="line">   <span class="keyword">print</span> <span class="string">"输出: "</span></span><br><span class="line">   <span class="keyword">print</span> arg1</span><br><span class="line">   <span class="keyword">for</span> var <span class="keyword">in</span> vartuple:</span><br><span class="line">      <span class="keyword">print</span> var</span><br><span class="line">   <span class="keyword">return</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 调用printinfo 函数</span></span><br><span class="line">printinfo( <span class="number">10</span> );</span><br><span class="line">printinfo( <span class="number">70</span>, <span class="number">60</span>, <span class="number">50</span> );</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/01/15/Java线程堆栈分析/#more" rel="contents">
+            <a class="btn" href="/2016/03/04/Python-函数/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1437,7 +1818,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/10/Linux下JDK安装配置/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/03/02/Python-基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1456,7 +1837,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/10/Linux下JDK安装配置/" itemprop="url">Linux下JDK安装配置</a></h1>
+                <a class="post-title-link" href="/2016/03/02/Python-基础/" itemprop="url">Python-基础</a></h1>
         
 
         <div class="post-meta">
@@ -1468,8 +1849,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-10T09:48:14+08:00">
-                2016-01-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-02T14:52:47+08:00">
+                2016-03-02
               </time>
             
 
@@ -1491,8 +1872,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -1510,8 +1891,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/01/10/Linux下JDK安装配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/10/Linux下JDK安装配置/" itemprop="commentsCount"></span>
+                <a href="/2016/03/02/Python-基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/03/02/Python-基础/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1541,350 +1922,24 @@
 
       
         
-          
-            <p>java可以运行，只能说明JRE环境变量配置正确；javac不能运行，说明JDK没安装或者环境变量配置错误。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
-<li><p>创建安装文件夹</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> usr]<span class="preprocessor"># mkdir /usr/java</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>复制安装文件到新建的文件夹</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> usr]<span class="preprocessor"># cd java</span></span><br><span class="line">[root<span class="constant">@Automation</span> java]<span class="preprocessor"># mv /tmp/jdk-7u80-linux-x64.rpm .</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@Automation</span> java]<span class="comment"># rpm -ivh jdk-7u80-linux-x64.rpm</span></span><br><span class="line">Preparing...                <span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment"># [100%]</span></span><br><span class="line">   <span class="number">1</span>:jdk                    <span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment">######</span><span class="comment"># [100%]</span></span><br><span class="line">Unpacking JAR files...</span><br><span class="line">        rt.jar...</span><br><span class="line">        jsse.jar...</span><br><span class="line">        charsets.jar...</span><br><span class="line">        tools.jar...</span><br><span class="line">        localedata.jar...</span><br><span class="line">        jfxrt.jar...</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>我的机器安装完jd后，不用配置环境变量也可以正常执行javac、java –version操作，但还是做一下说明。</p>
-<ol>
-<li><p>修改系统环境变量文件：</p>
- <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> java]<span class="preprocessor"># vi /etc/profile</span></span><br></pre></td></tr></table></figure>
-<p> 向文件里追加</p>
- <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk1.<span class="number">7.0_80</span></span><br><span class="line">JRE_HOME=/usr/java/jdk1.<span class="number">7.0_80</span>/jre</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA</span>_HOME/bin:<span class="variable">$JRE</span>_HOME/bin</span><br><span class="line">CLASSPATH=.:<span class="variable">$JAVA</span>_HOME/lib/dt.jar:<span class="variable">$JAVA</span>_HOME/lib/tools.jar:<span class="variable">$JRE</span>_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使修改生效</p>
- <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation java]# <span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span><br><span class="line">[root@Automation java]# echo $PATH</span><br><span class="line"><span class="regexp">/usr/</span>lib64<span class="regexp">/qt-3.3/</span>bin:<span class="regexp">/usr/</span>local<span class="regexp">/sbin:/u</span>sr<span class="regexp">/local/</span>bin:<span class="regexp">/sbin:/</span>bin:<span class="regexp">/usr/</span>sbin:<span class="regexp">/usr/</span>bin:<span class="regexp">/root/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>bin:<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_80/</span>jre<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
-<p> <em>Notes：在64位下安装32位JDK，会有错误，要安装对应位数的版本。</em></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/08/闺女第一次给Daddy洗脚/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/08/闺女第一次给Daddy洗脚/" itemprop="url">闺女第一次给Daddy洗脚</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-08T10:20:37+08:00">
-                2016-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/01/08/闺女第一次给Daddy洗脚/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/08/闺女第一次给Daddy洗脚/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天闺女第一次给Daddy洗脚，不让洗都不愿意，留念一下，也有了大概以下的对话：<br><strong>F: </strong>我老了你还能这么给我洗脚吗？<br><strong>D: </strong>我也不知道我长大了会变成什么样子。。。<br><strong>F: </strong>还会给我洗吗？<br><strong>D: </strong>不知道。。。。</p>
-<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjc5MDg3Ng==" frameborder="0" allowfullscreen></iframe>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/05/元旦回老家，兴奋的很/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/05/元旦回老家，兴奋的很/" itemprop="url">元旦回老家，兴奋的很</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-05T08:44:43+08:00">
-                2016-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/丁丁/" itemprop="url" rel="index">
-                    <span itemprop="name">丁丁</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/01/05/元旦回老家，兴奋的很/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/05/元旦回老家，兴奋的很/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>现在的小丁对回老家这件事很是向往和兴奋，提前两周自己就在倒计时，可以不上学，但一定要回老家。希望你长大了，也能保持这份热情:)</p>
-<p>大城市的玩伴本来就少，回老家就不一样了，太多的小朋友，没有了所谓的规矩，也不粘着大人了，除了晚上睡觉的时候给读个故事，其他时间根本就不用管，真是玩疯了。</p>
-<p>回老家的火车上，碰见了一个小朋友，高兴的玩了一路。<br><img src="/images/izheyi/2016/01/huijia.jpg" alt="你睡的真舒服么^_^"></p>
-<p>回京的路上，我们读了故事书，也有了下面的一些小对话：</p>
-<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg4OTY1Ng==" frameborder="0" allowfullscreen></iframe>
-
-<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg5MDY1Mg==" frameborder="0" allowfullscreen></iframe>
-
-
-
-
-          
+          <p>好处就不罗嗦了，看看市面上招自动化测试的JD里就知道这东东的‘地位’了：）<br>这里只对它进行一下简单的了解，弄明白是怎么回事。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>不做过多介绍，自己去官网下载相应版本安装即可：<a href="https://www.python.org/">Python官网</a><br>我的是在Windows下安装的，在安装的过程中，记得要“Add Python 3.5 to PATH”，如果安装的时候没做操作，安装完后要手工的添加。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users&gt;python</span><br><span class="line">Python <span class="number">3.5</span><span class="number">.1</span> (v3<span class="number">.5</span><span class="number">.1</span>:<span class="number">37</span>a07cee5969, Dec  <span class="number">6</span> <span class="number">2015</span>, <span class="number">01</span>:<span class="number">38</span>:<span class="number">48</span>) [MSC v<span class="number">.1900</span> <span class="number">32</span> bit (Intel)] on win32</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> or <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>安装成功！</p>
+<h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="行和缩进"><a href="#行和缩进" class="headerlink" title="行和缩进"></a>行和缩进</h2><p>Python的代码块不使用大括号（{}）来控制类，函数以及其他逻辑判断。python最具特色的就是用缩进来写模块。缩进的空白数量是可变的，但是所有代码块语句必须包含相同的缩进空白数量，这个必须严格执行。</p>
+<h2 id="多行语句"><a href="#多行语句" class="headerlink" title="多行语句"></a>多行语句</h2><p>Python语句中一般以新行作为为语句的结束符。但是我们可以使用斜杠（ \）将一行的语句分为多行显示。<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">total</span> = <span class="keyword">item_one </span>+ \</span><br><span class="line">        <span class="keyword">item_two </span>+ \</span><br><span class="line">        <span class="keyword">item_three</span></span><br></pre></td></tr></table></figure></p>
+<p>语句中包含[], {} 或 () 括号就不需要使用多行连接符。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">days</span> = [<span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>,</span><br><span class="line">        <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>]</span><br></pre></td></tr></table></figure></p>
+<h2 id="同一行显示多条语句"><a href="#同一行显示多条语句" class="headerlink" title="同一行显示多条语句"></a>同一行显示多条语句</h2><p>Python可以在同一行中使用多条语句，语句之间使用分号(;)分割。</p>
+<h2 id="Python-引号"><a href="#Python-引号" class="headerlink" title="Python 引号"></a>Python 引号</h2><p>Python 接收单引号(‘ )，双引号(“ )，三引号(‘’’ “””) 来表示字符串，引号的开始与结束必须的相同类型的。其中三引号可以由多行组成，编写多行文本的快捷语法，常用语文档字符串，在文件的特定地点，被当做注释。</p>
+<h1 id="Python运算符优先级"><a href="#Python运算符优先级" class="headerlink" title="Python运算符优先级"></a>Python运算符优先级</h1><p><img src="/images/python/yunsuanfu.jpg" alt=""></p>
+<h1 id="数据类型和变量"><a href="#数据类型和变量" class="headerlink" title="数据类型和变量"></a>数据类型和变量</h1><p>Python支持多种数据类型，在计算机内部，可以把任何数据都看成一个“对象”，而变量就是在程序中用来指向这些数据对象的，对变量赋值就是把数据和变量给关联起来。<br>跟其他语言基本没什么差别，整数，浮点数，字符串，布尔值，空值 ====<br>Note：1. 空值是Python里一个特殊的值，用None表示。None不能理解为0，因为0是有意义的，而None是一个特殊的空值。2. Python的整数没有大小限制。3. 字符串，加号（+）是字符串连接运算符，星号（*）是重复操作。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/03/02/Python-基础/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1922,7 +1977,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1972,7 +2027,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">391</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1983,7 +2038,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1994,7 +2049,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

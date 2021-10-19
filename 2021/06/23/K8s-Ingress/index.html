@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="YT7QzoP0CGYZziDQuLr2aOTGGmpgioKi3izg5T1vBPs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="k8s," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YONGFEIUALL" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="介绍k8s 对外暴露服务（service）主要有两种方式：NotePort, LoadBalance， 此外externalIPs也可以使各类service对外提供服务，但是当集群服务很多的时候，NodePort方式最大的缺点是会占用很多集群机器的端口；LB方式最大的缺点则是每个service一个LB又有点浪费和麻烦，并且需要k8s之外的支持； 而ingress则只需要一个NodePort或者一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s：Ingress">
+<meta property="og:url" content="http://izheyi.com/2021/06/23/K8s-Ingress/index.html">
+<meta property="og:site_name" content="YONGFEIUALL">
+<meta property="og:description" content="介绍k8s 对外暴露服务（service）主要有两种方式：NotePort, LoadBalance， 此外externalIPs也可以使各类service对外提供服务，但是当集群服务很多的时候，NodePort方式最大的缺点是会占用很多集群机器的端口；LB方式最大的缺点则是每个service一个LB又有点浪费和麻烦，并且需要k8s之外的支持； 而ingress则只需要一个NodePort或者一个">
+<meta property="og:image" content="http://izheyi.com/images/k8s/ingress.jpg">
+<meta property="og:image" content="http://izheyi.com/images/k8s/nginx.jpg">
+<meta property="og:image" content="http://izheyi.com/images/k8s/nginx_tomcat.jpg">
+<meta property="og:updated_time" content="2021-10-19T09:50:46.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K8s：Ingress">
+<meta name="twitter:description" content="介绍k8s 对外暴露服务（service）主要有两种方式：NotePort, LoadBalance， 此外externalIPs也可以使各类service对外提供服务，但是当集群服务很多的时候，NodePort方式最大的缺点是会占用很多集群机器的端口；LB方式最大的缺点则是每个service一个LB又有点浪费和麻烦，并且需要k8s之外的支持； 而ingress则只需要一个NodePort或者一个">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://izheyi.com/2021/06/23/K8s-Ingress/"/>
+
+
+
+
+
+  <title>K8s：Ingress | YONGFEIUALL</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?964433a58390bc50ac82f1418eb8dc8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YONGFEIUALL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">izheyi.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'fZPEsEHs3tafejXBDpZs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/06/23/K8s-Ingress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">K8s：Ingress</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-06-23T10:57:24+08:00">
+                2021-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/06/23/K8s-Ingress/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/06/23/K8s-Ingress/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>k8s 对外暴露服务（service）主要有两种方式：NotePort, LoadBalance， 此外externalIPs也可以使各类service对外提供服务，但是当集群服务很多的时候，NodePort方式最大的缺点是会占用很多集群机器的端口；LB方式最大的缺点则是每个service一个LB又有点浪费和麻烦，并且需要k8s之外的支持； 而ingress则只需要一个NodePort或者一个LB就可以满足所有service对外服务的需求。</p>
+<p>举个例子，现在集群有api、文件存储、前端3个service，可以通过一个ingress对象来实现图中的请求转发：</p>
+<p><img src="/images/k8s/ingress.jpg" alt=""></p>
+<p>实际上，Ingress相当于一个7层的负载均衡器，是kubernetes对反向代理的一个抽象，它的工作原理类似于Nginx，可以理解成在<strong>Ingress里建立诸多映射规则，Ingress Controller通过监听这些配置规则并转化成Nginx的反向代理配置 , 然后对外部提供服务</strong>。在这里有两个核心概念：</p>
+<ul>
+<li>ingress：kubernetes中的一个对象，作用是定义请求如何转发到service的规则</li>
+<li>ingress controller：具体实现反向代理及负载均衡的程序，对ingress定义的规则进行解析，根据配置的规则来实现请求转发，实现方式有很多，比如Nginx, Contour, Haproxy等等</li>
+</ul>
+<p>Ingress（以Nginx为例）的工作原理如下：</p>
+<ol>
+<li><p>用户编写Ingress规则，说明哪个域名对应kubernetes集群中的哪个Service</p>
+</li>
+<li><p>Ingress控制器动态感知Ingress服务规则的变化，然后生成一段对应的Nginx反向代理配置</p>
+</li>
+<li><p>Ingress控制器会将生成的Nginx配置写入到一个运行着的Nginx服务中，并动态更新</p>
+</li>
+<li><p>到此为止，其实真正在工作的就是一个Nginx了，内部配置了用户定义的请求转发规则</p>
+<p><img src="/images/k8s/nginx.jpg" alt=""></p>
+</li>
+</ol>
+<h4 id="Ingress的使用"><a href="#Ingress的使用" class="headerlink" title="Ingress的使用"></a>Ingress的使用</h4><h6 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h6><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# mkdir ingress&#10;[root@master ~]# cd ingress&#10;&#10;[root@master ingress]# wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml&#10;--2021-10-19 11:11:40--  https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml&#10;&#27491;&#22312;&#35299;&#26512;&#20027;&#26426; raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.110.133, 185.199.109.133, 185.199.111.133, ...&#10;&#27491;&#22312;&#36830;&#25509; raw.githubusercontent.com (raw.githubusercontent.com)|185.199.110.133|:443... &#24050;&#36830;&#25509;&#12290;&#10;&#24050;&#21457;&#20986; HTTP &#35831;&#27714;&#65292;&#27491;&#22312;&#31561;&#24453;&#22238;&#24212;... 200 OK&#10;&#38271;&#24230;&#65306;6635 (6.5K) [text/plain]&#10;&#27491;&#22312;&#20445;&#23384;&#33267;: &#8220;mandatory.yaml&#8221;&#10;&#10;[root@master ingress]# wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/baremetal/service-nodeport.yaml&#10;--2021-10-19 11:11:55--  https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/baremetal/service-nodeport.yaml&#10;&#27491;&#22312;&#35299;&#26512;&#20027;&#26426; raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.108.133, 185.199.110.133, ...&#10;&#27491;&#22312;&#36830;&#25509; raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... &#24050;&#36830;&#25509;&#12290;&#10;&#24050;&#21457;&#20986; HTTP &#35831;&#27714;&#65292;&#27491;&#22312;&#31561;&#24453;&#22238;&#24212;... 200 OK&#10;&#38271;&#24230;&#65306;471 [text/plain]&#10;&#27491;&#22312;&#20445;&#23384;&#33267;: &#8220;service-nodeport.yaml&#8221;&#10;&#10;[root@master ingress]# ls&#10;mandatory.yaml  service-nodeport.yaml&#10;[root@master ingress]# kubectl apply -f ./&#10;namespace/ingress-nginx created&#10;configmap/nginx-configuration created&#10;configmap/tcp-services created&#10;configmap/udp-services created&#10;serviceaccount/nginx-ingress-serviceaccount created&#10;clusterrole.rbac.authorization.k8s.io/nginx-ingress-clusterrole created&#10;role.rbac.authorization.k8s.io/nginx-ingress-role created&#10;rolebinding.rbac.authorization.k8s.io/nginx-ingress-role-nisa-binding created&#10;clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-clusterrole-nisa-binding created&#10;deployment.apps/nginx-ingress-controller created&#10;limitrange/ingress-nginx created&#10;service/ingress-nginx created&#10;&#10;[root@master ingress]# kubectl get pod -n ingress-nginx&#10;NAME                                        READY   STATUS              RESTARTS   AGE&#10;nginx-ingress-controller-7f74f657bd-q5zwf   0/1     Running              0          16s&#10;[root@master ingress]# kubectl get pod,svc -n ingress-nginx&#10;NAME                                            READY   STATUS              RESTARTS   AGE&#10;pod/nginx-ingress-controller-7f74f657bd-q5zwf   0/1     ContainerCreating   0          31s&#10;&#10;NAME                    TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE&#10;service/ingress-nginx   NodePort   10.106.103.131   &#60;none&#62;        80:32635/TCP,443:31777/TCP   31s</span><br></pre></td></tr></table></figure>
+<h6 id="Service和Pod"><a href="#Service和Pod" class="headerlink" title="Service和Pod"></a>Service和Pod</h6><p>创建tomcat-nginx.yaml</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apiVersion</span>: apps/v1</span><br><span class="line"><span class="attribute">kind</span>: Deployment</span><br><span class="line"><span class="attribute">metadata</span>:</span><br><span class="line">  <span class="attribute">name</span>: nginx-deployment</span><br><span class="line">  <span class="attribute">namespace</span>: dev</span><br><span class="line"><span class="attribute">spec</span>:</span><br><span class="line">  <span class="attribute">replicas</span>: <span class="number">3</span></span><br><span class="line">  <span class="attribute">selector</span>:</span><br><span class="line">    <span class="attribute">matchLabels</span>:</span><br><span class="line">      <span class="attribute">app</span>: nginx-pod</span><br><span class="line">  <span class="attribute">template</span>:</span><br><span class="line">    <span class="attribute">metadata</span>:</span><br><span class="line">      <span class="attribute">labels</span>:</span><br><span class="line">        <span class="attribute">app</span>: nginx-pod</span><br><span class="line">    <span class="attribute">spec</span>:</span><br><span class="line">      <span class="attribute">containers</span>:</span><br><span class="line">      - <span class="attribute">name</span>: nginx</span><br><span class="line">        <span class="attribute">image</span>: <span class="attribute">nginx</span>:<span class="number">1.17</span>.<span class="number">1</span></span><br><span class="line">        <span class="attribute">ports</span>:</span><br><span class="line">        - <span class="attribute">containerPort</span>: <span class="number">80</span></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="attribute">apiVersion</span>: apps/v1</span><br><span class="line"><span class="attribute">kind</span>: Deployment</span><br><span class="line"><span class="attribute">metadata</span>:</span><br><span class="line">  <span class="attribute">name</span>: tomcat-deployment</span><br><span class="line">  <span class="attribute">namespace</span>: dev</span><br><span class="line"><span class="attribute">spec</span>:</span><br><span class="line">  <span class="attribute">replicas</span>: <span class="number">3</span></span><br><span class="line">  <span class="attribute">selector</span>:</span><br><span class="line">    <span class="attribute">matchLabels</span>:</span><br><span class="line">      <span class="attribute">app</span>: tomcat-pod</span><br><span class="line">  <span class="attribute">template</span>:</span><br><span class="line">    <span class="attribute">metadata</span>:</span><br><span class="line">      <span class="attribute">labels</span>:</span><br><span class="line">        <span class="attribute">app</span>: tomcat-pod</span><br><span class="line">    <span class="attribute">spec</span>:</span><br><span class="line">      <span class="attribute">containers</span>:</span><br><span class="line">      - <span class="attribute">name</span>: tomcat</span><br><span class="line">        <span class="attribute">image</span>: <span class="attribute">tomcat</span>:<span class="number">8.5</span>-jre10-slim</span><br><span class="line">        <span class="attribute">ports</span>:</span><br><span class="line">        - <span class="attribute">containerPort</span>: <span class="number">8080</span></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="attribute">apiVersion</span>: v1</span><br><span class="line"><span class="attribute">kind</span>: Service</span><br><span class="line"><span class="attribute">metadata</span>:</span><br><span class="line">  <span class="attribute">name</span>: nginx-service</span><br><span class="line">  <span class="attribute">namespace</span>: dev</span><br><span class="line"><span class="attribute">spec</span>:</span><br><span class="line">  <span class="attribute">selector</span>:</span><br><span class="line">    <span class="attribute">app</span>: nginx-pod</span><br><span class="line">  <span class="attribute">clusterIP</span>: None</span><br><span class="line">  <span class="attribute">type</span>: ClusterIP</span><br><span class="line">  <span class="attribute">ports</span>:</span><br><span class="line">  - <span class="attribute">port</span>: <span class="number">80</span></span><br><span class="line">    <span class="attribute">targetPort</span>: <span class="number">80</span></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="attribute">apiVersion</span>: v1</span><br><span class="line"><span class="attribute">kind</span>: Service</span><br><span class="line"><span class="attribute">metadata</span>:</span><br><span class="line">  <span class="attribute">name</span>: tomcat-service</span><br><span class="line">  <span class="attribute">namespace</span>: dev</span><br><span class="line"><span class="attribute">spec</span>:</span><br><span class="line">  <span class="attribute">selector</span>:</span><br><span class="line">    <span class="attribute">app</span>: tomcat-pod</span><br><span class="line">  <span class="attribute">clusterIP</span>: None</span><br><span class="line">  <span class="attribute">type</span>: ClusterIP</span><br><span class="line">  <span class="attribute">ports</span>:</span><br><span class="line">  - <span class="attribute">port</span>: <span class="number">8080</span></span><br><span class="line">    <span class="attribute">targetPort</span>: <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ingress]# kubectl create -f tomcat-nginx.yaml&#10;deployment.apps/nginx-deployment created&#10;deployment.apps/tomcat-deployment created&#10;service/nginx-service created&#10;service/tomcat-service created&#10;&#10;[root@master ingress]# kubectl get pod,svc -n dev&#10;NAME                                     READY   STATUS    RESTARTS   AGE&#10;pod/nginx-deployment-6696798b78-4z9h9    1/1     Running   0          3m45s&#10;pod/nginx-deployment-6696798b78-n2ff8    1/1     Running   0          3m45s&#10;pod/nginx-deployment-6696798b78-xbnjh    1/1     Running   0          3m45s&#10;pod/tomcat-deployment-58467d5474-4t275   1/1     Running   0          3m45s&#10;pod/tomcat-deployment-58467d5474-c6cst   1/1     Running   0          3m45s&#10;pod/tomcat-deployment-58467d5474-mrpww   1/1     Running   0          3m45s&#10;&#10;NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE&#10;service/nginx-service    ClusterIP   None             &#60;none&#62;        80/TCP         3m45s&#10;service/tomcat-service   ClusterIP   None             &#60;none&#62;        8080/TCP       3m45s</span><br></pre></td></tr></table></figure>
+<h6 id="HTTP代理"><a href="#HTTP代理" class="headerlink" title="HTTP代理"></a>HTTP代理</h6><p>创建ingress-http.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1&#10;kind: Ingress&#10;metadata:&#10;  name: ingress-http&#10;  namespace: dev&#10;spec:&#10;  rules:&#10;  - host: nginx.izheyi.com&#10;    http:&#10;      paths:&#10;      - path: /&#10;        backend:&#10;          serviceName: nginx-service&#10;          servicePort: 80&#10;  - host: tomcat.izheyi.com&#10;    http:&#10;      paths:&#10;      - path: /&#10;        backend:&#10;          serviceName: tomcat-service&#10;          servicePort: 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ingress]# kubectl create -f ingress-http.yaml &#10;ingress.extensions/ingress-http created&#10;&#10;[root@master ingress]# kubectl get ing ingress-http -n dev&#10;NAME           HOSTS                                ADDRESS   PORTS   AGE&#10;ingress-http   nginx.izheyi.com,tomcat.izheyi.com             80      5s&#10;&#10;[root@master ingress]# kubectl describe ing ingress-http  -n dev&#10;Name:             ingress-http&#10;Namespace:        dev&#10;Address:          &#10;Default backend:  default-http-backend:80 (&#60;none&#62;)&#10;Rules:&#10;  Host               Path  Backends&#10;  ----               ----  --------&#10;  nginx.izheyi.com   &#10;                     /   nginx-service:80 (10.244.1.20:80,10.244.1.21:80,10.244.2.26:80)&#10;  tomcat.izheyi.com  &#10;                     /   tomcat-service:8080 (10.244.1.22:8080,10.244.2.24:8080,10.244.2.25:8080)&#10;Annotations:&#10;Events:&#10;  Type    Reason  Age   From                      Message&#10;  ----    ------  ----  ----                      -------&#10;  Normal  CREATE  27s   nginx-ingress-controller  Ingress dev/ingress-http</span><br></pre></td></tr></table></figure>
+<p>增加Hosts</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.36.10 nginx.izheyi.com&#10;192.168.36.10 tomcat.izheyi.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl get svc -n ingress-nginx&#10;NAME            TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE&#10;ingress-nginx   NodePort   10.106.103.131   &#60;none&#62;        80:32635/TCP,443:31777/TCP   124m</span><br></pre></td></tr></table></figure>
+<p><img src="/images/k8s/nginx_tomcat.jpg" alt=""></p>
+<h6 id="HTTPS代理"><a href="#HTTPS代理" class="headerlink" title="HTTPS代理"></a>HTTPS代理</h6><ol>
+<li><p>创建证书</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#29983;&#25104;&#35777;&#20070;&#10;[root@master ~]# openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj &#34;/C=CN/ST=BJ/L=BJ/O=nginx/CN=izhey.com&#34;&#10;Generating a 2048 bit RSA private key&#10;..........................................................+++&#10;..................................................................................................................................+++&#10;writing new private key to &#39;tls.key&#39;&#10;-----&#10;&#10;# &#21019;&#24314;&#23494;&#38053;&#10;[root@master ~]# kubectl create secret tls tls-secret --key tls.key --cert tls.crt&#10;secret/tls-secret created</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>创建ingress-https.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1&#10;kind: Ingress&#10;metadata:&#10;  name: ingress-https&#10;  namespace: dev&#10;spec:&#10;  tls:&#10;    - hosts:&#10;      - nginx.itheima.com&#10;      - tomcat.itheima.com&#10;      secretName: tls-secret # &#25351;&#23450;&#31192;&#38053;&#10;  rules:&#10;  - host: nginx.izheyi.com&#10;    http:&#10;      paths:&#10;      - path: /&#10;        backend:&#10;          serviceName: nginx-service&#10;          servicePort: 80&#10;  - host: tomcat.izheyi.com&#10;    http:&#10;      paths:&#10;      - path: /&#10;        backend:&#10;          serviceName: tomcat-service&#10;          servicePort: 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f ingress-https.yaml&#10;ingress.extensions/ingress-https created&#10;[root@master ~]# kubectl get ing ingress-https -n dev&#10;NAME            HOSTS                                ADDRESS   PORTS     AGE&#10;ingress-https   nginx.izheyi.com,tomcat.izheyi.com             80, 443   11s&#10;[root@master ~]# kubectl describe ing ingress-https -n dev&#10;Name:             ingress-https&#10;Namespace:        dev&#10;Address:          10.106.103.131&#10;Default backend:  default-http-backend:80 (&#60;none&#62;)&#10;TLS:&#10;  tls-secret terminates nginx.itheima.com,tomcat.itheima.com&#10;Rules:&#10;  Host               Path  Backends&#10;  ----               ----  --------&#10;  nginx.izheyi.com   &#10;                     /   nginx-service:80 (10.244.1.20:80,10.244.1.21:80,10.244.2.26:80)&#10;  tomcat.izheyi.com  &#10;                     /   tomcat-service:8080 (10.244.1.22:8080,10.244.2.24:8080,10.244.2.25:8080)&#10;Annotations:&#10;Events:&#10;  Type    Reason  Age   From                      Message&#10;  ----    ------  ----  ----                      -------&#10;  Normal  CREATE  25s   nginx-ingress-controller  Ingress dev/ingress-https&#10;  Normal  UPDATE  3s    nginx-ingress-controller  Ingress dev/ingress-https</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl get svc -n ingress-nginx&#10;NAME            TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE&#10;ingress-nginx   NodePort   10.106.103.131   &#60;none&#62;        80:32635/TCP,443:31777/TCP   148m</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用<code>https://</code>即可访问</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nginx.izheyi.com:31777/&#10;&#10;https://tomcat.izheyi.com:31777/</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin.jpg" alt="唐胡璐 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>分享创造价值，您的支持将鼓励我继续前行！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.jpg" alt="唐胡璐 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay.jpg" alt="唐胡璐 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    唐胡璐
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://izheyi.com/2021/06/23/K8s-Ingress/" title="K8s：Ingress">http://izheyi.com/2021/06/23/K8s-Ingress/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/06/19/K8s-Service/" rel="next" title="K8s：Service">
+                <i class="fa fa-chevron-left"></i> K8s：Service
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/06/25/K8s-数据存储/" rel="prev" title="K8s：数据存储">
+                K8s：数据存储 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="唐胡璐" />
+            
+              <p class="site-author-name" itemprop="name">唐胡璐</p>
+              <p class="site-description motion-element" itemprop="description">i just wanna live while i am alive</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yongfeiuall" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/yongfeiuall" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yongfeiuall" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yongfeiuall@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ingress的使用"><span class="nav-number">2.</span> <span class="nav-text">Ingress的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.0.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Service和Pod"><span class="nav-number">2.0.2.</span> <span class="nav-text">Service和Pod</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP代理"><span class="nav-number">2.0.3.</span> <span class="nav-text">HTTP代理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTPS代理"><span class="nav-number">2.0.4.</span> <span class="nav-text">HTTPS代理</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">唐胡璐</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 101212, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 101212, xid: "2021/06/23/K8s-Ingress/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/101212/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Wechat,Linkedin,Weibo,Mailto,Douban,QQZone,Twitter,Reddit,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

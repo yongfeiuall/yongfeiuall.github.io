@@ -305,6 +305,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/26/FastAPI-入门（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/26/FastAPI-入门（1）/" itemprop="url">FastAPI: 入门（1）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-26T13:22:59+08:00">
+                2021-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/09/26/FastAPI-入门（1）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/26/FastAPI-入门（1）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，使用 Python 3.6+ 并基于标准的 Python 类型提示。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> fastapi</span><br><span class="line"></span><br><span class="line">pip <span class="keyword">install</span> uvicorn[standard]</span><br></pre></td></tr></table></figure>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>操作流程如下：</p>
+<ol>
+<li><p>创建一个main.py，脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入 FastAPI</span></span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例化 FastAPI</span></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个路径</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">@app.post()</span><br><span class="line">@app.put()</span><br><span class="line">@app.delete()</span><br><span class="line">'''</span></span><br><span class="line"><span class="decorator">@app.get('/')</span></span><br><span class="line"><span class="comment"># 路径对应操作</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'msg'</span>: <span class="string">'hello world!'</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行服务</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">E:</span>\fastapi&gt;uvicorn <span class="string">main:</span>app --reload</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证</p>
+<p>打开浏览器访问  <a href="http://127.0.0.1:8000/" target="_blank" rel="external">http://127.0.0.1:8000</a></p>
+<p><img src="/images/fastapi/result.jpg" alt=""></p>
+<p>自动生成的交互式 API 文档 <a href="http://127.0.0.1:8000/docs" target="_blank" rel="external">http://127.0.0.1:8000/docs</a></p>
+<p><img src="/images/fastapi/swagger.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/23/Packaging-python-packages-with-Poetry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1444,7 +1614,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/14/Jmeter-JSR223使用/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/05/K8s-Dashboard/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1463,7 +1633,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/04/14/Jmeter-JSR223使用/" itemprop="url">Jmeter: JSR223使用</a></h1>
+                <a class="post-title-link" href="/2021/07/05/K8s-Dashboard/" itemprop="url">K8s：Dashboard</a></h1>
         
 
         <div class="post-meta">
@@ -1475,8 +1645,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-14T08:46:44+08:00">
-                2021-04-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-05T10:37:51+08:00">
+                2021-07-05
               </time>
             
 
@@ -1498,8 +1668,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
                   </a>
                 </span>
 
@@ -1517,8 +1687,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2021/04/14/Jmeter-JSR223使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/14/Jmeter-JSR223使用/" itemprop="commentsCount"></span>
+                <a href="/2021/07/05/K8s-Dashboard/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/05/K8s-Dashboard/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1549,383 +1719,217 @@
       
         
           
-            <p>Jmeter经常用BeanShell来实现一些其本身不能处理的任务，但是BeanShell的效率不高，现在可以用JSR223来代替，支持groovy脚本，效率更高。</p>
-<h4 id="常用内置变量"><a href="#常用内置变量" class="headerlink" title="常用内置变量"></a>常用内置变量</h4><ul>
-<li><p><strong>Vars</strong> </p>
-<p>定义变量与调用变量</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vars.<span class="built_in">get</span>(<span class="keyword">String</span> <span class="variable">key</span>)：从jmeter中获得变量值</span><br><span class="line"></span><br><span class="line">vars.put(<span class="keyword">String</span> <span class="variable">key</span>，<span class="keyword">String</span> value)：数据存到jmeter变量中</span><br><span class="line"></span><br><span class="line">vars.putObject(<span class="string">"OBJ1"</span>,<span class="keyword">new</span> <span class="keyword">Object</span>());</span><br></pre></td></tr></table></figure>
+            <p>kubernetes还开发了一个基于web的用户界面（Dashboard）。用户可以使用Dashboard部署容器化的应用，还可以监控应用的状态，执行故障排查以及管理kubernetes中各种资源。</p>
+<h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><ol>
+<li><p>下载yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# wget  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml&#10;--2021-10-18 10:40:54--  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml&#10;&#27491;&#22312;&#35299;&#26512;&#20027;&#26426; raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.110.133, ...&#10;&#27491;&#22312;&#36830;&#25509; raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... &#24050;&#36830;&#25509;&#12290;&#10;&#24050;&#21457;&#20986; HTTP &#35831;&#27714;&#65292;&#27491;&#22312;&#31561;&#24453;&#22238;&#24212;... 200 OK&#10;&#38271;&#24230;&#65306;7552 (7.4K) [text/plain]&#10;&#27491;&#22312;&#20445;&#23384;&#33267;: &#8220;recommended.yaml&#8221;&#10;&#10;100%[==============================================================================================================&#62;] 7,552       2.14KB/s &#29992;&#26102; 3.4s</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>Props</strong> </p>
-<p>设置属性与调用属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;__setProperty(test1,property1,)&#125;</span>;</span><br><span class="line">props.put(“<span class="built_in">test</span>2”,“property2”);</span><br><span class="line">String <span class="built_in">test</span>1 =props.get(“<span class="built_in">test</span>1”);</span><br><span class="line">String <span class="built_in">test</span>2 = props.get(“<span class="built_in">test</span>2”);</span><br></pre></td></tr></table></figure>
+<li><p>配置并运行Dashboard</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#26032;&#22686;type: NodePort &#21644; nodePort&#65306;31443&#65292;&#20197;&#20415;&#33021;&#23454;&#29616;&#38750;&#26412;&#26426;&#35775;&#38382;&#10;kind: Service&#10;apiVersion: v1&#10;metadata:&#10;  labels:&#10;    k8s-app: kubernetes-dashboard&#10;  name: kubernetes-dashboard&#10;  namespace: kubernetes-dashboard&#10;spec:&#10;  type: NodePort&#10;  ports:&#10;    - port: 443&#10;      targetPort: 8443&#10;      nodePort: 31443&#10;  selector:&#10;    k8s-app: kubernetes-dashboard&#10;&#10;# &#37096;&#32626;&#10;[root@master ~]# kubectl create -f recommended.yaml &#10;namespace/kubernetes-dashboard created&#10;serviceaccount/kubernetes-dashboard created&#10;service/kubernetes-dashboard created&#10;secret/kubernetes-dashboard-certs created&#10;secret/kubernetes-dashboard-csrf created&#10;secret/kubernetes-dashboard-key-holder created&#10;configmap/kubernetes-dashboard-settings created&#10;role.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;deployment.apps/kubernetes-dashboard created&#10;service/dashboard-metrics-scraper created&#10;deployment.apps/dashboard-metrics-scraper created&#10;&#10;# &#26597;&#30475;&#10;[root@master ~]# kubectl get pod,svc -n kubernetes-dashboard&#10;NAME                                            READY   STATUS    RESTARTS   AGE&#10;pod/dashboard-metrics-scraper-c79c65bb7-spq7w   1/1     Running   0          88s&#10;pod/kubernetes-dashboard-56484d4c5-8v84c        1/1     Running   0          88s&#10;&#10;NAME                                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)         AGE&#10;service/dashboard-metrics-scraper   ClusterIP   10.96.123.22   &#60;none&#62;        8000/TCP        88s&#10;service/kubernetes-dashboard        NodePort    10.106.25.93   &#60;none&#62;        443:31443/TCP   88s</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>Ctx</strong></p>
-<p>通过它来访问当前线程的上下文</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getVariables</span><span class="params">()</span></span>：获取当前线程的所有变量</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getPreviousResult</span><span class="params">()</span></span> ：获取前一个取样器的结果</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>prev</strong></p>
-<p>获取前面的sample采样的结果</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getResponseDataAsString</span><span class="params">()</span></span>：获取响应信息</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getResponseCode</span><span class="params">()</span></span> ：获取响应code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>log</strong></p>
-<p>打印日志 ，日志会保存在jmeter.log中</p>
-</li>
-</ul>
-<h4 id="运行外部文件"><a href="#运行外部文件" class="headerlink" title="运行外部文件"></a>运行外部文件</h4><ul>
-<li><p>Java</p>
-<p>在JSR223中引入源文件并执行，执行与JAVA本身的方法一致</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source(“<span class="string">F:</span><span class="regexp">/Test/</span>demo1.java”);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Jar</p>
-<p>有下边两种方法可以引入jar包，执行与JAVA本身的方法一致<br>1、将jar包放到Jmeter安装目录的\lib\ext目录下<br>2、在测试计划中导入</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/02/Jmeter-常用设置in-properties/" itemprop="url">Jmeter: 常用设置in properties</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T14:18:15+08:00">
-                2021-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/04/02/Jmeter-常用设置in-properties/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/02/Jmeter-常用设置in-properties/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Jmeter里常用的设置：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-<p>建议在user.properties里设置。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/20/Jmeter-命令行运行/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/03/20/Jmeter-命令行运行/" itemprop="url">Jmeter: 命令行运行和基本参数使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-20T10:33:21+08:00">
-                2021-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/03/20/Jmeter-命令行运行/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/20/Jmeter-命令行运行/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>GUI模式仅用于创建测试计划和调试脚本，真正跑性能测试时候，不要用 GUI 模式，用命令行模式</p>
-<h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>-t，–testfile &lt;参数&gt;<br> 要运行的jmeter test（.jmx）文件</p>
-<p>-l，–logfile &lt;参数&gt;<br> 将样本记录到的文件</p>
-<p>-j，–jmeterlogfile &lt;参数&gt;<br> jmeter运行日志文件（jmeter.log）</p>
-<p>-n，–nongui<br> 在命令行模式下运行JMeter</p>
-<p>-g，–reportonly &lt;参数&gt;<br> 仅从测试结果文件生成报告仪表板</p>
-<p>-e，–reportatendofloadtests<br> 负载测试后生成报告仪表板</p>
-<p>-o，–reportoutputfolder &lt;参数&gt;<br> 报告仪表板的输出文件夹</p>
-<p>==========================================</p>
-<p>-s，–server<br> 运行JMeter服务器</p>
-<p>-H，–proxyHost &lt;参数&gt;<br> 设置供JMeter使用的代理服务器</p>
-<p>-P，–proxyPort &lt;参数&gt;<br> 设置代理服务器端口以供JMeter使用</p>
-<p>-r，-runremote<br> 启动远程服务器（在remote_hosts中定义）</p>
-<p>-R，–remotestart &lt;参数&gt;<br> 启动这些远程服务器（覆盖remote_hosts）</p>
-<p>-X，–remoteexit<br> 测试结束时退出远程服务器（CLI模式）</p>
-<p>==========================================</p>
-<p>-J，–jmeterproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他JMeter属性</p>
-<p>-G，–globalproperty &lt;参数&gt; = &lt;值&gt;<br> 定义全局属性或属性文件（发送到服务器）<br> 例如-Gport = 123<br> 或-Gglobal.properties</p>
-<p>-D，–systemproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他系统属性</p>
-<p>-S，–systemPropertyFile &lt;参数&gt;<br> 其他系统属性文件</p>
-<p>-f，-forceDeleteResultFile<br> 在开始测试之前，强制删除现有结果文件和Web报告文件夹（如果存在）</p>
-<p>-L，–loglevel &lt;参数&gt; = &lt;值&gt;<br> [类别=]级别，例如jorphan = INFO，jmeter.util = DEBUG或com.example.foo = WARN</p>
-<p>-d，–homedir &lt;参数&gt;<br> 要使用的jmeter主目录</p>
-<h4 id="设置命令行参数"><a href="#设置命令行参数" class="headerlink" title="设置命令行参数"></a>设置命令行参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Sep 25, 2021 11:01:36 AM java.util.prefs.WindowsPreferences &#60;init&#62;&#10;WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neok.jmx&#10;Starting standalone test @ Sat Sep 25 11:01:37 CST 2021 (1632538897030)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary =      3 in 00:00:00 =    7.0/s Avg:   101 Min:     1 Max:   277 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:01:37 CST 2021 (1632538897689)&#10;... end of run</span><br></pre></td></tr></table></figure>
-<h4 id="设置属性参数"><a href="#设置属性参数" class="headerlink" title="设置属性参数"></a>设置属性参数</h4><p>为了更好的用命令行跟Jenkins集成， 可以设置以下Jmeter属性：线程数、duration、ramp up-time。</p>
-<ol>
-<li><p>设置用户变量</p>
-<p><img src="/images/jmeter/user_var.jpg" alt=""></p>
-</li>
-<li><p>更改线程组使用变量</p>
-<p><img src="/images/jmeter/use_var.jpg" alt=""></p>
-</li>
-<li><p>命令行验证</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -Jthread_number=5 -Jramp_up=2 -Jduration=60 -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neo.jmx&#10;Starting standalone test @ Sat Sep 25 11:30:03 CST 2021 (1632540603981)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary +      1 in 00:00:00 =    2.9/s Avg:   242 Min:   242 Max:   242 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0&#10;summary +   1706 in 00:00:25 =   67.1/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   1707 in 00:00:26 =   66.2/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%)&#10;summary +   2013 in 00:00:32 =   63.7/s Avg:    74 Min:     0 Max:  2139 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   3720 in 00:00:57 =   64.8/s Avg:    72 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;summary +     88 in 00:00:03 =   30.7/s Avg:   243 Min:     0 Max:  2136 Err:     0 (0.00%) Active: 0 Started: 5 Finished: 5&#10;summary =   3808 in 00:01:00 =   63.2/s Avg:    76 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:31:04 CST 2021 (1632540664505)&#10;... end of run</span><br></pre></td></tr></table></figure>
-<p><strong>-J是设置本地jmeter属性；-G是设置server的jmeter属性（只有设置了远程机，开启了远程服务，才需要用到-G）</strong></p>
+<li><p>创建访问账户</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#21019;&#24314;&#36134;&#21495;&#10;[root@k8s-master01-1 ~]# kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard&#10;&#10;# &#25480;&#26435;&#10;[root@k8s-master01-1 ~]# kubectl create clusterrolebinding dashboard-admin-rb --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin&#10;&#10;# &#33719;&#21462;&#36134;&#21495;token&#10;[root@master ~]# kubectl get secrets -n kubernetes-dashboard | grep dashboard-admin&#10;dashboard-admin-token-k6pp4        kubernetes.io/service-account-token   3      32s&#10;[root@master ~]# kubectl describe secrets dashboard-admin-token-k6pp4 -n kubernetes-dashboard&#10;Name:         dashboard-admin-token-k6pp4&#10;Namespace:    kubernetes-dashboard&#10;Labels:       &#60;none&#62;&#10;Annotations:  kubernetes.io/service-account.name: dashboard-admin&#10;              kubernetes.io/service-account.uid: 29dc2734-490e-4b03-bdad-a2574ac8ef59&#10;&#10;Type:  kubernetes.io/service-account-token&#10;&#10;Data&#10;====&#10;ca.crt:     1025 bytes&#10;namespace:  20 bytes&#10;token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InplRkxEdGNqbk1md0tyNnV1a0JHSy1OMml4Y2Q1a1g1QU5qMDRsdkZJTDgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4tazZwcDQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMjlkYzI3MzQtNDkwZS00YjAzLWJkYWQtYTI1NzRhYzhlZjU5Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.afoxaaCkhTggDxuiP13yC_fyd6yTKyHdB_0eSMqBZxpHR4jGLJnaMXO4WlHY07yPuo9vWA5izEv6qwfhueZi2dFkgMxdQdGKKQXsv1_qpnh9LxztxseYVXV9BNc55XUS2LIZg1If94tMd_meECNm8dVNuJIQd_0IN_cEG0csZNYoYbbyYgBkKJNNxLhmRotpuQ1QDxsEWVnLI8lhHr_vcX99Szv2IAqq2jiUWcsFTzIpAaSESUF8F1DxfaaWIpw-Jq9GnQILXb_HpIuFHW2ijaUik5V57w-oUIq6nSrQCBpxaTyY_ehQHLUUm4D3Bx9uYBhqlaZBVIvYTui_S_Rs0w</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>在登录页面上输入上面的token</p>
+<p><img src="/images/k8s/dashboard_login.jpg" alt=""></p>
+<p>登录成功</p>
+<p><img src="/images/k8s/dashboard_home.jpg" alt=""></p>
+<p>Dashboard的使用在此不做过多说明。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/01/K8s-ConfigMap-Secret/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/01/K8s-ConfigMap-Secret/" itemprop="url">K8s：ConfigMap & Secret</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-01T15:50:09+08:00">
+                2021-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/07/01/K8s-ConfigMap-Secret/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/01/K8s-ConfigMap-Secret/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="ConfigMap"><a href="#ConfigMap" class="headerlink" title="ConfigMap"></a>ConfigMap</h6><p>ConfigMap 允许您将配置文件与镜像文件分离，以使容器化的应用程序具有可移植性。</p>
+<p>你可以使用四种方式来使用 ConfigMap 配置 Pod 中的容器：</p>
+<ol>
+<li>在容器命令和参数内</li>
+<li>容器的环境变量</li>
+<li>在只读卷里面添加一个文件，让应用来读取</li>
+<li>编写代码在 Pod 中运行，使用 Kubernetes API 来读取 ConfigMap</li>
+</ol>
+<p>例子</p>
+<ol>
+<li><p>创建configmap.yaml：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: ConfigMap&#10;metadata:&#10;  name: game-config&#10;  namespace: dev&#10;data:&#10;  # &#31867;&#23646;&#24615;&#38190;&#65307;&#27599;&#19968;&#20010;&#38190;&#37117;&#26144;&#23556;&#21040;&#19968;&#20010;&#31616;&#21333;&#30340;&#20540;&#10;  player_initial_lives: &#34;3&#34;&#10;  ui_properties_file_name: &#34;user-interface.properties&#34;&#10;&#10;  # &#31867;&#25991;&#20214;&#38190;&#10;  game.properties: |&#10;    enemy.types=aliens,monsters&#10;    player.maximum-lives=5    &#10;  user-interface.properties: |&#10;    color.good=purple&#10;    color.bad=yellow&#10;    allow.textmode=true</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f configmap.yaml&#10;configmap/game-config created&#10;&#10;[root@master ~]# kubectl describe cm game-config -n dev&#10;Name:         game-config&#10;Namespace:    dev&#10;Labels:       &#60;none&#62;&#10;Annotations:  &#60;none&#62;&#10;&#10;Data&#10;====&#10;game.properties:&#10;----&#10;enemy.types=aliens,monsters&#10;player.maximum-lives=5    &#10;&#10;player_initial_lives:&#10;----&#10;3&#10;ui_properties_file_name:&#10;----&#10;user-interface.properties&#10;user-interface.properties:&#10;----&#10;color.good=purple&#10;color.bad=yellow&#10;allow.textmode=true    &#10;&#10;Events:  &#60;none&#62;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建pod-configmap.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: configmap-game&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;    - name: game&#10;      image: nginx:1.17.1&#10;      command: [&#34;sleep&#34;, &#34;3600&#34;]&#10;      env:&#10;        # &#23450;&#20041;&#29615;&#22659;&#21464;&#37327;&#10;        - name: PLAYER_INITIAL_LIVES # &#35831;&#27880;&#24847;&#36825;&#37324;&#21644; ConfigMap &#20013;&#30340;&#38190;&#21517;&#26159;&#19981;&#19968;&#26679;&#30340;&#10;          valueFrom:&#10;            configMapKeyRef:&#10;              name: game-config           # &#36825;&#20010;&#20540;&#26469;&#33258; ConfigMap&#10;              key: player_initial_lives # &#38656;&#35201;&#21462;&#20540;&#30340;&#38190;&#10;        - name: UI_PROPERTIES_FILE_NAME&#10;          valueFrom:&#10;            configMapKeyRef:&#10;              name: game-config&#10;              key: ui_properties_file_name&#10;      volumeMounts:&#10;      - name: config&#10;        mountPath: &#34;/config&#34;&#10;        readOnly: true&#10;  volumes:&#10;    # &#20320;&#21487;&#20197;&#22312; Pod &#32423;&#21035;&#35774;&#32622;&#21367;&#65292;&#28982;&#21518;&#23558;&#20854;&#25346;&#36733;&#21040; Pod &#20869;&#30340;&#23481;&#22120;&#20013;&#10;    - name: config&#10;      configMap:&#10;        # &#25552;&#20379;&#20320;&#24819;&#35201;&#25346;&#36733;&#30340; ConfigMap &#30340;&#21517;&#23383;&#10;        name: game-config</span><br></pre></td></tr></table></figure>
+<p>如果 Pod 中有多个容器，则每个容器都需要自己的 <code>volumeMounts</code> 块，但针对 每个 ConfigMap，你只需要设置一个 <code>spec.volumes</code> 块。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f pod-configmap.yaml&#10;pod/configmap-game created&#10;[root@master ~]# kubectl get pod configmap-game -n dev&#10;NAME             READY   STATUS    RESTARTS   AGE&#10;configmap-game   1/1     Running   0          33s&#10;[root@master ~]# kubectl exec -it configmap-game -n dev /bin/sh&#10;# cd config&#10;# ls&#10;game.properties  player_initial_lives  ui_properties_file_name&#9;user-interface.properties&#10;# cat user-interface.properties&#10;color.good=purple&#10;color.bad=yellow&#10;allow.textmode=true</span><br></pre></td></tr></table></figure>
+<p>当卷中使用的 ConfigMap 被更新时，所投射的键最终也会被更新。 kubelet 组件会在每次周期性同步时检查所挂载的 ConfigMap 是否为最新。</p>
+<p>以环境变量方式使用的 ConfigMap 数据不会被自动更新。 更新这些数据需要重新启动 Pod。</p>
+</li>
+</ol>
+<h4 id="Secret"><a href="#Secret" class="headerlink" title="Secret"></a>Secret</h4><p>Secret 是一种包含少量敏感信息例如密码、令牌或密钥的对象。Secrets其用法是跟ConfigMap基本上是一致，区别不同是ConfigMap是明文，而Secrets是经过base64加密过的。</p>
+<p>有几种不同的方式来创建 Secret：</p>
+<ul>
+<li>使用 kubectl 命令创建 Secret</li>
+<li>使用配置文件来创建 Secret</li>
+<li>使用 kustomize 来创建 Secret</li>
+</ul>
+<h6 id="配置文件创建"><a href="#配置文件创建" class="headerlink" title="配置文件创建"></a>配置文件创建</h6><ol>
+<li><p>数据进行编码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# echo -n &#39;admin&#39; | base64&#10;YWRtaW4=&#10;[root@master ~]# echo -n &#39;123456&#39; | base64&#10;MTIzNDU2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建secret.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Secret&#10;metadata:&#10;  name: secret&#10;  namespace: dev&#10;type: Opaque&#10;data:&#10;  username: YWRtaW4=&#10;  password: MTIzNDU2</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f secret.yaml&#10;secret/secret created&#10;[root@master ~]# kubectl describe secret secret -n dev&#10;Name:         secret&#10;Namespace:    dev&#10;Labels:       &#60;none&#62;&#10;Annotations:  &#60;none&#62;&#10;&#10;Type:  Opaque&#10;&#10;Data&#10;====&#10;password:  6 bytes&#10;username:  5 bytes</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h6 id="环境变量引用"><a href="#环境变量引用" class="headerlink" title="环境变量引用"></a>环境变量引用</h6><p>创建secretenv.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: secret-pod&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: mycontainer&#10;    image: nginx:1.17.1&#10;    env:&#10;      - name: SECRET_USERNAME&#10;        valueFrom:&#10;          secretKeyRef:&#10;            name: secret&#10;            key: username&#10;      - name: SECRET_PASSWORD&#10;        valueFrom:&#10;          secretKeyRef:&#10;            name: secret&#10;            key: password&#10;  restartPolicy: Never</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# vi secretenv.yaml&#10;[root@master ~]# kubectl create -f secretenv.yaml &#10;pod/secret-pod created&#10;[root@master ~]# kubectl get pod secret-pod -n dev&#10;NAME         READY   STATUS    RESTARTS   AGE&#10;secret-pod   1/1     Running   0          4s&#10;[root@master ~]# kubectl exec -it secret-pod -n dev /bin/sh&#10;# echo $SECRET_USERNAME&#10;admin&#10;# echo $SECRET_PASSWORD&#10;123456</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1965,7 +1969,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2015,7 +2019,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">391</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2026,7 +2030,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2037,7 +2041,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/08/08/navicat-for-mysql-无需激活码破解版/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/20/Jmeter-命令行运行/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/08/08/navicat-for-mysql-无需激活码破解版/" itemprop="url">navicat for mysql 无需激活码破解版</a></h1>
+                <a class="post-title-link" href="/2021/03/20/Jmeter-命令行运行/" itemprop="url">Jmeter: 命令行运行和基本参数使用</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-08T21:04:05+08:00">
-                2020-08-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-20T10:33:21+08:00">
+                2021-03-20
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/08/08/navicat-for-mysql-无需激活码破解版/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/08/08/navicat-for-mysql-无需激活码破解版/" itemprop="commentsCount"></span>
+                <a href="/2021/03/20/Jmeter-命令行运行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/20/Jmeter-命令行运行/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -410,16 +410,41 @@
       
         
           
-            <p>从方法网络取得，仅供学习研究，请勿用于商业用途！</p>
+            <p>GUI模式仅用于创建测试计划和调试脚本，真正跑性能测试时候，不要用 GUI 模式，用命令行模式</p>
+<h4 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h4><p>-t，–testfile &lt;参数&gt;<br> 要运行的jmeter test（.jmx）文件</p>
+<p>-l，–logfile &lt;参数&gt;<br> 将样本记录到的文件</p>
+<p>-j，–jmeterlogfile &lt;参数&gt;<br> jmeter运行日志文件（jmeter.log）</p>
+<p>-n，–nongui<br> 在命令行模式下运行JMeter</p>
+<p>-g，–reportonly &lt;参数&gt;<br> 仅从测试结果文件生成报告仪表板</p>
+<p>-e，–reportatendofloadtests<br> 负载测试后生成报告仪表板</p>
+<p>-o，–reportoutputfolder &lt;参数&gt;<br> 报告仪表板的输出文件夹</p>
+<p>==========================================</p>
+<p>-s，–server<br> 运行JMeter服务器</p>
+<p>-H，–proxyHost &lt;参数&gt;<br> 设置供JMeter使用的代理服务器</p>
+<p>-P，–proxyPort &lt;参数&gt;<br> 设置代理服务器端口以供JMeter使用</p>
+<p>-r，-runremote<br> 启动远程服务器（在remote_hosts中定义）</p>
+<p>-R，–remotestart &lt;参数&gt;<br> 启动这些远程服务器（覆盖remote_hosts）</p>
+<p>-X，–remoteexit<br> 测试结束时退出远程服务器（CLI模式）</p>
+<p>==========================================</p>
+<p>-J，–jmeterproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他JMeter属性</p>
+<p>-G，–globalproperty &lt;参数&gt; = &lt;值&gt;<br> 定义全局属性或属性文件（发送到服务器）<br> 例如-Gport = 123<br> 或-Gglobal.properties</p>
+<p>-D，–systemproperty &lt;参数&gt; = &lt;值&gt;<br> 定义其他系统属性</p>
+<p>-S，–systemPropertyFile &lt;参数&gt;<br> 其他系统属性文件</p>
+<p>-f，-forceDeleteResultFile<br> 在开始测试之前，强制删除现有结果文件和Web报告文件夹（如果存在）</p>
+<p>-L，–loglevel &lt;参数&gt; = &lt;值&gt;<br> [类别=]级别，例如jorphan = INFO，jmeter.util = DEBUG或com.example.foo = WARN</p>
+<p>-d，–homedir &lt;参数&gt;<br> 要使用的jmeter主目录</p>
+<h4 id="设置命令行参数"><a href="#设置命令行参数" class="headerlink" title="设置命令行参数"></a>设置命令行参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Sep 25, 2021 11:01:36 AM java.util.prefs.WindowsPreferences &#60;init&#62;&#10;WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neok.jmx&#10;Starting standalone test @ Sat Sep 25 11:01:37 CST 2021 (1632538897030)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary =      3 in 00:00:00 =    7.0/s Avg:   101 Min:     1 Max:   277 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:01:37 CST 2021 (1632538897689)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<h4 id="设置属性参数"><a href="#设置属性参数" class="headerlink" title="设置属性参数"></a>设置属性参数</h4><p>为了更好的用命令行跟Jenkins集成， 可以设置以下Jmeter属性：线程数、duration、ramp up-time。</p>
 <ol>
-<li><p>下载</p>
-<p>链接: <a href="https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw" target="_blank" rel="external">https://pan.baidu.com/s/14Cc_nqyNNu5Ol1yzmMZwQw</a> 提取码: 2dav </p>
+<li><p>设置用户变量</p>
+<p><img src="/images/jmeter/user_var.jpg" alt=""></p>
 </li>
-<li><p>解压安装</p>
-<p>安装 navicat for mysql</p>
+<li><p>更改线程组使用变量</p>
+<p><img src="/images/jmeter/use_var.jpg" alt=""></p>
 </li>
-<li><p>激活</p>
-<p>打开Patch.ext，选择navicat for mysql安装目录下的navicat.exe即可。</p>
+<li><p>命令行验证</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Desktop&#62;jmeter -n -Jthread_number=5 -Jramp_up=2 -Jduration=60 -t Neo.jmx -f -l result/report.jtl -e -o report&#10;Creating summariser &#60;summary&#62;&#10;Created the tree successfully using Neo.jmx&#10;Starting standalone test @ Sat Sep 25 11:30:03 CST 2021 (1632540603981)&#10;Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445&#10;summary +      1 in 00:00:00 =    2.9/s Avg:   242 Min:   242 Max:   242 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0&#10;summary +   1706 in 00:00:25 =   67.1/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   1707 in 00:00:26 =   66.2/s Avg:    71 Min:     0 Max:   386 Err:     0 (0.00%)&#10;summary +   2013 in 00:00:32 =   63.7/s Avg:    74 Min:     0 Max:  2139 Err:     0 (0.00%) Active: 5 Started: 5 Finished: 0&#10;summary =   3720 in 00:00:57 =   64.8/s Avg:    72 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;summary +     88 in 00:00:03 =   30.7/s Avg:   243 Min:     0 Max:  2136 Err:     0 (0.00%) Active: 0 Started: 5 Finished: 5&#10;summary =   3808 in 00:01:00 =   63.2/s Avg:    76 Min:     0 Max:  2139 Err:     0 (0.00%)&#10;Tidying up ...    @ Sat Sep 25 11:31:04 CST 2021 (1632540664505)&#10;... end of run</span><br></pre></td></tr></table></figure>
+<p><strong>-J是设置本地jmeter属性；-G是设置server的jmeter属性（只有设置了远程机，开启了远程服务，才需要用到-G）</strong></p>
 </li>
 </ol>
 
@@ -470,7 +495,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/07/07/Customized-test-report-with-Jira-and-Xray/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/12/Jmeter-常用函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -489,7 +514,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/07/07/Customized-test-report-with-Jira-and-Xray/" itemprop="url">Customized test report with Jira and Xray</a></h1>
+                <a class="post-title-link" href="/2021/03/12/Jmeter-常用函数/" itemprop="url">Jmeter: 常用函数</a></h1>
         
 
         <div class="post-meta">
@@ -501,8 +526,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-07T15:07:11+08:00">
-                2020-07-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-12T09:51:00+08:00">
+                2021-03-12
               </time>
             
 
@@ -524,8 +549,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试管理/" itemprop="url" rel="index">
-                    <span itemprop="name">测试管理</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -543,8 +568,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/07/07/Customized-test-report-with-Jira-and-Xray/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/07/07/Customized-test-report-with-Jira-and-Xray/" itemprop="commentsCount"></span>
+                <a href="/2021/03/12/Jmeter-常用函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/12/Jmeter-常用函数/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -575,21 +600,137 @@
       
         
           
-            <p>We could define one online report to know test status easily. here just setup some widget. use the below tech:</p>
-<ol>
-<li>Python</li>
-<li>Jira</li>
-<li>Xray</li>
-<li>Highcharts</li>
-</ol>
-<h1 id="Total-Test-Execution"><a href="#Total-Test-Execution" class="headerlink" title="Total Test Execution"></a>Total Test Execution</h1><p>Jira Rest API: <a href="https://xxxxxx/jira/rest/api/2/issue/ISR-11732" target="_blank" rel="external">https://xxxxxx/jira/rest/api/2/issue/ISR-11732</a></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">"customfield_10931": &#123;</span><br><span class="line">          "count": 17,</span><br><span class="line">          "statuses": [</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 0,</span><br><span class="line">                  "name": "PASS",</span><br><span class="line">                  "description": "The test run has passed",</span><br><span class="line">                  "isFinal": true,</span><br><span class="line">                  "color": "#95C160",</span><br><span class="line">                  "isNative": true,</span><br><span class="line">                  "statusCount": 8,</span><br><span class="line">                  "statusPercent": 47.05882352941177</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 3,</span><br><span class="line">                  "name": "FAIL",</span><br><span class="line">                  "description": "The test run has failed",</span><br><span class="line">                  "isFinal": true,</span><br><span class="line">                  "color": "#D45D52",</span><br><span class="line">                  "isNative": true,</span><br><span class="line">                  "statusCount": 1,</span><br><span class="line">                  "statusPercent": 5.882352941176471</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 4,</span><br><span class="line">                  "name": "ABORTED",</span><br><span class="line">                  "description": "The test run was aborted",</span><br><span class="line">                  "isFinal": true,</span><br><span class="line">                  "color": "#111111",</span><br><span class="line">                  "isNative": true,</span><br><span class="line">                  "statusCount": 0,</span><br><span class="line">                  "statusPercent": 0</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 1000,</span><br><span class="line">                  "name": "N/A",</span><br><span class="line">                  "description": "The test can't be executed or is not relevant",</span><br><span class="line">                  "isFinal": true,</span><br><span class="line">                  "color": "#000000",</span><br><span class="line">                  "isNative": false,</span><br><span class="line">                  "statusCount": 8,</span><br><span class="line">                  "statusPercent": 47.05882352941177</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 2,</span><br><span class="line">                  "name": "EXECUTING",</span><br><span class="line">                  "description": "The test run is currently being executed",</span><br><span class="line">                  "isFinal": false,</span><br><span class="line">                  "color": "#F1E069",</span><br><span class="line">                  "isNative": true,</span><br><span class="line">                  "statusCount": 0,</span><br><span class="line">                  "statusPercent": 0</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 1001,</span><br><span class="line">                  "name": "BLOCKED",</span><br><span class="line">                  "description": "The test run is currently blocked",</span><br><span class="line">                  "isFinal": false,</span><br><span class="line">                  "color": "#1F39B8",</span><br><span class="line">                  "isNative": false,</span><br><span class="line">                  "statusCount": 0,</span><br><span class="line">                  "statusPercent": 0</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                  "id": 1,</span><br><span class="line">                  "name": "TODO",</span><br><span class="line">                  "description": "The test run has not started",</span><br><span class="line">                  "isFinal": false,</span><br><span class="line">                  "color": "#A2A6AE",</span><br><span class="line">                  "isNative": true,</span><br><span class="line">                  "statusCount": 0,</span><br><span class="line">                  "statusPercent": 0</span><br><span class="line">              &#125;</span><br><span class="line">          ]</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Test-Execution-Summary"><a href="#Test-Execution-Summary" class="headerlink" title="Test Execution Summary"></a>Test Execution Summary</h1><p>Xray Rest API: <a href="https://xxxxxx/jira/rest/raven/1.0/api/testexec/ISR-11759/test" target="_blank" rel="external">https://xxxxxx/jira/rest/raven/1.0/api/testexec/ISR-11759/test</a></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389836</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10928"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">1</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389837</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10927"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">2</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389838</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10926"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">3</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389839</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10925"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">4</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389840</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10935"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">5</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389841</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10934"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">6</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389842</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10933"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">7</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389843</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10932"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">8</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389844</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10931"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">9</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389845</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10930"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">10</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389846</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"PASS"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10938"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">11</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">id</span>": <span class="value"><span class="number">4389847</span></span>,</span><br><span class="line">        "<span class="attribute">status</span>": <span class="value"><span class="string">"FAIL"</span></span>,</span><br><span class="line">        "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-10937"</span></span>,</span><br><span class="line">        "<span class="attribute">rank</span>": <span class="value"><span class="number">12</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h1 id="Test-Active-Defect"><a href="#Test-Active-Defect" class="headerlink" title="Test Active Defect"></a>Test Active Defect</h1><p>Jira Rest API: <a href="https://xxxxxx/jira/rest/api/2/search?jql=status" target="_blank" rel="external">https://xxxxxx/jira/rest/api/2/search?jql=status</a> not in (Closed, Resolved) AND issue in defectsCreatedDuringTestExecution(ISR-11759) </p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">expand</span>": <span class="value"><span class="string">"names,schema"</span></span>,</span><br><span class="line">    "<span class="attribute">startAt</span>": <span class="value"><span class="number">0</span></span>,</span><br><span class="line">    "<span class="attribute">maxResults</span>": <span class="value"><span class="number">50</span></span>,</span><br><span class="line">    "<span class="attribute">total</span>": <span class="value"><span class="number">1</span></span>,</span><br><span class="line">    "<span class="attribute">issues</span>": <span class="value">[</span><br><span class="line">        &#123;</span><br><span class="line">            "<span class="attribute">expand</span>": <span class="value"><span class="string">"operations,versionedRepresentations,editmeta,changelog,renderedFields"</span></span>,</span><br><span class="line">            "<span class="attribute">id</span>": <span class="value"><span class="string">"5925696"</span></span>,</span><br><span class="line">            "<span class="attribute">self</span>": <span class="value"><span class="string">"https://xxxxxx/jira/rest/api/2/issue/5925696"</span></span>,</span><br><span class="line">            "<span class="attribute">key</span>": <span class="value"><span class="string">"ISR-11944"</span></span>,</span><br><span class="line">            "<span class="attribute">fields</span>": <span class="value">&#123;</span><br><span class="line">	"<span class="attribute">priority</span>": <span class="value">&#123;</span><br><span class="line">                    "<span class="attribute">self</span>": <span class="value"><span class="string">"https://xxxxxx/jira/rest/api/2/priority/4"</span></span>,</span><br><span class="line">                    "<span class="attribute">iconUrl</span>": <span class="value"><span class="string">"https://xxxxxx/jira/images/icons/priorities/low.svg"</span></span>,</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Low"</span></span>,</span><br><span class="line">                    "<span class="attribute">id</span>": <span class="value"><span class="string">"4"</span></span><br><span class="line">	</span>&#125;</span><br><span class="line">            </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">    ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>Report:</p>
-<p><img src="/images/automation/report.png" alt=""></p>
+            <p>Jmeter提供了很多，列举一些比较常用函数，详细的自行查看（工具 -&gt; 函数帮助）：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__Random</td>
+<td>生成随机数</td>
+</tr>
+<tr>
+<td>__RandomDate</td>
+<td>生成随机日期</td>
+</tr>
+<tr>
+<td>__RandomString</td>
+<td>生成随机字符串</td>
+</tr>
+<tr>
+<td>__setProperty</td>
+<td>设置属性</td>
+</tr>
+<tr>
+<td>__property</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__P</td>
+<td>读取属性</td>
+</tr>
+<tr>
+<td>__V</td>
+<td>拼接字符串</td>
+</tr>
+<tr>
+<td>__time</td>
+<td>返回指定格式的当前时间</td>
+</tr>
+<tr>
+<td>__MD5</td>
+<td>将字符串MD5加密</td>
+</tr>
+<tr>
+<td>__UUID</td>
+<td>生成随机UUID字符串</td>
+</tr>
+<tr>
+<td>__TestPlanName</td>
+<td>测试计划名称</td>
+</tr>
+<tr>
+<td>__StringFromFile</td>
+<td>从文件中读取一行</td>
+</tr>
+<tr>
+<td>__strLen</td>
+<td>字符串长度</td>
+</tr>
+<tr>
+<td>__split</td>
+<td>将字符串拆分为变量</td>
+</tr>
+<tr>
+<td>__substring</td>
+<td>提取字符串的子串</td>
+</tr>
+<tr>
+<td>__machineName</td>
+<td>机器名</td>
+</tr>
+<tr>
+<td>__machineIP</td>
+<td>机器IP</td>
+</tr>
+<tr>
+<td>__isDefined</td>
+<td>判断变量是否已存在</td>
+</tr>
+<tr>
+<td>__BeanShell</td>
+<td>可执行beanshell脚本</td>
+</tr>
+<tr>
+<td>__char</td>
+<td>根据unicode生成字符</td>
+</tr>
+<tr>
+<td>__chooseRandom</td>
+<td>从指定的范围里面取值</td>
+</tr>
+<tr>
+<td>__counter</td>
+<td>计数器</td>
+</tr>
+<tr>
+<td>__env</td>
+<td>获取环境变量的值</td>
+</tr>
+<tr>
+<td>__eval</td>
+<td>读取变量表达式</td>
+</tr>
+<tr>
+<td>__FileToString</td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td>__intSum</td>
+<td>两个或多个整数的总和</td>
+</tr>
+<tr>
+<td>__longSum</td>
+<td>两个或多个长值的总和</td>
+</tr>
+<tr>
+<td>__digest</td>
+<td>将字符串加密</td>
+</tr>
+<tr>
+<td>__if</td>
+<td>if 判断</td>
+</tr>
+<tr>
+<td>__iterationNum</td>
+<td>线程循环次数</td>
+</tr>
+</tbody>
+</table>
 
           
         
@@ -638,7 +779,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/06/24/Python-实现Excel对比/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/05/Jmeter-P-函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -657,7 +798,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/24/Python-实现Excel对比/" itemprop="url">Python 实现Excel对比</a></h1>
+                <a class="post-title-link" href="/2021/03/05/Jmeter-P-函数/" itemprop="url">Jmeter: 获取 Jmeter 的属性</a></h1>
         
 
         <div class="post-meta">
@@ -669,8 +810,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-24T17:01:48+08:00">
-                2020-06-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-05T08:59:54+08:00">
+                2021-03-05
               </time>
             
 
@@ -692,8 +833,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
                   </a>
                 </span>
 
@@ -711,8 +852,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/06/24/Python-实现Excel对比/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/06/24/Python-实现Excel对比/" itemprop="commentsCount"></span>
+                <a href="/2021/03/05/Jmeter-P-函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/03/05/Jmeter-P-函数/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -743,33 +884,12 @@
       
         
           
-            <p>工作当中，发现用户在测试过程当中都是手工检查两个Excel文件的数据是否一致，有的都有好几万行，非常耗时也可能会遗漏一些数据。</p>
-<p>中间也试了<code>Spreadsheet Compare</code>这个工具，有时候对比达不到想要的效果，就想着用Python写一个小程序来实现两个Excel的数据对比，思路：</p>
-<ol>
-<li>用户不懂技术，实现一个简单界面让用户去选择文件</li>
-<li>对比数据，把结果写到一个新Excel里，并标注不同的数据</li>
-</ol>
-<h2 id="工具实现"><a href="#工具实现" class="headerlink" title="工具实现"></a>工具实现</h2><p>通过tkinter和pandas来实现，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tkinter <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tkinter.filedialog <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">root = Tk()</span><br><span class="line">root.title(<span class="string">"Compare Excel"</span>)</span><br><span class="line">root.geometry(<span class="string">'600x250'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_compare_file</span><span class="params">()</span>:</span></span><br><span class="line">    name = askopenfilename()</span><br><span class="line">    file1_text.set(name)</span><br><span class="line"></span><br><span class="line">Button(root, text=<span class="string">"Select Compare File"</span>, command=select_compare_file).pack()</span><br><span class="line">file1_text = StringVar()</span><br><span class="line">file1 = Entry(root, textvariable=file1_text, width=<span class="number">150</span>)</span><br><span class="line">file1_text.set(<span class="string">" "</span>)</span><br><span class="line">file1.pack()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Label(root, text=<span class="string">""</span>).pack()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_to_file</span><span class="params">()</span>:</span></span><br><span class="line">    a = askopenfilename()</span><br><span class="line">    file2_text.set(a)</span><br><span class="line">Button(root, text=<span class="string">"Select To File"</span>, command = select_to_file).pack()</span><br><span class="line">file2_text = StringVar()</span><br><span class="line">file2 = Entry(root, textvariable=file2_text, width=<span class="number">150</span>)</span><br><span class="line">file2_text.set(<span class="string">" "</span>)</span><br><span class="line">file2.pack()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Label(root, text=<span class="string">""</span>).pack()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare_excel</span><span class="params">(compare, to)</span>:</span></span><br><span class="line">    f1 = pd.read_excel(compare)</span><br><span class="line">    f2 = pd.read_excel(to)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Perform Diff</span></span><br><span class="line">    dfDiff = f1.copy()</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(dfDiff.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> range(dfDiff.shape[<span class="number">1</span>]):</span><br><span class="line">            value_OLD = f1.iloc[row, col]</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                value_NEW = f2.iloc[row, col]</span><br><span class="line">                <span class="keyword">if</span> value_OLD == value_NEW:</span><br><span class="line">                    dfDiff.iloc[row, col] = f2.iloc[row, col]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dfDiff.iloc[row, col] = (<span class="string">'&#123;&#125;→&#123;&#125;'</span>).format(value_OLD, value_NEW)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                dfDiff.iloc[row, col] = (<span class="string">'&#123;&#125;→&#123;&#125;'</span>).format(value_OLD, <span class="string">'NaN'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save output and format</span></span><br><span class="line">    writer = pd.ExcelWriter(<span class="string">'compare_result.xlsx'</span>, engine=<span class="string">'xlsxwriter'</span>)</span><br><span class="line"></span><br><span class="line">    dfDiff.to_excel(writer, sheet_name=<span class="string">'DIFF'</span>, index=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get xlsxwriter objects</span></span><br><span class="line">    workbook = writer.book</span><br><span class="line">    worksheet = writer.sheets[<span class="string">'DIFF'</span>]</span><br><span class="line">    worksheet.hide_gridlines(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># define formats</span></span><br><span class="line">    highlight_fmt = workbook.add_format(&#123;<span class="string">'font_color'</span>: <span class="string">'#FF0000'</span>, <span class="string">'bg_color'</span>: <span class="string">'#6A93B0'</span>&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set format over range</span></span><br><span class="line">    <span class="comment">## highlight changed cells</span></span><br><span class="line">    worksheet.conditional_format(<span class="string">'A1:ZZ1000'</span>, &#123;<span class="string">'type'</span>: <span class="string">'text'</span>,</span><br><span class="line">                                               <span class="string">'criteria'</span>: <span class="string">'containing'</span>,</span><br><span class="line">                                               <span class="string">'value'</span>: <span class="string">'→'</span>,</span><br><span class="line">                                               <span class="string">'format'</span>: highlight_fmt&#125;)</span><br><span class="line">    <span class="comment"># save</span></span><br><span class="line">    writer.save()</span><br><span class="line">    print(<span class="string">'Compare Done.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_click</span><span class="params">()</span>:</span></span><br><span class="line">    f1 = file1_text.get()</span><br><span class="line">    f2 = file2_text.get()</span><br><span class="line"></span><br><span class="line">    compare_excel(f1, f2)</span><br><span class="line"></span><br><span class="line">    Label(root, text=<span class="string">"Compare done, please see the result: 'compare_result.xlsx'"</span>).pack()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Button(root, text=<span class="string">"Start Compare"</span>, command=on_click).pack()</span><br><span class="line">root.mainloop()</span><br></pre></td></tr></table></figure>
-<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><ol>
-<li><p>准备对比文件</p>
-<ul>
-<li><p>文件1</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">学号	姓名	年龄	年级</span><br><span class="line"><span class="number">1</span>	tom	<span class="number">12</span>	<span class="number">1</span></span><br><span class="line"><span class="number">2</span>	jim	<span class="number">33</span>	<span class="number">8</span></span><br><span class="line"><span class="number">3</span>	Green	<span class="number">21</span>	<span class="number">2</span></span><br><span class="line"><span class="number">4</span>	Hello	<span class="number">11</span>	<span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>文件2</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">No.	Name	Age	Grade</span><br><span class="line"><span class="number">1</span>	Tom	<span class="number">12</span>	<span class="number">1</span></span><br><span class="line"><span class="number">2</span>	Jimmy	<span class="number">23</span>	<span class="number">8</span></span><br><span class="line"><span class="number">3</span>	Green	<span class="number">21</span>	<span class="number">2</span></span><br><span class="line"><span class="number">4</span>	Hello	<span class="number">11</span>	<span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>运行程序，选择文件，对比</p>
-<p><img src="/images/automation/compare_excel.jpg" alt=""></p>
-</li>
-<li><p>查看结果</p>
-<p><img src="/images/automation/compare_result.jpg" alt=""></p>
-</li>
-</ol>
-<h2 id="进一步"><a href="#进一步" class="headerlink" title="进一步"></a>进一步</h2><p>用户不会直接用命令行运行脚本，把脚本封装成一个bat文件，直接双击使用。</p>
+            <p>在跨平台运行，或者配置路径的时候，需要用到Jmeter的属性。</p>
+<p>可能用下边这个函数：</p>
+<p><strong>__P() 函数</strong></p>
+<p>比如Linux的<code>file.separator</code> 的是 <code>/</code>，Windows的<code>\</code>，${__P(file.separator,)}可以根据不同的系统，获取不同系统下的文件路径分隔符。</p>
+<h5 id="如何查看Jmeter属性"><a href="#如何查看Jmeter属性" class="headerlink" title="如何查看Jmeter属性"></a>如何查看Jmeter属性</h5><p> 测试计划右键添加：非测试元件 -&gt; 属性显示。如下图所示：</p>
+<p><img src="/images/jmeter/property.jpg" alt=""></p>
 
           
         
@@ -818,7 +938,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/02/15/熊猫来了探险/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -837,7 +957,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/" itemprop="url">Jmeter + Grafana + InfluxDB 性能测试实时监控</a></h1>
+                <a class="post-title-link" href="/2021/02/15/熊猫来了探险/" itemprop="url">熊猫来了探险</a></h1>
         
 
         <div class="post-meta">
@@ -849,1069 +969,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-14T14:07:33+08:00">
-                2020-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/06/14/Jmeter-Grafana-InfluxDB-性能测试实时监控/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Jmeter原生的监控确实是丑了点，且很难实时的压测过程中的性能状态，用下面的方式来代替原生的监控展示。</p>
-<p>InfluxDB来存Jmeter运行数据，用Grafana来展示数据。Jmeter引入<code>Backend Listener</code>，压测的过程中实时把统计数据发送到InfluxDB中，通过Grafana可视化的展示出来。</p>
-<h1 id="InfluxDB"><a href="#InfluxDB" class="headerlink" title="InfluxDB"></a>InfluxDB</h1><p>一个时序数据库，不做详细说明，可参见官网<a href="https://www.influxdata.com" target="_blank" rel="external">InfluxDB</a></p>
-<ol>
-<li><p>从官网下载</p>
-</li>
-<li><p>修改配置文件，influxdb.conf</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[meta]</span><br><span class="line">  # Where the metadata/raft database is stored</span><br><span class="line">  dir = "C:/influxdb/meta"</span><br><span class="line"></span><br><span class="line">  # Automatically <span class="operator"><span class="keyword">create</span> a <span class="keyword">default</span> <span class="keyword">retention</span> <span class="keyword">policy</span> <span class="keyword">when</span> creating a <span class="keyword">database</span>.</span><br><span class="line">  # <span class="keyword">retention</span>-autocreate = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # <span class="keyword">If</span> <span class="keyword">log</span> messages <span class="keyword">are</span> printed <span class="keyword">for</span> the meta service</span><br><span class="line">  # <span class="keyword">logging</span>-enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">data</span>]</span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores TSM files.</span><br><span class="line">  dir = <span class="string">"C:/influxdb/data"</span></span><br><span class="line"></span><br><span class="line">  # The <span class="keyword">directory</span> <span class="keyword">where</span> the TSM <span class="keyword">storage</span> <span class="keyword">engine</span> stores WAL files.</span><br><span class="line">  wal-dir = <span class="string">"C:/influxdb/wal"</span></span><br><span class="line">  </span><br><span class="line">############################</span><br><span class="line">[<span class="keyword">http</span>]</span><br><span class="line">  # Determines whether <span class="keyword">HTTP</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  enabled = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> endpoint <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # Determines whether the Flux <span class="keyword">query</span> <span class="keyword">logging</span> <span class="keyword">is</span> enabled.</span><br><span class="line">  # flux-<span class="keyword">log</span>-enabled = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  # The bind address used <span class="keyword">by</span> the <span class="keyword">HTTP</span> service.</span><br><span class="line"> bind-address = <span class="string">":8086"</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>创建相应Folder： data, meta, wal</p>
-</li>
-<li><p>双击influxd.exe，运行influxDB</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">8888888</span>           .d<span class="number">888 888</span>                   <span class="number">8888888</span>b.  888888b.</span><br><span class="line">   888            d88P"  888                   888  "Y88b 888  "88b</span><br><span class="line">   888            888    888                   888    <span class="number">888 888</span>  .88P</span><br><span class="line">   888   88888b.  <span class="number">888888 88</span>8 888  <span class="number">888 888</span>  <span class="number">888 888</span>    <span class="number">888 88888</span>88K.</span><br><span class="line">   888   888 "88b 888    <span class="number">888 888</span>  888  Y8bd8P' 888    <span class="number">888 888</span>  "Y88b</span><br><span class="line">   888   888  <span class="number">888 888</span>    <span class="number">888 888</span>  888   X88K   888    <span class="number">888 888</span>    888</span><br><span class="line">   888   888  <span class="number">888 888</span>    888 Y88b 888 .d8""8b. 888  .d88P 888   d88P</span><br><span class="line"> <span class="number">8888888 88</span>8  <span class="number">888 888</span>    888  "Y<span class="number">88888 888</span>  <span class="number">888 88888</span>88P"  <span class="number">8888888</span>P"</span><br><span class="line"></span><br><span class="line"><span class="number">2020-06-23</span>T<span class="number">06:34:00.42</span>1889Z     info    InfluxDB starting       &#123;"log_id": "0NZyzDPG000", "version": "1.8.0", "branch": "1.8", "commit": "781490de<span class="number">48220d7695</span>a<span class="number">05c29e5a36</span>f<span class="number">550a4568</span>f5"&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Jmeter"><a href="#Jmeter" class="headerlink" title="Jmeter"></a>Jmeter</h1><ol>
-<li><p>在InfluxDB创建DB</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Connected to http://localhost:8086 version 1.8.0</span><br><span class="line">InfluxDB shell version: 1.8.0</span><br><span class="line">&gt; create database jmeter</span><br><span class="line">&gt; show databases</span><br><span class="line">name: databases</span><br><span class="line"><span class="header">name</span><br><span class="line">----</span></span><br><span class="line"><span class="emphasis">_internal</span><br><span class="line">jmeter</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置 Jmeter Backend Listerner</p>
-<p><img src="/images/performancetesting/backend_listener.jpg" alt=""></p>
-</li>
-</ol>
-<h1 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h1><ol>
-<li><p>配置数据源</p>
-<p><img src="/images/performancetesting/grafana_influxdb.jpg" alt=""></p>
-</li>
-<li><p>搭建Dashboard</p>
-<p>Import Dashboard: 5496</p>
-</li>
-</ol>
-<h1 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h1><p>运行Jmeter脚本，查看数据展示：</p>
-<p><img src="/images/performancetesting/grafana_jmeter.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="url">Robotframework Automation With Jenkins and Xray - pipeline</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T10:46:52+08:00">
-                2020-05-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/25/Robotframework-Automation-With-Jenkins-and-Xray-pipeline/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>From last blog, we integrate RF, Jenkins and Xray, but for now, we usually use ‘Pipeline’ way for better management. Give it a try…</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    stages &#123;  </span><br><span class="line">        stage(<span class="string">'Test Execution'</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                bat <span class="string">'robot db.robot'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Publish RF Test Result'</span>)&#123;</span><br><span class="line">             steps &#123;</span><br><span class="line">				step([</span><br><span class="line">                     $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'RobotPublisher'</span>,</span><br><span class="line">                     disableArchiveOutput: false,</span><br><span class="line">                     logFileName: <span class="string">'log.html'</span>,</span><br><span class="line">                     otherFiles: <span class="string">''</span>,</span><br><span class="line">                     outputFileName: <span class="string">'output.xml'</span>,</span><br><span class="line">                     outputPath: <span class="string">''</span>,</span><br><span class="line">                     passThreshold: <span class="number">100</span>,</span><br><span class="line">                     reportFileName: <span class="string">'report.html'</span>,</span><br><span class="line">                     unstableThreshold: <span class="number">0</span></span><br><span class="line">				])</span><br><span class="line">			&#125;</span><br><span class="line">		 &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">'Import Result To Xray'</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                step([</span><br><span class="line">                    $<span class="class"><span class="keyword">class</span>:</span> <span class="string">'XrayImportBuilder'</span>,</span><br><span class="line">                    endpointName: <span class="string">'/robot'</span>,</span><br><span class="line">                    fixVersion: <span class="string">''</span>,</span><br><span class="line">                    importFilePath: <span class="string">'output.xml'</span>,</span><br><span class="line">                    importToSameExecution: <span class="string">'true'</span>,</span><br><span class="line">                    projectKey: <span class="string">'ISR'</span>,</span><br><span class="line">                    serverInstance: <span class="string">'39c998d7-e25b-4cc7-81d6-dfe14d970cac'</span>,</span><br><span class="line">                    testPlanKey: <span class="string">''</span>,</span><br><span class="line">                    testExecKey: <span class="string">'ISR-8352'</span></span><br><span class="line">				])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>After run job, the result as below:</p>
-<p><img src="/images/CI/xray/pipeline.png" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="url">Robotframework Automation With Jenkins and Xray</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-17T10:46:52+08:00">
-                2020-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/05/17/Robotframework-Automation-With-Jenkins-and-Xray/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Currently, we use Xray in Jira for test management, now we want to implement our automation as below:</p>
-<ol>
-<li>use Robotframework design script</li>
-<li>use Jenkins trigger automaion running</li>
-<li>return running result to xray and update execution status</li>
-</ol>
-<h1 id="Pre-Condition"><a href="#Pre-Condition" class="headerlink" title="Pre-Condition"></a>Pre-Condition</h1><ol>
-<li>Create one test case, one execution, and add test case to execution, the default status as below:<br><img src="/images/CI/xray/before_run.jpg" alt=""></li>
-<li>RF demo script:<br><img src="/images/CI/xray/rf_script.jpg" alt=""></li>
-</ol>
-<h1 id="Install-and-config-xray-jenkins-plugin"><a href="#Install-and-config-xray-jenkins-plugin" class="headerlink" title="Install and config xray jenkins plugin"></a>Install and config xray jenkins plugin</h1><p>Use offline way to install, download plugin here: <a href="http://mirrors.jenkins-ci.org/plugins/xray-connector/" target="_blank" rel="external">xray-connector</a>, and install plugin as below:<br><img src="/images/CI/xray/upload_plugin.jpg" alt=""></p>
-<p>Then, we need to configure Xray plug-in to communicate with JIRA, navigate to Manage Jenkins &gt; Configure System &gt; Xray for Jira configuration.<br><img src="/images/CI/xray/xray_config.jpg" alt=""></p>
-<h1 id="Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray"><a href="#Config-jenkins-job-to-run-automaiton-test-and-return-report-to-xray" class="headerlink" title="Config jenkins job to run automaiton test and return report to xray"></a>Config jenkins job to run automaiton test and return report to xray</h1><ol>
-<li>Just use RF command to run demo script, config as below:<br><img src="/images/CI/xray/run_rf.jpg" alt=""></li>
-<li>Retrun results to Xray, define in Post-build actioas - “Xray: Results Import Task”.<br><img src="/images/CI/xray/import_result.jpg" alt=""></li>
-<li>Config task with below params:<br><img src="/images/CI/xray/import_result_config.jpg" alt=""><pre><code>- Import to Same Test Execution – When this option is checked, if you are importing multiple execution report files using a glob expression, the results will be imported to the same Test Execution
-- Execution Report File (file path with file name) – location and name of the Robot Framework tests output file. 
-- Project Key – key of the JIRA project. This is a required parameter
-- Test Execution Key – JIRA issue key where results will be imported. 
-- Test Plan Key – JIRA issue key of the Test Plan. 
-- Test Environments – list of Environments (separated by “,”) where tests are executed.
-</code></pre></li>
-<li>Run jenkins job</li>
-<li>Back to Jira Xray, the status update from TODO to PASS automatically<br><img src="/images/CI/xray/after_run.jpg" alt=""></li>
-<li>Go to Execution detail page to view automaion detail result<br><img src="/images/CI/xray/after_run_detail.jpg" alt=""></li>
-</ol>
-<h1 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h1><p>Other things we could do:</p>
-<ol>
-<li>Create test exceution in xray automatically after automation running</li>
-<li>Even create test case after automation running</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/18/Prometheus-Grafana-实时监控Linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/18/Prometheus-Grafana-实时监控Linux/" itemprop="url">Prometheus + Grafana 实时监控Linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-18T13:34:27+08:00">
-                2020-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/04/18/Prometheus-Grafana-实时监控Linux/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/04/18/Prometheus-Grafana-实时监控Linux/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>上篇中介绍了Prometheus， Grafana，并实现了实时监控Windows，回顾：<a href="/2020/04/05/Prometheus-Grafana-监控Windows/">Prometheus + Grafana 实时监控Windows</a></p>
-<p>本篇来介绍一下Linux。</p>
-<h1 id="node-exporter安装配置"><a href="#node-exporter安装配置" class="headerlink" title="node exporter安装配置"></a>node exporter安装配置</h1><ol>
-<li><p>下载 node exporter </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/prometheus/node_exporter/releases/download/v0.<span class="number">18.1</span>/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解压</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加系统服务 (vi /usr/lib/systemd/system/node_exporter.service)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=https://prometheus.io</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Restart=on-failure</span><br><span class="line">ExecStart=/opt/node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64/node_exporter</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start node_exporter</span><br><span class="line">systemctl status node_exporter</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@izheyi node_exporter-<span class="number">0.18</span>.<span class="number">1</span>.linux-amd64]<span class="comment"># curl http://localhost:9100/metrics</span></span><br><span class="line"><span class="comment"># HELP go_gc_duration_seconds A summary of the GC invocation durations.</span></span><br><span class="line"><span class="comment"># TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.25"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.5"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"0.75"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile=<span class="string">"1"</span>&#125; <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_sum <span class="number">0</span></span><br><span class="line">go_gc_duration_seconds_count <span class="number">0</span></span><br><span class="line"><span class="comment"># HELP go_goroutines Number of goroutines that currently exist.</span></span><br><span class="line"><span class="comment"># TYPE go_goroutines gauge</span></span><br><span class="line">go_goroutines <span class="number">6</span></span><br><span class="line"><span class="comment"># HELP go_info Information about the Go environment.</span></span><br><span class="line"><span class="comment"># TYPE go_info gauge</span></span><br><span class="line">go_info&#123;version=<span class="string">"go1.12.5"</span>&#125; <span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Prometheus配置"><a href="#Prometheus配置" class="headerlink" title="Prometheus配置"></a>Prometheus配置</h1><ol>
-<li><p>添加prometheus相关配置， prometheus.yml</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> <span class="symbol">job_name:</span> <span class="string">'linux'</span></span><br><span class="line"></span>  static_configs:</span><br><span class="line">  -<span class="ruby"> <span class="symbol">targets:</span> [<span class="string">'192.168.174.128:9100'</span>]</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启prometheus</p>
-</li>
-<li><p>验证</p>
-<p><img src="/images/performancetesting/prometheus_target.png" alt=""></p>
-</li>
-</ol>
-<h1 id="Grafana配置"><a href="#Grafana配置" class="headerlink" title="Grafana配置"></a>Grafana配置</h1><ol>
-<li><p>配置Prometheus数据源</p>
-</li>
-<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 8919</p>
-</li>
-<li><p>验证</p>
-<p><img src="/images/performancetesting/grafana_linux.png" alt=""></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/04/05/Prometheus-Grafana-监控Windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="url">Prometheus + Grafana 实时监控Windows</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-05T09:14:47+08:00">
-                2020-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/04/05/Prometheus-Grafana-监控Windows/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/04/05/Prometheus-Grafana-监控Windows/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a> 是一个最初在SoundCloud上构建的开源系统监视和警报工具包。<br><a href="https://grafana.com/grafana/" target="_blank" rel="external">Grafana</a> 是一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知。</p>
-<h2 id="Windows采集器（wmi-exporter）"><a href="#Windows采集器（wmi-exporter）" class="headerlink" title="Windows采集器（wmi_exporter）"></a>Windows采集器（wmi_exporter）</h2><p>要获取服务器运行时的参数，比如当前的CPU负载、内存消耗、硬盘使用、网络IO等等，就可以在服务器上运行一个node_exporter，它能把这些参数收集好，并且暴露出一个HTTP接口以便你访问查询。</p>
-<ol>
-<li>下载采集器<br>从<a href="https://github.com/martinlindhe/wmi_exporter" target="_blank" rel="external">wmi_exporter</a>下载</li>
-<li>安装<br>直接双击安装即可。<br>Windows默认9182端口。</li>
-<li>验证<br>访问<a href="http://127.0.0.1:9182/metrics" target="_blank" rel="external">http://127.0.0.1:9182/metrics</a><br>显示以下数据，数据采集器安装成功。<br><img src="/images/performancetesting/vim_exporter.jpg" alt=""></li>
-</ol>
-<h2 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h2><ol>
-<li>下载<br>从<a href="https://prometheus.io/download/" target="_blank" rel="external">Prometheus</a>下载</li>
-<li><p>配置<br>打开prometheus.yml</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># my global config</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     5s # <span class="operator"><span class="keyword">Set</span> the scrape <span class="built_in">interval</span> <span class="keyword">to</span> every <span class="number">15</span> seconds. <span class="keyword">Default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  evaluation_interval: <span class="number">5</span>s # <span class="keyword">Evaluate</span> <span class="keyword">rules</span> every <span class="number">15</span> seconds. The <span class="keyword">default</span> <span class="keyword">is</span> every <span class="number">1</span> <span class="keyword">minute</span>.</span><br><span class="line">  # scrape_timeout <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">to</span> the <span class="keyword">global</span> <span class="keyword">default</span> (<span class="number">10</span>s).</span><br><span class="line"></span><br><span class="line"># Alertmanager configuration</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      # - alertmanager:<span class="number">9093</span></span><br><span class="line"></span><br><span class="line"># <span class="keyword">Load</span> <span class="keyword">rules</span> once <span class="keyword">and</span> periodically <span class="keyword">evaluate</span> them according <span class="keyword">to</span> the <span class="keyword">global</span> <span class="string">'evaluation_interval'</span>.</span><br><span class="line">rule_files:</span><br><span class="line">  # - <span class="string">"first_rules.yml"</span></span><br><span class="line">  # - <span class="string">"second_rules.yml"</span></span><br><span class="line"></span><br><span class="line"># A scrape configuration containing exactly one endpoint <span class="keyword">to</span> scrape:</span><br><span class="line"># Here it<span class="string">'s Prometheus itself.</span><br><span class="line">scrape_configs:</span><br><span class="line">  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span><br><span class="line">  - job_name: '</span>prometheus<span class="string">'</span><br><span class="line"></span><br><span class="line">    # metrics_path defaults to '</span>/metrics<span class="string">'</span><br><span class="line">    # scheme defaults to '</span><span class="keyword">http</span><span class="string">'.</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: ['</span>localhost:<span class="number">9182</span><span class="string">']</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运行(将默认端口9090改为8091)</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prometheus<span class="class">.exe</span> --config.file=prometheus<span class="class">.yml</span> --web.listen-address=:<span class="number">8091</span> &amp;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证<br>访问<a href="http://127.0.0.1:8091/" target="_blank" rel="external">http://127.0.0.1:8091/</a><br>目标列表中有你本地的机器，说明Prometheus已经成功监控到本地。<br><img src="/images/performancetesting/prometheus.jpg" alt=""></p>
-</li>
-</ol>
-<h2 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h2><ol>
-<li>下载<br>从<a href="https://grafana.com/grafana/download" target="_blank" rel="external">Grafana</a>下载</li>
-<li><p>启动<br>双击安装即可。 进行到安装bin目录下：双击<code>grafana-server.exe</code>启动<br>访问<a href="http://127.0.0.1:3000" target="_blank" rel="external">http://127.0.0.1:3000</a><br>默认账号/密码：admin/admin<br><img src="/images/performancetesting/grafana_home.jpg" alt=""></p>
-</li>
-<li><p>配置Prometheus数据源<br>从刚才配置好的prometheus那里获取本地性能数据并展示。<br><img src="/images/performancetesting/grafana_prometheus.jpg" alt=""></p>
-</li>
-<li><p>搭建Prometheus仪表盘<br>Import Dashboard: 10467<br><img src="/images/performancetesting/grafana_import.jpg" alt=""></p>
-</li>
-</ol>
-<p>最终显示如下：<br><img src="/images/performancetesting/grafana_dashboard.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/22/Python生成二维码/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/22/Python生成二维码/" itemprop="url">Python生成二维码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-22T10:16:33+08:00">
-                2020-03-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Automation Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/03/22/Python生成二维码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/03/22/Python生成二维码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>工作中用二维码扫描功能能带来不少的便利，简单看了一下，用Python和qrcode包来生成二维码其实很简单，</p>
-<p>qrcode，详细信息查看<a href="https://pypi.org/project/qrcode/" target="_blank" rel="external">pip qrcode</a>，安装直接用pip命令安装即可。</p>
-<h1 id="纯文本二维码"><a href="#纯文本二维码" class="headerlink" title="纯文本二维码"></a>纯文本二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'text.png'</span>)</span><br></pre></td></tr></table></figure>
-<p>二维码显示：<br><img src="/images/automation/text.png" alt=""></p>
-<h1 id="带Logo二维码"><a href="#带Logo二维码" class="headerlink" title="带Logo二维码"></a>带Logo二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image(fill_color=<span class="string">"green"</span>, back_color=<span class="string">"white"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 添加logo</span></span><br><span class="line">    icon = Image.open(<span class="string">"logo.jpg"</span>) <span class="comment"># 打开logo照片</span></span><br><span class="line">    img_w, img_h = img.size <span class="comment"># 图片的宽高</span></span><br><span class="line"></span><br><span class="line">    factor = <span class="number">6</span></span><br><span class="line">    size_w = int(img_w / factor)</span><br><span class="line">    size_h = int(img_h / factor)</span><br><span class="line">    icon_w, icon_h = icon.size</span><br><span class="line">    <span class="keyword">if</span> icon_w &gt; size_w:</span><br><span class="line">        icon_w = size_w</span><br><span class="line">    <span class="keyword">if</span> icon_h &gt; size_h:</span><br><span class="line">        icon_h = size_h</span><br><span class="line"></span><br><span class="line">    icon = icon.resize((icon_w, icon_h), Image.ANTIALIAS)</span><br><span class="line">    w = int((img_w - icon_w) / <span class="number">2</span>)</span><br><span class="line">    h = int((img_h - icon_h) / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    img.paste(icon, (w, h), mask=<span class="keyword">None</span>) <span class="comment"># 添加logo照</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 6. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'logo.png'</span>)</span><br></pre></td></tr></table></figure>
-<p>二维码显示：<br><img src="/images/automation/logo.png" alt=""></p>
-<p>还可以把二维码嵌入到页面中，以便更好的使用。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/08/丁丁画画（三年级下学期）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/08/丁丁画画（三年级下学期）/" itemprop="url">丁丁画画（三年级下学期）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-08T10:03:16+08:00">
-                2020-03-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-15T20:56:28+08:00">
+                2021-02-15
               </time>
             
 
@@ -1952,8 +1011,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/03/08/丁丁画画（三年级下学期）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/03/08/丁丁画画（三年级下学期）/" itemprop="commentsCount"></span>
+                <a href="/2021/02/15/熊猫来了探险/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/02/15/熊猫来了探险/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1984,7 +1043,1041 @@
       
         
           
-            <p><img src="/images/izheyi/pic/3/2_1.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_2.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_11.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_3.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_10.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_4.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_5.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_6.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_7.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_8.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_9.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_12.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_13.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_14.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_15.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_16.JPG" alt=""><br><img src="/images/izheyi/pic/3/2_17.JPG" alt=""></p>
+            <p><img src="/images/izheyi/2021/02/01.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/02.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/03.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/04.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/05.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/06.jpg" alt=""></p>
+<p><img src="/images/izheyi/2021/02/07.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="url">Pytest - 获取用例执行结果(pytest_runtest_makereport)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-08T11:26:54+08:00">
+                2020-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/11/08/Pytest-获取用例执行结果-pytest-runtest-makereport/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>可以通过pytest hook 来实现用例执行结果的统计。</p>
+<ol>
+<li><p>初步实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>, <span class="string">'error'</span>: <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    print(report.nodeid)</span><br><span class="line">    <span class="keyword">if</span> report.when == <span class="string">'setup'</span> <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        CASES[<span class="string">'error'</span>] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        CASES[<span class="string">'total'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> report.outcome == <span class="string">'passed'</span>:</span><br><span class="line">            CASES[<span class="string">'passed'</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">            CASES[<span class="string">'failed'</span>] += <span class="number">1</span></span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
+<p>这样有一个问题，当有失败重跑情况时，会把每次重跑都统计一次运行结果，结果会有偏差，不应该包含重跑的结果，因为是同一个Case。</p>
+</li>
+<li><p>换个方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CASES = &#123;<span class="string">'total'</span>: <span class="number">0</span>, <span class="string">'passed'</span>: <span class="number">0</span>, <span class="string">'failed'</span>: <span class="number">0</span>&#125;</span><br><span class="line">RUN_RESULT = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@pytest.hookimpl(hookwrapper=True, tryfirst=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pytest_runtest_makereport</span><span class="params">(item, call)</span>:</span></span><br><span class="line">    result = <span class="keyword">yield</span></span><br><span class="line">    report = result.get_result()</span><br><span class="line">    print(report)</span><br><span class="line">    <span class="keyword">if</span> (report.when == <span class="string">'setup'</span> <span class="keyword">or</span> report.when == <span class="string">'teardown'</span>) <span class="keyword">and</span> report.outcome == <span class="string">'failed'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = <span class="string">'failed'</span></span><br><span class="line">    <span class="keyword">elif</span> report.when == <span class="string">'call'</span>:</span><br><span class="line">        RUN_RESULT[report.nodeid] = report.outcome</span><br><span class="line">    print(RUN_RESULT)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    CASES[<span class="string">'total'</span>] = len(RUN_RESULT)</span><br><span class="line">    CASES[<span class="string">'passed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'passed'</span>&#125;)</span><br><span class="line">    CASES[<span class="string">'failed'</span>] = len(&#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> RUN_RESULT.items() <span class="keyword">if</span> v == <span class="string">'failed'</span>&#125;)</span><br><span class="line">    print(CASES)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'test_demo.py::test_demo01[zhangsan]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[lisi]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo01[wangwu]'</span>: <span class="string">'failed'</span>, <span class="string">'test_demo.py::test_demo02'</span>: <span class="string">'passed'</span>&#125;</span><br><span class="line">&#123;<span class="string">'total'</span>: <span class="number">4</span>, <span class="string">'passed'</span>: <span class="number">1</span>, <span class="string">'failed'</span>: <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/10/20/Allure-定制详细报告/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/20/Allure-定制详细报告/" itemprop="url">allure 定制详细报告</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-20T11:21:19+08:00">
+                2020-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/20/Allure-定制详细报告/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/10/20/Allure-定制详细报告/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>默认的allure报告不能详细的显示出来脚本执行的步骤，能做到跟Log里一样的每一步操作。</p>
+<p>用<code>@allure.step()</code>装饰器来实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@allure.step("Input text &#123;text&#125; in [&#123;element&#125;]")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_text</span><span class="params">(self, element, text)</span>:</span></span><br><span class="line">    <span class="string">"""**Description**:</span><br><span class="line">            Fill text to the page_element located by locator</span><br><span class="line"></span><br><span class="line">    :param element: The locator to locate the page_element.</span><br><span class="line">    :param text: value to set to the page_element</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    ele = self.find_element(element)</span><br><span class="line">    ele.clear()</span><br><span class="line">    ele.send_keys(text)</span><br><span class="line">    logger.info(f<span class="string">'Input [&#123;text&#125;] in &#123;element&#125;'</span>)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="/images/allure/step.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/10/09/钉钉自定义机器人/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/09/钉钉自定义机器人/" itemprop="url">钉钉自定义机器人</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-09T16:50:45+08:00">
+                2020-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/09/钉钉自定义机器人/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/10/09/钉钉自定义机器人/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有想法是把自动化执行的结果实时发送到钉钉群里，及时提醒。</p>
+<p>简单看了一下，可以通过Webhook自定义机器人来实现：</p>
+<ol>
+<li><p>为钉钉群创建自定义机器人 ，会产生webhook。</p>
+</li>
+<li><p>通过<a href="https://github.com/zhuifengshen/DingtalkChatbot" target="_blank" rel="external">DingtalkChatbot</a>来实现</p>
+</li>
+<li><p>发送机器人信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dingtalkchatbot.chatbot <span class="keyword">import</span> DingtalkChatbot</span><br><span class="line"></span><br><span class="line">webhook = <span class="string">'https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxx'</span></span><br><span class="line"></span><br><span class="line">xiaoding = DingtalkChatbot(webhook)</span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_text(msg='我就是小丁，测试我是小机器人！', is_at_all=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_text(msg='我就是小丁，测试只@一人', at_mobiles=[150xxxxxxxx])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># xiaoding.send_link(title='测试小丁',</span></span><br><span class="line"><span class="comment">#                    text='我是小机器人', message_url='http://izheyi.com/',</span></span><br><span class="line"><span class="comment">#                    pic_url='http://izheyi.com/uploads/avatar.jpg')</span></span><br><span class="line"></span><br><span class="line">xiaoding.send_markdown(title=<span class="string">'我就是测试小丁！'</span>,</span><br><span class="line">                       text=<span class="string">'哈哈，测试我是小机器人发送Markdown\n'</span></span><br><span class="line">                            <span class="string">'![izheyi](http://izheyi.com/uploads/avatar.jpg)\n'</span></span><br><span class="line">                            <span class="string">'&gt;这里是引用显示'</span>,</span><br><span class="line">                       is_at_all=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<p>我就是小丁，测试我是小机器人！<a href="app://desktop.dingtalk.com/web_content/chatbox.html?isFourColumnMode=false#" target="_blank" rel="external">@所有人</a> </p>
+<p>​             收到      回复</p>
+<p>基本上实现了Python通过小机器人发送信息，下面就可以把测试的结果发到群里了。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xiaoding.send_markdown(title=<span class="string">'我就是测试小丁！'</span>,</span><br><span class="line">                       text=<span class="string">'Automation Test Result: \n'</span></span><br><span class="line">                            <span class="string">'&gt;Total:  25\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; &lt;font size=4 color=#D2691E&gt; Passed:  20 &lt;/font&gt;\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; Failed:  4\n\n'</span></span><br><span class="line">                            <span class="string">'&gt; Error:  1\n\n'</span>,</span><br><span class="line">                       is_at_all=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   Automaton Test Result：</p>
+<blockquote>
+<p>Total:  25</p>
+<p>Passed: 20</p>
+<p>Failed: 4</p>
+<p>Error: 1</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/09/15/pytest-allure-jenkins集成/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/15/pytest-allure-jenkins集成/" itemprop="url">pytest + allure + jenkins集成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-15T14:38:00+08:00">
+                2020-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/15/pytest-allure-jenkins集成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/09/15/pytest-allure-jenkins集成/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Pytest的报告有点简单，把报告换成了allure，可以一并集成到Jenkins上去。</p>
+<ol>
+<li><p>安装插件<a href="https://plugins.jenkins.io/allure-jenkins-plugin" target="_blank" rel="external">Allure Jenkins Plugin</a></p>
+</li>
+<li><p>Allure Commandline 配置</p>
+<p>“全局工具配置”页面 <path里不包含bin目录></path里不包含bin目录></p>
+<p><img src="/images/allure/config.jpg" alt=""></p>
+</li>
+<li><p>创建Job</p>
+<ol>
+<li><p>build</p>
+<p><img src="/images/allure/build.jpg" alt=""></p>
+</li>
+<li><p>post build</p>
+<p><img src="/images/allure/post.jpg" alt=""></p>
+</li>
+</ol>
+</li>
+<li><p>支行Job</p>
+<p><img src="/images/allure/result.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/09/02/Jacoco功能测试覆盖率/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/02/Jacoco功能测试覆盖率/" itemprop="url">Jacoco功能测试覆盖率</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-02T10:17:10+08:00">
+                2020-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/02/Jacoco功能测试覆盖率/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/09/02/Jacoco功能测试覆盖率/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。</p>
+<p>我们需要这两个jar： <code>jacocoagent.jar</code>和<code>jacococli.jar</code>。</p>
+<p>一样是和Git，Jenkins集成，说一下思路</p>
+<ol>
+<li><p>同样<code>mvn install</code>，打包生成jar包</p>
+</li>
+<li><p>项目启动的时候，配置jacoco agent</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:/jacocoagent.jar=includes=*,output=tcpserver,address=localhost,port=<span class="number">11111</span> -jar ./target/project-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动后，生成报告</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar dump --address localhost --port <span class="number">11111</span> --destfile ./jacoco-demo.<span class="keyword">exec</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar report ./jacoco-demo.<span class="keyword">exec</span> --classfiles ./target/classes --html ./report</span><br></pre></td></tr></table></figure>
+<p>没有做任何测试，覆盖率极低。</p>
+</li>
+<li><p>做一些测试之后，生成报告</p>
+<p>反映出实时的测试覆盖率。</p>
+</li>
+</ol>
+<p>以上只是简单例子，也可以在Tomcat里配置。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/08/22/Jacoco自动化代码覆盖率/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/22/Jacoco自动化代码覆盖率/" itemprop="url">Jacoco自动化代码覆盖率</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-22T10:16:54+08:00">
+                2020-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
+                    <span itemprop="name">Product Delivery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/08/22/Jacoco自动化代码覆盖率/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/08/22/Jacoco自动化代码覆盖率/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。官网(Jacoco)[<a href="https://www.eclemma.org/jacoco/" target="_blank" rel="external">https://www.eclemma.org/jacoco/</a>]</p>
+<h2 id="覆盖率计数器"><a href="#覆盖率计数器" class="headerlink" title="覆盖率计数器"></a>覆盖率计数器</h2><h6 id="1-行覆盖"><a href="#1-行覆盖" class="headerlink" title="1. 行覆盖"></a>1. 行覆盖</h6><h6 id="2-类覆盖"><a href="#2-类覆盖" class="headerlink" title="2. 类覆盖"></a>2. 类覆盖</h6><h6 id="3-方法覆盖"><a href="#3-方法覆盖" class="headerlink" title="3. 方法覆盖"></a>3. 方法覆盖</h6><h6 id="4-分支覆盖"><a href="#4-分支覆盖" class="headerlink" title="4. 分支覆盖"></a>4. 分支覆盖</h6><h6 id="5-指令覆盖"><a href="#5-指令覆盖" class="headerlink" title="5. 指令覆盖"></a>5. 指令覆盖</h6><h6 id="6-圈复杂度"><a href="#6-圈复杂度" class="headerlink" title="6. 圈复杂度"></a>6. 圈复杂度</h6><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Jacoco使用插桩的方式来记录覆盖率数据。<br> 插桩模式有两种：</p>
+<h6 id="1-on-the-fly模式"><a href="#1-on-the-fly模式" class="headerlink" title="1. on-the-fly模式"></a>1. on-the-fly模式</h6><blockquote>
+<p>JVM通过 -javaagent参数指定jar文件启动代理程序，代理程序在ClassLoader装载一个class前判断是否修改class文件，并将探针插入class文件，探针不改变原有方法的行为，只是记录是否已经执行。</p>
+</blockquote>
+<h6 id="2-offline模式"><a href="#2-offline模式" class="headerlink" title="2. offline模式"></a>2. offline模式</h6><blockquote>
+<p>在测试之前先对文件进行插桩，生成插过桩的class或jar包，测试插过桩的class和jar包，生成覆盖率信息到文件，最后统一处理，生成报告。</p>
+</blockquote>
+<h1 id="集成Maven"><a href="#集成Maven" class="headerlink" title="集成Maven"></a>集成Maven</h1><p>下载配置JDK，Maven，Jacoco</p>
+<p>Manven配置(Maven Plug-in)[<a href="https://www.eclemma.org/jacoco/trunk/doc/maven.html" target="_blank" rel="external">https://www.eclemma.org/jacoco/trunk/doc/maven.html</a>]</p>
+<p>用下载的Jacoco的example里的例子演示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Test\Jacoco&gt;mvn install</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] ----------------&lt; org.jacoco:org.jacoco.examples.maven &gt;----------------</span><br><span class="line">[INFO] Building JaCoCo Maven plug-<span class="keyword">in</span> example <span class="number">0.8</span><span class="number">.6</span></span><br><span class="line">[INFO] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] --- jacoco-maven-plugin:<span class="number">0.8</span><span class="number">.6</span>:prepare-agent (default-prepare-agent) @ org.jacoco.examples.maven ---</span><br><span class="line">[INFO] argLine set to -</span><br></pre></td></tr></table></figure>
+<p>Maven构建成功之后，生成代码覆盖报告（\target\site\jacoco）</p>
+<p><img src="/images/jacoco\report.jpg" alt=""></p>
+<h1 id="集成Git和Jenkins"><a href="#集成Git和Jenkins" class="headerlink" title="集成Git和Jenkins"></a>集成Git和Jenkins</h1><ol>
+<li><p>把example上传到Github上</p>
+</li>
+<li><p>配置Jenkins，回传报告</p>
+<p><img src="/images/jacoco\jenkins.jpg" alt=""></p>
+</li>
+<li><p>配置Jacoco Coverage Report</p>
+<p><img src="/images/jacoco\coverage.jpg" alt=""></p>
+</li>
+<li><p>Coverage Trend</p>
+<p><img src="/images/jacoco\trend.jpg" alt=""></p>
+</li>
+</ol>
 
           
         
@@ -2024,7 +2117,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2074,7 +2167,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">391</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2085,7 +2178,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2096,7 +2189,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

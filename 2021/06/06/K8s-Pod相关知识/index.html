@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="YT7QzoP0CGYZziDQuLr2aOTGGmpgioKi3izg5T1vBPs" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="k8s," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="YONGFEIUALL" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Pod 是 Kubernetes 的一个最小调度以及资源单元。用户可以通过 Kubernetes 的 Pod API 生产一个 Pod，让 Kubernetes 对这个 Pod 进行调度，也就是把它放在某一个 Kubernetes 管理的节点上运行起来。
+Pods内运行一个或者多个container，container之间共享pod的网络ip资源，存储volume资源，计算等资源，方便pod内部的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s：Pod相关知识">
+<meta property="og:url" content="http://izheyi.com/2021/06/06/K8s-Pod相关知识/index.html">
+<meta property="og:site_name" content="YONGFEIUALL">
+<meta property="og:description" content="Pod 是 Kubernetes 的一个最小调度以及资源单元。用户可以通过 Kubernetes 的 Pod API 生产一个 Pod，让 Kubernetes 对这个 Pod 进行调度，也就是把它放在某一个 Kubernetes 管理的节点上运行起来。
+Pods内运行一个或者多个container，container之间共享pod的网络ip资源，存储volume资源，计算等资源，方便pod内部的">
+<meta property="og:image" content="http://izheyi.com/images/k8s/life.jpg">
+<meta property="og:updated_time" content="2021-10-19T09:50:00.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K8s：Pod相关知识">
+<meta name="twitter:description" content="Pod 是 Kubernetes 的一个最小调度以及资源单元。用户可以通过 Kubernetes 的 Pod API 生产一个 Pod，让 Kubernetes 对这个 Pod 进行调度，也就是把它放在某一个 Kubernetes 管理的节点上运行起来。
+Pods内运行一个或者多个container，container之间共享pod的网络ip资源，存储volume资源，计算等资源，方便pod内部的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://izheyi.com/2021/06/06/K8s-Pod相关知识/"/>
+
+
+
+
+
+  <title>K8s：Pod相关知识 | YONGFEIUALL</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?964433a58390bc50ac82f1418eb8dc8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YONGFEIUALL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">izheyi.com</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'fZPEsEHs3tafejXBDpZs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/06/06/K8s-Pod相关知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">K8s：Pod相关知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-06-06T21:49:32+08:00">
+                2021-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/06/06/K8s-Pod相关知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/06/06/K8s-Pod相关知识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Pod 是 Kubernetes 的一个最小调度以及资源单元。用户可以通过 Kubernetes 的 Pod API 生产一个 Pod，让 Kubernetes 对这个 Pod 进行调度，也就是把它放在某一个 Kubernetes 管理的节点上运行起来。</p>
+<p>Pods内运行一个或者多个container，container之间共享pod的网络ip资源，存储volume资源，计算等资源，方便pod内部的container之间能够实现快速的访问和交互。</p>
+<h4 id="Pod简单操作"><a href="#Pod简单操作" class="headerlink" title="Pod简单操作"></a>Pod简单操作</h4><p>kubernetes交互的方式通常分为四种：</p>
+<ul>
+<li>命令行，kubectl和kubernetes交互，完成资源的管理，命令行入门简单，但只能支持部分资源创建</li>
+<li>API，通过resfulAPI以http的方式和kubernetes交互，适用于基于API做二次开发</li>
+<li>SDK，提供各种语言原生的SDK，实现各种语言编程接入</li>
+<li>YAML，通过易于理解的YAML文件格式，描述资源的定义，功能最丰富，最终转换为json格式</li>
+</ul>
+<p>kubernetes中通过定义生申明式的方式定义资源，即通过在yaml文件中定义所需的资源，kubernetes通过controller-manager按照yaml文件中定义的资源去生成所需的资源。通常在kubernetes中通过yaml文件的方式定义资源，然后通过kubectl create -f 文件.yaml的方式应用配置。</p>
+<p>Pod资源清单</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1     #&#24517;&#36873;&#65292;&#29256;&#26412;&#21495;&#65292;&#20363;&#22914;v1&#10;kind: Pod       &#12288; #&#24517;&#36873;&#65292;&#36164;&#28304;&#31867;&#22411;&#65292;&#20363;&#22914; Pod&#10;metadata:       &#12288; #&#24517;&#36873;&#65292;&#20803;&#25968;&#25454;&#10;  name: string     #&#24517;&#36873;&#65292;Pod&#21517;&#31216;&#10;  namespace: string  #Pod&#25152;&#23646;&#30340;&#21629;&#21517;&#31354;&#38388;,&#40664;&#35748;&#20026;&#34;default&#34;&#10;  labels:       &#12288;&#12288;  #&#33258;&#23450;&#20041;&#26631;&#31614;&#21015;&#34920;&#10;    - name: string      &#12288;          &#10;spec:  #&#24517;&#36873;&#65292;Pod&#20013;&#23481;&#22120;&#30340;&#35814;&#32454;&#23450;&#20041;&#10;  containers:  #&#24517;&#36873;&#65292;Pod&#20013;&#23481;&#22120;&#21015;&#34920;&#10;  - name: string   #&#24517;&#36873;&#65292;&#23481;&#22120;&#21517;&#31216;&#10;    image: string  #&#24517;&#36873;&#65292;&#23481;&#22120;&#30340;&#38236;&#20687;&#21517;&#31216;&#10;    imagePullPolicy: [ Always|Never|IfNotPresent ]  #&#33719;&#21462;&#38236;&#20687;&#30340;&#31574;&#30053; &#10;    command: [string]   #&#23481;&#22120;&#30340;&#21551;&#21160;&#21629;&#20196;&#21015;&#34920;&#65292;&#22914;&#19981;&#25351;&#23450;&#65292;&#20351;&#29992;&#25171;&#21253;&#26102;&#20351;&#29992;&#30340;&#21551;&#21160;&#21629;&#20196;&#10;    args: [string]      #&#23481;&#22120;&#30340;&#21551;&#21160;&#21629;&#20196;&#21442;&#25968;&#21015;&#34920;&#10;    workingDir: string  #&#23481;&#22120;&#30340;&#24037;&#20316;&#30446;&#24405;&#10;    volumeMounts:       #&#25346;&#36733;&#21040;&#23481;&#22120;&#20869;&#37096;&#30340;&#23384;&#20648;&#21367;&#37197;&#32622;&#10;    - name: string      #&#24341;&#29992;pod&#23450;&#20041;&#30340;&#20849;&#20139;&#23384;&#20648;&#21367;&#30340;&#21517;&#31216;&#65292;&#38656;&#29992;volumes[]&#37096;&#20998;&#23450;&#20041;&#30340;&#30340;&#21367;&#21517;&#10;      mountPath: string #&#23384;&#20648;&#21367;&#22312;&#23481;&#22120;&#20869;mount&#30340;&#32477;&#23545;&#36335;&#24452;&#65292;&#24212;&#23569;&#20110;512&#23383;&#31526;&#10;      readOnly: boolean #&#26159;&#21542;&#20026;&#21482;&#35835;&#27169;&#24335;&#10;    ports: #&#38656;&#35201;&#26292;&#38706;&#30340;&#31471;&#21475;&#24211;&#21495;&#21015;&#34920;&#10;    - name: string        #&#31471;&#21475;&#30340;&#21517;&#31216;&#10;      containerPort: int  #&#23481;&#22120;&#38656;&#35201;&#30417;&#21548;&#30340;&#31471;&#21475;&#21495;&#10;      hostPort: int       #&#23481;&#22120;&#25152;&#22312;&#20027;&#26426;&#38656;&#35201;&#30417;&#21548;&#30340;&#31471;&#21475;&#21495;&#65292;&#40664;&#35748;&#19982;Container&#30456;&#21516;&#10;      protocol: string    #&#31471;&#21475;&#21327;&#35758;&#65292;&#25903;&#25345;TCP&#21644;UDP&#65292;&#40664;&#35748;TCP&#10;    env:   #&#23481;&#22120;&#36816;&#34892;&#21069;&#38656;&#35774;&#32622;&#30340;&#29615;&#22659;&#21464;&#37327;&#21015;&#34920;&#10;    - name: string  #&#29615;&#22659;&#21464;&#37327;&#21517;&#31216;&#10;      value: string #&#29615;&#22659;&#21464;&#37327;&#30340;&#20540;&#10;    resources: #&#36164;&#28304;&#38480;&#21046;&#21644;&#35831;&#27714;&#30340;&#35774;&#32622;&#10;      limits:  #&#36164;&#28304;&#38480;&#21046;&#30340;&#35774;&#32622;&#10;        cpu: string     #Cpu&#30340;&#38480;&#21046;&#65292;&#21333;&#20301;&#20026;core&#25968;&#65292;&#23558;&#29992;&#20110;docker run --cpu-shares&#21442;&#25968;&#10;        memory: string  #&#20869;&#23384;&#38480;&#21046;&#65292;&#21333;&#20301;&#21487;&#20197;&#20026;Mib/Gib&#65292;&#23558;&#29992;&#20110;docker run --memory&#21442;&#25968;&#10;      requests: #&#36164;&#28304;&#35831;&#27714;&#30340;&#35774;&#32622;&#10;        cpu: string    #Cpu&#35831;&#27714;&#65292;&#23481;&#22120;&#21551;&#21160;&#30340;&#21021;&#22987;&#21487;&#29992;&#25968;&#37327;&#10;        memory: string #&#20869;&#23384;&#35831;&#27714;,&#23481;&#22120;&#21551;&#21160;&#30340;&#21021;&#22987;&#21487;&#29992;&#25968;&#37327;&#10;    lifecycle: #&#29983;&#21629;&#21608;&#26399;&#38057;&#23376;&#10;        postStart: #&#23481;&#22120;&#21551;&#21160;&#21518;&#31435;&#21363;&#25191;&#34892;&#27492;&#38057;&#23376;,&#22914;&#26524;&#25191;&#34892;&#22833;&#36133;,&#20250;&#26681;&#25454;&#37325;&#21551;&#31574;&#30053;&#36827;&#34892;&#37325;&#21551;&#10;        preStop: #&#23481;&#22120;&#32456;&#27490;&#21069;&#25191;&#34892;&#27492;&#38057;&#23376;,&#26080;&#35770;&#32467;&#26524;&#22914;&#20309;,&#23481;&#22120;&#37117;&#20250;&#32456;&#27490;&#10;    livenessProbe:  #&#23545;Pod&#20869;&#21508;&#23481;&#22120;&#20581;&#24247;&#26816;&#26597;&#30340;&#35774;&#32622;&#65292;&#24403;&#25506;&#27979;&#26080;&#21709;&#24212;&#20960;&#27425;&#21518;&#23558;&#33258;&#21160;&#37325;&#21551;&#35813;&#23481;&#22120;&#10;      exec:       &#12288; #&#23545;Pod&#23481;&#22120;&#20869;&#26816;&#26597;&#26041;&#24335;&#35774;&#32622;&#20026;exec&#26041;&#24335;&#10;        command: [string]  #exec&#26041;&#24335;&#38656;&#35201;&#21046;&#23450;&#30340;&#21629;&#20196;&#25110;&#33050;&#26412;&#10;      httpGet:       #&#23545;Pod&#20869;&#20010;&#23481;&#22120;&#20581;&#24247;&#26816;&#26597;&#26041;&#27861;&#35774;&#32622;&#20026;HttpGet&#65292;&#38656;&#35201;&#21046;&#23450;Path&#12289;port&#10;        path: string&#10;        port: number&#10;        host: string&#10;        scheme: string&#10;        HttpHeaders:&#10;        - name: string&#10;          value: string&#10;      tcpSocket:     #&#23545;Pod&#20869;&#20010;&#23481;&#22120;&#20581;&#24247;&#26816;&#26597;&#26041;&#24335;&#35774;&#32622;&#20026;tcpSocket&#26041;&#24335;&#10;         port: number&#10;       initialDelaySeconds: 0       #&#23481;&#22120;&#21551;&#21160;&#23436;&#25104;&#21518;&#39318;&#27425;&#25506;&#27979;&#30340;&#26102;&#38388;&#65292;&#21333;&#20301;&#20026;&#31186;&#10;       timeoutSeconds: 0    &#12288;&#12288;    #&#23545;&#23481;&#22120;&#20581;&#24247;&#26816;&#26597;&#25506;&#27979;&#31561;&#24453;&#21709;&#24212;&#30340;&#36229;&#26102;&#26102;&#38388;&#65292;&#21333;&#20301;&#31186;&#65292;&#40664;&#35748;1&#31186;&#10;       periodSeconds: 0     &#12288;&#12288;    #&#23545;&#23481;&#22120;&#30417;&#25511;&#26816;&#26597;&#30340;&#23450;&#26399;&#25506;&#27979;&#26102;&#38388;&#35774;&#32622;&#65292;&#21333;&#20301;&#31186;&#65292;&#40664;&#35748;10&#31186;&#19968;&#27425;&#10;       successThreshold: 0&#10;       failureThreshold: 0&#10;       securityContext:&#10;         privileged: false&#10;  restartPolicy: [Always | Never | OnFailure]  #Pod&#30340;&#37325;&#21551;&#31574;&#30053;&#10;  nodeName: &#60;string&#62; #&#35774;&#32622;NodeName&#34920;&#31034;&#23558;&#35813;Pod&#35843;&#24230;&#21040;&#25351;&#23450;&#21040;&#21517;&#31216;&#30340;node&#33410;&#28857;&#19978;&#10;  nodeSelector: obeject #&#35774;&#32622;NodeSelector&#34920;&#31034;&#23558;&#35813;Pod&#35843;&#24230;&#21040;&#21253;&#21547;&#36825;&#20010;label&#30340;node&#19978;&#10;  imagePullSecrets: #Pull&#38236;&#20687;&#26102;&#20351;&#29992;&#30340;secret&#21517;&#31216;&#65292;&#20197;key&#65306;secretkey&#26684;&#24335;&#25351;&#23450;&#10;  - name: string&#10;  hostNetwork: false   #&#26159;&#21542;&#20351;&#29992;&#20027;&#26426;&#32593;&#32476;&#27169;&#24335;&#65292;&#40664;&#35748;&#20026;false&#65292;&#22914;&#26524;&#35774;&#32622;&#20026;true&#65292;&#34920;&#31034;&#20351;&#29992;&#23487;&#20027;&#26426;&#32593;&#32476;&#10;  volumes:   #&#22312;&#35813;pod&#19978;&#23450;&#20041;&#20849;&#20139;&#23384;&#20648;&#21367;&#21015;&#34920;&#10;  - name: string    #&#20849;&#20139;&#23384;&#20648;&#21367;&#21517;&#31216; &#65288;volumes&#31867;&#22411;&#26377;&#24456;&#22810;&#31181;&#65289;&#10;    emptyDir: &#123;&#125;       #&#31867;&#22411;&#20026;emtyDir&#30340;&#23384;&#20648;&#21367;&#65292;&#19982;Pod&#21516;&#29983;&#21629;&#21608;&#26399;&#30340;&#19968;&#20010;&#20020;&#26102;&#30446;&#24405;&#12290;&#20026;&#31354;&#20540;&#10;    hostPath: string   #&#31867;&#22411;&#20026;hostPath&#30340;&#23384;&#20648;&#21367;&#65292;&#34920;&#31034;&#25346;&#36733;Pod&#25152;&#22312;&#23487;&#20027;&#26426;&#30340;&#30446;&#24405;&#10;      path: string      &#12288;&#12288;        #Pod&#25152;&#22312;&#23487;&#20027;&#26426;&#30340;&#30446;&#24405;&#65292;&#23558;&#34987;&#29992;&#20110;&#21516;&#26399;&#20013;mount&#30340;&#30446;&#24405;&#10;    secret:       &#12288;&#12288;&#12288;#&#31867;&#22411;&#20026;secret&#30340;&#23384;&#20648;&#21367;&#65292;&#25346;&#36733;&#38598;&#32676;&#19982;&#23450;&#20041;&#30340;secret&#23545;&#35937;&#21040;&#23481;&#22120;&#20869;&#37096;&#10;      scretname: string  &#10;      items:     &#10;      - key: string&#10;        path: string&#10;    configMap:         #&#31867;&#22411;&#20026;configMap&#30340;&#23384;&#20648;&#21367;&#65292;&#25346;&#36733;&#39044;&#23450;&#20041;&#30340;configMap&#23545;&#35937;&#21040;&#23481;&#22120;&#20869;&#37096;&#10;      name: string&#10;      items:&#10;      - key: string&#10;        path: string</span><br></pre></td></tr></table></figure>
+<p>这么多东西都记住不太可能，可以通过<code>kubectl explain</code>查到每个字段的含义，使用说明和使用方式。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[rootmaster ~]# kubectl explain pod&#10;KIND:     Pod&#10;VERSION:  v1&#10;FIELDS:&#10;   apiVersion   &#60;string&#62;&#10;   kind &#60;string&#62;&#10;   metadata     &#60;Object&#62;&#10;   spec &#60;Object&#62;&#10;   status       &#60;Object&#62;&#10;&#10;[root@master ~]# kubectl explain pod.metadata</span><br></pre></td></tr></table></figure>
+<h6 id="创建Pod"><a href="#创建Pod" class="headerlink" title="创建Pod"></a>创建Pod</h6><p>创建 <code>pod-basic.yaml</code>文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-basic&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;    ports: # &#35774;&#32622;&#23481;&#22120;&#26292;&#38706;&#30340;&#31471;&#21475;&#21015;&#34920;&#10;    - name: nginx-port&#10;      containerPort: 80&#10;      protocol: TCP&#10;    imagePullPolicy: Never # &#29992;&#20110;&#35774;&#32622;&#38236;&#20687;&#25289;&#21462;&#31574;&#30053;&#10;  - name: busybox&#10;    image: busybox:1.30&#10;    command: [&#34;/bin/sh&#34;,&#34;-c&#34;,&#34;touch /tmp/hello.txt;while true;do /bin/echo $(date +%T) &#62;&#62; /tmp/hello.txt; sleep 3; done;&#34;]</span><br></pre></td></tr></table></figure>
+<p>上面定义了一个比较简单Pod的配置，里面有两个容器。</p>
+<p>imagePullPolicy，用于设置镜像拉取策略，kubernetes支持配置三种拉取策略：</p>
+<ul>
+<li><p>Always：总是从远程仓库拉取镜像（一直远程下载）</p>
+</li>
+<li><p>IfNotPresent：本地有则使用本地镜像，本地没有则从远程仓库拉取镜像（本地有就本地 本地没远程下载）</p>
+</li>
+<li><p>Never：只使用本地镜像，从不去远程仓库拉取，本地没有就报错 （一直使用本地）</p>
+<blockquote>
+<p>如果镜像tag为具体版本号， 默认策略是：IfNotPresent</p>
+<p>如果镜像tag为：latest（最终版本） ，默认策略是always</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create ns dev&#10;namespace/dev created&#10;[root@master ~]# kubectl create -f pod-basic.yaml &#10;Error from server (Forbidden): error when creating &#34;pod-basic.yaml&#34;: pods &#34;pod-basic&#34; is forbidden: error looking up service account dev/default: serviceaccount &#34;default&#34; not found&#10;# &#20462;&#29702; Error&#10;[root@master ~]# mkdir -p $HOME/.kube&#10;[root@master ~]# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config&#10;cp&#65306;&#26159;&#21542;&#35206;&#30422;&#34;/root/.kube/config&#34;&#65311; y&#10;[root@master ~]# sudo chown $(id -u):$(id -g) $HOME/.kube/config&#10;&#10;[root@master ~]# kubectl create -f pod-basic.yaml &#10;pod/pod-basic created</span><br></pre></td></tr></table></figure>
+<h6 id="查看Pod"><a href="#查看Pod" class="headerlink" title="查看Pod"></a>查看Pod</h6><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#26597;&#30475;Pod&#29366;&#24577;&#10;[root@master ~]# kubectl get pod -n dev&#10;NAME        READY   STATUS    RESTARTS   AGE&#10;pod-basic   2/2     Running   0          6m21s&#10;&#10;# &#26597;&#30475;Pod&#35814;&#32454;&#20449;&#24687;&#10;[root@master ~]# kubectl describe pod pod-basic -n dev&#10;Name:         pod-basic&#10;Namespace:    dev&#10;Priority:     0&#10;Node:         node1/192.168.36.11&#10;Start Time:   Fri, 15 Oct 2021 10:03:02 +0800&#10;Labels:       &#60;none&#62;&#10;Annotations:  &#60;none&#62;&#10;Status:       Running&#10;IP:           10.244.2.5&#10;IPs:&#10;  IP:  10.244.2.5&#10;Containers:&#10;  nginx:&#10;    Container ID:   docker://7898e9c6351803089656d74defbf979f7126b1c01a370499c27cd882658ecaec&#10;    Image:          nginx:1.17.1&#10;    Image ID:       docker-pullable://nginx@sha256:b4b9b3eee194703fc2fa8afa5b7510c77ae70cfba567af1376a573a967c03dbb&#10;    Port:           80/TCP&#10;    Host Port:      0/TCP&#10;    State:          Running&#10;      Started:      Fri, 15 Oct 2021 10:03:48 +0800&#10;    Ready:          True&#10;    Restart Count:  0&#10;    Environment:    &#60;none&#62;&#10;    Mounts:&#10;      /var/run/secrets/kubernetes.io/serviceaccount from default-token-5kcqv (ro)&#10;  busybox:&#10;    Container ID:  docker://99731cc93e57c7a5551f32f672cdd0f8c69f2f5af59e39f8203bbf8b40de2034&#10;    Image:         busybox:1.30&#10;    Image ID:      docker-pullable://busybox@sha256:4b6ad3a68d34da29bf7c8ccb5d355ba8b4babcad1f99798204e7abb43e54ee3d&#10;    Port:          &#60;none&#62;&#10;    Host Port:     &#60;none&#62;&#10;    Command:&#10;      /bin/sh&#10;      -c&#10;      touch /tmp/hello.txt;while true;do /bin/echo $(date +%T) &#62;&#62; /tmp/hello.txt; sleep 3; done;&#10;    State:          Running&#10;      Started:      Fri, 15 Oct 2021 10:03:48 +0800&#10;    Ready:          True&#10;    Restart Count:  0&#10;    Environment:    &#60;none&#62;&#10;    Mounts:&#10;      /var/run/secrets/kubernetes.io/serviceaccount from default-token-5kcqv (ro)&#10;Conditions:&#10;  Type              Status&#10;  Initialized       True &#10;  Ready             True &#10;  ContainersReady   True &#10;  PodScheduled      True &#10;Volumes:&#10;  default-token-5kcqv:&#10;    Type:        Secret (a volume populated by a Secret)&#10;    SecretName:  default-token-5kcqv&#10;    Optional:    false&#10;QoS Class:       BestEffort&#10;Node-Selectors:  &#60;none&#62;&#10;Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s&#10;                 node.kubernetes.io/unreachable:NoExecute for 300s&#10;Events:&#10;  Type    Reason     Age        From               Message&#10;  ----    ------     ----       ----               -------&#10;  Normal  Scheduled  &#60;unknown&#62;  default-scheduler  Successfully assigned dev/pod-basic to node1&#10;  Normal  Pulling    3m14s      kubelet, node1     Pulling image &#34;nginx:1.17.1&#34;&#10;  Normal  Pulled     2m30s      kubelet, node1     Successfully pulled image &#34;nginx:1.17.1&#34;&#10;  Normal  Created    2m30s      kubelet, node1     Created container nginx&#10;  Normal  Started    2m29s      kubelet, node1     Started container nginx&#10;  Normal  Pulled     2m29s      kubelet, node1     Container image &#34;busybox:1.30&#34; already present on machine&#10;  Normal  Created    2m29s      kubelet, node1     Created container busybox&#10;  Normal  Started    2m29s      kubelet, node1     Started container busybox</span><br></pre></td></tr></table></figure>
+<h6 id="进入Pod"><a href="#进入Pod" class="headerlink" title="进入Pod"></a>进入Pod</h6><p><code>kubectl exec  pod名称 -n 命名空间 -it -c 容器名称 command</code>使用这个命令就可以进入某个容器的内部，然后进行相关操作了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl exec pod-basic -n dev -it -c busybox /bin/sh&#10;/ # tail -f /tmp/hello.txt &#10;02:12:46&#10;02:12:49&#10;02:12:52</span><br></pre></td></tr></table></figure>
+<h6 id="资源配额"><a href="#资源配额" class="headerlink" title="资源配额"></a>资源配额</h6><p>容器中的程序要运行，肯定是要占用一定资源的，比如cpu和内存等，如果不对某个容器的资源做限制，那么它就可能吃掉大量资源，导致其它容器无法运行。针对这种情况，kubernetes提供了对内存和cpu的资源进行配额的机制，这种机制主要通过resources选项实现，他有两个子选项：</p>
+<ul>
+<li>limits：用于限制运行时容器的最大占用资源，当容器占用资源超过limits时会被终止，并进行重启</li>
+<li>requests ：用于设置容器需要的最小资源，如果环境资源不够，容器将无法启动</li>
+</ul>
+<p>可以通过上面两个选项设置资源的上下限。</p>
+<p>创建pod-resources.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-resources&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;    resources: # &#36164;&#28304;&#37197;&#39069;&#10;      limits:  # &#38480;&#21046;&#36164;&#28304;&#65288;&#19978;&#38480;&#65289;&#10;        cpu: &#34;2&#34; # CPU&#38480;&#21046;&#65292;&#21333;&#20301;&#26159;core&#25968;&#10;        memory: &#34;10Gi&#34; # &#20869;&#23384;&#38480;&#21046;&#10;      requests: # &#35831;&#27714;&#36164;&#28304;&#65288;&#19979;&#38480;&#65289;&#10;        cpu: &#34;1&#34;  # CPU&#38480;&#21046;&#65292;&#21333;&#20301;&#26159;core&#25968;&#10;        memory: &#34;10Mi&#34;  # &#20869;&#23384;&#38480;&#21046;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>cpu：core数，可以为整数或小数</li>
+<li>memory： 内存大小，可以使用Gi、Mi、G、M等形式</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#36816;&#34892;Pod&#10;[root@master ~]# kubectl create  -f pod-resources.yaml&#10;pod/pod-resources created&#10;&#10;# &#26597;&#30475;&#21457;&#29616;pod&#36816;&#34892;&#27491;&#24120;&#10;[root@master ~]# kubectl get pod pod-resources -n dev&#10;NAME            READY   STATUS    RESTARTS   AGE  &#10;pod-resources   1/1     Running   0          39s   &#10;&#10;# &#25509;&#19979;&#26469;&#65292;&#20572;&#27490;Pod&#10;[root@master ~]# kubectl delete  -f pod-resources.yaml&#10;pod &#34;pod-resources&#34; deleted&#10;&#10;# &#32534;&#36753;pod&#65292;&#20462;&#25913;resources.requests.memory&#30340;&#20540;&#20026;10Gi&#10;[root@master ~]# vim pod-resources.yaml&#10;&#10;# &#20877;&#27425;&#21551;&#21160;pod&#10;[root@master ~]# kubectl create  -f pod-resources.yaml&#10;pod/pod-resources created&#10;&#10;# &#26597;&#30475;Pod&#29366;&#24577;&#65292;&#21457;&#29616;Pod&#21551;&#21160;&#22833;&#36133;&#10;[root@master ~]# kubectl get pod pod-resources -n dev -o wide&#10;NAME            READY   STATUS    RESTARTS   AGE          &#10;pod-resources   0/1     Pending   0          20s    &#10;&#10;# &#26597;&#30475;pod&#35814;&#24773;&#20250;&#21457;&#29616;&#65292;&#22914;&#19979;&#25552;&#31034;&#10;[root@master ~]# kubectl describe pod pod-resources -n dev&#10;Events:&#10;  Type     Reason            Age        From               Message&#10;  ----     ------            ----       ----               -------&#10;  Warning  FailedScheduling  &#60;unknown&#62;  default-scheduler  0/3 nodes are available: 3 Insufficient memory.</span><br></pre></td></tr></table></figure>
+<h4 id="Pod生命周期"><a href="#Pod生命周期" class="headerlink" title="Pod生命周期"></a>Pod生命周期</h4><p><img src="/images/k8s/life.jpg" alt=""></p>
+<ul>
+<li>运行初始化容器（init container）过程</li>
+<li>运行主容器（main container）<ul>
+<li>容器启动后钩子（post start）、容器终止前钩子（pre stop）</li>
+<li>容器的存活性探测（liveness probe）、就绪性探测（readiness probe）</li>
+</ul>
+</li>
+</ul>
+<h6 id="Pod状态"><a href="#Pod状态" class="headerlink" title="Pod状态"></a>Pod状态</h6><p>在整个生命周期中，Pod会出现5种状态</p>
+<ul>
+<li>挂起（Pending）：apiserver已经创建了pod资源对象，但它尚未被调度完成或者仍处于下载镜像的过程中</li>
+<li>运行中（Running）：pod已经被调度至某节点，并且所有容器都已经被kubelet创建完成</li>
+<li>成功（Succeeded）：pod中的所有容器都已经成功终止并且不会被重启</li>
+<li>失败（Failed）：所有容器都已经终止，但至少有一个容器终止失败，即容器返回了非0值的退出状态</li>
+<li>未知（Unknown）：apiserver无法正常获取到pod对象的状态信息，通常由网络通信失败所导致</li>
+</ul>
+<h6 id="Pod的创建过程"><a href="#Pod的创建过程" class="headerlink" title="Pod的创建过程"></a>Pod的创建过程</h6><p>①用户通过kubectl或其他API客户端提交Pod Spec给API Server。</p>
+<p>②API Server尝试将Pod对象的相关信息存储到etcd中，等待写入操作完成，API Server返回确认信息到客户端。</p>
+<p>③API Server开始反映etcd中的状态变化。</p>
+<p>④所有的Kubernetes组件通过”watch”机制跟踪检查API Server上的相关信息变动。</p>
+<p>⑤kube-scheduler（调度器）通过其”watcher”检测到API Server创建了新的Pod对象但是没有绑定到任何工作节点。</p>
+<p>⑥kube-scheduler为Pod对象挑选一个工作节点并将结果信息更新到API Server。</p>
+<p>⑦调度结果新消息由API Server更新到etcd，并且API Server也开始反馈该Pod对象的调度结果。</p>
+<p>⑧Pod被调度到目标工作节点上的kubelet尝试在当前节点上调用docker engine进行启动容器，并将容器的状态结果返回到API Server。</p>
+<p>⑨API Server将Pod信息存储到etcd系统中。</p>
+<p>⑩在etcd确认写入操作完成，API Server将确认信息发送到相关的kubelet。</p>
+<h6 id="初始化容器"><a href="#初始化容器" class="headerlink" title="初始化容器"></a>初始化容器</h6><p>初始化容器是在pod的主容器启动之前要运行的容器，主要是做一些主容器的前置工作，它具有两大特征：</p>
+<ol>
+<li>初始化容器必须运行完成直至结束，若某初始化容器运行失败，那么kubernetes需要重启它直到成功完成</li>
+<li>初始化容器必须按照定义的顺序执行，当且仅当前一个成功之后，后面的一个才能运行</li>
+</ol>
+<h6 id="Webhook"><a href="#Webhook" class="headerlink" title="Webhook"></a>Webhook</h6><p>kubernetes在主容器的启动之后和停止之前提供了两个钩子函数：</p>
+<ul>
+<li>post start：容器创建之后执行，如果失败了会重启容器</li>
+<li>pre stop ：容器终止之前执行，执行完成之后容器将成功终止，在其完成之前会阻塞删除容器的操作</li>
+</ul>
+<p>钩子处理器支持使用下面三种方式定义动作：</p>
+<p>钩子处理器支持使用下面三种方式定义动作：</p>
+<ul>
+<li><p>Exec命令：在容器内执行一次命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lifecycle:&#10;  postStart: &#10;    exec:&#10;      command:&#10;      - cat&#10;      - /tmp/healthy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCPSocket：在当前容器尝试访问指定的socket</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">lifecycle</span>:</span><br><span class="line">  <span class="attribute">postStart</span>:</span><br><span class="line">    <span class="attribute">tcpSocket</span>:</span><br><span class="line">      <span class="attribute">port</span>: <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HTTPGet：在当前容器中向某url发起http请求</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lifecycle:</span><br><span class="line">  postStart:</span><br><span class="line">    httpGet:</span><br><span class="line">      path: / <span class="preprocessor">#URI地址</span></span><br><span class="line">      port: <span class="number">80</span> <span class="preprocessor">#端口号</span></span><br><span class="line">      host: <span class="number">192.168</span><span class="number">.5</span><span class="number">.3</span> <span class="preprocessor">#主机地址</span></span><br><span class="line">      scheme: HTTP <span class="preprocessor">#支持的协议，http或者https</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>创建pod-hook-exec.yaml文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-hook-exec&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: main-container&#10;    image: nginx:1.17.1&#10;    ports:&#10;    - name: nginx-port&#10;      containerPort: 80&#10;    lifecycle:&#10;      postStart: &#10;        exec: # &#22312;&#23481;&#22120;&#21551;&#21160;&#30340;&#26102;&#20505;&#25191;&#34892;&#19968;&#20010;&#21629;&#20196;&#65292;&#20462;&#25913;&#25481;nginx&#30340;&#40664;&#35748;&#39318;&#39029;&#20869;&#23481;&#10;          command: [&#34;/bin/sh&#34;, &#34;-c&#34;, &#34;echo postStart... &#62; /usr/share/nginx/html/index.html&#34;]&#10;      preStop:&#10;        exec: # &#22312;&#23481;&#22120;&#20572;&#27490;&#20043;&#21069;&#20572;&#27490;nginx&#26381;&#21153;&#10;          command: [&#34;/usr/sbin/nginx&#34;,&#34;-s&#34;,&#34;quit&#34;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# vim pod-hook-exec.yaml&#10;[root@master ~]# kubectl create -f pod-hook-exec.yaml &#10;pod/pod-hook-exec created&#10;[root@master ~]# kubectl get pods  pod-hook-exec -n dev -o wide&#10;NAME            READY   STATUS    RESTARTS   AGE   IP           NODE    NOMINATED NODE   READINESS GATES&#10;pod-hook-exec   1/1     Running   0          28s   10.244.2.7   node1   &#60;none&#62;           &#60;none&#62;&#10;[root@master ~]# curl 10.244.2.7&#10;postStart...</span><br></pre></td></tr></table></figure>
+<h6 id="容器探测"><a href="#容器探测" class="headerlink" title="容器探测"></a>容器探测</h6><p>容器探测用于检测容器中的应用实例是否正常工作，是保障业务可用性的一种传统机制。如果经过探测，实例的状态不符合预期，那么kubernetes就会把该问题实例” 摘除 “，不承担业务流量。kubernetes提供了两种探针来实现容器探测，分别是：</p>
+<ul>
+<li>liveness probes：存活性探针，用于检测应用实例当前是否处于正常运行状态，如果不是，k8s会重启容器</li>
+<li>readiness probes：就绪性探针，用于检测应用实例当前是否可以接收请求，如果不能，k8s不会转发流量</li>
+</ul>
+<blockquote>
+<p>livenessProbe 决定是否重启容器，readinessProbe 决定是否将请求转发给容器。</p>
+</blockquote>
+<p>上面两种探针目前均支持三种探测方式：</p>
+<ul>
+<li>Exec命令：在容器内执行一次命令，如果命令执行的退出码为0，则认为程序正常，否则不正常</li>
+<li>TCPSocket：将会尝试访问一个用户容器的端口，如果能够建立这条连接，则认为程序正常，否则不正常</li>
+<li>HTTPGet：调用容器内Web应用的URL，如果返回的状态码在200和399之间，则认为程序正常，否则不正常</li>
+</ul>
+<p>创建pod-liveness-tcpsocket.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-liveness-tcpsocket&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;    ports: &#10;    - name: nginx-port&#10;      containerPort: 80&#10;    livenessProbe:&#10;      tcpSocket:&#10;        port: 8080 # &#23581;&#35797;&#35775;&#38382;8080&#31471;&#21475;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# vi pod-liveness-tcpsocket.yaml&#10;[root@master ~]# kubectl create -f pod-liveness-tcpsocket.yaml &#10;pod/pod-liveness-tcpsocket created&#10;&#10;# &#26597;&#30475;Pod&#35814;&#24773;&#10;[root@master ~]# kubectl describe pods pod-liveness-tcpsocket -n dev&#10;Events:&#10;  Type     Reason     Age        From               Message&#10;  ----     ------     ----       ----               -------&#10;  Normal   Scheduled  &#60;unknown&#62;  default-scheduler  Successfully assigned dev/pod-liveness-tcpsocket to node1&#10;  Normal   Pulled     14s        kubelet, node1     Container image &#34;nginx:1.17.1&#34; already present on machine&#10;  Normal   Created    14s        kubelet, node1     Created container nginx&#10;  Normal   Started    13s        kubelet, node1     Started container nginx&#10;  Warning  Unhealthy  7s         kubelet, node1     Liveness probe failed: dial tcp 10.244.2.8:8080: connect: connection refused&#10;&#10;# &#31245;&#31561;&#19968;&#20250;&#20043;&#21518;&#65292;&#20877;&#35266;&#23519;pod&#20449;&#24687;&#65292;&#23601;&#21487;&#20197;&#30475;&#21040;RESTARTS&#19981;&#20877;&#26159;0&#65292;&#32780;&#26159;&#19968;&#30452;&#22686;&#38271;&#10;[root@master ~]# kubectl get pods pod-liveness-tcpsocket  -n dev&#10;NAME                     READY   STATUS    RESTARTS   AGE&#10;pod-liveness-tcpsocket   1/1     Running   3          2m50s</span><br></pre></td></tr></table></figure>
+<h6 id="重启策略"><a href="#重启策略" class="headerlink" title="重启策略"></a>重启策略</h6><p>一旦容器探测出现了问题，kubernetes就会对容器所在的Pod进行重启，其实这是由pod的重启策略决定的，pod的重启策略有 3 种，分别如下：</p>
+<ul>
+<li>Always ：容器失效时，自动重启该容器，这也是默认值。</li>
+<li>OnFailure ： 容器终止运行且退出码不为0时重启</li>
+<li>Never ： 不论状态为何，都不重启该容器</li>
+</ul>
+<p>重启策略适用于pod对象中的所有容器，首次需要重启的容器，将在其需要时立即进行重启，随后再次需要重启的操作将由kubelet延迟一段时间后进行，且反复的重启操作的延迟时长以此为10s、20s、40s、80s、160s和300s，300s是最大延迟时长。</p>
+<p>创建pod-restartpolicy.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-restartpolicy&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;    ports:&#10;    - name: nginx-port&#10;      containerPort: 80&#10;    livenessProbe:&#10;      httpGet:&#10;        scheme: HTTP&#10;        port: 80&#10;        path: /hello&#10;  restartPolicy: Never # &#35774;&#32622;&#37325;&#21551;&#31574;&#30053;&#20026;Never</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f pod-restartpolicy.yaml&#10;pod/pod-restartpolicy created&#10;&#10;# &#26597;&#30475;Pod&#35814;&#24773;&#10;[root@master ~]# kubectl  describe pods pod-restartpolicy  -n dev&#10;......&#10;  Warning  Unhealthy  15s (x3 over 35s)  kubelet, node1     Liveness probe failed: HTTP probe failed with statuscode: 404&#10;  Normal   Killing    15s                kubelet, node1     Container nginx failed liveness probe&#10;  &#10;# &#22810;&#31561;&#19968;&#20250;&#65292;&#20877;&#35266;&#23519;pod&#30340;&#37325;&#21551;&#27425;&#25968;&#65292;&#21457;&#29616;&#19968;&#30452;&#26159;0&#65292;&#24182;&#26410;&#37325;&#21551;   &#10;[root@master ~]# kubectl  get pods pod-restartpolicy -n dev&#10;NAME                   READY   STATUS    RESTARTS   AGE&#10;pod-restartpolicy      0/1     Running   0          5min42s</span><br></pre></td></tr></table></figure>
+<h4 id="Pod调度"><a href="#Pod调度" class="headerlink" title="Pod调度"></a>Pod调度</h4><p>在默认情况下，一个Pod在哪个Node节点上运行，是由Scheduler组件采用相应的算法计算出来的，这个过程是不受人工控制的。但是在实际使用中，这并不满足的需求，因为很多情况下，我们想控制某些Pod到达某些节点上，那么应该怎么做呢？这就要求了解kubernetes对Pod的调度规则，kubernetes提供了四大类调度方式：</p>
+<ul>
+<li>自动调度：运行在哪个节点上完全由Scheduler经过一系列的算法计算得出</li>
+<li>定向调度：NodeName、NodeSelector</li>
+<li>亲和性调度：NodeAffinity、PodAffinity、PodAntiAffinity</li>
+<li>污点（容忍）调度：Taints、Toleration</li>
+</ul>
+<h6 id="定向调度"><a href="#定向调度" class="headerlink" title="定向调度"></a>定向调度</h6><p>定向调度，指的是利用在pod上声明nodeName或者nodeSelector，以此将Pod调度到期望的node节点上。注意，这里的调度是强制的，这就意味着即使要调度的目标Node不存在，也会向上面进行调度，只不过pod运行失败而已。</p>
+<ul>
+<li><p>nodeName调度</p>
+<p>NodeName用于强制约束将Pod调度到指定的Name的Node节点上。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-nodename&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;  nodeName: node1 # &#25351;&#23450;&#35843;&#24230;&#21040;node1&#33410;&#28857;&#19978;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>nodeSelector调度</p>
+<p>NodeSelector用于将pod调度到添加了指定标签的node节点上。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: pod-nodeselector&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: nginx&#10;    image: nginx:1.17.1&#10;  nodeSelector: &#10;    nodeenv: dev # &#25351;&#23450;&#35843;&#24230;&#21040;&#20855;&#26377;nodeenv=dev&#26631;&#31614;&#30340;&#33410;&#28857;&#19978;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h6 id="亲和性调度"><a href="#亲和性调度" class="headerlink" title="亲和性调度"></a>亲和性调度</h6><p>kubernetes还提供了一种亲和性调度（Affinity）。它在NodeSelector的基础之上的进行了扩展，可以通过配置的形式，实现优先选择满足条件的Node进行调度，如果没有，也可以调度到不满足条件的节点上，使调度更加灵活。</p>
+<p>Affinity主要分为三类：</p>
+<ul>
+<li><p>nodeAffinity(node亲和性）: 以node为目标，解决pod可以调度到哪些node的问题</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod.spec.affinity.nodeAffinity&#10;  requiredDuringSchedulingIgnoredDuringExecution  Node&#33410;&#28857;&#24517;&#39035;&#28385;&#36275;&#25351;&#23450;&#30340;&#25152;&#26377;&#35268;&#21017;&#25165;&#21487;&#20197;&#65292;&#30456;&#24403;&#20110;&#30828;&#38480;&#21046;&#10;    nodeSelectorTerms  &#33410;&#28857;&#36873;&#25321;&#21015;&#34920;&#10;      matchFields   &#25353;&#33410;&#28857;&#23383;&#27573;&#21015;&#20986;&#30340;&#33410;&#28857;&#36873;&#25321;&#22120;&#35201;&#27714;&#21015;&#34920;&#10;      matchExpressions   &#25353;&#33410;&#28857;&#26631;&#31614;&#21015;&#20986;&#30340;&#33410;&#28857;&#36873;&#25321;&#22120;&#35201;&#27714;&#21015;&#34920;(&#25512;&#33616;)&#10;        key    &#38190;&#10;        values &#20540;&#10;        operat or &#20851;&#31995;&#31526; &#25903;&#25345;Exists, DoesNotExist, In, NotIn, Gt, Lt&#10;  preferredDuringSchedulingIgnoredDuringExecution &#20248;&#20808;&#35843;&#24230;&#21040;&#28385;&#36275;&#25351;&#23450;&#30340;&#35268;&#21017;&#30340;Node&#65292;&#30456;&#24403;&#20110;&#36719;&#38480;&#21046; (&#20542;&#21521;)&#10;    preference   &#19968;&#20010;&#33410;&#28857;&#36873;&#25321;&#22120;&#39033;&#65292;&#19982;&#30456;&#24212;&#30340;&#26435;&#37325;&#30456;&#20851;&#32852;&#10;      matchFields   &#25353;&#33410;&#28857;&#23383;&#27573;&#21015;&#20986;&#30340;&#33410;&#28857;&#36873;&#25321;&#22120;&#35201;&#27714;&#21015;&#34920;&#10;      matchExpressions   &#25353;&#33410;&#28857;&#26631;&#31614;&#21015;&#20986;&#30340;&#33410;&#28857;&#36873;&#25321;&#22120;&#35201;&#27714;&#21015;&#34920;(&#25512;&#33616;)&#10;        key    &#38190;&#10;        values &#20540;&#10;        operator &#20851;&#31995;&#31526; &#25903;&#25345;In, NotIn, Exists, DoesNotExist, Gt, Lt&#10;&#9;weight &#20542;&#21521;&#26435;&#37325;&#65292;&#22312;&#33539;&#22260;1-100&#12290;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>podAffinity(pod亲和性) : 以pod为目标，解决pod可以和哪些已存在的pod部署在同一个拓扑域中的问题</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod.spec.affinity.podAffinity&#10;  requiredDuringSchedulingIgnoredDuringExecution  &#30828;&#38480;&#21046;&#10;    namespaces       &#25351;&#23450;&#21442;&#29031;pod&#30340;namespace&#10;    topologyKey      &#25351;&#23450;&#35843;&#24230;&#20316;&#29992;&#22495;&#10;    labelSelector    &#26631;&#31614;&#36873;&#25321;&#22120;&#10;      matchExpressions  &#25353;&#33410;&#28857;&#26631;&#31614;&#21015;&#20986;&#30340;&#33410;&#28857;&#36873;&#25321;&#22120;&#35201;&#27714;&#21015;&#34920;(&#25512;&#33616;)&#10;        key    &#38190;&#10;        values &#20540;&#10;        operator &#20851;&#31995;&#31526; &#25903;&#25345;In, NotIn, Exists, DoesNotExist.&#10;      matchLabels    &#25351;&#22810;&#20010;matchExpressions&#26144;&#23556;&#30340;&#20869;&#23481;&#10;  preferredDuringSchedulingIgnoredDuringExecution &#36719;&#38480;&#21046;&#10;    podAffinityTerm  &#36873;&#39033;&#10;      namespaces      &#10;      topologyKey&#10;      labelSelector&#10;        matchExpressions  &#10;          key    &#38190;&#10;          values &#20540;&#10;          operator&#10;        matchLabels &#10;    weight &#20542;&#21521;&#26435;&#37325;&#65292;&#22312;&#33539;&#22260;1-100</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>podAntiAffinity(pod反亲和性) : 以pod为目标，解决pod不能和哪些已存在pod部署在同一个拓扑域中的问题</p>
+</li>
+</ul>
+<h6 id="污点和容忍"><a href="#污点和容忍" class="headerlink" title="污点和容忍"></a>污点和容忍</h6><ul>
+<li><p>污点（Taints）</p>
+<p>通过在Node上添加污点属性，来决定是否允许Pod调度过来</p>
+<p>污点的格式为：<code>key=value:effect</code>, key和value是污点的标签，effect描述污点的作用，支持如下三个选项：</p>
+<ul>
+<li>PreferNoSchedule：kubernetes将尽量避免把Pod调度到具有该污点的Node上，除非没有其他节点可调度</li>
+<li>NoSchedule：kubernetes将不会把Pod调度到具有该污点的Node上，但不会影响当前Node上已存在的Pod</li>
+<li>NoExecute：kubernetes将不会把Pod调度到具有该污点的Node上，同时也会将Node上已存在的Pod驱离</li>
+</ul>
+<p>使用kubectl设置和去除污点的命令示例如下：</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># 设置污点</span></span><br><span class="line">kubectl taint nodes node1 key=value:effect</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># 去除污点</span></span><br><span class="line">kubectl taint nodes node1 key:effect-</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># 去除所有污点</span></span><br><span class="line">kubectl taint nodes node1 key-</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>容忍（Toleration）</p>
+<p>污点就是拒绝，容忍就是忽略，Node通过污点拒绝pod调度上去，Pod通过容忍忽略拒绝</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin.jpg" alt="唐胡璐 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>分享创造价值，您的支持将鼓励我继续前行！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.jpg" alt="唐胡璐 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay.jpg" alt="唐胡璐 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    唐胡璐
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://izheyi.com/2021/06/06/K8s-Pod相关知识/" title="K8s：Pod相关知识">http://izheyi.com/2021/06/06/K8s-Pod相关知识/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/25/K8s-Namespace-Label/" rel="next" title="K8s：Namespace & Label">
+                <i class="fa fa-chevron-left"></i> K8s：Namespace & Label
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/06/10/K8s-Pod控制器/" rel="prev" title="K8s：Pod控制器">
+                K8s：Pod控制器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="唐胡璐" />
+            
+              <p class="site-author-name" itemprop="name">唐胡璐</p>
+              <p class="site-description motion-element" itemprop="description">i just wanna live while i am alive</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/yongfeiuall" target="_blank" title="LinkedIn">
+                      
+                        <i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/yongfeiuall" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yongfeiuall" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="yongfeiuall@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod简单操作"><span class="nav-number">1.</span> <span class="nav-text">Pod简单操作</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#创建Pod"><span class="nav-number">1.0.1.</span> <span class="nav-text">创建Pod</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#查看Pod"><span class="nav-number">1.0.2.</span> <span class="nav-text">查看Pod</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#进入Pod"><span class="nav-number">1.0.3.</span> <span class="nav-text">进入Pod</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#资源配额"><span class="nav-number">1.0.4.</span> <span class="nav-text">资源配额</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod生命周期"><span class="nav-number">2.</span> <span class="nav-text">Pod生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Pod状态"><span class="nav-number">2.0.1.</span> <span class="nav-text">Pod状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Pod的创建过程"><span class="nav-number">2.0.2.</span> <span class="nav-text">Pod的创建过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#初始化容器"><span class="nav-number">2.0.3.</span> <span class="nav-text">初始化容器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Webhook"><span class="nav-number">2.0.4.</span> <span class="nav-text">Webhook</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#容器探测"><span class="nav-number">2.0.5.</span> <span class="nav-text">容器探测</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重启策略"><span class="nav-number">2.0.6.</span> <span class="nav-text">重启策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod调度"><span class="nav-number">3.</span> <span class="nav-text">Pod调度</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#定向调度"><span class="nav-number">3.0.1.</span> <span class="nav-text">定向调度</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#亲和性调度"><span class="nav-number">3.0.2.</span> <span class="nav-text">亲和性调度</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#污点和容忍"><span class="nav-number">3.0.3.</span> <span class="nav-text">污点和容忍</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">唐胡璐</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 101212, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 101212, xid: "2021/06/06/K8s-Pod相关知识/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/101212/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Wechat,Linkedin,Weibo,Mailto,Douban,QQZone,Twitter,Reddit,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

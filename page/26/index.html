@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/18/Java线程状态及分析工具/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2016/01/05/元旦回老家，兴奋的很/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -324,7 +324,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/18/Java线程状态及分析工具/" itemprop="url">Java线程状态及监控工具</a></h1>
+                <a class="post-title-link" href="/2016/01/05/元旦回老家，兴奋的很/" itemprop="url">元旦回老家，兴奋的很</a></h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T07:32:08+08:00">
-                2015-12-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-05T08:44:43+08:00">
+                2016-01-05
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
                   </a>
                 </span>
 
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/18/Java线程状态及分析工具/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/18/Java线程状态及分析工具/" itemprop="commentsCount"></span>
+                <a href="/2016/01/05/元旦回老家，兴奋的很/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2016/01/05/元旦回老家，兴奋的很/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -409,35 +409,176 @@
 
       
         
-          <h1 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h1><p>在监控的过程中，要弄明白下边这6种状态(我们主要关注分析的：Runnable, Blocked, Waiting)：</p>
-<ol>
-<li>NEW<br>　 当线程对象对创建后，即进入了新建状态</li>
-<li>RUNNABLE<br>　 当调用线程对象的start()方法，线程即进入就绪状态。正在 Java 虚拟机中执行的线程处于这种状态。该状态的线程位于可运行线程池中，等待被线程调度选中，获取cpu 的使用权 。</li>
-<li>BLOCKED<br>　 处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：<ul>
-<li>等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；</li>
-<li>同步阻塞：线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；</li>
-<li>其他阻塞：通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。</li>
-</ul>
-</li>
-<li>WAITING<br>　 无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。某一线程因为调用下列方法之一而处于等待状态：<ul>
-<li>不带超时值的 Object.wait</li>
-<li>不带超时值的 Thread.join</li>
-<li>LockSupport.park</li>
-</ul>
-</li>
-<li>TIMED_WAITING<br>　 具有指定等待时间的某一等待线程的线程状态。某一线程因为调用以下带有指定正等待时间的方法之一而处于定时等待状态：<ul>
-<li>Thread.sleep</li>
-<li>带有超时值的 Object.wait</li>
-<li>带有超时值的 Thread.join</li>
-<li>LockSupport.parkNanos</li>
-<li>LockSupport.parkUntil</li>
-</ul>
-</li>
-<li>TERMINATED<br>　　已终止线程的线程状态。线程已经结束执行。</li>
-</ol>
+          
+            <p>现在的小丁对回老家这件事很是向往和兴奋，提前两周自己就在倒计时，可以不上学，但一定要回老家。希望你长大了，也能保持这份热情:)</p>
+<p>大城市的玩伴本来就少，回老家就不一样了，太多的小朋友，没有了所谓的规矩，也不粘着大人了，除了晚上睡觉的时候给读个故事，其他时间根本就不用管，真是玩疯了。</p>
+<p>回老家的火车上，碰见了一个小朋友，高兴的玩了一路。<br><img src="/images/izheyi/2016/01/huijia.jpg" alt="你睡的真舒服么^_^"></p>
+<p>回京的路上，我们读了故事书，也有了下面的一些小对话：</p>
+<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg4OTY1Ng==" frameborder="0" allowfullscreen></iframe>
+
+<iframe height="498" width="510" src="http://player.youku.com/embed/XMTQ0Mjg5MDY1Mg==" frameborder="0" allowfullscreen></iframe>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/30/小丁的第一个元旦演出/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/30/小丁的第一个元旦演出/" itemprop="url">小丁的第一次元旦演出</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-30T08:43:38+08:00">
+                2015-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/30/小丁的第一个元旦演出/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/30/小丁的第一个元旦演出/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>由于种种原因，都上大班了，才有了第一次的元旦文艺演出，小丁的表现真是可圈可点，处处都争取表现到最好，精神可嘉！</p>
+<p>好几个节目，小丁好像都是领舞呢:)</p>
+<h1 id="歌舞串烧"><a href="#歌舞串烧" class="headerlink" title="歌舞串烧"></a>歌舞串烧</h1><p>我有一只小毛驴 + 新年好</p>
+<p><iframe height=498 width=510 src="http://player.youku.com/embed/XMTQ0MjcwNzM5Ng==" frameborder=0 allowfullscreen></iframe><br><img src="/images/izheyi/2015/chuan_1.jpg" alt=""><br><img src="/images/izheyi/2015/chuan_2.jpg" alt=""></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/18/Java线程状态及分析工具/#more" rel="contents">
+            <a class="btn" href="/2015/12/30/小丁的第一个元旦演出/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -488,7 +629,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/15/Java执行机制过程和JVM入门/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/25/2015圣诞节/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -507,7 +648,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/15/Java执行机制过程和JVM入门/" itemprop="url">Java运行环境、执行过程和JVM入门</a></h1>
+                <a class="post-title-link" href="/2015/12/25/2015圣诞节/" itemprop="url">2015圣诞节</a></h1>
         
 
         <div class="post-meta">
@@ -519,8 +660,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-15T08:55:58+08:00">
-                2015-12-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-25T08:43:02+08:00">
+                2015-12-25
               </time>
             
 
@@ -542,8 +683,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/丁丁/" itemprop="url" rel="index">
+                    <span itemprop="name">丁丁</span>
                   </a>
                 </span>
 
@@ -561,8 +702,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/15/Java执行机制过程和JVM入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/15/Java执行机制过程和JVM入门/" itemprop="commentsCount"></span>
+                <a href="/2015/12/25/2015圣诞节/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/25/2015圣诞节/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -592,19 +733,10 @@
 
       
         
-          <h1 id="Java运行过程"><a href="#Java运行过程" class="headerlink" title="Java运行过程"></a>Java运行过程</h1><p><img src="/images/java/java_run.jpg" alt=""></p>
-<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p>概念性的东西也不多说了，JVM的体系结构如下：<br><img src="/images/java/jvm.jpg" alt=""><br>在系统监控和分析中，我们主要关心的是堆和栈</p>
-<ul>
-<li>栈是运行时单位，堆是存储单位</li>
-<li>栈解决程序运行问题，堆解决数据存储问题</li>
-<li>堆中存的是对象，栈中存的基本数据类型和堆中对象的引用</li>
-<li>栈代表了处理逻辑，而堆代表了数据</li>
-<li>栈异常：java.lang.StackOverflowError</li>
-<li>堆异常：java.lang.OutOfMemoryError</li>
-</ul>
+          <p>圣诞节到了，小丁也长大了，好像明白了是咋回事了，我们去了上地华联，又去了中关村，可高兴坏了。<br><img src="/images/izheyi/2015/xmas_0.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_1.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_2.jpg" alt=""><br><img src="/images/izheyi/2015/xmas_3.jpg" alt=""></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/15/Java执行机制过程和JVM入门/#more" rel="contents">
+            <a class="btn" href="/2015/12/25/2015圣诞节/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -655,7 +787,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/14/HTTP协议基础/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/23/Load-Runner-VuGen参数化构造数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -674,7 +806,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/14/HTTP协议基础/" itemprop="url">HTTP协议基础</a></h1>
+                <a class="post-title-link" href="/2015/12/23/Load-Runner-VuGen参数化构造数据/" itemprop="url">Load Runner - VuGen参数化构造数据</a></h1>
         
 
         <div class="post-meta">
@@ -686,181 +818,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T09:27:49+08:00">
-                2015-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/14/HTTP协议基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/14/HTTP协议基础/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>目前接触到的基本上都是Web端的性能测试，都是基于HTTP协议的，这里对HTTP协议做个简单的认识：</p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>官方概念不多说，简单来说，就是一个基于应用层的通信规范：双方要进行通信，大家都要遵守一个规范，这个规范就是HTTP协议。<br>HTTP三点注意事项：</p>
-<ul>
-<li>HTTP是无连接<br>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
-<li>HTTP是媒体独立的<br>这意味着，只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。客户端以及服务器指定使用适合的MIME-type内容类型。 </li>
-<li>HTTP是无状态<br>HTTP协议是无状态协议。同一个客户端的这次请求和上次请求是没有对应关系，对http服务器来说，它并不知道这两个请求来自同一个客户端。 为了解决这个问题， Web程序引入了Cookie机制来维护状态.</li>
-</ul>
-<p><img src="/images/performancetesting/http_woshou.jpg" alt="HTTP 三次握手"><br>第一次握手：建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。<br>第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；<br>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
-<h1 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h1><p>一次HTTP操作称为一个事务，其工作过程可分为四步：</p>
-<ol>
-<li>首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP的工作开始。</li>
-<li>建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是MIME信息包括请求修饰符、客户机信息和可能的内容。</li>
-<li>服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是MIME信息包括服务器信息、实体信息和可能的内容。</li>
-<li>客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。</li>
-</ol>
-<p>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由HTTP自己完成的，用户只要用鼠标点击，等待信息显示就可以了</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/12/14/HTTP协议基础/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/Load-Runner-VuGen脚本开发基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="url">Load Runner - VuGen脚本开发基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T13:32:08+08:00">
-                2015-12-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-23T11:01:23+08:00">
+                2015-12-23
               </time>
             
 
@@ -901,8 +860,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/10/Load-Runner-VuGen脚本开发基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/Load-Runner-VuGen脚本开发基础/" itemprop="commentsCount"></span>
+                <a href="/2015/12/23/Load-Runner-VuGen参数化构造数据/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/23/Load-Runner-VuGen参数化构造数据/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -933,29 +892,42 @@
       
         
           
-            <h1 id="Load-Runner"><a href="#Load-Runner" class="headerlink" title="Load Runner"></a>Load Runner</h1><p>主要由以下工具构成</p>
+            <p>这才是参数化的难点，构造真实合理数据。<br>最好是利用现在系统中的数据。（数据漂白： 真实数据改成不真实，但还是真实）</p>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><p>从工具栏打开‘Parameter List’窗口：<br><img src="/images/lr/vugen_parameter_list.jpg" alt=""><br><em>Notes: 参数列表里最多显示100行。</em></p>
+<h1 id="Data-Wizard"><a href="#Data-Wizard" class="headerlink" title="Data Wizard"></a>Data Wizard</h1><p>由图形化界面来通过ODBC访问数据库。<br><em>说明例子:我们把Mysql的当前用户列表输出到参数列表里。</em></p>
+<ol>
+<li>要先在本机安装mysql驱动程序；</li>
+<li>点击‘Data Wizard’ button；</li>
+<li>选择‘Specify SQL statement manually’，点击‘Next’；</li>
+<li>点击‘Create’去创建数据源<br><img src="/images/mysql/datasource.jpg" alt=""></li>
+<li>输入‘SQL statement’，点击‘Finish’；<br><img src="/images/lr/vugen_parameter_datawizard_sql.jpg" alt=""></li>
+<li>查看参数列表。<br><img src="/images/lr/vugen_parameter_datawizard_success.jpg" alt=""></li>
+</ol>
+<h1 id="DataFactory"><a href="#DataFactory" class="headerlink" title="DataFactory"></a>DataFactory</h1><p>Quest DataFactory 是一种快速的、易于产生测试数据工具，它能建模复杂数据关系，且有带有GUI界面。DataFactory是一个功能强大的数据产生器，它允许开发人员和QA毫不费力地产生百万行有意义的测试数据。<br><em>说明例子:构造添加用户数据，包括用户名、密码、部门、简历</em></p>
+<ol>
+<li>要先在本机安装mysql驱动程序；</li>
+<li>创建一个新库(DataFactoryUser)和使用的表(User)；</li>
+<li>打开DataFactory，选择Connection Method：ODBC；</li>
+<li>点击‘ODBC Administrator’，修改数据源到相应的库；</li>
+<li>选择数据源，点击‘Next’；</li>
+<li>选择刚创造的表；<br><img src="/images/lr/vugen_parameter_datafactory_add_table.jpg" alt=""></li>
+<li>完成此次创建，到达主窗口页面；</li>
+<li>点击表‘user’，完成配置；<br><img src="/images/lr/vugen_parameter_datafactory_config_table.jpg" alt=""><br><em>Notes:我们实验创建到本地文件中10000条数据。</em></li>
+<li>点击字段‘username’,完成配置；<br><img src="/images/lr/vugen_parameter_datafactory_config_field.jpg" alt=""></li>
+<li>同样配置剩下的字段；</li>
+<li>点击‘Run’，生成数据。</li>
+</ol>
+<p>DataFactory只能生成英文数据，不能生成中文数据。<br>下面是8个很不错的免费测试数据生成器。</p>
 <ul>
-<li>VuGen（Virtual User Generator） - 开发脚本（录制+编写）</li>
-<li>Controller - 体现多线程，VuGen中也有体现</li>
-<li>Analysis - 结果分析</li>
-<li>Load generator - 压力机（客户端），可以跨平台。</li>
+<li>GenerateData</li>
+<li>DBMonster</li>
+<li>CSV Data Generator</li>
+<li>Datagenerator</li>
+<li>dgMaster</li>
+<li>Spawner Data Generator</li>
+<li>Test Dictionary</li>
+<li>Fresh Trash Generator</li>
 </ul>
-<h1 id="VuGen工具使用"><a href="#VuGen工具使用" class="headerlink" title="VuGen工具使用"></a>VuGen工具使用</h1><h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><p>录制目的是帮助快速生成脚本。<br><strong>录制原理</strong>：录制的是在B和S之间基本协议的数据包。Lr在B和S之间，相当于一个截取的功能。<br><strong>录制设置</strong>：主要有以下两个方面</p>
-<ol>
-<li>设置字符集编码：Advanced –&gt; Support charset (选中Checkbox和UTF-8)</li>
-<li>设置HTTP/HTML Level： Recording –&gt; HTML-based script –&gt; HTML Advanced –&gt; Script type (选择第2个选项)</li>
-</ol>
-<p><em>Notes：在‘开始录制’窗口，不选择‘Record the application startup’，打开页面后就不会自动录制，到希望录制的地方点击‘Record’再开始录制。</em></p>
-<h2 id="回放"><a href="#回放" class="headerlink" title="回放"></a>回放</h2><p><strong>回放原理</strong>：回放时不需要启动被测试程序（浏览器）不打开浏览器，LR可以模拟多线程。<br><strong>回放设置</strong>：脚本运行顺序、迭代，思考时间，网速模拟等等。</p>
-<h1 id="脚本开发知识点"><a href="#脚本开发知识点" class="headerlink" title="脚本开发知识点"></a>脚本开发知识点</h1><p><img src="/images/lr/vugen_zhishidian.jpg" alt="六个点"><br>最难的是关联和思考时间，后边会一个一个单独详细介绍。</p>
-<h1 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h1><p>这个是非常重要的，可在以下地方查看：</p>
-<ol>
-<li>主界面Replay Log<br> <em>LR只能判断请求成功与否，不能判断业务是否正确。</em></li>
-<li>业务是否成功View –&gt;TestResults下 Submit Data</li>
-<li>关联 General Log</li>
-</ol>
-<p>脚本老是失败原因：参数化、关联、思考时间。</p>
-<p><em>Notes: 脚本开发最好是用以下组合（LR11 + Win7 + IE9）</em></p>
 
           
         
@@ -1004,7 +976,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/10/TestNG-命令行运行/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Centos下Mysql远程访问/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1023,7 +995,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/10/TestNG-命令行运行/" itemprop="url">TestNG 命令行运行</a></h1>
+                <a class="post-title-link" href="/2015/12/22/Centos下Mysql远程访问/" itemprop="url">Centos下Mysql远程访问</a></h1>
         
 
         <div class="post-meta">
@@ -1035,8 +1007,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-10T08:59:54+08:00">
-                2015-12-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T21:18:41+08:00">
+                2015-12-22
               </time>
             
 
@@ -1058,8 +1030,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
                   </a>
                 </span>
 
@@ -1077,8 +1049,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/10/TestNG-命令行运行/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/10/TestNG-命令行运行/" itemprop="commentsCount"></span>
+                <a href="/2015/12/22/Centos下Mysql远程访问/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/Centos下Mysql远程访问/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1109,26 +1081,179 @@
       
         
           
-            <p>之前一直是在Eclipse里运行测试的，本次简单介绍一下怎么样来实现命令行来执行TestNG。<br>Assuming that you have TestNG in your class path, the simplest way to invoke TestNG is as follows:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java org<span class="class">.testng</span><span class="class">.TestNG</span> testng1<span class="class">.xml</span> [testng2<span class="class">.xml</span> testng3<span class="class">.xml</span> ...]</span><br></pre></td></tr></table></figure></p>
-<p>主要是在Windows下做的配置（<em>有步骤已经做过，请忽略</em>）：</p>
-<ol>
-<li>下载JDK安装，配置环境变量。</li>
-<li>下载testng-6.8.8.jar包，放在C:\TestNG, 并配置了环境变量<ul>
-<li>TESTNG_HOME 为 C:\TESTNG</li>
-<li>CLASSPATH 为 %CLASSPATH%;%TESTNG_HOME%\testng-6.8.jar;  </li>
-</ul>
+            <p>Mysql默认是不可以通过远程机器访问的,通过下面的配置可以开启远程访问 </p>
+<p>在MySQL Server端：<br>执行mysql 命令进入mysql命令模式， </p>
+<pre><code>mysql&gt; use mysql;   
+mysql&gt; GRANT ALL ON *.* TO admin@&apos;%&apos; IDENTIFIED BY &apos;admin&apos; WITH GRANT OPTION;  
+mysql&gt; flush privileges;
+</code></pre><p>授权命令的意思是允许任何IP地址（上面的%就是这个意思）的电脑用admin帐户和密码（admin）来访问这个MySQL Server。<br>不要用root帐户远程登录的。</p>
+<p>做了以上操作，发现远程还是不行，报错：<code>Can&#39;t connect to MySQL server on x.x.x.x (10061)</code>。<br>我们要去<code>/etc/my.cnf</code>文件里，修改/增加以下内容<br><code>[mysqld]</code><br><code>bing-address=0.0.0.0</code><br>By setting the bind-address to 0.0.0.0 Mysql will now listen on all interfaces.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/" itemprop="url">CentOS命令登录MySQL时，ERROR 1045 (28000): Access denied for user root@localhost (using password: NO)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T14:42:16+08:00">
+                2015-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/CentOS命令登录MySQL时，报错ERROR-1045-28000-Access-denied-for-user-root-localhost-using-password-NO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用命令行来登录Mysql时，就会出现这个错误。</p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><ol>
+<li>停用mysql服务： <code>[root@Automation ~]# service mysqld stop</code></li>
+<li>输入命令：<code>[root@Automation ~]# mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</code> </li>
+<li><p>另打开一个SSH，登入数据库：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@Automation</span> ~]<span class="comment"># mysql -u root mysql·</span></span><br><span class="line">mysql&gt; <span class="keyword">use</span> mysql</span><br><span class="line">mysql&gt; UPDATE user SET Password=PASSWORD(<span class="string">'newpassword'</span>)where USER=<span class="string">'newuser'</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; <span class="keyword">exit</span>;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在F:\testng下创建一个java文件command.java</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> org.testng.annotations.Test;</span><br><span class="line"> <span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String str = <span class="string">"TestNG is working fine"</span>;</span><br><span class="line">	assertEquals(<span class="string">"TestNG is working fine"</span>, str);</span><br><span class="line">&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<li><p>删除mysqld_safe：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Automation ~]<span class="preprocessor"># ps -A | grep mysql</span></span><br><span class="line"> <span class="number">3297</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> mysqld_safe</span><br><span class="line"> <span class="number">3399</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> mysqld</span><br><span class="line">[root@Automation ~]<span class="preprocessor"># kill -<span class="number">9</span> <span class="number">3297</span></span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>编译java文件</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">javac</span> <span class="tag">Command</span><span class="class">.java</span></span><br></pre></td></tr></table></figure>
+<li><p>启用mysql服务： <code>[root@Automation ~]# service mysqld start</code></p>
 </li>
-<li><p>在同目录下，创建testng.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">suite</span> <span class="attribute">name</span>=<span class="value">"Suite1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">test</span> <span class="attribute">name</span>=<span class="value">"test1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">classes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Command"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">classes</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">test</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">suite</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用java调用testng.xml</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">F:\testng&gt;java org.testng.TestNG testng.xml</span><br><span class="line">[TestNG] Running:</span><br><span class="line">F:\testng\testng.xml</span><br><span class="line"></span><br><span class="line">===============================================</span><br><span class="line">Suite1</span><br><span class="line">Total tests run: 1, Failures: 0, Skips: 0</span><br><span class="line">===============================================</span><br></pre></td></tr></table></figure>
+<li>登录数据库<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">[</span>root@Automation ~]<span class="comment"># mysql -uadmin -padmin</span></span><br><span class="line">Welcome to the MySQ<span class="class">L monitor.  Commands end with ;</span><span class="instruction"> or </span>\g.</span><br><span class="line">Your MySQL connection id is 5</span><br><span class="line">Server version: 5.1.73 Source distribution</span><br><span class="line"></span><br><span class="line">Copyright<span class="function"> (</span>c<span class="function">)</span> 2000, 2013, Oracle<span class="instruction"> and/or </span>its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation<span class="instruction"> and/or </span>its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type 'help;'<span class="instruction"> or </span>'\h' for help. Type '\c' to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 
@@ -1179,7 +1304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/09/Performance-Testing-操作系统监控/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Load-Runner-VuGen参数化方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1198,7 +1323,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/09/Performance-Testing-操作系统监控/" itemprop="url">Linux操作系统监控</a></h1>
+                <a class="post-title-link" href="/2015/12/22/Load-Runner-VuGen参数化方式/" itemprop="url">Load Runner - VuGen参数化方式</a></h1>
         
 
         <div class="post-meta">
@@ -1210,8 +1335,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-09T08:37:33+08:00">
-                2015-12-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T11:01:12+08:00">
+                2015-12-22
               </time>
             
 
@@ -1233,8 +1358,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Performance-Testing/" itemprop="url" rel="index">
-                    <span itemprop="name">Performance Testing</span>
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
                   </a>
                 </span>
 
@@ -1252,8 +1377,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/09/Performance-Testing-操作系统监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/09/Performance-Testing-操作系统监控/" itemprop="commentsCount"></span>
+                <a href="/2015/12/22/Load-Runner-VuGen参数化方式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/Load-Runner-VuGen参数化方式/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1283,23 +1408,19 @@
 
       
         
-          <p>在性能测试的过程中，要监控的地方应该就是以下部分：</p>
-<ul>
-<li>操作系统</li>
-<li>中间件</li>
-<li>Code</li>
-<li>DB</li>
-<li>网络</li>
-</ul>
-<p>这5部分来说，主要的瓶颈可能多是操作系统、代码和DB。会在下面把这两个部分说明，操作系统基于Linux，代码基于Java，DB视情况而定。</p>
-<h1 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h1><p>CPU监控的关键指标做一个大概的说明：</p>
-<h2 id="运行队列"><a href="#运行队列" class="headerlink" title="运行队列"></a>运行队列</h2><p>正在执行和等待CPU处理的任务的总和，称为运行队列。运行队列越长，说明排队等待的任务越多，响应越慢。<br><strong>Notes：运行队列长度最大不要超过当前内核数的3倍。</strong><br>Another common system statistic is that of load average. The load on a system is the total amount of running and runnable process. For example, if two processes were running and three were available to run, the system’s load would be five. The load average is the amount of load over a given amount of time. Typically, the load average is taken over <strong>1 minute, 5 minutes, and 15 minutes</strong>. This enables you to see how the load changes over time.</p>
-<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>To create the illusion that a given single processor runs multiple tasks simultaneously, the Linux kernel constantly switches between different processes. The switch between different processes is called a context switch, because when it happens, the CPU saves all the context information from the old process and retrieves all the context information for the new process.<br>是CPU在不同进程间按时间片轮换，交互性强的需要高优先级，交互性弱的需要低优先级。在linux系统中，有两种优先级：普通优先级和实时优先级。上下文切换不可避免，如果可能最好减少上下文切换。</p>
-<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>一般来自于外部硬件中断，中断也是不可避免的。中断就会有上下文切换，但是上正文切换并不都是中断造成的。<br><em>性能测试不需要特别关心内核的问题（中断、上下文切换），而是关注有时因程序写的不好造成的频繁切换（不正常切换）。</em></p>
-<h2 id="资源利用率"><a href="#资源利用率" class="headerlink" title="资源利用率"></a>资源利用率</h2><p>CPU utilization is a straightforward concept. At any given time, the CPU can be doing one of seven things.<br>First, it can be idle, which means that the processor is not actually doing any work and is waiting for something to do. This is “<strong>idle</strong>“ time.<br>Second, the CPU can be running user code, which is specified as “<strong>user</strong>“ time.<br>Third, the CPU can be executing code in the Linux kernel on behalf of the application code. This is “<strong>system</strong>“ time.<br>Fourth, the CPU can be executing user code that has been “nice”ed or set to run at a lower priority than normal processes. （切换线程优先级时消耗的时间)<br>Fifth, the CPU can be in iowait, which mean the system is spending its time waiting for I/O (such as disk or network) to complete.<br>Sixth, the CPU can be in irq state, which means it is in high-priority kernel code handling a hardware interrupt.<br>Finally, the CPU can be in softirq mode, which means it is executing kernel code that was also triggered by an interrupt, but it is running at a lower priority (the bottom-half code). This can happen when a device interrupt occurs, but the kernel needs to do some work with it before it is ready to hand it over to user space (for example, with a network packet).<br>通常我们只关注：idle, user, system, (+wa)。<br><strong>在正常情况下，用户态和系统态的CUP消耗比率是7：3.</strong></p>
+          <p>就是这两个选项：select next row和update value on。<br><img src="/images/lr/vugen_parameter_method.jpg" alt="9种方式"></p>
+<p>可以通过“参数模拟(Simulate Parameter)”来模拟多虚拟用户的情况下，各次迭代中每个用户对参数的取值。</p>
+<ol>
+<li>Sequential - Each Iteration<br><img src="/images/lr/vugen_parameter_sequential_iteration.jpg" alt=""></li>
+<li>Random - Each Iteration<br><img src="/images/lr/vugen_parameter_random_iteration.jpg" alt=""></li>
+<li>Unique - Each Iteration<br><img src="/images/lr/vugen_parameter_unique_iteration.jpg" alt=""></li>
+<li>Sequential - Once<br><img src="/images/lr/vugen_parameter_sequential_once.jpg" alt=""></li>
+<li>Random - Once<br><img src="/images/lr/vugen_parameter_random_once.jpg" alt=""></li>
+<li>Unique - Once<br><img src="/images/lr/vugen_parameter_unique_once.jpg" alt=""></li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/09/Performance-Testing-操作系统监控/#more" rel="contents">
+            <a class="btn" href="/2015/12/22/Load-Runner-VuGen参数化方式/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1350,7 +1471,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/08/Centos下Nginx-php-fpm安装配置/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/22/Load-Runner-VuGen参数化基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1369,7 +1490,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/08/Centos下Nginx-php-fpm安装配置/" itemprop="url">Centos下Nginx + php-fpm安装配置</a></h1>
+                <a class="post-title-link" href="/2015/12/22/Load-Runner-VuGen参数化基础/" itemprop="url">Load Runner - VuGen参数化基础</a></h1>
         
 
         <div class="post-meta">
@@ -1381,8 +1502,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-08T08:21:55+08:00">
-                2015-12-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-22T08:06:58+08:00">
+                2015-12-22
               </time>
             
 
@@ -1404,8 +1525,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
                   </a>
                 </span>
 
@@ -1423,8 +1544,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/08/Centos下Nginx-php-fpm安装配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/08/Centos下Nginx-php-fpm安装配置/" itemprop="commentsCount"></span>
+                <a href="/2015/12/22/Load-Runner-VuGen参数化基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/22/Load-Runner-VuGen参数化基础/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1454,30 +1575,15 @@
 
       
         
-          <h1 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h1><p>Nginx是一款轻量级的Web 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器，并在一个BSD-like协议下发行。</p>
-<ol>
-<li><p>编译环境安装<br>我们默认你是安装好了的，如果没有安装的话，请用下面命令安装<br>make安装：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
-<p>g++安装：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="operator"><span class="keyword">install</span> gcc gcc-<span class="keyword">c</span>++</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>依赖包安装<br>我们选择/usr/local/src作为源码目录。Nginx需要依赖下面3个包：</p>
-<ul>
-<li><p>rewrite模块需要 pcre 库</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src</span><br><span class="line">wget ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.37.tar.gz</span></span><br><span class="line">tar -zxvf pcre-8.37.tar.gz</span><br><span class="line"><span class="keyword">cd</span> pcre-8.37</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>gzip模块需要 zlib 库</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">wget http:<span class="comment">//zlib.net/zlib-1.2.8.tar.gz</span></span><br><span class="line">tar -zxvf zlib-<span class="number">1.2</span><span class="number">.8</span>.tar.gz</span><br><span class="line">cd zlib-<span class="number">1.2</span><span class="number">.8</span></span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ssl 功能需要openssl库</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">wget http:<span class="comment">//www.openssl.org/source/openssl-1.0.1q.tar.gz</span></span><br><span class="line">tar -zxvf openssl-<span class="number">1.0</span><span class="number">.1</span>q.tar.gz</span><br><span class="line">cd openssl-<span class="number">1.0</span><span class="number">.1</span>q</span><br><span class="line">./config</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
+          <p><strong>参数化的目的就是为了真实。</strong><br><img src="/images/lr/vugen_parameter_list.jpg" alt="Parameter List"></p>
+<h1 id="参数化步骤"><a href="#参数化步骤" class="headerlink" title="参数化步骤"></a>参数化步骤</h1><p>实现步骤也很简单，双击选中要参数化的内容，右键 -&gt; Replace with a Parameter；在替换的参数名处点右键，选择Replace more occurrences进行其他值替换。根据情况不同也可使用Ctrl+H替换。<br>例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Action()</span><br><span class="line">&#123;</span><br><span class="line">	lr_error_message(<span class="string">"test"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参数化后：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Action</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="tag">lr_error_message</span>(<span class="string">"&#123;message&#125;"</span>);</span><br><span class="line">	<span class="tag">return</span> <span class="tag">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但执行的结果：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br><span class="line"><span class="keyword">Action</span>.c(<span class="number">3</span>): Error: &#123;message&#125;</span><br><span class="line">Ending <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br></pre></td></tr></table></figure></p>
+<p>lr_error_message只是原样输出双引号里的内容，并没有取出参数值的功能。那我们就要取出参数的值，传给相应函数。<br>The <code>lr_eval_string</code> function returns the input string after evaluating any embedded parameters.<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Action</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="tag">lr_error_message</span>(<span class="function">lr_eval_string</span>(<span class="string">"&#123;message&#125;"</span>));</span><br><span class="line">	<span class="tag">return</span> <span class="tag">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再次执行结果：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br><span class="line"><span class="keyword">Action</span>.c(<span class="number">3</span>): Error: test</span><br><span class="line">Ending <span class="keyword">action</span> <span class="keyword">Action</span>.</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/08/Centos下Nginx-php-fpm安装配置/#more" rel="contents">
+            <a class="btn" href="/2015/12/22/Load-Runner-VuGen参数化基础/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1528,7 +1634,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/07/DiffPackage-package-did-not-load-correctly/">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="唐胡璐">
@@ -1547,7 +1653,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/07/DiffPackage-package-did-not-load-correctly/" itemprop="url">TFS 'DiffPackage' package did not load correctly</a></h1>
+                <a class="post-title-link" href="/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/" itemprop="url">QTP can't get the latest update after updating in extenal library file</a></h1>
         
 
         <div class="post-meta">
@@ -1559,339 +1665,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-07T10:52:26+08:00">
-                2015-12-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TFS/" itemprop="url" rel="index">
-                    <span itemprop="name">TFS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/07/DiffPackage-package-did-not-load-correctly/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/07/DiffPackage-package-did-not-load-correctly/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Today i got a weird issue, when i compare 2 files in TFS, got the “package did not load correctly” error.</p>
-<p><strong>Solution</strong></p>
-<ol>
-<li>Close Visual Studio</li>
-<li>Open a Developer Command Prompt For VS 2012(as administrator)</li>
-<li>Type <code>devenv /setup</code></li>
-<li>Restart Visual Studio</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/06/Linux下软件安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/06/Linux下软件安装/" itemprop="url">Linux下软件安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-06T10:44:52+08:00">
-                2015-12-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/12/06/Linux下软件安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/06/Linux下软件安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Linux下安装软件的几种方法，做一个简单的介绍：</p>
-<ol>
-<li>直接运行可执行程序，类似于Windows下的安装。</li>
-<li>绿色版，也就是免安装，例如：Tomcat。</li>
-<li>rpm安装<ul>
-<li>查询是否已经安装<br><code>rpm -aq mysql</code></li>
-<li>删除已安装软件<br><code>rpm -e [上一步查询到的内容]</code><br>删除的时候，会有一些依赖关系的报错，可用下面方法强制删除，强制解除依赖关系<br><code>rpm -e --nodeps [上一步查询到的内容]</code></li>
-<li>安装软件<br><code>rpm -ivh [rpm软件包]</code></li>
-</ul>
-</li>
-<li>源码安装<ul>
-<li>生成配置文件<br><code>./configure</code></li>
-<li>编译<br><code>make</code></li>
-<li>安装软件<br><code>make install</code></li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/" itemprop="url">UFT 12.01 Identifies Firefox web object as Window object</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-04T09:47:50+08:00">
-                2015-12-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-21T12:37:48+08:00">
+                2015-12-21
               </time>
             
 
@@ -1932,8 +1707,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/04/UFT-12-01-Identifies-Firefox-web-object-as-Window-object/" itemprop="commentsCount"></span>
+                <a href="/2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/21/QTP-can-t-get-the-latest-update-after-updating-in-extenal-library-file/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -1964,9 +1739,194 @@
       
         
           
-            <p>I got a problem:  UFT 12.01 Identifies web object as Window object.<br>Currently I use UFT 12.01. I rolled back Firefox to v31. It seems UFT 12.01 supports this version. But….</p>
-<p><strong>Solution:</strong><br>Go to “Tools -&gt; Add-ons -&gt; Extensions”, enable Unified Functional Testing Extension.</p>
-<p>It should be work now. </p>
+            <p>Sometimes QTP doesn’t pick up the latest library file change if the script is already open.   </p>
+<p>When we update an external library file, in QTP, even if close the updating file and open it again, the change might not get picked up the next time you run it.   </p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Open the library in QTP and do a syntax check by using <code>Ctrl+F7</code>.<br>That seems to force QTP to read the latest content.  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2015/12/20/Load-Runner-VuGen-Get-Post/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="url">Load Runner - VuGen Get & Post</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-20T07:31:56+08:00">
+                2015-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Load-Runner/" itemprop="url" rel="index">
+                    <span itemprop="name">Load Runner</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/20/Load-Runner-VuGen-Get-Post/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2015/12/20/Load-Runner-VuGen-Get-Post/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>性能测试中大部的都是基于HTTP协议的，脚本里的90%都是Get和Post，多数是Get请求。我们用以下两个方法来实现HTTP请求：</p>
+<h1 id="Get-web-url"><a href="#Get-web-url" class="headerlink" title="Get - web_url()"></a>Get - web_url()</h1><p>此函数用来模拟用户请求，它也是在脚本中最常使用的函数之一。<br>语法：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Int Web_url(<span class="keyword">const</span> <span class="built_in">char</span> *StepName, <span class="keyword">const</span> <span class="built_in">char</span> * url, &lt;Lists <span class="keyword">of</span> Attributes&gt;, [EXTRARES,&lt;Lists <span class="keyword">of</span> Resource Attributes&gt;,LAST)</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">web_url<span class="list">(<span class="string">"Open Login Page"</span>,</span><br><span class="line">        <span class="string">"URL=http://10.11.2.22/"</span>,</span><br><span class="line">        <span class="string">"Resource=0"</span>,</span><br><span class="line">        <span class="string">"RecContentType=text/html"</span>,</span><br><span class="line">        <span class="string">"Referer="</span>,</span><br><span class="line">        <span class="string">"Snapshot=t1.inf"</span>,</span><br><span class="line">        <span class="string">"Mode=HTML"</span>,</span><br><span class="line">        EXTRARES,</span><br><span class="line">        <span class="string">"URL=/common/login/button.gif"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/main.jpg"</span>, ENDITEM,</span><br><span class="line">        <span class="string">"URL=/common/login/head_bg.gif"</span>, ENDITEM,</span><br><span class="line">        LAST)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
+<p>参数的几点说明:</p>
+<ol>
+<li>最基本的三个参数是StepName，url, LAST，在不能录制的情况下，可以自己用这三个参数写代码。</li>
+<li>Resource - 指定一个值说明这个URL是否是一个资源，0 表示非资源，1 表示资源。</li>
+<li>RecContentType - 指定接受服务器什么格式文件。</li>
+<li>EXTRARES 是由script、active、java applet、flash、CSS产生的请求，在页面上都找不到。<ul>
+<li>每一个都是一个请求。</li>
+<li>加不加额外资源，会影响下载量。</li>
+<li>能不能删除此处脚本，取决于是不是全部都是图片或样式的请求，有没有特殊的请求存在。(原则上只要是录制时录下来的，不是无关的内容，就保留下来。)</li>
+<li>如果在脚本回放时不想下载图片、样式表等，设置：<br>  Run-time Setting -&gt; Browser Emulation -&gt; Download non-html resources。只关心业务处理能力，带宽受限时取消此选项。默认是选中的。</li>
+</ul>
+</li>
+</ol>
+<p><em>Notes: 排错，只关注url部分即可，数据要是有变化的话，要进行参数化。</em></p>
+<h1 id="Post-web-submit-data"><a href="#Post-web-submit-data" class="headerlink" title="Post - web_submit_data()"></a>Post - web_submit_data()</h1><p>与Get请求的web_url函数相比，多了ITEMDATA。<br><figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int web_submit_data( <span class="keyword">const</span> char *StepName, <span class="keyword">const</span> char *Action, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Attributes&gt;, ITEMDATA, &lt;<span class="built_in">List</span> <span class="keyword">of</span> data&gt;, [ EXTRARES, &lt;<span class="built_in">List</span> <span class="keyword">of</span> Resource Attributes&gt;,] LAST );</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">web_submit_data("<span class="operator"><span class="keyword">start</span><span class="string">", </span><br><span class="line">"</span><span class="keyword">Action</span>=login.asp<span class="string">", </span><br><span class="line">"</span>Method=POST<span class="string">",</span><br><span class="line">ITEMDATA, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">user</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=<span class="keyword">password</span><span class="string">", "</span><span class="keyword">value</span>=yongfeiuall<span class="string">", ENDITEM, </span><br><span class="line">"</span><span class="keyword">name</span>=sessionID<span class="string">", "</span><span class="keyword">value</span>=<span class="number">20151220</span><span class="string">", ENDITEM, </span><br><span class="line">LAST);</span></span></span><br></pre></td></tr></table></figure></p>
+<p>返回值:<br>成功时返回LR_PASS (0)，失败时返回 LR_FAIL (1)。</p>
+<p>参数的几点说明：</p>
+<ol>
+<li>Action：Form中的ACTION属性，指定了完成Form中的操作用到的URL。 </li>
+<li>Method：表单提交方法：POST或GET（默认是POST）。 </li>
+<li>ITEMDATA：数据域和属性的分隔符。 <ul>
+<li>List of Data：<br>数据域列表定义了表单提交的内容。由于此请求是上下文无关的，因此数据域包含了所有的隐含域。使用Form的编码规则组织数据域。<br>数据域列表可以使用下面任意一种格式：<br>“name=n1”, “value=v1”, ENDITEM,<br>“name=n2”, “EncryptedValue=qwerty”, ENDITEM, </li>
+<li>如果要自己写脚本的话，用HTTPWATCH工具，在POST_DATA中可以看到提交对应的参数名和参数值,与脚本一致。</li>
+</ul>
+</li>
+</ol>
+<p><em>Notes：排错，两个地方：1. Action 2. ITEMDATA提交的数据不合法。</em></p>
 
           
         
@@ -2006,7 +1966,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2056,7 +2016,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">391</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2067,7 +2027,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2078,7 +2038,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
