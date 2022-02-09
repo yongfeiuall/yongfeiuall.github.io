@@ -305,6 +305,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/21/Python给Gogs项目批量打Tag/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/21/Python给Gogs项目批量打Tag/" itemprop="url">Python给Gogs项目批量打Tag</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-21T11:03:54+08:00">
+                2021-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/21/Python给Gogs项目批量打Tag/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/21/Python给Gogs项目批量打Tag/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Gogs的Rest API不能用，就用下面的方式来实现：</p>
+<p>通过csv文件配置要打Tag的项目</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Project Name,Release,Tag Name,Tag Branch,Title,Content&#10;t1,Y,v1.1.0,master,,test1&#10;t2,Y,v1.1.0,master,v1.1.0,test2&#10;t3,Y,v1.1.0,master,v1.1.0,test3</span><br></pre></td></tr></table></figure>
+<p>实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">session = HTMLSession()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get crsf token</span></span><br><span class="line">r = session.get(url=f<span class="string">'&#123;URL&#125;/user/login'</span>)</span><br><span class="line">csrf = r.html.xpath(<span class="string">'//input[@name="_csrf"]/@value'</span>, first=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Login</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">'_csrf'</span>: csrf,</span><br><span class="line">    <span class="string">'user_name'</span>: USERNAME,</span><br><span class="line">    <span class="string">'password'</span>: PASSWORD,</span><br><span class="line">    <span class="string">'login_source'</span>: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">session.post(url=f<span class="string">'&#123;URL&#125;/user/login'</span>, data=data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get login crsf token</span></span><br><span class="line">r = session.get(url=f<span class="string">'&#123;URL&#125;'</span>)</span><br><span class="line">login_csrf = r.html.xpath(<span class="string">'//meta[@name="_csrf"]/@content'</span>, first=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set tag for project from csv file</span></span><br><span class="line">projects = get_test_csv_data(<span class="string">'build.csv'</span>)</span><br><span class="line"><span class="keyword">for</span> project <span class="keyword">in</span> projects:</span><br><span class="line">    <span class="keyword">if</span> project[<span class="number">1</span>] == <span class="string">'Y'</span>:</span><br><span class="line"></span><br><span class="line">        build_data = &#123;</span><br><span class="line">            <span class="string">'tag_name'</span>: project[<span class="number">2</span>],</span><br><span class="line">            <span class="string">'tag_target'</span>: project[<span class="number">3</span>],</span><br><span class="line">            <span class="string">'title'</span>: project[<span class="number">4</span>],</span><br><span class="line">            <span class="string">'content'</span>: project[<span class="number">5</span>],</span><br><span class="line">            <span class="string">'_csrf'</span>: login_csrf</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        print(f<span class="string">'===== set tag &#123;project[2]&#125; for &#123;project[0]&#125; ====='</span>)</span><br><span class="line">        print(build_data)</span><br><span class="line">        r = session.post(url=f<span class="string">'&#123;URL&#125;/&#123;OWNER&#125;/&#123;project[0]&#125;/releases/new'</span>, data=build_data)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Verify set correctly</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            res = session.get(f<span class="string">'&#123;URL&#125;/&#123;OWNER&#125;/&#123;project[0]&#125;/releases'</span>)</span><br><span class="line">            version = res.html.xpath(<span class="string">'//ul[@id="release-list"]//a'</span>, first=<span class="keyword">True</span>).text</span><br><span class="line">            <span class="keyword">if</span> version == project[<span class="number">2</span>]:</span><br><span class="line">                print(f<span class="string">'===== set tag &#123;project[2]&#125; for &#123;project[0]&#125; successfully ====='</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            print(f<span class="string">'===== set tag &#123;project[2]&#125; for &#123;project[0]&#125; failed ====='</span>)</span><br><span class="line">        print()</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="header">===== set tag v1.1.0 for t1 =====</span></span><br><span class="line">&#123;<span class="emphasis">'tag_name'</span>: <span class="emphasis">'v1.1.0'</span>, <span class="emphasis">'tag_target'</span>: <span class="emphasis">'master'</span>, <span class="emphasis">'title'</span>: '<span class="emphasis">', '</span>content': <span class="emphasis">'test1'</span>, <span class="emphasis">'_csrf'</span>: <span class="emphasis">'iE2XUTv0z4jDvjr6HuPYTiFvOrc6MTYzNTUwMDA3OTgyNjgxNTU5Mw=='</span>&#125;</span><br><span class="line"><span class="header">===== set tag v1.1.0 for t1 failed =====</span></span><br><span class="line"></span><br><span class="line"><span class="header">===== set tag v1.1.0 for t2 =====</span></span><br><span class="line">&#123;<span class="emphasis">'tag_name'</span>: <span class="emphasis">'v1.1.0'</span>, <span class="emphasis">'tag_target'</span>: <span class="emphasis">'master'</span>, <span class="emphasis">'title'</span>: <span class="emphasis">'v1.1.0'</span>, <span class="emphasis">'content'</span>: <span class="emphasis">'test2'</span>, <span class="emphasis">'_csrf'</span>: <span class="emphasis">'iE2XUTv0z4jDvjr6HuPYTiFvOrc6MTYzNTUwMDA3OTgyNjgxNTU5Mw=='</span>&#125;</span><br><span class="line"><span class="header">===== set tag v1.1.0 for t2 successfully =====</span></span><br><span class="line"></span><br><span class="line"><span class="header">===== set tag v1.1.0 for t3 =====</span></span><br><span class="line">&#123;<span class="emphasis">'tag_name'</span>: <span class="emphasis">'v1.1.0'</span>, <span class="emphasis">'tag_target'</span>: <span class="emphasis">'master'</span>, <span class="emphasis">'title'</span>: <span class="emphasis">'v1.1.0'</span>, <span class="emphasis">'content'</span>: <span class="emphasis">'test3'</span>, <span class="emphasis">'_csrf'</span>: <span class="emphasis">'iE2XUTv0z4jDvjr6HuPYTiFvOrc6MTYzNTUwMDA3OTgyNjgxNTU5Mw=='</span>&#125;</span><br><span class="line"><span class="header">===== set tag v1.1.0 for t3 successfully =====</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/10/Python获得Gogs里项目最新发布版本Version/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1851,173 +2011,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/02/FastAPI-响应模型（12）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/10/02/FastAPI-响应模型（12）/" itemprop="url">FastAPI: 响应模型（12）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-02T09:27:24+08:00">
-                2021-10-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
-                    <span itemprop="name">FastAPI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/10/02/FastAPI-响应模型（12）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/02/FastAPI-响应模型（12）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在前面的操作中也看到，请求响应返回的就是请求体的内容，比如，要是登记注册就是返回用户名和密码，这种行为是不行的。</p>
-<p>可以使用 <code>response_model</code> 参数来声明用于响应的模型。</p>
-<ul>
-<li>将输出数据转换为其声明的类型。</li>
-<li>校验数据。</li>
-<li>会将输出数据限制在该模型定义内。</li>
-<li>在 OpenAPI 的<em>路径操作</em>中为响应添加一个 JSON Schema。</li>
-<li>并在自动生成文档系统中使用。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
-<p><img src="/images/fastapi/response_model.jpg" alt=""></p>
-<p>上面的例子中，可以看到响应里会自动的返回请求体里默认的字段。如果请求体中不传，就不要返回带默认值的字段，可以用<code>response_model_exclude_unset</code>来实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes, response_model_exclude_unset=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
-<p><img src="/images/fastapi/response_model_default.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2072,7 +2065,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2172,7 +2165,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

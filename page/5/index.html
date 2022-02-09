@@ -305,6 +305,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/02/Jmeter-常用设置in-properties/" itemprop="url">Jmeter: 常用设置in properties</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T14:18:15+08:00">
+                2021-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/04/02/Jmeter-常用设置in-properties/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/02/Jmeter-常用设置in-properties/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Jmeter里常用的设置：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>建议在user.properties里设置。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/03/20/Jmeter-命令行运行/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1933,186 +2089,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/08/22/Jacoco自动化代码覆盖率/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/22/Jacoco自动化代码覆盖率/" itemprop="url">Jacoco自动化代码覆盖率</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-08-22T10:16:54+08:00">
-                2020-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/08/22/Jacoco自动化代码覆盖率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/08/22/Jacoco自动化代码覆盖率/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>JaCoCo是一个开源的覆盖率工具，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。官网(Jacoco)[<a href="https://www.eclemma.org/jacoco/" target="_blank" rel="external">https://www.eclemma.org/jacoco/</a>]</p>
-<h2 id="覆盖率计数器"><a href="#覆盖率计数器" class="headerlink" title="覆盖率计数器"></a>覆盖率计数器</h2><h6 id="1-行覆盖"><a href="#1-行覆盖" class="headerlink" title="1. 行覆盖"></a>1. 行覆盖</h6><h6 id="2-类覆盖"><a href="#2-类覆盖" class="headerlink" title="2. 类覆盖"></a>2. 类覆盖</h6><h6 id="3-方法覆盖"><a href="#3-方法覆盖" class="headerlink" title="3. 方法覆盖"></a>3. 方法覆盖</h6><h6 id="4-分支覆盖"><a href="#4-分支覆盖" class="headerlink" title="4. 分支覆盖"></a>4. 分支覆盖</h6><h6 id="5-指令覆盖"><a href="#5-指令覆盖" class="headerlink" title="5. 指令覆盖"></a>5. 指令覆盖</h6><h6 id="6-圈复杂度"><a href="#6-圈复杂度" class="headerlink" title="6. 圈复杂度"></a>6. 圈复杂度</h6><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Jacoco使用插桩的方式来记录覆盖率数据。<br> 插桩模式有两种：</p>
-<h6 id="1-on-the-fly模式"><a href="#1-on-the-fly模式" class="headerlink" title="1. on-the-fly模式"></a>1. on-the-fly模式</h6><blockquote>
-<p>JVM通过 -javaagent参数指定jar文件启动代理程序，代理程序在ClassLoader装载一个class前判断是否修改class文件，并将探针插入class文件，探针不改变原有方法的行为，只是记录是否已经执行。</p>
-</blockquote>
-<h6 id="2-offline模式"><a href="#2-offline模式" class="headerlink" title="2. offline模式"></a>2. offline模式</h6><blockquote>
-<p>在测试之前先对文件进行插桩，生成插过桩的class或jar包，测试插过桩的class和jar包，生成覆盖率信息到文件，最后统一处理，生成报告。</p>
-</blockquote>
-<h1 id="集成Maven"><a href="#集成Maven" class="headerlink" title="集成Maven"></a>集成Maven</h1><p>下载配置JDK，Maven，Jacoco</p>
-<p>Manven配置(Maven Plug-in)[<a href="https://www.eclemma.org/jacoco/trunk/doc/maven.html" target="_blank" rel="external">https://www.eclemma.org/jacoco/trunk/doc/maven.html</a>]</p>
-<p>用下载的Jacoco的example里的例子演示</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">C:\Test\Jacoco&gt;mvn install</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] ----------------&lt; org.jacoco:org.jacoco.examples.maven &gt;----------------</span><br><span class="line">[INFO] Building JaCoCo Maven plug-<span class="keyword">in</span> example <span class="number">0.8</span><span class="number">.6</span></span><br><span class="line">[INFO] --------------------------------[ jar ]---------------------------------</span><br><span class="line">[INFO]</span><br><span class="line">[INFO] --- jacoco-maven-plugin:<span class="number">0.8</span><span class="number">.6</span>:prepare-agent (default-prepare-agent) @ org.jacoco.examples.maven ---</span><br><span class="line">[INFO] argLine set to -</span><br></pre></td></tr></table></figure>
-<p>Maven构建成功之后，生成代码覆盖报告（\target\site\jacoco）</p>
-<p><img src="/images/jacoco\report.jpg" alt=""></p>
-<h1 id="集成Git和Jenkins"><a href="#集成Git和Jenkins" class="headerlink" title="集成Git和Jenkins"></a>集成Git和Jenkins</h1><ol>
-<li><p>把example上传到Github上</p>
-</li>
-<li><p>配置Jenkins，回传报告</p>
-<p><img src="/images/jacoco\jenkins.jpg" alt=""></p>
-</li>
-<li><p>配置Jacoco Coverage Report</p>
-<p><img src="/images/jacoco\coverage.jpg" alt=""></p>
-</li>
-<li><p>Coverage Trend</p>
-<p><img src="/images/jacoco\trend.jpg" alt=""></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2167,7 +2143,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2267,7 +2243,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

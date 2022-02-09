@@ -305,6 +305,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/01/K8s-ConfigMap-Secret/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/01/K8s-ConfigMap-Secret/" itemprop="url">K8s：ConfigMap & Secret</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-01T15:50:09+08:00">
+                2021-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/07/01/K8s-ConfigMap-Secret/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/01/K8s-ConfigMap-Secret/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="ConfigMap"><a href="#ConfigMap" class="headerlink" title="ConfigMap"></a>ConfigMap</h6><p>ConfigMap 允许您将配置文件与镜像文件分离，以使容器化的应用程序具有可移植性。</p>
+<p>你可以使用四种方式来使用 ConfigMap 配置 Pod 中的容器：</p>
+<ol>
+<li>在容器命令和参数内</li>
+<li>容器的环境变量</li>
+<li>在只读卷里面添加一个文件，让应用来读取</li>
+<li>编写代码在 Pod 中运行，使用 Kubernetes API 来读取 ConfigMap</li>
+</ol>
+<p>例子</p>
+<ol>
+<li><p>创建configmap.yaml：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: ConfigMap&#10;metadata:&#10;  name: game-config&#10;  namespace: dev&#10;data:&#10;  # &#31867;&#23646;&#24615;&#38190;&#65307;&#27599;&#19968;&#20010;&#38190;&#37117;&#26144;&#23556;&#21040;&#19968;&#20010;&#31616;&#21333;&#30340;&#20540;&#10;  player_initial_lives: &#34;3&#34;&#10;  ui_properties_file_name: &#34;user-interface.properties&#34;&#10;&#10;  # &#31867;&#25991;&#20214;&#38190;&#10;  game.properties: |&#10;    enemy.types=aliens,monsters&#10;    player.maximum-lives=5    &#10;  user-interface.properties: |&#10;    color.good=purple&#10;    color.bad=yellow&#10;    allow.textmode=true</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f configmap.yaml&#10;configmap/game-config created&#10;&#10;[root@master ~]# kubectl describe cm game-config -n dev&#10;Name:         game-config&#10;Namespace:    dev&#10;Labels:       &#60;none&#62;&#10;Annotations:  &#60;none&#62;&#10;&#10;Data&#10;====&#10;game.properties:&#10;----&#10;enemy.types=aliens,monsters&#10;player.maximum-lives=5    &#10;&#10;player_initial_lives:&#10;----&#10;3&#10;ui_properties_file_name:&#10;----&#10;user-interface.properties&#10;user-interface.properties:&#10;----&#10;color.good=purple&#10;color.bad=yellow&#10;allow.textmode=true    &#10;&#10;Events:  &#60;none&#62;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建pod-configmap.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: configmap-game&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;    - name: game&#10;      image: nginx:1.17.1&#10;      command: [&#34;sleep&#34;, &#34;3600&#34;]&#10;      env:&#10;        # &#23450;&#20041;&#29615;&#22659;&#21464;&#37327;&#10;        - name: PLAYER_INITIAL_LIVES # &#35831;&#27880;&#24847;&#36825;&#37324;&#21644; ConfigMap &#20013;&#30340;&#38190;&#21517;&#26159;&#19981;&#19968;&#26679;&#30340;&#10;          valueFrom:&#10;            configMapKeyRef:&#10;              name: game-config           # &#36825;&#20010;&#20540;&#26469;&#33258; ConfigMap&#10;              key: player_initial_lives # &#38656;&#35201;&#21462;&#20540;&#30340;&#38190;&#10;        - name: UI_PROPERTIES_FILE_NAME&#10;          valueFrom:&#10;            configMapKeyRef:&#10;              name: game-config&#10;              key: ui_properties_file_name&#10;      volumeMounts:&#10;      - name: config&#10;        mountPath: &#34;/config&#34;&#10;        readOnly: true&#10;  volumes:&#10;    # &#20320;&#21487;&#20197;&#22312; Pod &#32423;&#21035;&#35774;&#32622;&#21367;&#65292;&#28982;&#21518;&#23558;&#20854;&#25346;&#36733;&#21040; Pod &#20869;&#30340;&#23481;&#22120;&#20013;&#10;    - name: config&#10;      configMap:&#10;        # &#25552;&#20379;&#20320;&#24819;&#35201;&#25346;&#36733;&#30340; ConfigMap &#30340;&#21517;&#23383;&#10;        name: game-config</span><br></pre></td></tr></table></figure>
+<p>如果 Pod 中有多个容器，则每个容器都需要自己的 <code>volumeMounts</code> 块，但针对 每个 ConfigMap，你只需要设置一个 <code>spec.volumes</code> 块。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f pod-configmap.yaml&#10;pod/configmap-game created&#10;[root@master ~]# kubectl get pod configmap-game -n dev&#10;NAME             READY   STATUS    RESTARTS   AGE&#10;configmap-game   1/1     Running   0          33s&#10;[root@master ~]# kubectl exec -it configmap-game -n dev /bin/sh&#10;# cd config&#10;# ls&#10;game.properties  player_initial_lives  ui_properties_file_name&#9;user-interface.properties&#10;# cat user-interface.properties&#10;color.good=purple&#10;color.bad=yellow&#10;allow.textmode=true</span><br></pre></td></tr></table></figure>
+<p>当卷中使用的 ConfigMap 被更新时，所投射的键最终也会被更新。 kubelet 组件会在每次周期性同步时检查所挂载的 ConfigMap 是否为最新。</p>
+<p>以环境变量方式使用的 ConfigMap 数据不会被自动更新。 更新这些数据需要重新启动 Pod。</p>
+</li>
+</ol>
+<h4 id="Secret"><a href="#Secret" class="headerlink" title="Secret"></a>Secret</h4><p>Secret 是一种包含少量敏感信息例如密码、令牌或密钥的对象。Secrets其用法是跟ConfigMap基本上是一致，区别不同是ConfigMap是明文，而Secrets是经过base64加密过的。</p>
+<p>有几种不同的方式来创建 Secret：</p>
+<ul>
+<li>使用 kubectl 命令创建 Secret</li>
+<li>使用配置文件来创建 Secret</li>
+<li>使用 kustomize 来创建 Secret</li>
+</ul>
+<h6 id="配置文件创建"><a href="#配置文件创建" class="headerlink" title="配置文件创建"></a>配置文件创建</h6><ol>
+<li><p>数据进行编码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# echo -n &#39;admin&#39; | base64&#10;YWRtaW4=&#10;[root@master ~]# echo -n &#39;123456&#39; | base64&#10;MTIzNDU2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建secret.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Secret&#10;metadata:&#10;  name: secret&#10;  namespace: dev&#10;type: Opaque&#10;data:&#10;  username: YWRtaW4=&#10;  password: MTIzNDU2</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f secret.yaml&#10;secret/secret created&#10;[root@master ~]# kubectl describe secret secret -n dev&#10;Name:         secret&#10;Namespace:    dev&#10;Labels:       &#60;none&#62;&#10;Annotations:  &#60;none&#62;&#10;&#10;Type:  Opaque&#10;&#10;Data&#10;====&#10;password:  6 bytes&#10;username:  5 bytes</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h6 id="环境变量引用"><a href="#环境变量引用" class="headerlink" title="环境变量引用"></a>环境变量引用</h6><p>创建secretenv.yaml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1&#10;kind: Pod&#10;metadata:&#10;  name: secret-pod&#10;  namespace: dev&#10;spec:&#10;  containers:&#10;  - name: mycontainer&#10;    image: nginx:1.17.1&#10;    env:&#10;      - name: SECRET_USERNAME&#10;        valueFrom:&#10;          secretKeyRef:&#10;            name: secret&#10;            key: username&#10;      - name: SECRET_PASSWORD&#10;        valueFrom:&#10;          secretKeyRef:&#10;            name: secret&#10;            key: password&#10;  restartPolicy: Never</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# vi secretenv.yaml&#10;[root@master ~]# kubectl create -f secretenv.yaml &#10;pod/secret-pod created&#10;[root@master ~]# kubectl get pod secret-pod -n dev&#10;NAME         READY   STATUS    RESTARTS   AGE&#10;secret-pod   1/1     Running   0          4s&#10;[root@master ~]# kubectl exec -it secret-pod -n dev /bin/sh&#10;# echo $SECRET_USERNAME&#10;admin&#10;# echo $SECRET_PASSWORD&#10;123456</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/06/25/K8s-数据存储/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2257,162 +2451,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/02/Jmeter-常用设置in-properties/" itemprop="url">Jmeter: 常用设置in properties</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T14:18:15+08:00">
-                2021-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
-                    <span itemprop="name">Jmeter</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/04/02/Jmeter-常用设置in-properties/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/02/Jmeter-常用设置in-properties/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Jmeter里常用的设置：</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">jmeter.hidpi.mode=<span class="keyword">true</span></span><br><span class="line">jmeter.hidpi.<span class="built_in">scale</span>.factor=<span class="number">2.0</span></span><br><span class="line">sampleresult.<span class="keyword">default</span>.encoding=UTF-<span class="number">8</span></span><br><span class="line">jsyntaxtextarea.font.<span class="built_in">size</span>=<span class="number">20</span></span><br><span class="line"></span><br><span class="line">jmeter.reportgenerator.overall_granularity=<span class="number">1000</span></span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.bytes = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.label = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.latency = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_code = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.response_message = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.successful = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_counts = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.thread_name = <span class="keyword">true</span></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.time = <span class="keyword">true</span></span><br><span class="line"># the timestamp format must include the time and should include the date.</span><br><span class="line"># For example the <span class="keyword">default</span>, which is milliseconds since the epoch: </span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = ms</span><br><span class="line"># Or the following would also be suitable</span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.timestamp_format = yyyy/MM/dd HH:mm:ss</span><br><span class="line"></span><br><span class="line">jmeter.<span class="built_in">save</span>.saveservice.assertion_results_failure_message = <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-<p>建议在user.properties里设置。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2467,7 +2505,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2567,7 +2605,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -305,6 +305,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/22/Python生成二维码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/22/Python生成二维码/" itemprop="url">Python生成二维码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-22T10:16:33+08:00">
+                2020-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/22/Python生成二维码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2020/03/22/Python生成二维码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工作中用二维码扫描功能能带来不少的便利，简单看了一下，用Python和qrcode包来生成二维码其实很简单，</p>
+<p>qrcode，详细信息查看<a href="https://pypi.org/project/qrcode/" target="_blank" rel="external">pip qrcode</a>，安装直接用pip命令安装即可。</p>
+<h1 id="纯文本二维码"><a href="#纯文本二维码" class="headerlink" title="纯文本二维码"></a>纯文本二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'text.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>二维码显示：<br><img src="/images/automation/text.png" alt=""></p>
+<h1 id="带Logo二维码"><a href="#带Logo二维码" class="headerlink" title="带Logo二维码"></a>带Logo二维码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_qrcode</span><span class="params">(data, file_name)</span>:</span></span><br><span class="line">    <span class="comment"># 1. 实例化QRCode对象</span></span><br><span class="line">    qr = qrcode.QRCode(</span><br><span class="line">        version=<span class="number">1</span>,</span><br><span class="line">        error_correction=qrcode.constants.ERROR_CORRECT_H,</span><br><span class="line">        box_size=<span class="number">10</span>,</span><br><span class="line">        border=<span class="number">4</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 2. 添加数据</span></span><br><span class="line">    qr.add_data(data)</span><br><span class="line">    qr.make(fit=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 生成二维码</span></span><br><span class="line">    img = qr.make_image(fill_color=<span class="string">"green"</span>, back_color=<span class="string">"white"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 添加logo</span></span><br><span class="line">    icon = Image.open(<span class="string">"logo.jpg"</span>) <span class="comment"># 打开logo照片</span></span><br><span class="line">    img_w, img_h = img.size <span class="comment"># 图片的宽高</span></span><br><span class="line"></span><br><span class="line">    factor = <span class="number">6</span></span><br><span class="line">    size_w = int(img_w / factor)</span><br><span class="line">    size_h = int(img_h / factor)</span><br><span class="line">    icon_w, icon_h = icon.size</span><br><span class="line">    <span class="keyword">if</span> icon_w &gt; size_w:</span><br><span class="line">        icon_w = size_w</span><br><span class="line">    <span class="keyword">if</span> icon_h &gt; size_h:</span><br><span class="line">        icon_h = size_h</span><br><span class="line"></span><br><span class="line">    icon = icon.resize((icon_w, icon_h), Image.ANTIALIAS)</span><br><span class="line">    w = int((img_w - icon_w) / <span class="number">2</span>)</span><br><span class="line">    h = int((img_h - icon_h) / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    img.paste(icon, (w, h), mask=<span class="keyword">None</span>) <span class="comment"># 添加logo照</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 保存二维码</span></span><br><span class="line">    img.save(file_name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 6. 展示二维码</span></span><br><span class="line">    img.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate_qrcode(<span class="string">"http://izheyi.com"</span>, <span class="string">'logo.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>二维码显示：<br><img src="/images/automation/logo.png" alt=""></p>
+<p>还可以把二维码嵌入到页面中，以便更好的使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/03/08/丁丁画画（三年级下学期）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1734,207 +1894,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2019/01/06/2019-Flag/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/06/2019-Flag/" itemprop="url">2019 - Flag</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-06T12:41:23+08:00">
-                2019-01-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/06/2019-Flag/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2019/01/06/2019-Flag/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="lt-lt-lt-lt-lt-lt-lt-HEAD"><a href="#lt-lt-lt-lt-lt-lt-lt-HEAD" class="headerlink" title="&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD"></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</h1><blockquote>
-<p>4月初的时候看了一下学历教育，今年大部分的时间应该都会在这个考试上了，以下计划相应调整。</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cf95e98… switch pc<br>2018年自我感觉还是可以的，2019年又开始了，好多人都在朋友圈里发看书的Flag了，也为自己立一些Flag：</p>
-<ol>
-<li>读书<br>基于去年的不足，今年细化，每月一本书，读书笔记到Blog。</li>
-<li>PMP<br>这个东西几年前有看过，一直没付诸行动，挤时间，逼自己一把，今年拿下证书。</li>
-<li>工作<br>a. 保持技术的更新，有自己的想法和应对方法。<br>b. 更全面的看待，处理事情。</li>
-<li>英语<br>a. 再看一下英语基础，试着找一下快速提升的方法。<br>b. 搞定Friends前三季。</li>
-<li>生活<br>a. 控制脾气，控制脾气，控制脾气。<br>b. 放下手机，活的仪式感一些。<br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>c. 培养一个兴趣，报个钢琴班。</li>
-<li>Blog<br>隔周一更。</li>
-</ol>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h1 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h1><ol>
-<li>拿到PMP证书，看音乐会。</li>
-<li><h1 id="国内游。"><a href="#国内游。" class="headerlink" title="国内游。"></a>国内游。</h1>c. 培养一个兴趣。</li>
-<li>其他<br>a. Blog，尽量更新。<br>b. 每周运动三次，发圈Track。</li>
-</ol>
-<h1 id="奖励-1"><a href="#奖励-1" class="headerlink" title="奖励"></a>奖励</h1><ol>
-<li>拿到PMP证书，看音乐会。</li>
-<li>国内游。<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cf95e98… switch pc</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1989,7 +1948,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2089,7 +2048,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

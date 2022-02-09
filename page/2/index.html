@@ -305,6 +305,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/02/FastAPI-响应模型（12）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/02/FastAPI-响应模型（12）/" itemprop="url">FastAPI: 响应模型（12）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-02T09:27:24+08:00">
+                2021-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/10/02/FastAPI-响应模型（12）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/02/FastAPI-响应模型（12）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在前面的操作中也看到，请求响应返回的就是请求体的内容，比如，要是登记注册就是返回用户名和密码，这种行为是不行的。</p>
+<p>可以使用 <code>response_model</code> 参数来声明用于响应的模型。</p>
+<ul>
+<li>将输出数据转换为其声明的类型。</li>
+<li>校验数据。</li>
+<li>会将输出数据限制在该模型定义内。</li>
+<li>在 OpenAPI 的<em>路径操作</em>中为响应添加一个 JSON Schema。</li>
+<li>并在自动生成文档系统中使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/response_model.jpg" alt=""></p>
+<p>上面的例子中，可以看到响应里会自动的返回请求体里默认的字段。如果请求体中不传，就不要返回带默认值的字段，可以用<code>response_model_exclude_unset</code>来实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    password: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    adress: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserRes</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    username: str</span><br><span class="line">    email: EmailStr</span><br><span class="line">    address: Optional[str] = <span class="string">'beijing'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.post('/user/register/', response_model=UserRes, response_model_exclude_unset=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(user: User)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
+<p><img src="/images/fastapi/response_model_default.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/02/FastAPI-响应状态码（11）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1756,172 +1923,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/26/FastAPI-请求参数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/09/26/FastAPI-请求参数/" itemprop="url">FastAPI: 请求路径参数（2）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-26T16:27:39+08:00">
-                2021-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
-                    <span itemprop="name">FastAPI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/09/26/FastAPI-请求参数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/26/FastAPI-请求参数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>路径参数（<code>/users/{id}</code>）在项目中 不可避免的，如下：</p>
-<h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@app.get('/users/&#123;id&#125;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(id: int)</span>:</span> <span class="comment"># 声明参数类型</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'user_id'</span>: id&#125;</span><br></pre></td></tr></table></figure>
-<p>id被声明为int类型，如果调用的时候不是int型，会报错。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/users/<span class="number">123</span></span><br><span class="line">&#123;<span class="string">"user_id"</span>:<span class="number">123</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据校验</span></span><br><span class="line">http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/users/a</span><br><span class="line"><span class="string">"detail"</span>:[&#123;<span class="string">"loc"</span>:[<span class="string">"path"</span>,<span class="string">"id"</span>],<span class="string">"msg"</span>:<span class="string">"value is not a valid integer"</span>,<span class="string">"type"</span>:<span class="string">"type_error.integer"</span>&#125;]&#125;</span><br></pre></td></tr></table></figure>
-<p>注意函数接收（并返回）的值为 123，是一个 <code>int</code> 值，而不是字符串 <code>&quot;123&quot;</code>。FastAPI通过类型声明自动对请求进行转换。</p>
-<h4 id="路径查找顺序"><a href="#路径查找顺序" class="headerlink" title="路径查找顺序"></a>路径查找顺序</h4><p>路径操作是按顺序依次运行的，所以下面的代码就会有问题</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@app.get('/users/&#123;id&#125;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(id: int)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'user_id'</span>: id&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/zhangsan')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'name'</span>: <span class="string">'zhangsan'</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>调用<code>http://127.0.0.1:8000/users/zhangsan</code>时，至上而下执行，<code>/users/{id}</code>会与 <code>/users/zhangsan</code> 相匹配，认为把<code>zhangsan</code>传给了 <code>user_id</code> </p>
-<p>一定要确保路径的顺序的正确性。</p>
-<h4 id="预设参数"><a href="#预设参数" class="headerlink" title="预设参数"></a>预设参数</h4><p>有时候想给参数设定一个有效的范围，FastAPI也是支持的。可以使用枚举来设定有效参数值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserName</span><span class="params">(str, Enum)</span>:</span></span><br><span class="line">    n1 = <span class="string">'zhangsan'</span></span><br><span class="line">    n2 = <span class="string">'lisi'</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/&#123;name&#125;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(name: UserName)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> name == UserName.n1:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">'name'</span>: name&#125;</span><br><span class="line">    <span class="keyword">if</span> name.value == <span class="string">'lisi'</span>:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">'name'</span>: name&#125;</span><br></pre></td></tr></table></figure>
-<p>只能传设定好的参数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/users/zhangsan</span><br><span class="line">&#123;<span class="string">"name"</span>:<span class="string">"zhangsan"</span>&#125;</span><br><span class="line"></span><br><span class="line">http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/users/wangwu</span><br><span class="line">&#123;<span class="string">"detail"</span>:[&#123;<span class="string">"loc"</span>:[<span class="string">"path"</span>,<span class="string">"name"</span>],<span class="string">"msg"</span>:<span class="string">"value is not a valid enumeration member; permitted: 'zhangsan', 'lisi'"</span>,<span class="string">"type"</span>:<span class="string">"type_error.enum"</span>,<span class="string">"ctx"</span>:&#123;<span class="string">"enum_values"</span>:[<span class="string">"zhangsan"</span>,<span class="string">"lisi"</span>]&#125;&#125;]&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1976,7 +1977,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2076,7 +2077,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

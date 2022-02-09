@@ -305,6 +305,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/01/01/Consul-集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/01/Consul-集群/" itemprop="url">Consul - 集群</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-01T11:11:54+08:00">
+                2018-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Consul/" itemprop="url" rel="index">
+                    <span itemprop="name">Consul</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/01/Consul-集群/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/01/01/Consul-集群/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="搭建集群"><a href="#搭建集群" class="headerlink" title="搭建集群"></a>搭建集群</h1><p>Consul推荐在每个数据中心运行3或5个Servers以避免Server失败导致的数据丢失。</p>
+<p>基于此，我们先用4个虚拟机来做试验：<br>|:—IP Address–:|:—–Role—-:|<br>| 192.168.244.130 | Consul Server |<br>| 192.168.244.131 | Consul Server |<br>| 192.168.244.132 | Consul Server |<br>| 192.168.244.133 | Consul Client |</p>
+<h2 id="Server-Configuration"><a href="#Server-Configuration" class="headerlink" title="Server Configuration"></a>Server Configuration</h2><h3 id="1-生成Key，创建必要配置目录和文件"><a href="#1-生成Key，创建必要配置目录和文件" class="headerlink" title="1. 生成Key，创建必要配置目录和文件"></a>1. 生成Key，创建必要配置目录和文件</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/server</span></span><br><span class="line">[root<span class="constant">@Automation</span> ~]<span class="preprocessor"># mkdir /etc/consul.d/consul-server-data</span></span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># ls</span></span><br><span class="line">consul-server-data  <span class="built_in">ping</span>.json  server  web.json</span><br><span class="line">[root<span class="constant">@Automation</span> consul.d]<span class="preprocessor"># consul keygen</span></span><br><span class="line">Vz3jcuLn6a6Ekq5PbrJO2w==</span><br></pre></td></tr></table></figure>
+<p><em>Key: It should be the same for all the servers and clients in a datacenter. If it’s different the consul members will refuse to join.</em></p>
+<h3 id="2-创建Configration"><a href="#2-创建Configration" class="headerlink" title="2. 创建Configration"></a>2. 创建Configration</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">bind_addr</span>": <span class="value"><span class="string">"192.168.244.130"</span></span>, </span><br><span class="line">"<span class="attribute">datacenter</span>": <span class="value"><span class="string">"dc1"</span></span>,</span><br><span class="line">"<span class="attribute">data_dir</span>": <span class="value"><span class="string">"/etc/consul.d/consul-server-data"</span></span>,</span><br><span class="line">"<span class="attribute">encrypt</span>": <span class="value"><span class="string">"Vz3jcuLn6a6Ekq5PbrJO2w=="</span></span>,</span><br><span class="line">"<span class="attribute">log_level</span>": <span class="value"><span class="string">"INFO"</span></span>,</span><br><span class="line">"<span class="attribute">enable_syslog</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">enable_debug</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">node_name</span>": <span class="value"><span class="string">"ConsulServer1"</span></span>,</span><br><span class="line">"<span class="attribute">server</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">bootstrap_expect</span>": <span class="value"><span class="number">3</span></span>,</span><br><span class="line">"<span class="attribute">rejoin_after_leave</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">"<span class="attribute">retry_join</span>": <span class="value">[ </span><br><span class="line">  <span class="string">"192.168.244.130"</span>,</span><br><span class="line">  <span class="string">"192.168.244.131"</span>,</span><br><span class="line">  <span class="string">"192.168.244.132"</span></span><br><span class="line">  ]</span><br><span class="line"> </span>&#125;</span><br></pre></td></tr></table></figure>
+<p><em>在每一个Server都要以下相同操作, 唯一要修改的就是IP地址和node_name。</em></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/01/Consul-集群/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/26/Consul-Key-Value和Web-UI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1763,172 +1926,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2017/12/02/Docker-Dockerfile-Customize-Image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/02/Docker-Dockerfile-Customize-Image/" itemprop="url">Docker - Dockerfile Customize Image</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-02T16:05:30+08:00">
-                2017-12-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/02/Docker-Dockerfile-Customize-Image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/02/Docker-Dockerfile-Customize-Image/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>镜像的定制实际上就是定制每一层所添加的配置、文件。<code>Dockerfile</code>是一个文本文件，其内包含了一条条的指令，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
-<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><p>例子：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">FROM</span> nginx</span><br><span class="line"><span class="built_in">RUN</span> <span class="bash"><span class="built_in">echo</span> <span class="string">'&lt;h1&gt;Hello, Docker!&lt;/h1&gt;'</span> &gt; /usr/share/nginx/html/index.html</span></span><br></pre></td></tr></table></figure></p>
-<p>这里只介绍两个最基本的，还有很多，用到的时候再学习。</p>
-<h2 id="From"><a href="#From" class="headerlink" title="From"></a>From</h2><p>指定基础image，在其上进行定制，必须要有且是第一条指令。</p>
-<h2 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h2><p>是用来执行命令行命令的。主要有两种格式：</p>
-<ul>
-<li>Shell<br><code>RUN &lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。</li>
-<li>Exec<br><code>RUN [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</code>，这更像是函数调用中的格式。</li>
-</ul>
-<p><em>Union FS 是有最大层数限制的，所以别用太多Run命令建很多层，如果有多条命令要执行，使用 &amp;&amp; 将各个所需命令串联起来。</em><br><em>Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。</em></p>
-<p>到此，要定制的内容就完成了，下面就是构建了。</p>
-<h1 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h1><p>用 docker build 命令来构建镜像。</p>
-<p>例子：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~/myngix$ docker build -t nginx:v5 .</span><br><span class="line">Sending build context <span class="keyword">to</span> Docker daemon  <span class="number">2.048</span>kB</span><br><span class="line"><span class="keyword">Step</span> <span class="number">1</span>/<span class="number">2</span> : <span class="keyword">FROM</span> nginx</span><br><span class="line"> ---&gt; <span class="number">9e7424</span>e5dbae</span><br><span class="line"><span class="keyword">Step</span> <span class="number">2</span>/<span class="number">2</span> : RUN echo <span class="comment">'<span class="xmlDocTag">&lt;h1&gt;</span>Hello, Docker!<span class="xmlDocTag">&lt;/h1&gt;</span>' &gt; /usr/share/nginx/html/index.html</span></span><br><span class="line"> ---&gt; Running <span class="keyword">in</span> <span class="number">0</span>f77e86fba64</span><br><span class="line"> ---&gt; d725428dfdad</span><br><span class="line">Removing intermediate container <span class="number">0</span>f77e86fba64</span><br><span class="line">Successfully built d725428dfdad</span><br><span class="line">Successfully tagged nginx:v5</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker@<span class="keyword">default</span>:~/myngix$ docker image ls -a</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx               v5                  d725428dfdad        <span class="number">16</span> seconds ago      <span class="number">108</span>MB</span><br><span class="line">nginx               latest              <span class="number">9e7424</span>e5dbae        <span class="number">2</span> weeks ago         <span class="number">108</span>MB</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1983,7 +1980,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">391</span>
+                  <span class="site-state-item-count">392</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2083,7 +2080,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
