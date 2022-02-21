@@ -305,6 +305,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/08/11/Dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/11/Dubbo/" itemprop="url">Dubbo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T14:30:11+08:00">
+                2018-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Distribution/" itemprop="url" rel="index">
+                    <span itemprop="name">Distribution</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/11/Dubbo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/08/11/Dubbo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://dubbo.incubator.apache.org" target="_blank" rel="external">Dubbo</a>是一款分布式服务框架，高性能和透明化的RPC远程服务调用方案。</p>
+<p>Dubbo采用全spring配置方式，透明化接入应用，对应用没有任何API侵入，只需用Spring加载Dubbo的配置即可。</p>
+<h1 id="Dubbo架构："><a href="#Dubbo架构：" class="headerlink" title="Dubbo架构："></a>Dubbo架构：</h1><p><img src="/images/distributed/dubbo_frame.jpg" alt=""></p>
+<ul>
+<li>Provider: 暴露服务的服务提供方。 </li>
+<li>Consumer: 调用远程服务的服务消费方。 </li>
+<li>Registry: 服务注册与发现的注册中心。 </li>
+<li>Monitor: 统计服务的调用次数和调用时间的监控中心。</li>
+</ul>
+<h1 id="调用流程"><a href="#调用流程" class="headerlink" title="调用流程"></a>调用流程</h1><ol>
+<li>服务容器负责启动，加载，运行服务提供者。 </li>
+<li>服务提供者在启动时，向注册中心注册自己提供的服务。 </li>
+<li>服务消费者在启动时，向注册中心订阅自己所需的服务。 </li>
+<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。 </li>
+<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。 </li>
+<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/08/11/Zookeeper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1801,178 +1971,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/07/22/Java项目实战-solr安装与配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/22/Java项目实战-solr安装与配置/" itemprop="url">Java项目实战 - solr安装与配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T09:12:51+08:00">
-                2018-07-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/22/Java项目实战-solr安装与配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/07/22/Java项目实战-solr安装与配置/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Solr是一个全文检索服务器，只需要进行配置就可以实现全文检索服务。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
-<li>前提，有JDK和Tomcat。</li>
-<li>下载solr的安装包，解压，并把dist下的war包部署到Tomcat下。</li>
-<li>解压war包。启动tomcat自动解压。</li>
-<li>把solr/example/lib/ext目录下所有的jar包复制Tomcat下/webapps/solr/WEB-INF/lib/。</li>
-<li>创建solrhome，把example/sor复制到/opt/solrhome。</li>
-<li>配置solrhome，在/apache-tomcat-8.0.28/webapps/solr/WEB-INF/web.xml。</li>
-<li>启动Tomcat。<br><img src="/images/javaproject/solr.jpg" alt=""></li>
-</ol>
-<h1 id="中文分析器IK-Analyzer"><a href="#中文分析器IK-Analyzer" class="headerlink" title="中文分析器IK-Analyzer"></a>中文分析器IK-Analyzer</h1><p>Solr中默认是没有中文分析器的，需要手工配置，配置一个FieldType，在FieldType中指定使用的中文分析器。</p>
-<ol>
-<li>下载包。</li>
-<li>把中文分析器的jar复制到Tomcat下/webapps/solr/WEB-INF/lib/。</li>
-<li>把IK Analyzer需要的扩展词典及停用词词典、配置文件复制到Tomcat下/webapps/solr/WEB-INF/classes。</li>
-<li>在solrhome/collection1/conf/schema.xml中配置FileType。</li>
-</ol>
-<h1 id="配置业务域"><a href="#配置业务域" class="headerlink" title="配置业务域"></a>配置业务域</h1><p>就是配置要搜索的字段，和后续用到的字段。<br>业务系统Fileds：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;field name=<span class="string">"item_title"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_sell_point"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_price"</span>  <span class="class"><span class="keyword">type</span></span>=<span class="string">"long"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_image"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"string"</span> indexed=<span class="string">"false"</span> stored=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_category_name"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"string"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;field name=<span class="string">"item_desc"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"false"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;field name=<span class="string">"item_keywords"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"false"</span> multiValued=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_title"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_sell_point"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_category_name"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br><span class="line">&lt;copyField source=<span class="string">"item_desc"</span> dest=<span class="string">"item_keywords"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/javaproject/solr_config.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2027,7 +2025,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

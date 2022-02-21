@@ -305,6 +305,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/10/14/SonarQube-with-Jenkins-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/SonarQube-with-Jenkins-pipeline/" itemprop="url">SonarQube with Jenkins pipeline</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T15:16:51+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SonarQube/" itemprop="url" rel="index">
+                    <span itemprop="name">SonarQube</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/14/SonarQube-with-Jenkins-pipeline/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/10/14/SonarQube-with-Jenkins-pipeline/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>Install <code>SonarQube Scanner</code> plugin in Jenkins.</li>
+<li>Global Configuration.<br>Log into Jenkins as an administrator and go to <code>Manage Jenkins &gt; Global Tool Configuration</code>:<br><img src="/images/sonarqube/jenkins_config.jpg" alt=""></li>
+<li><p>Create Pipeline job.<br>Add the below Pipeline script:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mvnHome</span></span><br><span class="line"></span>  stage(<span class="symbol">'SCM</span> and configration') &#123;</span><br><span class="line">    git <span class="symbol">'https</span>:<span class="comment">//github.com/yongfeiuall/spring-boot-example.git'</span></span><br><span class="line">    mvnHome = tool <span class="symbol">'M</span>3'</span><br><span class="line">  &#125;</span><br><span class="line">  stage(<span class="symbol">'SonarQube</span> analysis') &#123;</span><br><span class="line">    withSonarQubeEnv(<span class="symbol">'SonarQub</span>e') &#123;</span><br><span class="line">      sh <span class="string">"'$&#123;mvnHome&#125;/bin/mvn' clean package sonar:sonar"</span></span><br><span class="line">    &#125; <span class="comment">// SonarQube taskId is automatically attached to the pipeline context</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run job.<br><img src="/images/sonarqube/jenkins_run.jpg" alt=""><br><img src="/images/sonarqube/jenkins_result.jpg" alt=""></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/10/07/Code-Analysis-with-SonarQube/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1786,176 +1948,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2018/08/11/Dubbo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/11/Dubbo/" itemprop="url">Dubbo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T14:30:11+08:00">
-                2018-08-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Distribution/" itemprop="url" rel="index">
-                    <span itemprop="name">Distribution</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/11/Dubbo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2018/08/11/Dubbo/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://dubbo.incubator.apache.org" target="_blank" rel="external">Dubbo</a>是一款分布式服务框架，高性能和透明化的RPC远程服务调用方案。</p>
-<p>Dubbo采用全spring配置方式，透明化接入应用，对应用没有任何API侵入，只需用Spring加载Dubbo的配置即可。</p>
-<h1 id="Dubbo架构："><a href="#Dubbo架构：" class="headerlink" title="Dubbo架构："></a>Dubbo架构：</h1><p><img src="/images/distributed/dubbo_frame.jpg" alt=""></p>
-<ul>
-<li>Provider: 暴露服务的服务提供方。 </li>
-<li>Consumer: 调用远程服务的服务消费方。 </li>
-<li>Registry: 服务注册与发现的注册中心。 </li>
-<li>Monitor: 统计服务的调用次数和调用时间的监控中心。</li>
-</ul>
-<h1 id="调用流程"><a href="#调用流程" class="headerlink" title="调用流程"></a>调用流程</h1><ol>
-<li>服务容器负责启动，加载，运行服务提供者。 </li>
-<li>服务提供者在启动时，向注册中心注册自己提供的服务。 </li>
-<li>服务消费者在启动时，向注册中心订阅自己所需的服务。 </li>
-<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。 </li>
-<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。 </li>
-<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2010,7 +2002,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

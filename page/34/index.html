@@ -305,6 +305,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/09/QTP-Recovery-Scenario-Specification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/10/09/QTP-Recovery-Scenario-Specification/" itemprop="url">QTP Recovery Scenario Specification</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-10-09T12:12:28+08:00">
+                2014-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QTP/" itemprop="url" rel="index">
+                    <span itemprop="name">QTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/09/QTP-Recovery-Scenario-Specification/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2014/10/09/QTP-Recovery-Scenario-Specification/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>When we run script under our new framework, we found that will missing the “FrameworkErrorHandler.vbs” in Recovery Scenario.  </p>
+</blockquote>
+<p><strong>Issue:</strong><br>For the better transplantation, we use the relevant path for all items in new framework, but once we generate the QRS file, the relevant path will change to absolute path, and we can’t modify this path any more.<br><img src="/images/QTP/rs_issue.jpg" alt=""></p>
+<p><strong>Solution:</strong><br>Now that this file is change to absolute path, and need to in keeping with relevant path in framework, I thought a way to specify a path, and generate the “FrameworkErrorHandler.vbs” dynamically:<br><img src="/images/QTP/rs_solution.jpg" alt=""></p>
+<p>Before we run the test cases, copy the “FrameworkErrorHandler.vbs” in framework to root directory of C disk.<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set fso = <span class="function"><span class="title">CreateObject</span><span class="params">( <span class="string">"Scripting.FileSystemObject"</span> )</span></span></span><br><span class="line">fso<span class="class">.CopyFile</span> oParentFolder + <span class="string">"FrameworkErrorHandler.vbs"</span>, <span class="string">"c:\FrameworkErrorHandler.vbs"</span></span><br><span class="line">fso.<span class="function"><span class="title">GetFile</span><span class="params">(<span class="string">"c:\FrameworkErrorHandler.vbs"</span>)</span></span><span class="class">.Attributes</span> = <span class="number">0</span> <span class="string">'set file attribute to nomal</span></span><br></pre></td></tr></table></figure></p>
+<p>No matter you put the framework in anywhere of your PC, QRS file can find and read the custom recovery scenario function file successfully.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/10/09/Run-VBS-file-with-command-and-pass-parameter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1716,162 +1876,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2014/03/16/IEDriverServer在进程中没有关闭？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="url">IEDriverServer在进程中没有关闭？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-03-16T15:32:21+08:00">
-                2014-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Selenium-Webdriver/" itemprop="url" rel="index">
-                    <span itemprop="name">Selenium Webdriver</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2014/03/16/IEDriverServer在进程中没有关闭？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2014/03/16/IEDriverServer在进程中没有关闭？/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有时候跑完脚本后，IEDriverServer.exe进程没杀掉。</p>
-<p><strong>解决方法：</strong></p>
-<p>在关闭driver时用Driver.Quit();不要用Driver.Close();<br>Driver.Quit() – Quit this dirver, closing every associated windows;<br>Driver.Close() – Close the current window, quiting the browser if it is the last window currently open.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1926,7 +1930,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

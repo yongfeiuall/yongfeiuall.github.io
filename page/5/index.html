@@ -305,6 +305,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/14/Jmeter-JSR223使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/14/Jmeter-JSR223使用/" itemprop="url">Jmeter: JSR223使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-14T08:46:44+08:00">
+                2021-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jmeter/" itemprop="url" rel="index">
+                    <span itemprop="name">Jmeter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/04/14/Jmeter-JSR223使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/04/14/Jmeter-JSR223使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Jmeter经常用BeanShell来实现一些其本身不能处理的任务，但是BeanShell的效率不高，现在可以用JSR223来代替，支持groovy脚本，效率更高。</p>
+<h4 id="常用内置变量"><a href="#常用内置变量" class="headerlink" title="常用内置变量"></a>常用内置变量</h4><ul>
+<li><p><strong>Vars</strong> </p>
+<p>定义变量与调用变量</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vars.<span class="built_in">get</span>(<span class="keyword">String</span> <span class="variable">key</span>)：从jmeter中获得变量值</span><br><span class="line"></span><br><span class="line">vars.put(<span class="keyword">String</span> <span class="variable">key</span>，<span class="keyword">String</span> value)：数据存到jmeter变量中</span><br><span class="line"></span><br><span class="line">vars.putObject(<span class="string">"OBJ1"</span>,<span class="keyword">new</span> <span class="keyword">Object</span>());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Props</strong> </p>
+<p>设置属性与调用属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;__setProperty(test1,property1,)&#125;</span>;</span><br><span class="line">props.put(“<span class="built_in">test</span>2”,“property2”);</span><br><span class="line">String <span class="built_in">test</span>1 =props.get(“<span class="built_in">test</span>1”);</span><br><span class="line">String <span class="built_in">test</span>2 = props.get(“<span class="built_in">test</span>2”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Ctx</strong></p>
+<p>通过它来访问当前线程的上下文</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getVariables</span><span class="params">()</span></span>：获取当前线程的所有变量</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getPreviousResult</span><span class="params">()</span></span> ：获取前一个取样器的结果</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>prev</strong></p>
+<p>获取前面的sample采样的结果</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">getResponseDataAsString</span><span class="params">()</span></span>：获取响应信息</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">getResponseCode</span><span class="params">()</span></span> ：获取响应code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>log</strong></p>
+<p>打印日志 ，日志会保存在jmeter.log中</p>
+</li>
+</ul>
+<h4 id="运行外部文件"><a href="#运行外部文件" class="headerlink" title="运行外部文件"></a>运行外部文件</h4><ul>
+<li><p>Java</p>
+<p>在JSR223中引入源文件并执行，执行与JAVA本身的方法一致</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source(“<span class="string">F:</span><span class="regexp">/Test/</span>demo1.java”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Jar</p>
+<p>有下边两种方法可以引入jar包，执行与JAVA本身的方法一致<br>1、将jar包放到Jmeter安装目录的\lib\ext目录下<br>2、在测试计划中导入</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/04/02/Jmeter-常用设置in-properties/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1917,178 +2101,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2020/09/02/Jacoco功能测试覆盖率/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/09/02/Jacoco功能测试覆盖率/" itemprop="url">Jacoco功能测试覆盖率</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-02T10:17:10+08:00">
-                2020-09-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Product-Delivery/" itemprop="url" rel="index">
-                    <span itemprop="name">Product Delivery</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/09/02/Jacoco功能测试覆盖率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2020/09/02/Jacoco功能测试覆盖率/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对于测试来说，更关注于功能（接口或UI）测试的覆盖率，一样也可以通过Jacoco来实现。</p>
-<p>我们需要这两个jar： <code>jacocoagent.jar</code>和<code>jacococli.jar</code>。</p>
-<p>一样是和Git，Jenkins集成，说一下思路</p>
-<ol>
-<li><p>同样<code>mvn install</code>，打包生成jar包</p>
-</li>
-<li><p>项目启动的时候，配置jacoco agent</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -javaagent:/jacocoagent.jar=includes=*,output=tcpserver,address=localhost,port=<span class="number">11111</span> -jar ./target/project-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动后，生成报告</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar dump --address localhost --port <span class="number">11111</span> --destfile ./jacoco-demo.<span class="keyword">exec</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jacococli.jar report ./jacoco-demo.<span class="keyword">exec</span> --classfiles ./target/classes --html ./report</span><br></pre></td></tr></table></figure>
-<p>没有做任何测试，覆盖率极低。</p>
-</li>
-<li><p>做一些测试之后，生成报告</p>
-<p>反映出实时的测试覆盖率。</p>
-</li>
-</ol>
-<p>以上只是简单例子，也可以在Tomcat里配置。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2143,7 +2155,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

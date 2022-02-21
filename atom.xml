@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://izheyi.com/"/>
-  <updated>2021-11-01T03:07:57.765Z</updated>
+  <updated>2022-02-21T02:22:45.008Z</updated>
   <id>http://izheyi.com/</id>
   
   <author>
@@ -16,11 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python给Jenkins Job批量修改权限</title>
+    <link href="http://izheyi.com/2022/02/21/Python%E7%BB%99Jenkins-Job%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90/"/>
+    <id>http://izheyi.com/2022/02/21/Python给Jenkins-Job批量修改权限/</id>
+    <published>2022-02-21T01:16:09.000Z</published>
+    <updated>2022-02-21T02:22:45.008Z</updated>
+    
+    <content type="html">&lt;p&gt;开发老是不自觉的更新UAT的Job，对测试造成一定的影响。查看了一下，Jenkins上的用户是通过第三方系统引入的，没有更合理的分组，用Role Based Strategy不能够实现对特定Job的权限控制。&lt;/p&gt;
+&lt;p&gt;采用项目矩阵授权策略来实现：目前的权限不受影响，只有UAT View下的Job只有测试能访问执行。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;全局配置，设置Admin和Authenticated User权限&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;项目设置，选择不继承权限策略，并对特定用户加进来设置相应权限&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这种方式，View下有很多个Job，每来一个人都要一个一个加，可以利用代码方式批量的来添加用户权限：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;jobs = s.get_jobs(view_name=VIEW_NAME)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; job &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; jobs:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    name = job[&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    config = s.get_job_config(name)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    content = f&lt;span class=&quot;string&quot;&gt;&#39;&#39;&#39;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Build:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Cancel:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Configure:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Delete:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Move:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Read:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;permission&amp;gt;hudson.model.Item.Workspace:&amp;#123;USER&amp;#125;&amp;lt;/permission&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &#39;&#39;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    new = config.replace(&lt;span class=&quot;string&quot;&gt;&#39;&amp;lt;/permission&amp;gt;&#39;&lt;/span&gt;, content, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    s.reconfig_job(name, new)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开发老是不自觉的更新UAT的Job，对测试造成一定的影响。查看了一下，Jenkins上的用户是通过第三方系统引入的，没有更合理的分组，用Role Based Strategy不能够实现对特定Job的权限控制。&lt;/p&gt;
+&lt;p&gt;采用项目矩阵授权策略来实现：目前的权限不受影响，只
+    
+    </summary>
+    
+      <category term="Automation Testing" scheme="http://izheyi.com/categories/Automation-Testing/"/>
+    
+    
+      <category term="自动化测试" scheme="http://izheyi.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python给Gogs项目批量打Tag</title>
     <link href="http://izheyi.com/2021/10/21/Python%E7%BB%99Gogs%E9%A1%B9%E7%9B%AE%E6%89%B9%E9%87%8F%E6%89%93Tag/"/>
     <id>http://izheyi.com/2021/10/21/Python给Gogs项目批量打Tag/</id>
     <published>2021-10-21T03:03:54.000Z</published>
-    <updated>2021-11-01T03:07:57.765Z</updated>
+    <updated>2021-11-01T05:53:28.265Z</updated>
     
     <content type="html">&lt;p&gt;Gogs的Rest API不能用，就用下面的方式来实现：&lt;/p&gt;
 &lt;p&gt;通过csv文件配置要打Tag的项目&lt;/p&gt;
@@ -724,44 +757,6 @@
     
       &lt;p&gt;可以通过Query来实现对字符串查询参数的校验。&lt;/p&gt;
 &lt;h4 id=&quot;常规校验&quot;&gt;&lt;a href=&quot;#常规校验&quot; class=&quot;headerlink&quot; title=&quot;常规校验&quot;&gt;&lt;/a&gt;常规校验&lt;/h4&gt;&lt;figure class=&quot;highlight python&quot;&gt;
-    
-    </summary>
-    
-      <category term="FastAPI" scheme="http://izheyi.com/categories/FastAPI/"/>
-    
-    
-      <category term="FastAPI" scheme="http://izheyi.com/tags/FastAPI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>FastAPI: 请求查询参数（3）</title>
-    <link href="http://izheyi.com/2021/09/27/FastAPI-%E8%AF%B7%E6%B1%82%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0%EF%BC%883%EF%BC%89/"/>
-    <id>http://izheyi.com/2021/09/27/FastAPI-请求查询参数（3）/</id>
-    <published>2021-09-27T08:35:20.000Z</published>
-    <updated>2021-10-04T08:03:45.494Z</updated>
-    
-    <content type="html">&lt;p&gt;声明不是路径参数的其他参数时，自动解释成查询参数，也就是位于 URL 的 &lt;code&gt;？&lt;/code&gt; 之后，并以 &lt;code&gt;&amp;amp;&lt;/code&gt; 符号分隔的键值对的集合。&lt;/p&gt;
-&lt;h4 id=&quot;默认参数&quot;&gt;&lt;a href=&quot;#默认参数&quot; class=&quot;headerlink&quot; title=&quot;默认参数&quot;&gt;&lt;/a&gt;默认参数&lt;/h4&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;users = [&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;zhangsan&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;lisi&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;wangwu&#39;&lt;/span&gt;&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@app.get(&#39;/users/&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(start: int = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, limit: int = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; users[start : limit]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;code&gt;start=0&lt;/code&gt; 和 &lt;code&gt;limit=2&lt;/code&gt; 的默认值，下面两种方式访问，结果是一样的&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/?start=0&amp;amp;limit=2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;必填参数&quot;&gt;&lt;a href=&quot;#必填参数&quot; class=&quot;headerlink&quot; title=&quot;必填参数&quot;&gt;&lt;/a&gt;必填参数&lt;/h4&gt;&lt;p&gt;不声明默认值的参数就是默认参数。注意，有默认值参数和必填参数值都存在时，有默认值参数必须放到必填参数后边。&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;users = [&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;zhangsan&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;lisi&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;wangwu&#39;&lt;/span&gt;&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@app.get(&#39;/users/&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(start: int, limit: int = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; users[start : limit]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;start是填参数，如果不写会报错。&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/?limit=2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;detail&quot;:[&amp;#123;&quot;loc&quot;:[&quot;query&quot;,&quot;start&quot;],&quot;msg&quot;:&quot;field required&quot;,&quot;type&quot;:&quot;value_error.missing&quot;&amp;#125;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;可选参数&quot;&gt;&lt;a href=&quot;#可选参数&quot; class=&quot;headerlink&quot; title=&quot;可选参数&quot;&gt;&lt;/a&gt;可选参数&lt;/h4&gt;&lt;p&gt;用Optional，默认值设置为 &lt;code&gt;None&lt;/code&gt; 来声明可选参数&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;users = [&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;zhangsan&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;lisi&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;wangwu&#39;&lt;/span&gt;&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@app.get(&#39;/users/&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(start: int = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, limit: Optional[int] = None)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; limit:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; users[start : limit]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; users[start: ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;结果&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/?start=0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[&amp;#123;&quot;name&quot;:&quot;zhangsan&quot;&amp;#125;,&amp;#123;&quot;name&quot;:&quot;lisi&quot;&amp;#125;,&amp;#123;&quot;name&quot;:&quot;wangwu&quot;&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&quot;路径和查询参数&quot;&gt;&lt;a href=&quot;#路径和查询参数&quot; class=&quot;headerlink&quot; title=&quot;路径和查询参数&quot;&gt;&lt;/a&gt;路径和查询参数&lt;/h4&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;books = [&amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;python&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;fastapi&#39;&lt;/span&gt;&amp;#125;, &amp;#123;&lt;span class=&quot;string&quot;&gt;&#39;name&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;java&#39;&lt;/span&gt;&amp;#125;, ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;decorator&quot;&gt;@app.get(&#39;/users/&amp;#123;id&amp;#125;&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(id: int, start: int = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, limit: Optional[int] = None)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; limit:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;#123;id: books[start : limit]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;#123;id: books[start: ]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;结果&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/123&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;123&quot;:[&amp;#123;&quot;name&quot;:&quot;python&quot;&amp;#125;,&amp;#123;&quot;name&quot;:&quot;fastapi&quot;&amp;#125;,&amp;#123;&quot;name&quot;:&quot;java&quot;&amp;#125;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;http://127.0.0.1:8000/users/123?start=1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&quot;123&quot;:[&amp;#123;&quot;name&quot;:&quot;fastapi&quot;&amp;#125;,&amp;#123;&quot;name&quot;:&quot;java&quot;&amp;#125;]&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;声明不是路径参数的其他参数时，自动解释成查询参数，也就是位于 URL 的 &lt;code&gt;？&lt;/code&gt; 之后，并以 &lt;code&gt;&amp;amp;&lt;/code&gt; 符号分隔的键值对的集合。&lt;/p&gt;
-&lt;h4 id=&quot;默认参数&quot;&gt;&lt;a href=&quot;#默认参数&quot; class=&quot;header
     
     </summary>
     

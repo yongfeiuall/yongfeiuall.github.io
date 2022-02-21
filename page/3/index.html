@@ -305,6 +305,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/27/FastAPI-请求查询参数（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/27/FastAPI-请求查询参数（3）/" itemprop="url">FastAPI: 请求查询参数（3）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-27T16:35:20+08:00">
+                2021-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
+                    <span itemprop="name">FastAPI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/09/27/FastAPI-请求查询参数（3）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2021/09/27/FastAPI-请求查询参数（3）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>声明不是路径参数的其他参数时，自动解释成查询参数，也就是位于 URL 的 <code>？</code> 之后，并以 <code>&amp;</code> 符号分隔的键值对的集合。</p>
+<h4 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">users = [&#123;<span class="string">'name'</span>: <span class="string">'zhangsan'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'lisi'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'wangwu'</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(start: int = <span class="number">0</span>, limit: int = <span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> users[start : limit]</span><br></pre></td></tr></table></figure>
+<p><code>start=0</code> 和 <code>limit=2</code> 的默认值，下面两种方式访问，结果是一样的</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/</span><br><span class="line">http://127.0.0.1:8000/users/?start=0&amp;limit=2</span><br></pre></td></tr></table></figure>
+<h4 id="必填参数"><a href="#必填参数" class="headerlink" title="必填参数"></a>必填参数</h4><p>不声明默认值的参数就是默认参数。注意，有默认值参数和必填参数值都存在时，有默认值参数必须放到必填参数后边。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">users = [&#123;<span class="string">'name'</span>: <span class="string">'zhangsan'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'lisi'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'wangwu'</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(start: int, limit: int = <span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> users[start : limit]</span><br></pre></td></tr></table></figure>
+<p>start是填参数，如果不写会报错。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/?limit=2</span><br><span class="line"></span><br><span class="line">&#123;"detail":[&#123;"loc":["query","start"],"msg":"field required","type":"value_error.missing"&#125;]&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h4><p>用Optional，默认值设置为 <code>None</code> 来声明可选参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">users = [&#123;<span class="string">'name'</span>: <span class="string">'zhangsan'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'lisi'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'wangwu'</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(start: int = <span class="number">0</span>, limit: Optional[int] = None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit:</span><br><span class="line">        <span class="keyword">return</span> users[start : limit]</span><br><span class="line">    <span class="keyword">return</span> users[start: ]</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/?start=0</span><br><span class="line"></span><br><span class="line">[&#123;"name":"zhangsan"&#125;,&#123;"name":"lisi"&#125;,&#123;"name":"wangwu"&#125;]</span><br></pre></td></tr></table></figure>
+<h4 id="路径和查询参数"><a href="#路径和查询参数" class="headerlink" title="路径和查询参数"></a>路径和查询参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">books = [&#123;<span class="string">'name'</span>: <span class="string">'python'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'fastapi'</span>&#125;, &#123;<span class="string">'name'</span>: <span class="string">'java'</span>&#125;, ]</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/&#123;id&#125;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">root</span><span class="params">(id: int, start: int = <span class="number">0</span>, limit: Optional[int] = None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit:</span><br><span class="line">        <span class="keyword">return</span> &#123;id: books[start : limit]&#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;id: books[start: ]&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/123</span><br><span class="line">&#123;"123":[&#123;"name":"python"&#125;,&#123;"name":"fastapi"&#125;,&#123;"name":"java"&#125;]&#125;</span><br><span class="line"></span><br><span class="line">http://127.0.0.1:8000/users/123?start=1</span><br><span class="line">&#123;"123":[&#123;"name":"fastapi"&#125;,&#123;"name":"java"&#125;]&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/09/26/FastAPI-请求参数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1767,176 +1935,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/07/05/K8s-Dashboard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/05/K8s-Dashboard/" itemprop="url">K8s：Dashboard</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-05T10:37:51+08:00">
-                2021-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/k8s/" itemprop="url" rel="index">
-                    <span itemprop="name">k8s</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/07/05/K8s-Dashboard/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/07/05/K8s-Dashboard/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>kubernetes还开发了一个基于web的用户界面（Dashboard）。用户可以使用Dashboard部署容器化的应用，还可以监控应用的状态，执行故障排查以及管理kubernetes中各种资源。</p>
-<h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><ol>
-<li><p>下载yaml</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# wget  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml&#10;--2021-10-18 10:40:54--  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml&#10;&#27491;&#22312;&#35299;&#26512;&#20027;&#26426; raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.110.133, ...&#10;&#27491;&#22312;&#36830;&#25509; raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... &#24050;&#36830;&#25509;&#12290;&#10;&#24050;&#21457;&#20986; HTTP &#35831;&#27714;&#65292;&#27491;&#22312;&#31561;&#24453;&#22238;&#24212;... 200 OK&#10;&#38271;&#24230;&#65306;7552 (7.4K) [text/plain]&#10;&#27491;&#22312;&#20445;&#23384;&#33267;: &#8220;recommended.yaml&#8221;&#10;&#10;100%[==============================================================================================================&#62;] 7,552       2.14KB/s &#29992;&#26102; 3.4s</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置并运行Dashboard</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#26032;&#22686;type: NodePort &#21644; nodePort&#65306;31443&#65292;&#20197;&#20415;&#33021;&#23454;&#29616;&#38750;&#26412;&#26426;&#35775;&#38382;&#10;kind: Service&#10;apiVersion: v1&#10;metadata:&#10;  labels:&#10;    k8s-app: kubernetes-dashboard&#10;  name: kubernetes-dashboard&#10;  namespace: kubernetes-dashboard&#10;spec:&#10;  type: NodePort&#10;  ports:&#10;    - port: 443&#10;      targetPort: 8443&#10;      nodePort: 31443&#10;  selector:&#10;    k8s-app: kubernetes-dashboard&#10;&#10;# &#37096;&#32626;&#10;[root@master ~]# kubectl create -f recommended.yaml &#10;namespace/kubernetes-dashboard created&#10;serviceaccount/kubernetes-dashboard created&#10;service/kubernetes-dashboard created&#10;secret/kubernetes-dashboard-certs created&#10;secret/kubernetes-dashboard-csrf created&#10;secret/kubernetes-dashboard-key-holder created&#10;configmap/kubernetes-dashboard-settings created&#10;role.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created&#10;deployment.apps/kubernetes-dashboard created&#10;service/dashboard-metrics-scraper created&#10;deployment.apps/dashboard-metrics-scraper created&#10;&#10;# &#26597;&#30475;&#10;[root@master ~]# kubectl get pod,svc -n kubernetes-dashboard&#10;NAME                                            READY   STATUS    RESTARTS   AGE&#10;pod/dashboard-metrics-scraper-c79c65bb7-spq7w   1/1     Running   0          88s&#10;pod/kubernetes-dashboard-56484d4c5-8v84c        1/1     Running   0          88s&#10;&#10;NAME                                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)         AGE&#10;service/dashboard-metrics-scraper   ClusterIP   10.96.123.22   &#60;none&#62;        8000/TCP        88s&#10;service/kubernetes-dashboard        NodePort    10.106.25.93   &#60;none&#62;        443:31443/TCP   88s</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建访问账户</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#21019;&#24314;&#36134;&#21495;&#10;[root@k8s-master01-1 ~]# kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard&#10;&#10;# &#25480;&#26435;&#10;[root@k8s-master01-1 ~]# kubectl create clusterrolebinding dashboard-admin-rb --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin&#10;&#10;# &#33719;&#21462;&#36134;&#21495;token&#10;[root@master ~]# kubectl get secrets -n kubernetes-dashboard | grep dashboard-admin&#10;dashboard-admin-token-k6pp4        kubernetes.io/service-account-token   3      32s&#10;[root@master ~]# kubectl describe secrets dashboard-admin-token-k6pp4 -n kubernetes-dashboard&#10;Name:         dashboard-admin-token-k6pp4&#10;Namespace:    kubernetes-dashboard&#10;Labels:       &#60;none&#62;&#10;Annotations:  kubernetes.io/service-account.name: dashboard-admin&#10;              kubernetes.io/service-account.uid: 29dc2734-490e-4b03-bdad-a2574ac8ef59&#10;&#10;Type:  kubernetes.io/service-account-token&#10;&#10;Data&#10;====&#10;ca.crt:     1025 bytes&#10;namespace:  20 bytes&#10;token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InplRkxEdGNqbk1md0tyNnV1a0JHSy1OMml4Y2Q1a1g1QU5qMDRsdkZJTDgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4tazZwcDQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMjlkYzI3MzQtNDkwZS00YjAzLWJkYWQtYTI1NzRhYzhlZjU5Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmVybmV0ZXMtZGFzaGJvYXJkOmRhc2hib2FyZC1hZG1pbiJ9.afoxaaCkhTggDxuiP13yC_fyd6yTKyHdB_0eSMqBZxpHR4jGLJnaMXO4WlHY07yPuo9vWA5izEv6qwfhueZi2dFkgMxdQdGKKQXsv1_qpnh9LxztxseYVXV9BNc55XUS2LIZg1If94tMd_meECNm8dVNuJIQd_0IN_cEG0csZNYoYbbyYgBkKJNNxLhmRotpuQ1QDxsEWVnLI8lhHr_vcX99Szv2IAqq2jiUWcsFTzIpAaSESUF8F1DxfaaWIpw-Jq9GnQILXb_HpIuFHW2ijaUik5V57w-oUIq6nSrQCBpxaTyY_ehQHLUUm4D3Bx9uYBhqlaZBVIvYTui_S_Rs0w</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>在登录页面上输入上面的token</p>
-<p><img src="/images/k8s/dashboard_login.jpg" alt=""></p>
-<p>登录成功</p>
-<p><img src="/images/k8s/dashboard_home.jpg" alt=""></p>
-<p>Dashboard的使用在此不做过多说明。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1991,7 +1989,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

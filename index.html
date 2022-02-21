@@ -305,6 +305,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2022/02/21/Python给Jenkins-Job批量修改权限/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="唐胡璐">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YONGFEIUALL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/21/Python给Jenkins-Job批量修改权限/" itemprop="url">Python给Jenkins Job批量修改权限</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-02-21T09:16:09+08:00">
+                2022-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Automation-Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Automation Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/02/21/Python给Jenkins-Job批量修改权限/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2022/02/21/Python给Jenkins-Job批量修改权限/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>开发老是不自觉的更新UAT的Job，对测试造成一定的影响。查看了一下，Jenkins上的用户是通过第三方系统引入的，没有更合理的分组，用Role Based Strategy不能够实现对特定Job的权限控制。</p>
+<p>采用项目矩阵授权策略来实现：目前的权限不受影响，只有UAT View下的Job只有测试能访问执行。</p>
+<ol>
+<li><p>全局配置，设置Admin和Authenticated User权限</p>
+</li>
+<li><p>项目设置，选择不继承权限策略，并对特定用户加进来设置相应权限</p>
+</li>
+</ol>
+<p>这种方式，View下有很多个Job，每来一个人都要一个一个加，可以利用代码方式批量的来添加用户权限：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)</span><br><span class="line"></span><br><span class="line">jobs = s.get_jobs(view_name=VIEW_NAME)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">    name = job[<span class="string">'name'</span>]</span><br><span class="line">    config = s.get_job_config(name)</span><br><span class="line"></span><br><span class="line">    content = f<span class="string">'''&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Build:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Cancel:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Configure:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Delete:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Move:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Read:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Workspace:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    '''</span></span><br><span class="line"></span><br><span class="line">    new = config.replace(<span class="string">'&lt;/permission&gt;'</span>, content, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    s.reconfig_job(name, new)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/21/Python给Gogs项目批量打Tag/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1827,190 +1990,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://izheyi.com/2021/10/03/FastAPI-Dependencies（13）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="唐胡璐">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YONGFEIUALL">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/10/03/FastAPI-Dependencies（13）/" itemprop="url">FastAPI: Dependencies（13）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-10-03T08:35:43+08:00">
-                2021-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FastAPI/" itemprop="url" rel="index">
-                    <span itemprop="name">FastAPI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            <!--noindex-->
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2021/10/03/FastAPI-Dependencies（13）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2021/10/03/FastAPI-Dependencies（13）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-              <!--/noindex-->
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>FastAPI 提供了简单易用，但功能强大的<strong>依赖注入</strong>系统，可以让开发人员轻松地把组件集成至 <strong>FastAPI</strong>。</p>
-<p>编程中的<strong>「依赖注入」</strong>是声明代码（本文中为<em>路径操作函数</em> ）运行所需的，或要使用的「依赖」的一种方式。</p>
-<h4 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result</span><span class="params">(start: int = <span class="number">0</span>, limit: int = <span class="number">10</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'start'</span>: start, <span class="string">'limit'</span>: limit&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: dict = Depends<span class="params">(result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/books/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">books</span><span class="params">(res: dict = Depends<span class="params">(result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<p>这里只能传给 Depends 一个参数。</p>
-<p>接收到新的请求时，<strong>FastAPI</strong> 执行如下操作：</p>
-<ul>
-<li>用正确的参数调用依赖项函数（「可依赖项」）</li>
-<li>获取函数返回的结果</li>
-<li>把函数返回的结果赋值给<em>路径操作函数</em>的参数</li>
-</ul>
-<h4 id="Class-依赖注入"><a href="#Class-依赖注入" class="headerlink" title="Class 依赖注入"></a>Class 依赖注入</h4><p>也可以用Python Class来实现依赖注入。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Result</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, start: int = <span class="number">0</span>, limit: int = <span class="number">10</span>)</span>:</span></span><br><span class="line">        self.start = start</span><br><span class="line">        self.limit = limit</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: Result = Depends<span class="params">(Result)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<p>引用时，也可以用下边方式：</p>
-<p><code>res: Result = Depends()</code></p>
-<h4 id="子依赖注入"><a href="#子依赖注入" class="headerlink" title="子依赖注入"></a>子依赖注入</h4><p>FastAPI 支持创建含任意深度的子依赖项。类似于函数调用：fun1 -&gt; fun2 -&gt; fun3</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int = <span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> start</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(start: int = Depends<span class="params">(result1)</span>, limit: int = <span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit:</span><br><span class="line">        <span class="keyword">return</span> limit</span><br><span class="line">    <span class="keyword">return</span> start</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">(res: dict = Depends<span class="params">(result2)</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<p>结果</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/users/?start=2&#10;2&#10;&#10;http://127.0.0.1:8000/users/?limit=5&#10;5</span><br></pre></td></tr></table></figure>
-<h4 id="多次使用同一个依赖项"><a href="#多次使用同一个依赖项" class="headerlink" title="多次使用同一个依赖项"></a>多次使用同一个依赖项</h4><p>如果在同一个<em>路径操作</em> 多次声明了同一个依赖项，例如，多个依赖项共用一个子依赖项，FastAPI 在处理同一请求时，只调用一次该子依赖项。</p>
-<p>FastAPI 不会为同一个请求多次调用同一个依赖项，而是把依赖项的返回值进行「缓存」，并把它传递给同一请求中所有需要使用该返回值的「依赖项」。</p>
-<p>在高级使用场景中，如果不想使用「缓存」值，而是为需要在同一请求的每一步操作（多次）中都实际调用依赖项，可以把 <code>Depends</code> 的参数 <code>use_cache</code> 的值设置为 <code>False</code></p>
-<h4 id="路径依赖"><a href="#路径依赖" class="headerlink" title="路径依赖"></a>路径依赖</h4><p>以在<em>路径操作装饰器</em>中添加一个由 <code>dependencies</code> 组成的 <code>list</code>来注入多个引用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> start != <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'start not == 2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(limit: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit != <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'limit not == 5'</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/', dependencies=[Depends(result1), Depends(result2)])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/fastapi/injection_path_1.jpg" alt=""></p>
-<p><img src="/images/fastapi/injection_path_2.jpg" alt=""></p>
-<p><img src="/images/fastapi/injection_path_3.jpg" alt=""></p>
-<h4 id="全局依赖"><a href="#全局依赖" class="headerlink" title="全局依赖"></a>全局依赖</h4><p>有时，我们要为整个应用添加依赖项。</p>
-<p>可以把依赖项添加至整个 <code>FastAPI</code> 应用。后续就可以为所有<em>路径操作</em>应用该依赖项。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result1</span><span class="params">(start: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> start != <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'start not == 2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result2</span><span class="params">(limit: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> limit != <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">'limit not == 5'</span>)</span><br><span class="line"></span><br><span class="line">app = FastAPI(dependencies=[Depends(result1), Depends(result2)])</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/users/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.get('/books/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">users</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">'status'</span>: <span class="string">'ok'</span>&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/fastapi/injection_path_3.jpg" alt=""></p>
-<p><img src="/images/fastapi/injection_path_4.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2065,7 +2044,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">392</span>
+                  <span class="site-state-item-count">393</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

@@ -4,6 +4,22 @@
   
     
     <entry>
+      <title><![CDATA[Python给Jenkins Job批量修改权限]]></title>
+      <url>http://izheyi.com/2022/02/21/Python%E7%BB%99Jenkins-Job%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90/</url>
+      <content type="html"><![CDATA[<p>开发老是不自觉的更新UAT的Job，对测试造成一定的影响。查看了一下，Jenkins上的用户是通过第三方系统引入的，没有更合理的分组，用Role Based Strategy不能够实现对特定Job的权限控制。</p>
+<p>采用项目矩阵授权策略来实现：目前的权限不受影响，只有UAT View下的Job只有测试能访问执行。</p>
+<ol>
+<li><p>全局配置，设置Admin和Authenticated User权限</p>
+</li>
+<li><p>项目设置，选择不继承权限策略，并对特定用户加进来设置相应权限</p>
+</li>
+</ol>
+<p>这种方式，View下有很多个Job，每来一个人都要一个一个加，可以利用代码方式批量的来添加用户权限：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">s = jenkins.Jenkins(url=URL, username=USERNAME, password=PASSWORD)</span><br><span class="line"></span><br><span class="line">jobs = s.get_jobs(view_name=VIEW_NAME)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">    name = job[<span class="string">'name'</span>]</span><br><span class="line">    config = s.get_job_config(name)</span><br><span class="line"></span><br><span class="line">    content = f<span class="string">'''&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Build:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Cancel:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Configure:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Delete:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Move:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Read:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    &lt;permission&gt;hudson.model.Item.Workspace:&#123;USER&#125;&lt;/permission&gt;</span><br><span class="line">    '''</span></span><br><span class="line"></span><br><span class="line">    new = config.replace(<span class="string">'&lt;/permission&gt;'</span>, content, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    s.reconfig_job(name, new)</span><br></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python给Gogs项目批量打Tag]]></title>
       <url>http://izheyi.com/2021/10/21/Python%E7%BB%99Gogs%E9%A1%B9%E7%9B%AE%E6%89%B9%E9%87%8F%E6%89%93Tag/</url>
       <content type="html"><![CDATA[<p>Gogs的Rest API不能用，就用下面的方式来实现：</p>
